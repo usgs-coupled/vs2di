@@ -1,0 +1,3 @@
+      deallocate(ITEMBL,ITBDUM)
+
+

@@ -52,7 +52,7 @@ struct back_list
 /*
  *  Used to reduce dimension of problem for phreeqc
  */
-EXTERNAL int *forward;
+EXTERNAL int *forward1;
 EXTERNAL struct back_list *back;
 EXTERNAL int ix, iz;
 EXTERNAL int  ixz;

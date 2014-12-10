@@ -227,7 +227,7 @@ PHREEQC_FREE(int *solute)
 		free_model_allocs();
 		free_check_null(buffer);
 		free_check_null(activity_list);
-		free_check_null(forward);
+		free_check_null(forward1);
 		free_check_null(back);
 		//free_check_null(file_prefix);
 		free_check_null(old_vMoistureContent);
@@ -764,10 +764,10 @@ DISTRIBUTE_INITIAL_CONDITIONS(int *initial_conditions1,
 	 cout<<"Intial distribution1 ="<<"\n";
 	for (i = 0; i < ixz; i++)
 	{							/* i is ixyz number */
-		j = forward[i];			/* j is count_chem number */
+		j = forward1[i];			/* j is count_chem number */
 		if (j < 0)
 			continue;
-		assert(forward[i] >= 0);	
+		assert(forward1[i] >= 0);	
 		system_cxxInitialize(i, j, initial_conditions1, initial_conditions2,
 			fraction1);
 	}
@@ -1404,8 +1404,10 @@ EQUILIBRATE_SERIAL(double *fraction,double *hxshc,int *dim, int *print_sel,
 			theta[j] = 0.0;
 		// set flags
 		active = FALSE;
-		if (theta[j] > 0.0);
-		active = TRUE;
+		if (theta[j] > 0.0)
+		{
+			active = TRUE;
+		}
 		pr.all = FALSE;
 		if (*print_out == TRUE && printzone_chem[j] == TRUE)
 			pr.all = TRUE;
@@ -1609,8 +1611,8 @@ FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 /*
  *   malloc space
  */
-	forward = (int *) PHRQ_malloc((size_t) ixz * sizeof(int));
-	if (forward == NULL)
+	forward1 = (int *) PHRQ_malloc((size_t) ixz * sizeof(int));
+	if (forward1 == NULL)
 		malloc_error();
 	back =
 		(back_list *) PHRQ_malloc((size_t) count_chem *sizeof(back_list)); 
@@ -1626,15 +1628,15 @@ FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 					|| initial_conditions[7 * i] <= -100)
                         
 			{
-				forward[i] = n;
+				forward1[i] = n;
 				back[n].list = i;
 				n++;
 			}
 			else
 			{
-				forward[i] = -1;
+				forward1[i] = -1;
 			}
-			cout<<"XZforward ["<<i<<"] ="<<forward[i]<<"\n";	
+			cout<<"XZforward ["<<i<<"] ="<<forward1[i]<<"\n";	
 		}
 		count_chem = n;
 /*
@@ -1664,15 +1666,15 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			n_to_ij(i, &ii, &jj);
 			if (jj == 0)
 			{
-				forward[i] = n;
+				forward1[i] = n;
 				back[n].list = i;
 				n++;
 			}
 			else
 			{
-				forward[i] = -1;
+				forward1[i] = -1;
 			}
-			cout<<"Xforward ["<<i<<"] ="<<forward[i]<<"\n";	
+			cout<<"Xforward ["<<i<<"] ="<<forward1[i]<<"\n";	
 		}
 		count_chem = n;
 /*
@@ -1694,15 +1696,15 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			n_to_ij(i, &ii, &jj);
 			if (ii == 0)
 			{
-				forward[i] = n;
+				forward1[i] = n;
 				back[n].list = i;
 				n++;
 			}
 			else
 			{
-				forward[i] = -1;
+				forward1[i] = -1;
 			}
-				cout<<"Zforward ["<<i<<"] ="<<forward[i]<<"\n";
+				cout<<"Zforward ["<<i<<"] ="<<forward1[i]<<"\n";
 		}
 		count_chem = n;
 	}

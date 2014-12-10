@@ -339,7 +339,7 @@ unpackcxx_from_vsrtwheat(double *fraction,int *dim,int *heat)
 	int i, j,l,k;
 	for (i = 0; i < ixz; i++)
 	{
-		l = forward[i];
+		l = forward1[i];
 		if (l < 0)
 			continue;
 	 for (j = 0; j < count_component; j++)
@@ -361,7 +361,7 @@ unpackcxx_from_vsrt(double *fraction,int *dim)
 	int i, j,k,l;
 	for (i = 0; i < ixz; i++)
 	{
-		l = forward[i];
+		l = forward1[i];
 		if (l < 0)
 			continue;
     	 for (j = 0; j < count_component; j++)

@@ -1,7 +1,6 @@
-
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvs2drt", "libvs2drt.vcproj", "{9F245F95-2D70-4B7A-8140-3C8AD664676D}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvs2drt", "libvs2drt.vcxproj", "{9F245F95-2D70-4B7A-8140-3C8AD664676D}"
 EndProject
 Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "vs2drt", "vs2drt.vfproj", "{A35940C4-7A25-405E-9211-44EB3C8F607C}"
 	ProjectSection(ProjectDependencies) = postProject

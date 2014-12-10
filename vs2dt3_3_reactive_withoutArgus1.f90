@@ -120,7 +120,7 @@
       COMMON/SCON1/ITESTS
       CHARACTER*80 CHEMFILE,DATABASEFILE,PREFIX
       COMMON/SOLCHAR/CHEMFILE,DATABASEFILE,PREFIX
-      logical axes(2) 
+      integer axes(2) 
       common/axis/axes
       common/conversion/CNVTM,CNVTMI     
       CHARACTER*10 SCOMPNAME(50)
@@ -201,14 +201,14 @@
       CNVTMI= 1.D0/ CNVTM    
       READ (05,*) NXR,NLY
       if(NXR .GT. 2) THEN 
-      axes(1)= .true.
+      axes(1)= 1
       ELSE IF (NXR .EQ. 2)then
-      axes(1)= .false.
+      axes(1)= 0
       END IF
       if(NLY .GT. 2) THEN 
-      axes(2)= .true.
+      axes(2)= 1
       ELSE IF (NLY.EQ. 2)then
-      axes(2)= .false.
+      axes(2)= 0
       END IF
       READ (05,*) NRECH,NUMT
 !
@@ -332,7 +332,7 @@
       NTYP(I) = 0
       THETA(I) = 0.0D0
       THLST(I) = 0.0D0
-      SATUR(IN)=0.0D0
+      SATUR(I)=0.0D0
       P(I) = 0.0D0
       PXXX(I) = 0.0D0
       THEAD(I)=0.0D0
@@ -1142,9 +1142,12 @@
       DO 10 J23=1,NPROP
    10 HK(J22,J23)=0.0D0
       DO 20 J23=1,NHTPROP
-   20 HT(J22,J23)=0.0D0
+20    HT(J22,J23)=0.0D0
+      
+      DO 2010, J22=1,NTEX
       DO 21 J23=1,NSTPROP
-   21 HS(J22,J23)=0.0D0
+21    HS(J22,J23)=0.0D0
+2010  CONTINUE      
       DO 30 J22=1,NTEX
       READ (5,*) J
       READ (5,*) ANIZ(J),(HK(J,I),I=1,NPROP)
@@ -1583,7 +1586,7 @@
  402  continue
  403  continue
       END IF 
-       DO 185 I=0, Nsol
+       DO 185 I=1, Nsol
        Solcomp(I)=0.0d0
  185  continue  
        DO I=1, NLY

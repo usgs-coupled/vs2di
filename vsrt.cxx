@@ -1588,9 +1588,9 @@ void
 FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 /* ---------------------------------------------------------------------- */
 {
-/*
- *   calculate mapping from full set of cells to subset needed for chemistry
- */
+	/*
+	*   calculate mapping from full set of cells to subset needed for chemistry
+	*/
 	int
 		i,
 		n,
@@ -1604,13 +1604,13 @@ FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 	if (axes[0] == FALSE && axes[1] == FALSE )
 	{
 		error_msg("No active coordinate direction in DIMENSIONS keyword.",
-				  STOP);
+			STOP);
 	}
-	
-		count_chem = ixz;
-/*
- *   malloc space
- */
+
+	count_chem = ixz;
+	/*
+	*   malloc space
+	*/
 	forward1 = (int *) PHRQ_malloc((size_t) ixz * sizeof(int));
 	if (forward1 == NULL)
 		malloc_error();
@@ -1618,15 +1618,15 @@ FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 		(back_list *) PHRQ_malloc((size_t) count_chem *sizeof(back_list)); 
 	if (back == NULL)
 		malloc_error();
-		n = 0;
-        if ((axes[0] == TRUE) && (axes[1] == TRUE))
+	n = 0;
+	if ((axes[0] == TRUE) && (axes[1] == TRUE))
 	{
 		n = 0;
 		for (i = 0; i < ixz; i++)
 		{
-                  if(initial_conditions[7 * i] >= 0
-					|| initial_conditions[7 * i] <= -100)
-                        
+			if(initial_conditions[7 * i] >= 0
+				|| initial_conditions[7 * i] <= -100)
+
 			{
 				forward1[i] = n;
 				back[n].list = i;
@@ -1639,19 +1639,19 @@ FORWARD_AND_BACK(int *initial_conditions,int *axes,int *nx, int *nz)
 			cout<<"XZforward ["<<i<<"] ="<<forward1[i]<<"\n";	
 		}
 		count_chem = n;
-/*
- *   Copy line x
- */
+		/*
+		*   Copy line x
+		*/
 	}
-else if ((axes[0] == TRUE) && (axes[1] == FALSE))
+	else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 	{
 		if (iz != 2)
 		{
 			sprintf(error_string,
-					"z direction should contain only three nodes for this 1D problem.");
+				"z direction should contain only three nodes for this 1D problem.");
 			error_msg(error_string, STOP);
 		}
-		
+
 		n = 0;
 		for (i = 0; i < ixz; i++)
 		{
@@ -1660,7 +1660,7 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			{
 				input_error++;
 				sprintf(error_string,
-						"Can not have inactive cells in a 1D simulation.");
+					"Can not have inactive cells in a 1D simulation.");
 				error_msg(error_string, STOP);
 			}
 			n_to_ij(i, &ii, &jj);
@@ -1677,9 +1677,9 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			cout<<"Xforward ["<<i<<"] ="<<forward1[i]<<"\n";	
 		}
 		count_chem = n;
-/*
- *   Copy z line
- */}
+		/*
+		*   Copy z line
+		*/}
 	else if ((axes[0] == FALSE) && (axes[1] == TRUE))
 	{
 		n = 0;
@@ -1690,7 +1690,7 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			{
 				input_error++;
 				sprintf(error_string,
-						"Can not have inactive cells in a 1D simulation.");
+					"Can not have inactive cells in a 1D simulation.");
 				error_msg(error_string, STOP);
 			}
 			n_to_ij(i, &ii, &jj);
@@ -1704,13 +1704,13 @@ else if ((axes[0] == TRUE) && (axes[1] == FALSE))
 			{
 				forward1[i] = -1;
 			}
-				cout<<"Zforward ["<<i<<"] ="<<forward1[i]<<"\n";
+			cout<<"Zforward ["<<i<<"] ="<<forward1[i]<<"\n";
 		}
 		count_chem = n;
 	}
-	
+
 	count_chem = n;
-		cout<<"count_chem ="<<count_chem<<"\n";
+	cout<<"count_chem ="<<count_chem<<"\n";
 	return;
 }
 

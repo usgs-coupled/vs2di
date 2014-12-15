@@ -77,6 +77,8 @@
       include 'd_solindex.inc'    
       include 'd_phreecc.inc'
       include 'd_react.inc'
+      USE vs2dt_rm
+      USE PhreeqcRM
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/PND/POND
@@ -120,7 +122,7 @@
       COMMON/SCON1/ITESTS
       CHARACTER*80 CHEMFILE,DATABASEFILE,PREFIX
       COMMON/SOLCHAR/CHEMFILE,DATABASEFILE,PREFIX
-      integer axes(2) 
+      logical axes(2) 
       common/axis/axes
       common/conversion/CNVTM,CNVTMI     
       CHARACTER*10 SCOMPNAME(50)
@@ -201,14 +203,14 @@
       CNVTMI= 1.D0/ CNVTM    
       READ (05,*) NXR,NLY
       if(NXR .GT. 2) THEN 
-      axes(1)= 1
+      axes(1)= .true.
       ELSE IF (NXR .EQ. 2)then
-      axes(1)= 0
+      axes(1)= .false.
       END IF
       if(NLY .GT. 2) THEN 
-      axes(2)= 1
+      axes(2)= .true.
       ELSE IF (NLY.EQ. 2)then
-      axes(2)= 0
+      axes(2)= .false.
       END IF
       READ (05,*) NRECH,NUMT
 !
@@ -267,10 +269,14 @@
       NNODES=NLY*NXR
       Nsol=0
       IF (SOLUTE)then
-      CALL PHREEQC_MAIN(SOLUTE,CHEMFILE,DATABASEFILE,PREFIX)
-      SCOMPNAME= "          "
-      CALL COUNT_ALL_COMPONENTS(Nsol, SCOMPNAME)
-      Nodesol= NNODES*Nsol  
+          CALL CreateRM
+          !#CALL PHREEQC_MAIN(SOLUTE,CHEMFILE,DATABASEFILE,PREFIX)
+          !#SCOMPNAME= "          "
+          !#CALL COUNT_ALL_COMPONENTS(Nsol, SCOMPNAME)
+          do i = 1, nSol
+              status = RM_GetComponent(rm_id, i, scompname(i))
+          enddo
+          Nodesol= NNODES*Nsol  
       END IF
       IF(PPNT.OR.HPNT)THEN
         F14P=.TRUE.
@@ -792,6 +798,9 @@
       include 'd_solindex.inc'
       include 'd_phreecc.inc'
       include 'd_react.inc'
+      USE vs2dt_rm
+      USE PhreeqcRM
+      !USE PRICON      
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -965,15 +974,35 @@
   161 CONTINUE 
       iprrestartflag = 0 
       istopmsg = 0
-      if (HEAT.AND.SOLUTE)THEN
-      CALL EQUILIBRATEWHEAT( cc,hx,tt,NNODES,heat,nprconc,xnode,znode,  &
-      tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
-      theta,iprrestartflag)
-      ELSE if((.not.heat).and.solute)then
-      call EQUILIBRATE( cc,hx,NNODES,nprconc,xnode,znode,  &
-      tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
-      theta,iprrestartflag)  
-      END IF
+      !#if (HEAT.AND.SOLUTE)THEN
+      !#CALL EQUILIBRATEWHEAT( cc,hx,tt,NNODES,heat,nprconc,xnode,znode,  &
+      !#tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
+      !#theta,iprrestartflag)
+      !#ELSE if((.not.heat).and.solute)then
+      !#call EQUILIBRATE( cc,hx,NNODES,nprconc,xnode,znode,  &
+      !#tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
+      !#theta,iprrestartflag)  
+      !#END IF
+          IF (SOLUTE) THEN
+              call SetConcentrationsRM(cc)
+              IF (HEAT) THEN
+                  status = RM_SetTemperature(rm_id, tt)
+              endif
+              status = RM_SetTime(rm_id, tper)
+              status = RM_SetTimeStep(rm_id, delt)
+              status = RM_SetTimeConversion(rm_id, cnvtmi)
+              status = RM_SetPrintChemistryMask(rm_id, nprchem)
+              status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+              status = RM_SetSaturation(rm_id, theta)
+              status = RM_RunCells(rm_id)
+              call GetConcentrationsRM(cc)
+              !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
+              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
+          END IF      
+      if (solute) then
+          if (heat) then
+          endif
+      endif
 !      write(*,*)'after...reactionnnnnnnnnnnnnnnnnnn'
 !      CALL VSOUTS(1,CC)
       DO 204 I=1, NNODES
@@ -1037,6 +1066,9 @@
       include 'd_itemblo.inc'
       include 'd_itemtxb.inc'
       include 'd_react.inc'
+      USE vs2dt_rm
+      USE PhreeqcRM
+      USE PRICON
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1070,8 +1102,8 @@
       COMMON/FLO/FLOW
 !      LOGICAL VER1P0
 !      COMMON/VERSION/VER1P0   
-      DIMENSION Solcomp(50)
-      common/solind/ INSOL1(7),INSOL2(7)
+      !DIMENSION Solcomp(50)
+      common/solind/ INSOL1(7),INSOL2(7),Solcomp(50)
       logical axes(2) 
       common/axis/axes
       common/ITEMK/KNLY,KNXR,KNNODE
@@ -1552,107 +1584,129 @@
 !    BE SOLVED
 !      
       IF (SOLUTE) THEN
-      READ(05,*) IREAD
-      INSOL2(1)=2
-      DO  I=1,7
-      INSOL2(I)=-1
-        DO J=1,NNODES
-         INDSOL2(I,J) = INSOL2(I)
-         CMIXFARC(I,J) = 1.0d0
-        END DO
-      END DO  
-      IF(IREAD.EQ.0) THEN
-      READ(05,*)(INSOL1(I),I=1,7)
-      INSOL2(1)=2
-      DO 212 I=2,7
-        INSOL2(I)=-1
- 212  CONTINUE       
-      DO 182 I=1,7
-      DO 181 J=1,NNODES
-      INDSOL1(I,J) = INSOL1(I)
-!      INDSOL2(I,J) = INSOL2(I)
-!      CMIXFARC(I,J) = 1.0d0
-  181 CONTINUE
-  182 CONTINUE
-      ELSE if (IREAD.EQ.1)then
-      DO 403 K=1,7  
-      DO 402 J=1,NLY
-      READ (05,*)(DUM(N),N=1,NXR)
-      DO 401 N=1,NXR
-      IN=NLY*(N-1)+J
-      INDSOL1(K,IN)=DUM(N)
-!      write(*,*)"INDSOL1(",K,",",NI,")=ITEMTX(",IN,")=",INDSOL1(K,NI),ITEMTX(IN)
- 401  continue
- 402  continue
- 403  continue
-      END IF 
-       DO 185 I=1, Nsol
-       Solcomp(I)=0.0d0
- 185  continue  
-       DO I=1, NLY
-         DO J=1, NXR
-         IN=NLY*(J-1)+I  
-           if (I.eq.1.or.I.eq.NLY)then
-              INDSOL1(1,IN)=1
-           END if   
-           if (J.eq.1.or.J.eq.NXR)then
-              INDSOL1(1,IN)=1 
-           end if    
-        END DO       
-      END DO
-!      do 184 I=1,7
-!      do 183 J=1, NNODES  
-!     write(6,*)"INDSOL1(",I,",",J,")=",INDSOL1(I,J)
-! 183  continue
-! 184  continue   
-      do 205 I=1, Nodesol
-      phreeC(I)= 0.0d0
- 205  continue
-      CALL STORE_C_POINTERS(INDSOL1,XNODE,ZNODE)
-      CALL FORWARD_AND_BACK(INDSOL1,axes,NXR, NLY) 
-      CALL DISTRIBUTE_INITIAL_CONDITIONS(INDSOL1,INDSOL2,CMIXFARC)
-      CALL PACK_FOR_VSRT(CC,NNODES)
-      CALL COLLECT_COMP(Solcomp) 
-      DO 186 I=1,Nsol 
-      WRITE(06,4012)COMPNAME(I), Solcomp(I)
- 186  CONTINUE  
- !     DO 200 I=1, NNODES
-!      DO 189 M=1, Nsol
-!      write(6,*)"CC(",M,",",I,")=",CC(M,J)
-!  189 continue
-!  200 continue
-      DO 203 J=1,NLY
-      DO 203 N=1,NXR
-      DO 201 M=1,Nsol
-      IN=NLY*(N-1)+J
-      CCOLD(M,IN)=CC(M,IN)
-  201 CONTINUE
-  203 CONTINUE
-      do 162 J=1,NLY
-      do 156 N=1,NXR
-       IN=NLY*(N-1)+1
-       if(hydraulicFunctionType.eq.0)then
-          THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
-            else if(hydraulicFunctionType.eq.1)then
-              THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
-              else if(hydraulicFunctionType.eq.2)then
-                  THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
-                    else if(hydraulicFunctionType.eq.4)then
-                     THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
-                 end if
-  156 CONTINUE
-  162 CONTINUE 
-      iprrestartflag = 0 
-      istopmsg = 0
-      if (HEAT.AND.SOLUTE)THEN
-      CALL EQUILIBRATEWHEAT( cc,hx,tt,NNODES,heat,nprconc,xnode,znode,  &
-      tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
-      theta,iprrestartflag)
-      ELSE IF ((.NOT.HEAT).AND.SOLUTE)THEN
-      call EQUILIBRATE( cc,hx,NNODES,nprconc,xnode,znode,  &
-      tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
-      theta,iprrestartflag)  
-      END IF
+          READ(05,*) IREAD
+          insol2 = -1
+          indsol2 = -1
+          cmixfarc = 1.0d0
+          !INSOL2(1)=2
+          !DO  I=1,7
+          !    INSOL2(I)=-1
+          !    DO J=1,NNODES
+          !        INDSOL2(I,J) = INSOL2(I)
+          !        CMIXFARC(I,J) = 1.0d0
+          !    END DO
+          !END DO  
+          IF(IREAD.EQ.0) THEN
+              READ(05,*)(INSOL1(I),I=1,7)
+              INSOL2(1)=2
+              DO 212 I=2,7
+                  INSOL2(I)=-1
+212           CONTINUE       
+              DO 182 I=1,7
+                  DO 181 J=1,NNODES
+                      INDSOL1(I,J) = INSOL1(I)
+                      !      INDSOL2(I,J) = INSOL2(I)
+                      !      CMIXFARC(I,J) = 1.0d0
+181               CONTINUE
+182           CONTINUE
+          ELSE if (IREAD.EQ.1)then
+              DO 403 K=1,7  
+                  DO 402 J=1,NLY
+                      READ (05,*)(DUM(N),N=1,NXR)
+                      DO 401 N=1,NXR
+                          IN=NLY*(N-1)+J
+                          INDSOL1(K,IN)=DUM(N)
+                          !      write(*,*)"INDSOL1(",K,",",NI,")=ITEMTX(",IN,")=",INDSOL1(K,NI),ITEMTX(IN)
+401                   continue
+402               continue
+403           continue
+          END IF 
+          DO 185 I=1, Nsol
+              Solcomp(I)=0.0d0
+185       continue  
+          DO I=1, NLY
+              DO J=1, NXR
+                  IN=NLY*(J-1)+I  
+                  if (I.eq.1.or.I.eq.NLY)then
+                      INDSOL1(1,IN)=1
+                  END if   
+                  if (J.eq.1.or.J.eq.NXR)then
+                      INDSOL1(1,IN)=1 
+                  end if    
+              END DO       
+          END DO
+          !      do 184 I=1,7
+          !      do 183 J=1, NNODES  
+          !     write(6,*)"INDSOL1(",I,",",J,")=",INDSOL1(I,J)
+          ! 183  continue
+          ! 184  continue   
+          do 205 I=1, Nodesol
+              phreeC(I)= 0.0d0
+205       continue
+          !#CALL STORE_C_POINTERS(INDSOL1,XNODE,ZNODE)
+          !#CALL FORWARD_AND_BACK(INDSOL1,axes,NXR, NLY) 
+          CALL CreateMappingRM(INDSOL1,axes,NXR,NLY) 
+          CALL InitializeRM
+          !#CALL DISTRIBUTE_INITIAL_CONDITIONS(INDSOL1,INDSOL2,CMIXFARC)
+          !#CALL PACK_FOR_VSRT(CC,NNODES)
+          !#CALL COLLECT_COMP(Solcomp) 
+          DO 186 I=1,Nsol 
+              WRITE(06,4012)COMPNAME(I), Solcomp(I)
+186       CONTINUE  
+          !     DO 200 I=1, NNODES
+          !      DO 189 M=1, Nsol
+          !      write(6,*)"CC(",M,",",I,")=",CC(M,J)
+          !  189 continue
+          !  200 continue
+          DO 203 J=1,NLY
+              DO 203 N=1,NXR
+                  DO 201 M=1,Nsol
+                      IN=NLY*(N-1)+J
+                      CCOLD(M,IN)=CC(M,IN)
+201               CONTINUE
+203       CONTINUE
+          do 162 J=1,NLY
+              do 156 N=1,NXR
+                  IN=NLY*(N-1)+1
+                  if(hydraulicFunctionType.eq.0)then
+                      THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
+                  else if(hydraulicFunctionType.eq.1)then
+                      THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
+                  else if(hydraulicFunctionType.eq.2)then
+                      THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
+                  else if(hydraulicFunctionType.eq.4)then
+                      THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
+                  end if
+156           CONTINUE
+162       CONTINUE 
+          iprrestartflag = 0 
+          istopmsg = 0
+
+          !if (HEAT.AND.SOLUTE)THEN
+              !CALL EQUILIBRATEWHEAT( cc,hx,tt,NNODES,heat,nprconc,xnode,znode,  &
+              !tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
+              !theta,iprrestartflag)
+          !ELSE IF ((.NOT.HEAT).AND.SOLUTE)THEN
+              !call EQUILIBRATE( cc,hx,NNODES,nprconc,xnode,znode,  &
+              !tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
+              !theta,iprrestartflag)   
+          !ENDIF
+          IF (SOLUTE) THEN
+              call SetConcentrationsRM(cc)
+              IF (HEAT) THEN
+                  status = RM_SetTemperature(rm_id, tt)
+              endif
+              status = RM_SetTime(rm_id, tper)
+              status = RM_SetTimeStep(rm_id, delt)
+              status = RM_SetTimeConversion(rm_id, cnvtmi)
+              status = RM_SetPrintChemistryMask(rm_id, nprchem)
+              status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+              status = RM_SetSaturation(rm_id, theta)
+              status = RM_RunCells(rm_id)
+              call GetConcentrationsRM(cc)
+              !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
+              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
+          END IF
       END IF
 !
 !   COMPUTE INTERCELL CONDUCTANCES
@@ -1777,6 +1831,8 @@
       include 'd_ihdum.inc'
       include 'd_trxxh.inc'
       include 'd_solindex.inc'
+      use PhreeqcRM
+      use vs2dt_rm
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1802,6 +1858,9 @@
       COMMON/FLO/FLOW
       common/thick/dely
       COMMON/JCONF/JFLAG2
+      double precision, allocatable, dimension(:,:) :: bcsol1
+      double precision, allocatable, dimension(:) :: f1
+      integer, allocatable, dimension(:) :: ibsol1, ibsol2
       SAVE STERR
       include 'd_ihdummAlloc.inc'
       include 'd_isdummAlloc.inc'
@@ -1922,7 +1981,18 @@
       END IF
       IF(solute)  then
       READ (05,*)NTC,INSBC1,INSBC2,SBFRAC
-      CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+      
+      !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+      allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
+      ibsol1(1) = insbc1
+      ibsol2(1) = insbc2
+      f1(1) = sbfrac
+      status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
+      do i = 1, nsol
+          bcsol(i) = bcsol1(1,i)
+      enddo
+      deallocate(bcsol1, ibsol1, ibsol2, f1)
+      
       ELSE
       NTC=0
       END IF
@@ -1946,7 +2016,18 @@
       END IF
       IF (SOLUTE)THEN
       READ (05,*)NTC,INSBC1,INSBC2,SBFRAC 
-      CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+      
+      !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+      allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
+      ibsol1(1) = insbc1
+      ibsol2(1) = insbc2
+      f1(1) = sbfrac
+      status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
+      do i = 1, nsol
+          bcsol(i) = bcsol1(1,i)
+      enddo
+      deallocate(bcsol1, ibsol1, ibsol2, f1)
+      
       ELSE
       NTC=0
       END IF

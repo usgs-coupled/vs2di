@@ -20,8 +20,8 @@
 extern "C" {
 #endif
 void FH_FinalizeFiles();
-void FH_ProcessRestartFiles(int *id, int *initial_conditions1_in, int *initial_conditions2_in, 
-	double *fraction1_in);
+//void FH_ProcessRestartFiles(int *id, int *initial_conditions1_in, int *initial_conditions2_in, 
+//	double *fraction1_in);
 void FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation = NULL, int *mapping = NULL);
 void FH_SetRestartName(const char *name, long nchar);
 void FH_WriteFiles(int *id, int *print_hdf, int *print_media, int *print_xyz, int *xyz_mask, int *print_restart);

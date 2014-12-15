@@ -17,12 +17,12 @@
 #define gzprintf fprintf
 #define igzstream ifstream
 #endif
-#include "KDtree/KDtree.h"
+//#include "KDtree/KDtree.h"
 #include "Phreeqc.h"
 #include "Solution.h"
 #include "IPhreeqc.h"
-#include "H5Cpp.h"
-#include "hdf.h"
+//#include "H5Cpp.h"
+//#include "hdf.h"
 //#ifdef USE_OPENMP
 //#include <omp.h>
 //#endif
@@ -59,10 +59,10 @@ public:
 		int *initial_conditions1_in,
 		int *initial_conditions2_in, 
 		double *fraction1_in);
-	bool GetHDFInitialized(void) {return this->HDFInitialized;}
-	void SetHDFInitialized(bool tf) {this->HDFInitialized = tf;}
-	bool GetHDFInvariant(void) {return this->HDFInvariant;}
-	void SetHDFInvariant(bool tf) {this->HDFInvariant = tf;}
+	//bool GetHDFInitialized(void) {return this->HDFInitialized;}
+	//void SetHDFInitialized(bool tf) {this->HDFInitialized = tf;}
+	//bool GetHDFInvariant(void) {return this->HDFInvariant;}
+	//void SetHDFInvariant(bool tf) {this->HDFInvariant = tf;}
 	bool GetXYZInitialized(void) {return this->XYZInitialized;}
 	void SetXYZInitialized(bool tf) {this->XYZInitialized = tf;}
 	std::map< std::string, std::ostream * > &GetBcZoneOstreams(void) {return this->BcZoneOstreams;}
@@ -73,10 +73,10 @@ public:
 	IRM_RESULT SetRestartName(const char *name, long nchar);
 	IRM_RESULT WriteRestartFile(int *id, int *print_restart = NULL, int *indices_ic = NULL);
 	IRM_RESULT WriteFiles(int id, int *print_hdf = NULL, int *print_media = NULL, int *print_xyz = NULL, int *xyz_mask = NULL, int *print_restart = NULL);
-	IRM_RESULT WriteHDF(int id, int *print_hdf, int *print_media);
+	//IRM_RESULT WriteHDF(int id, int *print_hdf, int *print_media);
 	IRM_RESULT WriteRestart(int id, int *print_restart);
 	IRM_RESULT WriteXYZ(int id, int *print_xyz, int *xyz_mask);
-    IRM_RESULT WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
+    //IRM_RESULT WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
 
 protected:
 	bool HDFInitialized;
@@ -107,6 +107,7 @@ FileHandler::~FileHandler()
 {
 	delete this->io;
 }
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
 FileHandler::ProcessRestartFiles(
@@ -416,6 +417,7 @@ FileHandler::ProcessRestartFiles(
 	}
 	return IRM_BADINSTANCE;
 }
+#endif
 /* ---------------------------------------------------------------------- */
 void
 FileHandler::SetPointers(double *x_node_in, double *y_node_in, double *z_node_in, int *ic_in,
@@ -476,11 +478,11 @@ FileHandler::WriteFiles(int id, int *print_hdf_in, int *print_media_in, int *pri
 		print_xyz = *print_xyz_in;
 		print_restart = *print_restart_in;
 
-		if (print_hdf != 0)
-		{
-			IRM_RESULT result = WriteHDF(id, &print_hdf, &print_media);
-			if (result) rtn = result;
-		}
+		//if (print_hdf != 0)
+		//{
+		//	IRM_RESULT result = WriteHDF(id, &print_hdf, &print_media);
+		//	if (result) rtn = result;
+		//}
 		if (print_xyz != 0)
 		{
 			IRM_RESULT result = WriteXYZ(id, &print_xyz, xyz_mask);
@@ -496,6 +498,7 @@ FileHandler::WriteFiles(int id, int *print_hdf_in, int *print_media_in, int *pri
 	}
 	return IRM_BADINSTANCE;
 }
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
 FileHandler::WriteHDF(int id, int *print_hdf, int *print_media)
@@ -607,6 +610,7 @@ FileHandler::WriteHDF(int id, int *print_hdf, int *print_media)
 	}
 	return IRM_BADINSTANCE;
 }
+#endif
 #ifdef SKIP
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
@@ -917,6 +921,7 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 	}
 	return IRM_BADINSTANCE;
 }
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 void
 FH_FinalizeFiles()
@@ -938,9 +943,11 @@ FH_FinalizeFiles()
 	}
 	file_handler.GetBcZoneOstreams().clear();
 }
+#endif
 //
 // Wrappers
 //
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 void
 FH_ProcessRestartFiles(
@@ -954,7 +961,7 @@ FH_ProcessRestartFiles(
 	file_handler.ProcessRestartFiles(id, initial_conditions1_in, 
 		initial_conditions2_in, fraction1_in);
 }
-
+#endif
 /* ---------------------------------------------------------------------- */
 void
 FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation, int *mapping)
@@ -980,6 +987,7 @@ FH_WriteFiles(int *id_in, int *print_hdf, int *print_media, int *print_xyz, int 
 	int id = *id_in;
 	file_handler.WriteFiles(id, print_hdf, print_media, print_xyz, xyz_mask, print_restart);
 }
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 void
 FH_WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l)
@@ -1066,3 +1074,4 @@ FileHandler::WriteBcRaw(int *id, double *c_in, int *solution_list, int * bc_solu
 	}
 	return IRM_OK;
 }
+#endif

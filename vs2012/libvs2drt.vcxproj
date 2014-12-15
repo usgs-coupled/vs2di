@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9F245F95-2D70-4B7A-8140-3C8AD664676D}</ProjectGuid>
+    <RootNamespace>vs2drt</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(BOOSTROOT);../phreeqcpp/phreeqc;../phreeqcpp;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(BOOSTROOT);../phreeqcpp/phreeqc;../phreeqcpp;../x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(BOOSTROOT);../phreeqcpp/phreeqc;../phreeqcpp;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(BOOSTROOT);../phreeqcpp/phreeqc;../phreeqcpp;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\phreeqcpp\phreeqc\advection.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\basic.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\basicsubs.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\cl1.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\cvdense.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\cvode.c" />
+    <ClCompile Include="..\phreeqcpp\cxxKinetics.cxx" />
+    <ClCompile Include="..\phreeqcpp\cxxMix.cxx" />
+    <ClCompile Include="..\cxxvsrtSubs.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\dense.c" />
+    <ClCompile Include="..\phreeqcpp\Dictionary.cxx" />
+    <ClCompile Include="..\phreeqcpp\dumper.cpp" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\dw.c" />
+    <ClCompile Include="..\phreeqcpp\Exchange.cxx" />
+    <ClCompile Include="..\phreeqcpp\ExchComp.cxx" />
+    <ClCompile Include="..\phreeqcpp\GasPhase.cxx" />
+    <ClCompile Include="..\gzstream.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\input.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\integrate.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\inverse.c" />
+    <ClCompile Include="..\phreeqcpp\ISolution.cxx" />
+    <ClCompile Include="..\phreeqcpp\ISolutionComp.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\isotopes.c" />
+    <ClCompile Include="..\KDtree\KDtree.cpp" />
+    <ClCompile Include="..\KDtree\KDtree2.cpp" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\kinetics.c" />
+    <ClCompile Include="..\phreeqcpp\KineticsComp.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\mainsubs.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\model.c" />
+    <ClCompile Include="..\phreeqcpp\NameDouble.cxx" />
+    <ClCompile Include="..\phreeqcpp\NumKeyword.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\nvector.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\nvector_serial.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\output.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\p2clib.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\parse.c" />
+    <ClCompile Include="..\phreeqcpp\Parser.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\phqalloc.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\pitzer.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\pitzer_structures.c" />
+    <ClCompile Include="..\KDtree\Point.cpp" />
+    <ClCompile Include="..\phreeqcpp\PPassemblage.cxx" />
+    <ClCompile Include="..\phreeqcpp\PPassemblageComp.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\prep.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\print.c" />
+    <ClCompile Include="..\phreeqcpp\Reaction.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\read.c" />
+    <ClCompile Include="..\phreeqcpp\ReadClass.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\readtr.c" />
+    <ClCompile Include="..\phreeqcpp\runner.cpp" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\sit.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\smalldense.c" />
+    <ClCompile Include="..\phreeqcpp\Solution.cxx" />
+    <ClCompile Include="..\phreeqcpp\SolutionIsotope.cxx" />
+    <ClCompile Include="..\phreeqcpp\SolutionIsotopeList.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\spread.c" />
+    <ClCompile Include="..\phreeqcpp\SSassemblage.cxx" />
+    <ClCompile Include="..\phreeqcpp\SSassemblageSS.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\step.c" />
+    <ClCompile Include="..\phreeqcpp\StorageBin.cxx" />
+    <ClCompile Include="..\phreeqcpp\StorageBinList.cpp" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\structures.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\sundialsmath.c" />
+    <ClCompile Include="..\phreeqcpp\Surface.cxx" />
+    <ClCompile Include="..\phreeqcpp\SurfaceCharge.cxx" />
+    <ClCompile Include="..\phreeqcpp\SurfaceComp.cxx" />
+    <ClCompile Include="..\phreeqcpp\System.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\tally.c" />
+    <ClCompile Include="..\phreeqcpp\Temperature.cxx" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\tidy.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\transport.c" />
+    <ClCompile Include="..\phreeqcpp\phreeqc\utilities.c" />
+    <ClCompile Include="..\phreeqcpp\Utils.cxx" />
+    <ClCompile Include="..\vsrt.cxx" />
+    <ClCompile Include="..\vsrt_files.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\vsrtsubs.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\KDtree\Cell_Face.h" />
+    <ClInclude Include="..\phreeqcpp\char_star.h" />
+    <ClInclude Include="..\phreeqcpp\cxxKinetics.h" />
+    <ClInclude Include="..\phreeqcpp\cxxMix.h" />
+    <ClInclude Include="..\phreeqcpp\Dictionary.h" />
+    <ClInclude Include="..\phreeqcpp\dumper.h" />
+    <ClInclude Include="..\phreeqcpp\Exchange.h" />
+    <ClInclude Include="..\phreeqcpp\ExchComp.h" />
+    <ClInclude Include="..\phreeqcpp\GasPhase.h" />
+    <ClInclude Include="..\gzstream.h" />
+    <ClInclude Include="..\phreeqcpp\ISolution.h" />
+    <ClInclude Include="..\phreeqcpp\ISolutionComp.h" />
+    <ClInclude Include="..\KDtree\KDtree.h" />
+    <ClInclude Include="..\KDtree\KDtree2.hpp" />
+    <ClInclude Include="..\phreeqcpp\KineticsComp.h" />
+    <ClInclude Include="..\phreeqcpp\NameDouble.h" />
+    <ClInclude Include="..\phreeqcpp\NumKeyword.h" />
+    <ClInclude Include="..\phreeqcpp\Parser.h" />
+    <ClInclude Include="..\phreeqcpp\Phreeqc.h" />
+    <ClInclude Include="..\phreeqcpp\Phreeqc_class.h" />
+    <ClInclude Include="..\KDtree\Point.h" />
+    <ClInclude Include="..\Pointers_to_fortran.h" />
+    <ClInclude Include="..\phreeqcpp\PPassemblage.h" />
+    <ClInclude Include="..\phreeqcpp\PPassemblageComp.h" />
+    <ClInclude Include="..\phreeqcpp\Reaction.h" />
+    <ClInclude Include="..\phreeqcpp\runner.h" />
+    <ClInclude Include="..\phreeqcpp\SaxPhreeqcHandlers.h" />
+    <ClInclude Include="..\phreeqcpp\Solution.h" />
+    <ClInclude Include="..\phreeqcpp\SolutionIsotope.h" />
+    <ClInclude Include="..\phreeqcpp\SolutionIsotopeList.h" />
+    <ClInclude Include="..\phreeqcpp\SSassemblage.h" />
+    <ClInclude Include="..\phreeqcpp\SSassemblageSS.h" />
+    <ClInclude Include="..\phreeqcpp\StorageBin.h" />
+    <ClInclude Include="..\phreeqcpp\StorageBinList.h" />
+    <ClInclude Include="..\phreeqcpp\Surface.h" />
+    <ClInclude Include="..\phreeqcpp\SurfaceCharge.h" />
+    <ClInclude Include="..\phreeqcpp\SurfaceComp.h" />
+    <ClInclude Include="..\phreeqcpp\System.h" />
+    <ClInclude Include="..\phreeqcpp\Temperature.h" />
+    <ClInclude Include="..\phreeqcpp\Utils.h" />
+    <ClInclude Include="..\vsrt.h" />
+    <ClInclude Include="..\vsrt_files.h" />
+    <ClInclude Include="..\vsrtproto.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -253,10 +253,11 @@
       IF(TRANS) READ(05,*)CIS,CIT
       IF(SOLUTE)THEN
       READ (05,*)NPRCONC,NPSCRN,IPRNTCHE,INPRXZ,IPOUT
-      DO 5 I=1,NNODES
-      NPRCHEM(I)= IPRNTCHE
-      NPRCHXZ(I)= INPRXZ
-  5   CONTINUE
+  ! nnodes not defined, nprchem, nprchxz not allocated
+  !    DO 5 I=1,NNODES
+  !    NPRCHEM(I)= IPRNTCHE
+  !    NPRCHXZ(I)= INPRXZ
+  !5   CONTINUE
       END IF     
       READ (05,*) F11P,F7P,F8P,F9P,F6P
       READ (05,*) THPT,SPNT,PPNT,HPNT,VPNT
@@ -431,7 +432,13 @@
       BLSOL(M,J)= 0.0D0
       bcmtt(M)=0.0D0
  716  CONTINUE
- 717  CONTINUE
+717   CONTINUE
+
+      DO 5 I=1,NNODES
+      NPRCHEM(I)= IPRNTCHE
+      NPRCHXZ(I)= INPRXZ
+5     CONTINUE   
+      tper = 0.0d0
 !
 !   ESTABLISH HORIZONTAL OR RADIAL SPACING
 !
@@ -792,8 +799,10 @@
       include 'd_solindex.inc'
       include 'd_phreecc.inc'
       include 'd_react.inc'
+      use SCON
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
+      common/conversion/CNVTM,CNVTMI 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/PND/POND
       COMMON/WGT/WUS,WDS
@@ -1037,8 +1046,11 @@
       include 'd_itemblo.inc'
       include 'd_itemtxb.inc'
       include 'd_react.inc'
+      use PRICON
+      use SCON
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
+      common/conversion/CNVTM,CNVTMI 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/WGT/WUS,WDS
       COMMON/JCON/JSTOP,JFLAG,jflag1

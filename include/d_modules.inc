@@ -136,7 +136,7 @@
 
       module SCON
       double precision, allocatable::DHMX(:)
-      double precision DELT, HMAX, TMAX, EPS
+      double precision DELT, HMAX, TMAX, EPS, TPER
       integer NUMT, ITMAX, MINIT, ITEST
       end module SCON
 

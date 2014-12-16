@@ -160,7 +160,7 @@
 
       module SOLINDEX
       double precision, allocatable:: CMIXFARC(:,:),BCSOL(:)
-      integer, allocatable:: INDSOL1(:,:),INDSOL2(:,:)
+      integer, allocatable:: INDSOL1(:,:),INDSOL2(:,:), ic1_reordered(:,:)
       end module SOLINDEX
 
       module PHREECC

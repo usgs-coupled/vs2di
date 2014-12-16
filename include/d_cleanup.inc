@@ -98,6 +98,7 @@
       if (allocated(BCSOL))deallocate(BCSOL)
       if (allocated(INDSOL1))deallocate(INDSOL1)
       if (allocated(INDSOL2))deallocate(INDSOL2)
+      if (allocated(ic1_reordered))deallocate(ic1_reordered)
       if (allocated(NPRCHEM))deallocate(NPRCHEM)
       if (allocated (NPRCHXZ))deallocate(NPRCHXZ) 
       if (allocated(BLSOL))deallocate(BLSOL)

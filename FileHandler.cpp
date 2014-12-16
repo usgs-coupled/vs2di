@@ -830,7 +830,9 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 						this->GetXYZOstreams().push_back(this->Get_io()->Get_punch_ostream());
 						// write first headings
 						char line_buff[132];
-						sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", "y",
+						//sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", "y",
+						//	"z", "time", "in");
+						sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", 
 							"z", "time", "in");
 						this->Get_io()->punch_msg(line_buff);
 
@@ -894,8 +896,11 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 							std::ostringstream ln;
 
 							char line_buff[132];
-							sprintf(line_buff, "%15g\t%15g\t%15g\t%15g\t%2d\t",
-								x_node[irow], y_node[irow], z_node[irow], current_time,
+							//sprintf(line_buff, "%15g\t%15g\t%15g\t%15g\t%2d\t",
+							//	x_node[irow], y_node[irow], z_node[irow], current_time,
+							//	active);
+							sprintf(line_buff, "%15g\t%15g\t%15g\t%2d\t",
+								x_node[irow], z_node[irow], current_time,
 								active);
 							ln << line_buff;
 

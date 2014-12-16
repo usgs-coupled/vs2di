@@ -28,6 +28,7 @@
       allocate(XNODE(NNODES),ZNODE(NNODES))
       allocate(phreeC(Nodesol))
       allocate(CMIXFARC(7,NNODES),BCSOL(Nsol),INDSOL1(7,NNODES),INDSOL2(7,NNODES))
+	  allocate(ic1_reordered(nnodes,7))
       allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES))
       allocate(BLSOL(Nsol,36),bl62I(Nsol),bl62IT(Nsol),bl62O(Nsol),bl62OT(Nsol), &
              bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol))

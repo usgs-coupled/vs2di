@@ -11,11 +11,13 @@
       call SETUP(filen)
  10   CALL STEP(JSTOP)
       IF (JSTOP.EQ.0) GOTO 10  
-       call system_clock(clock1)
+      ! call system_clock(clock1)
 
-      ticks = clock1-clock0
-      ticks = mod(ticks+clockmax, clockmax)   ! reset negative numbers
-      secs = float(ticks)/float(clockrate)
+      !ticks = clock1-clock0
+      !ticks = mod(ticks+clockmax, clockmax)   ! reset negative numbers
+      !secs = float(ticks)/float(clockrate)
+      call system_clock(clock1, clockrate, clockmax)
+      secs = real( clock1 - clock0) / real(clockrate)
       print*,'Code took ', secs, ' seconds' 
       stop
       end
@@ -255,10 +257,10 @@
       IF(TRANS) READ(05,*)CIS,CIT
       IF(SOLUTE)THEN
       READ (05,*)NPRCONC,NPSCRN,IPRNTCHE,INPRXZ,IPOUT
-      DO 5 I=1,NNODES
-      NPRCHEM(I)= IPRNTCHE
-      NPRCHXZ(I)= INPRXZ
-  5   CONTINUE
+  !    DO 5 I=1,NNODES
+  !    NPRCHEM(I)= IPRNTCHE
+  !    NPRCHXZ(I)= INPRXZ
+  !5   CONTINUE
       END IF     
       READ (05,*) F11P,F7P,F8P,F9P,F6P
       READ (05,*) THPT,SPNT,PPNT,HPNT,VPNT
@@ -438,6 +440,12 @@
       bcmtt(M)=0.0D0
  716  CONTINUE
  717  CONTINUE
+      
+      DO 5 I=1,NNODES
+      NPRCHEM(I)= IPRNTCHE
+      NPRCHXZ(I)= INPRXZ
+5     CONTINUE   
+      
 !
 !   ESTABLISH HORIZONTAL OR RADIAL SPACING
 !
@@ -798,11 +806,12 @@
       include 'd_solindex.inc'
       include 'd_phreecc.inc'
       include 'd_react.inc'
+      use SCON
       USE vs2dt_rm
-      USE PhreeqcRM
-      !USE PRICON      
+      USE PhreeqcRM   
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
+      common/conversion/CNVTM,CNVTMI 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/PND/POND
       COMMON/WGT/WUS,WDS
@@ -832,6 +841,7 @@
       COMMON/TTT1/NISS,NISS1,NISS2
       COMMON/FLO/FLOW
       COMMON/SCON1/ITESTS
+      character(100) msg
       
 !
 ! -------------------------------------------------------------
@@ -983,22 +993,26 @@
       !#tper,delt,npscrn,cnvtmi,nprchem,nprchxz,ipout,istopmsg,  &
       !#theta,iprrestartflag)  
       !#END IF
-          IF (SOLUTE) THEN
-              call SetConcentrationsRM(cc)
-              IF (HEAT) THEN
-                  status = RM_SetTemperature(rm_id, tt)
-              endif
-              status = RM_SetTime(rm_id, tper)
-              status = RM_SetTimeStep(rm_id, delt)
-              status = RM_SetTimeConversion(rm_id, cnvtmi)
-              status = RM_SetPrintChemistryMask(rm_id, nprchem)
-              status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
-              status = RM_SetSaturation(rm_id, theta)
-              status = RM_RunCells(rm_id)
-              call GetConcentrationsRM(cc)
-              !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
-              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
-          END IF      
+      IF (SOLUTE) THEN
+          call SetConcentrationsRM(cc)
+          IF (HEAT) THEN
+              status = RM_SetTemperature(rm_id, tt)
+          endif
+          status = RM_SetTime(rm_id, stim)
+          status = RM_SetTimeStep(rm_id, delt)
+          status = RM_SetTimeConversion(rm_id, cnvtmi)
+          status = RM_SetPrintChemistryMask(rm_id, nprchem)
+          status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+          status = RM_SetSaturation(rm_id, theta)
+          !if (npscrn .ne. 0) then
+              write(msg,"(A,F12.2)") "Chemistry at time: ", stim
+              status = RM_ScreenMessage(rm_id, msg)
+          !endif
+          status = RM_RunCells(rm_id)
+          call GetConcentrationsRM(cc)
+          !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
+          call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
+      END IF      
       if (solute) then
           if (heat) then
           endif
@@ -1069,8 +1083,10 @@
       USE vs2dt_rm
       USE PhreeqcRM
       USE PRICON
+      use SCON
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
+      common/conversion/CNVTM,CNVTMI 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/WGT/WUS,WDS
       COMMON/JCON/JSTOP,JFLAG,jflag1
@@ -1170,16 +1186,14 @@
 !   READ AND WRITE MATERIAL PROPERTIES FOR EACH TEXTURAL CLASS
 !
 
-      DO 20 J22=1,NTEX
+      DO 21 J22=1,NTEX
       DO 10 J23=1,NPROP
    10 HK(J22,J23)=0.0D0
       DO 20 J23=1,NHTPROP
-20    HT(J22,J23)=0.0D0
-      
-      DO 2010, J22=1,NTEX
+   20 HT(J22,J23)=0.0D0
       DO 21 J23=1,NSTPROP
-21    HS(J22,J23)=0.0D0
-2010  CONTINUE      
+   21 HS(J22,J23)=0.0D0
+      
       DO 30 J22=1,NTEX
       READ (5,*) J
       READ (5,*) ANIZ(J),(HK(J,I),I=1,NPROP)
@@ -1696,7 +1710,7 @@
               IF (HEAT) THEN
                   status = RM_SetTemperature(rm_id, tt)
               endif
-              status = RM_SetTime(rm_id, tper)
+              status = RM_SetTime(rm_id, 0.0d0)
               status = RM_SetTimeStep(rm_id, delt)
               status = RM_SetTimeConversion(rm_id, cnvtmi)
               status = RM_SetPrintChemistryMask(rm_id, nprchem)
@@ -1705,7 +1719,8 @@
               status = RM_RunCells(rm_id)
               call GetConcentrationsRM(cc)
               !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
-              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
+              call FH_SetPointers(xnode(1), xnode(1), znode(1), ic1_reordered(1,1), theta(1), forward1(1))
+              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz(1), iprrestartflag)
           END IF
       END IF
 !

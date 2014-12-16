@@ -1710,6 +1710,7 @@
               IF (HEAT) THEN
                   status = RM_SetTemperature(rm_id, tt)
               endif
+              
               status = RM_SetTime(rm_id, 0.0d0)
               status = RM_SetTimeStep(rm_id, delt)
               status = RM_SetTimeConversion(rm_id, cnvtmi)

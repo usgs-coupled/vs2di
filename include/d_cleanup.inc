@@ -8,6 +8,7 @@
       if (allocated(THETA)) deallocate(THETA)
       if (allocated(THLST)) deallocate(THLST)
       IF (allocated(SATUR)) deallocate(SATUR)
+      IF (allocated(POROSITY)) deallocate(POROSITY)
       if (allocated(P)) deallocate(P)
       if (allocated(PXXX)) deallocate(PXXX)
       if (allocated(THEAD)) deallocate(THEAD)

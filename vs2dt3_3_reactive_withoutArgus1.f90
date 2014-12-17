@@ -271,7 +271,7 @@
       NNODES=NLY*NXR
       Nsol=0
       IF (SOLUTE)then
-          CALL CreateRM
+          CALL CreateRM(SOLUTE, NNODES,  PREFIX, DATABASEFILE, CHEMFILE, nSol)
           !#CALL PHREEQC_MAIN(SOLUTE,CHEMFILE,DATABASEFILE,PREFIX)
           !#SCOMPNAME= "          "
           !#CALL COUNT_ALL_COMPONENTS(Nsol, SCOMPNAME)
@@ -1003,7 +1003,7 @@
           status = RM_SetTimeConversion(rm_id, cnvtmi)
           status = RM_SetPrintChemistryMask(rm_id, nprchem)
           status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
-          status = RM_SetSaturation(rm_id, theta)
+          status = RM_SetSaturation(rm_id, satur)
           !if (npscrn .ne. 0) then
               write(msg,"(A,F12.2)") "Chemistry at time: ", stim
               status = RM_ScreenMessage(rm_id, msg)
@@ -1657,27 +1657,28 @@
           do 205 I=1, Nodesol
               phreeC(I)= 0.0d0
 205       continue
-          !#CALL STORE_C_POINTERS(INDSOL1,XNODE,ZNODE)
-          !#CALL FORWARD_AND_BACK(INDSOL1,axes,NXR, NLY) 
-          CALL CreateMappingRM(INDSOL1,axes,NXR,NLY) 
-          CALL InitializeRM
-          !#CALL DISTRIBUTE_INITIAL_CONDITIONS(INDSOL1,INDSOL2,CMIXFARC)
-          !#CALL PACK_FOR_VSRT(CC,NNODES)
-          !#CALL COLLECT_COMP(Solcomp) 
-          DO 186 I=1,Nsol 
+          
+          CALL CreateMappingRM(INDSOL1, axes, NXR, NLY) 
+          ! Set porosity
+          do i = 1, nnodes            
+              porosity(i) = HK(jtex(i),3)
+          enddo
+          status = RM_SetPorosity(rm_id, porosity) 
+          CALL InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
+          CALL GetConcentrationsRM(cc)
+          
+          ! Set SolComp
+          !status = RM_InitialPhreeqc2Concentrations(rm_id, Solcomp(1), 1, INSOL1(1))  
+          do i = 1, Nsol
               WRITE(06,4012)COMPNAME(I), Solcomp(I)
-186       CONTINUE  
-          !     DO 200 I=1, NNODES
-          !      DO 189 M=1, Nsol
-          !      write(6,*)"CC(",M,",",I,")=",CC(M,J)
-          !  189 continue
-          !  200 continue
-          DO 203 J=1,NLY
-              DO 203 N=1,NXR
-                  DO 201 M=1,Nsol
-                      IN=NLY*(N-1)+J
-                      CCOLD(M,IN)=CC(M,IN)
-201               CONTINUE
+          enddo  
+          
+          ! Set ccold
+          DO 203 N=1,NXR
+              DO 201 M=1,Nsol
+                  IN=NLY*(N-1)+J
+                  CCOLD(M,IN)=CC(M,IN)
+201           CONTINUE
 203       CONTINUE
           do 162 J=1,NLY
               do 156 N=1,NXR

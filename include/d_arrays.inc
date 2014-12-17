@@ -1,7 +1,7 @@
 !     allocate arrays
       allocate(DELZ(NLY),DZZ(NLY),DXR(NXR),RX(NXR))
       allocate(HX(NNODES),NTYP(NNODES))
-      allocate(THETA(NNODES),THLST(NNODES),SATUR(NNODES))
+      allocate(THETA(NNODES),THLST(NNODES),SATUR(NNODES),POROSITY(NNODES))
       allocate(P(NNODES),PXXX(NNODES),THEAD(NNODES))
       allocate(Q(NNODES),QQ(NNODES))
       allocate(HCND(NNODES),HKLL(NNODES),HKTT(NNODES))

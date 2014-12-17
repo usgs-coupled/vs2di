@@ -57,7 +57,7 @@
       end module KCON
 
       module MPROP
-      double precision, allocatable::THETA(:),THLST(:),SATUR(:)
+      double precision, allocatable::THETA(:),THLST(:),SATUR(:),POROSITY(:)
       end module MPROP
 
       module PRESS

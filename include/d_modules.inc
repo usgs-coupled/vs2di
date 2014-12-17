@@ -75,8 +75,8 @@
       end module HCON
 
       module EQUAT
-      double precision, allocatable::A(:),B(:),C(:),D(:),E(:),  &
-    		RHS(:),XI(:)
+      double precision, allocatable::A(:),B(:),C(:),D(:),E(:), &
+        RHS(:),XI(:)
       end module EQUAT
       
       module EQUATS
@@ -94,10 +94,9 @@
       end module DUMM
 
       module PTET
-      double precision, allocatable::DPTH(:),RT(:),PEVAL(:),PTVAL(:)
-      double precision, dimension(:,:), allocatable::RDC
-      double precision ETCYC,  &
-          PET,PEV,HROOT,HA,SRES,RTDPTH,RTBOT,RTTOP
+      double precision, allocatable, dimension(:) :: DPTH, RT, PEVAL, PTVAL
+      double precision, dimension(:,:), allocatable :: RDC
+      double precision ETCYC, PET,PEV,HROOT,HA,SRES,RTDPTH,RTBOT,RTTOP
 	  integer NPV
       end module PTET
 

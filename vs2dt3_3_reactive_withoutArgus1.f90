@@ -1003,6 +1003,15 @@
           status = RM_SetTimeConversion(rm_id, cnvtmi)
           status = RM_SetPrintChemistryMask(rm_id, nprchem)
           status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+          DO J=2,NLYY
+              DO N=2,NXRR
+                  IN=NLY*(N-1)+J
+                  SATUR(IN) = 0.0d0
+                  IF(POROSITY(IN).GT.0.0D0) THEN
+                      SATUR(IN)=THETA(IN)/POROSITY(IN)
+                  END IF
+              enddo
+          enddo
           status = RM_SetSaturation(rm_id, satur)
           !if (npscrn .ne. 0) then
               write(msg,"(A,F12.2)") "Chemistry at time: ", stim

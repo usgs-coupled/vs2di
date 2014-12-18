@@ -431,10 +431,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\phreeqcpp\Parser.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\phreeqcpp\Parser.cxx"
 				>
 			</File>
@@ -524,10 +520,6 @@
 			</File>
 			<File
 				RelativePath="..\phreeqcpp\phreeqc\step.c"
-				>
-			</File>
-			<File
-				RelativePath="..\phreeqcpp\StorageBin.cpp"
 				>
 			</File>
 			<File

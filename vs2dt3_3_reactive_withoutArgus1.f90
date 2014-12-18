@@ -2916,7 +2916,8 @@
 !
 !   ---- SKIP COMPUTATIONS OF NODE IS OUTSIDE OF SOLUTION DOMAIN
 !
-      IF(HX(N).EQ.0.0D0 .OR. NTYP(N).EQ.1.0) GO TO 60
+!1      IF(HX(N).EQ.0.0D0 .OR. NTYP(N).EQ.1.0) GO TO 60
+      IF(HX(N).EQ.0.0D0) GO TO 60
       IF((NTYP(N).EQ.1.AND.(.NOT.TRANS2)).OR.(TRANS2.AND.(NCTYP(N).EQ.1)))GO TO 60   
       NL=N-NLY
 !      NR=N+NLY 
@@ -7401,7 +7402,18 @@
       DO 31 J=2,NLYY
       N=N1+J
       CC(M,N)=TempC(N)
-  31  CONTINUE   
+!1
+!1 debug printout
+!1
+!1      if (m.eq.4) then
+!1       write (6,6000) ktim,nis1,n,ntyp(n),nctyp(n),cc(m,n),bs(n),&
+!1       ds(n),es(n),rhss(n),qs(n),qq(n)
+!1      end if
+!1
+!1  end debug
+!1
+  31  CONTINUE
+ 6000 format(5i4, 7e12.4)  
 !C      WRITE(6,*)'TempC After ########### ',M
 !      CALL VSOUTS(1,TempC(N))
       IF(ITESTS.EQ.0) THEN

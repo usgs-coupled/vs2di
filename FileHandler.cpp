@@ -873,7 +873,7 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 					{
 						this->Get_io()->Set_punch_ostream(this->GetXYZOstreams()[iso]);
 						local_selected_out.resize((size_t) (nxyz*ncol));
-						RM_GetSelectedOutput(id, local_selected_out.data());
+						RM_GetSelectedOutput(id, &local_selected_out.front());
 
 						// write xyz file
 #ifdef OLD_STYLE_XYZ

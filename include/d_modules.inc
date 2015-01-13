@@ -168,7 +168,9 @@
 
       module SOLMASS
       double precision, allocatable::BLSOL(:,:),bl62I(:), &
-           bl62IT(:),bl62O(:),bl62OT(:), bcmtt(:),bcmt(:),bcmtr(:)
+           bl62IT(:),bl62O(:),bl62OT(:), bcmtt(:),bcmt(:),bcmtr(:),&
+           bltemp36(:),bltemp39(:),bltemp42(:),bltemp45(:), &
+           bltemp60(:)
       end module SOLMASS
 
       Module COMPNAM

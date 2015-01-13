@@ -2746,7 +2746,7 @@
 !
 !   ---- SKIP COMPUTATIONS OF NODE IS OUTSIDE OF SOLUTION DOMAIN
 !
-      IF(HX(N).EQ.0.0D0 .OR. NTYP(N).EQ.1.0) GO TO 60
+      IF(HX(N).EQ.0.0D0) GO TO 60
       IF((NTYP(N).EQ.1.AND.(.NOT.TRANS1)).OR.(TRANS1.AND.(NHTYP(N).EQ.1)))GO TO 60
       NL=N-NLY
       NA=N-1
@@ -3014,7 +3014,8 @@
 !
 !   ---- SKIP COMPUTATIONS OF NODE IS OUTSIDE OF SOLUTION DOMAIN
 !
-      IF(HX(N).EQ.0.0D0 .OR. NTYP(N).EQ.1.0) GO TO 60
+!1      IF(HX(N).EQ.0.0D0 .OR. NTYP(N).EQ.1.0) GO TO 60
+      IF(HX(N).EQ.0.0D0) GO TO 60
       IF((NTYP(N).EQ.1.AND.(.NOT.TRANS2)).OR.(TRANS2.AND.(NCTYP(N).EQ.1)))GO TO 60   
       NL=N-NLY
 !      NR=N+NLY 
@@ -3447,8 +3448,8 @@
       CHARACTER*10 SCOMPNAME(50)
       COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
       bl95I,bl95IT,bl95O,bl95OT
-      common/massb1/bltemp36,bltemp39,bltemp42,bltemp45,bcmf,bcmh, &
-      bltemp60,bltemp69,bltemp72,bltemp75,bltemp78,bltemp99
+      common/massb1/bcmf,bcmh, &
+      bltemp69,bltemp72,bltemp75,bltemp78,bltemp91
       common/massb2/label9
      
 !-------------------------------------------------------------------
@@ -3466,9 +3467,10 @@
       BL(I)=0.0D0
    10 CONTINUE
       if(solute)then
-        do 100 I=1,36
-        dO 100 N=1, Nsol
+        do 100 N = 1,Nsol
+        dO 108 I = 1,36
         BLSOL(N,I)=0.0D0
+   108  continue
         bl62I(N)=0.0d0
         bl62IT(N)=0.0d0
         bl62O(N)=0.0d0
@@ -3476,6 +3478,11 @@
         bcmtt(N)=0.0d0
         bcmt(N)=0.0d0
         bcmtr(N)=0.0d0
+        bltemp36(N) = 0.0d0
+        bltemp39(N) = 0.0d0
+        bltemp42(N) = 0.0d0
+        bltemp45(N) = 0.0d0
+        bltemp60(N) = 0.0d0   
  100  CONTINUE     
       end if 
       if (f7p) then
@@ -3485,16 +3492,12 @@
         currentBF(i,4) = 0.0d0
  11     continue
       end if
-      bltemp36 = 0.0d0
-      bltemp39 = 0.0d0
-      bltemp42 = 0.0d0
-      bltemp45 = 0.0d0
-      bltemp60 = 0.0d0
+
       bltemp69 = 0.0d0
       bltemp72 = 0.0d0
       bltemp75 = 0.0d0
       bltemp78 = 0.0d0
-      bltemp99 = 0.0d0
+      bltemp91 = 0.0d0
       bcmft = 0.0d0
       bcmht= 0.0d0    
       bl95I= 0.0d0
@@ -3743,6 +3746,19 @@
       bcmf = 0.0D0
       bcmh = 0.0D0
       bltemp2 = 0.0D0
+      Do 111 M=1,nsol
+      BLSOL(M,3) = 0.0D0
+      BLSOL(M,6) = 0.0D0
+      BLSOL(M,9) = 0.0D0
+      BLSOL(M,12) = 0.0D0
+      BLSOL(M,15) = 0.0D0
+      BLSOL(M,18) = 0.0D0
+      BLSOL(M,27) = 0.0D0
+      BLSOL(M,29) = 0.0D0
+      BLSOL(M,35) = 0.0D0
+      BCMT(M) = 0.0D0
+   
+ 111  continue
       if (f7p) then
        do 12 i=1,numBF
         currentBF(i,1) = 0.0d0
@@ -3834,19 +3850,19 @@
         bltemp2=VOL*(&
       CC(M,IN)*THETA(IN)*(1.0d0+SS*(P(IN)-PXXX(IN)))-ccold(m,in)&
       *thlst(in))
-      BLSOL(N,29)=BLSOL(N,29)+ bltemp2
-      BLSOL(M,35)= BLSOL(M,35)+ (CCAR(M,IN)-CCBR(M,IN)) 
+      BLSOL(M,29)=BLSOL(M,29)+ bltemp2
+      BLSOL(M,35)= BLSOL(M,35)+ vol*theta(in)*(CC(M,IN)-CCBR(M,IN)) 
       if (jflag2.eq.1) then
-       if(ntyp(in).eq.1.or.nctyp(in).eq.1) bcmt(N) =bcmt(N) + bltemp2
+       if(ntyp(in).eq.1.or.nctyp(in).eq.1) bcmt(M) =bcmt(M) + bltemp2
 !      if(nctyp(in).eq.1)bcmt(N)=bcmt(N)+(theta(in)*(cc(m,in)- &
 !       ccold(m,in)))*vol
       end if
       if(bltemp2.ge.0.0D0) then
       if (.not.((jflag2.eq.1).and.(ntyp(in).eq.1.or.nctyp(in)&
-       .eq.1)))  bl62I(N) = bl62I(N) + bltemp2
+       .eq.1)))  bl62I(M) = bl62I(M) + bltemp2
       else
        if (.not.((jflag2.eq.1).and.(ntyp(in).eq.1.or.nctyp(in)&
-      .eq.1)))bl62O(N) = bl62O(N) + bltemp2
+      .eq.1)))bl62O(M) = bl62O(M) + bltemp2
       end if 
   20  continue
       end if    
@@ -3859,7 +3875,7 @@
       END IF
       IF(NCTYP(IN).EQ.2) THEN
         do 22 M1=1,Nsol
-      IF(CSS(M,IN).LT.0.0D0) THEN
+      IF(CSS(M1,IN).LT.0.0D0) THEN
 !      BL(51)=BL(51)+CSS(M1,IN)
       BLSOL(M1,18)=BLSOL(M1,18)+ CSS(M1,IN)
       ELSE
@@ -3909,24 +3925,24 @@
       END IF
       END IF
       IF(NCTYP(IN).EQ.1) THEN
-        DO 23 M2=1,Nsol
+        DO 23 M=1,Nsol
         IF (CIT) THEN
       T6=AS(IN)*(CC(M,IN)-CC(M,NM1))+aoc(in)*(CCOLD(M,IN)-&
       CCOLD(M,NM1))+BS(IN)*(CC(M,IN)-CC(M,JM1))+boc(in)*(CCOLD(M,IN)-&
       CCOLD(M,JM1))+CS(IN)*(CC(M,IN)-CC(M,NP1))+coc(in)*(CCOLD(M,IN)&
       -CCOLD(M,NP1))+DS(IN)*(CC(M,IN)-CC(M,JP1))+doc(in)*(CCOLD(M,IN)&
       -CCOLD(M,JP1))
+      if(M.EQ.Nsol) then
        aoc(in) = as(in)
        boc(in) = bs(in)
        coc(in) = cs(in)
        doc(in) = ds(in)
-       
        IF(JFLAG2.EQ.1) THEN
         AOC(IN)=0.5D0*AOC(IN)
         BOC(IN)=0.5D0*BOC(IN)
         COC(IN)=0.5D0*COC(IN)
-        DOC(IN)=0.5D0*DOC(IN)
-          
+        DOC(IN)=0.5D0*DOC(IN)          
+       END IF
        END IF
       ELSE
       T6=AS(IN)*(CC(M,IN)-CC(M,NM1))+BS(IN)*(CC(M,IN)-CC(M,JM1))+&
@@ -3944,10 +3960,10 @@
  15   continue 
       IF(T6.LT.0.0D0) THEN
 !      BL(51)=BL(51)+T6
-      BLSOL(N,18)=BLSOL(N,18)+ T6
+      BLSOL(M,18)=BLSOL(M,18)+ T6
       ELSE
 !      BL(48)=BL(48)+T6
-      BLSOL(N,15)=BLSOL(N,15)+T6 
+      BLSOL(M,15)=BLSOL(M,15)+T6 
       END IF
   23  continue    
       END IF
@@ -3994,7 +4010,12 @@
 !      QX=VSFLX1(IN)
 !      END IF
       if (.not. trans) qt(in) = vsflx1(in)
-      qx = qt(in)
+!      qx = qt(in)
+      if(SOLUTE) then
+         qx = qs(in)
+        else
+         qx = qt(in)
+      end if
       IF(QX.LT.0.0D0) THEN  
       BL(3)=BL(3)-QX
       IF(HEAT) BL(69)=BL(69)-QX*TS(IN)*HT(JJ,6)
@@ -4006,11 +4027,11 @@
       end if
       ELSE
       BL(6)=BL(6)-QX
-      IF(HEAT) BL(72)=BL(72)-QX*TS(IN)*HT(JJ,6)
+      IF(HEAT) BL(72)=BL(72)-QX*TT(IN)*HT(JJ,6)
       IF(SOLUTE)then
         do 27 M5=1,Nsol
 !      BL(39)=BL(39)-QX*CSS(M5,IN)
-      BLSOL(M5,6)=BLSOL(M5,6)-QX*CSS(M5,IN)
+      BLSOL(M5,6)=BLSOL(M5,6)-QX*CC(M5,IN)
   27  continue  
       end if
       END IF
@@ -4066,26 +4087,26 @@
        IF (SOLUTE) THEN
          do 30 N=1,Nsol
        if(JFLAG2.eq.1) then
-        bltemp36 = BLSOL(N,3)
-        bltemp39 = BLSOL(N,6)
-        bltemp42 = BLSOL(N,9)
-        bltemp45 = BLSOL(N,12)
-        bltemp60 = BLSOL(N,27)
+        bltemp36(N) = BLSOL(N,3)
+        bltemp39(N) = BLSOL(N,6)
+        bltemp42(N) = BLSOL(N,9)
+        bltemp45(N) = BLSOL(N,12)
+        bltemp60(N) = BLSOL(N,27)
       else
-        bltemp1 = 0.5d0*(BLSOL(N,3)+bltemp36)
-        bltemp36 = BLSOL(N,3)
+        bltemp1 = 0.5d0*(BLSOL(N,3)+bltemp36(N))
+        bltemp36(N) = BLSOL(N,3)
         BLSOL(N,3) = bltemp1
-        bltemp1 = 0.5d0*(BLSOL(N,6)+bltemp39)
-        bltemp39 = BLSOL(N,6)
+        bltemp1 = 0.5d0*(BLSOL(N,6)+bltemp39(N))
+        bltemp39(N) = BLSOL(N,6)
         BLSOL(N,6) = bltemp1
-        bltemp1 = 0.5d0*(BLSOL(N,9)+bltemp42)
-        bltemp42 = BLSOL(N,9)
+        bltemp1 = 0.5d0*(BLSOL(N,9)+bltemp42(N))
+        bltemp42(N) = BLSOL(N,9)
         BLSOL(N,9) = bltemp1
-        bltemp1 = 0.5d0*(BLSOL(N,12)+bltemp45)
-        bltemp45 = BLSOL(N,12)
-        BLSOL(N,3) = bltemp1
-        bltemp1 = 0.5d0*(BLSOL(N,27)+bltemp60)
-        bltemp60 = BLSOL(N,27)
+        bltemp1 = 0.5d0*(BLSOL(N,12)+bltemp45(N))
+        bltemp45(N) = BLSOL(N,12)
+        BLSOL(N,12) = bltemp1
+        bltemp1 = 0.5d0*(BLSOL(N,27)+bltemp60(N))
+        bltemp60(N) = BLSOL(N,27)
         BLSOL(N,27) = bltemp1
        end if
   30   continue
@@ -4227,7 +4248,12 @@
          in1 = nodenum(ib1,ib2)
          if(ntyp(in1).eq.1) then
           iflag7 = 1
-          qx = qt(in1)
+!          qx = qt(in1)
+          if(SOLUTE) then
+	       qx = qs(in1)
+	      else
+	       qx = qt(in1)
+          end if
           currentBF(ib1,1) = currentBF(ib1,1) - qx
           if (HEAT) then
            if (qt(in1).lt.0.0) then
@@ -7887,8 +7913,8 @@
 !c     include 'c_scon.inc'      
       COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
       bl95I,bl95IT,bl95o,bl95OT
-      common/massb1/bltemp36,bltemp39,bltemp42,bltemp45,bcmf,bcmh, &
-      bltemp60,bltemp69,bltemp72,bltemp75,bltemp78,bltemp99
+      common/massb1/bcmf,bcmh, &
+      bltemp69,bltemp72,bltemp75,bltemp78,bltemp91
  !     common/massb2/label9
       COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
       DIMENSION ERR(2)
@@ -7932,8 +7958,8 @@
 !c      include 'c_scon.inc'
       COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
       bl95I,bl95IT,bl95o,bl95OT
-      common/massb1/bltemp36,bltemp39,bltemp42,bltemp45,bcmf,bcmh, &
-      bltemp60,bltemp69,bltemp72,bltemp75,bltemp78,bltemp99
+      common/massb1/bcmf,bcmh, &
+      bltemp69,bltemp72,bltemp75,bltemp78,bltemp91
       COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
       DIMENSION ERR(2)
       IF(KTIM.EQ.0) THEN

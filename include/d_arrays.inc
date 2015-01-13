@@ -31,7 +31,8 @@
 	  allocate(ic1_reordered(nnodes,7))
       allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES))
       allocate(BLSOL(Nsol,36),bl62I(Nsol),bl62IT(Nsol),bl62O(Nsol),bl62OT(Nsol), &
-             bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol))
+             bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol),bltemp36(Nsol),bltemp39(Nsol), &
+             bltemp42(Nsol),bltemp45(Nsol),bltemp60(Nsol))
       allocate(COMPNAME(Nsol))       
       allocate(CCBR(Nsol,NNODES),CCAR(Nsol,NNODES))
   

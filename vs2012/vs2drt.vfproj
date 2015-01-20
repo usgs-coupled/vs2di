@@ -154,9 +154,9 @@
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath="..\Call_RM.F90"/>
 		<File RelativePath="..\PhreeqcRM\RM_interface.F90">
-			<FileConfiguration Name="openmp_debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="openmp|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="openmp_debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="openmp_debug|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
@@ -164,5 +164,7 @@
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath="..\vs2dt3_3_reactive_withoutArgus1.f90">
 			<FileConfiguration Name="openmp_debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter></Files>
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
+		<File RelativePath="..\vs2dt3_3_reactive_withoutArgus2.f90"/>
+		<File RelativePath="..\vs2dt3_3_reactive_withoutArgus3.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>

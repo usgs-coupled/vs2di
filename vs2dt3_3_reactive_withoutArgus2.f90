@@ -1119,9 +1119,12 @@
       BL(81)=0.0D0
       BL(84)=0.0D0
       BL(92)=0.0D0
+      BL(95)=0.0D0
       bcmf = 0.0D0
       bcmh = 0.0D0
       bltemp2 = 0.0D0
+      bl95I = 0.0D0
+      bl95O = 0.0D0
       Do 111 M=1,nsol
       BLSOL(M,3) = 0.0D0
       BLSOL(M,6) = 0.0D0
@@ -1200,14 +1203,14 @@
 ! calculated
 !*****************************
       bltemp2=VOL*( &
-      TT(IN)*(HT(JJ,5)+THETA(IN)*RHO(IN)*HT(JJ,6)*(1.0d0+ &
+      TT(IN)*(HT(JJ,3)+THETA(IN)*RHO(IN)*HT(JJ,6)*(1.0d0+ &
       SS*(P(IN)-PXXX(IN))))-ttold(in)*(thlst(in)*RHO(IN)*ht(jj,6)&
       +ht(jj,3)))
       bl(95) = bl(95) + bltemp2
       if (jflag1.eq.1) then
-       if(ntyp(in).eq.1) bcmt = bcmt + TT(IN)*(theta(in) - thlst(in)) &
+       if(ntyp(in).eq.1) bcmh = bcmh + TT(IN)*(theta(in) - thlst(in)) &
          *RHOOLD(IN)*HT(JJ,6)*vol
-       if(nhtyp(in).eq.1) bcmt = bcmt + (theta(in)*RHOOLD(IN)*HT(JJ,6) &
+       if(nhtyp(in).eq.1) bcmh = bcmh + (theta(in)*RHOOLD(IN)*HT(JJ,6) &
          +ht(jj,3))*(TT(IN) - TTOLD(IN))*vol
       end if
       if(bltemp2.ge.0.0D0) then
@@ -1432,6 +1435,12 @@
       end if
       END IF
       end if
+!      if(cit.and.nctyp(in).ne.1) then
+!      SS=theta(IN)*(P(IN)-PXXX(IN))*HK(JJ,2)/HK(JJ,3)
+!      EO(IN)=E(IN)+VOL*(((THETA(IN)+SS)*RHO(IN)*HT(JJ,6)+&
+!      HT(JJ,3))/DELT)
+!      IF(JFLAG1.EQ.1) EO(IN)=0.5D0*EO(IN)
+!      end if
    21 CONTINUE
 !
 !   ACCUMULATE VALUES FOR TOTAL ELAPSED SIMULATION TIME
@@ -1517,7 +1526,7 @@
 !
 !   TRANSPORT MASS BALANCE COMPONENTS
 !
-      BL(94)=BL(94)+BL(95)
+!     BL(94)=BL(94)+BL(95)
       BL(96)=BL(95)/DELT
       BL(87)=BL(69)+BL(75)+BL(81)
       BL(90)=BL(72)+BL(78)+BL(84)
@@ -1529,6 +1538,7 @@
       BL(91)=BL(91)+BL(92)
       BL(94)=BL(94)+BL(95)
       BL(70)=BL(70)+BL(71)
+      BL(67)=BL(67)+BL(68)
       BL(76)=BL(76)+BL(77)
       BL(85)=BL(85)+BL(86)
       BL(73)=BL(73)+BL(74)
@@ -2049,7 +2059,7 @@
 !      WRITE(07,4040) KTIM,STIM,NIT,NIT1,NIS1
 !     WRITE(07,4030) (DHMX(M2),M2=1,NIT)
 !      END IF
-      WRITE(06,4040) KTIM,STIM,NIT,NIT1,NIS1
+      WRITE(06,4040) KTIM,STIM,NIT,NIT1,NIT3,NIS1
       IF(JSTOP.EQ.1.OR.JPLT.EQ.1) GO TO 20
       IF(.NOT.PRNT.AND.JFLAG.EQ.0) RETURN
    20 WRITE (6,4050) TITL,STIM,TUNIT,KTIM
@@ -2230,7 +2240,7 @@
 ! 4021 FORMAT(1pe18.10,1x,i8,2x,12(1PE21.12E3))
  4030 FORMAT(7E11.4)
  4040 FORMAT(' TIME STEP ',I9,'  TIME = ',E14.6,'  NIT = ',I5, &
-     '  NIT1 = ',I5,'  NIS1 = ',I5)
+     '  NIT1 = ',I5,'  NIT3 = ',I5,'  NIS1 = ',I5)
  4050 FORMAT(6X,A80/5X,20HTOTAL ELAPSED TIME =,1PE14.6,1X,A4/5X, &
       10HTIME STEP ,I9,//)
  4060 FORMAT(1H ,50X,10HTOTAL HEAD)

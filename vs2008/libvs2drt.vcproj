@@ -44,14 +44,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(BOOSTROOT)&quot;;../phreeqcpp/phreeqc;../phreeqcpp;../win32"
+				AdditionalIncludeDirectories="../PhreeqcRM;../PhreeqcRM/IPhreeqcPhast;../PhreeqcRM/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/IPhreeqcPhast/IPhreeqc/phreeqcpp;../win32"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 				CompileAs="2"
 			/>
 			<Tool
@@ -174,7 +174,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;$(BOOSTROOT)&quot;;../phreeqcpp/phreeqc;../phreeqcpp;../win32"
+				AdditionalIncludeDirectories="../PhreeqcRM;../PhreeqcRM/IPhreeqcPhast;../PhreeqcRM/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/IPhreeqcPhast/IPhreeqc/phreeqcpp;../win32"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

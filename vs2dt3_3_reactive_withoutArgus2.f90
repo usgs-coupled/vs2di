@@ -11,15 +11,15 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_equat.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxxh.inc'
-      include 'd_sip.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
+      use rspac
+      use kcon
+      use press
+      use equat
+      use jtxx
+      use trxxh
+      use sip
+      use rpropsh
+      use scon
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -275,16 +275,16 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_equats.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxx.inc'
-      include 'd_sip.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_tempcc.inc'
+      use rspac
+      use kcon
+      use press
+      use equats
+      use jtxx
+      use trxx
+      use sip
+      use rpropsh
+      use scon
+      use tempcc
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
       COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
@@ -550,14 +550,14 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_hcon.inc'
-      include 'd_jtxx.inc'
-      include 'd_rpropsh.inc'
-      include 'd_trxxh.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use hcon
+      use jtxx
+      use rpropsh
+      use trxxh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -722,11 +722,11 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_hcon.inc'
-      include 'd_jtxx.inc'
-      include 'd_rpropsh.inc'
+      use rspac
+      use kcon
+      use hcon
+      use jtxx
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -774,29 +774,29 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_dumm.inc'
-      include 'd_jtxx.inc'
-      include 'd_equat.inc'
-      include 'd_equats.inc'
-      include 'd_trxx.inc'
-      include 'd_trxy1.inc'
-      include 'd_plott.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_BF.inc'
-      include 'd_ptet.inc'
-      include 'd_temp.inc'
-      include 'd_pit.inc'
-      include 'd_trxy2.inc'
-      include 'd_trxxh.inc'
-      include 'd_solmassb.inc'
-      include 'd_compnamm.inc'
-      include 'd_react.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use dumm
+      use jtxx
+      use equat
+      use equats
+      use trxx
+      use trxy1
+      use plott
+      use rpropsh
+      use scon
+      use BF
+      use ptet
+      use temp
+      use pit
+      use trxy2
+      use trxxh
+      use solmass
+      use compnam
+      use react
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1825,13 +1825,13 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_hcon.inc'
-      include 'd_equat.inc'
-      include 'd_temp.inc'
-      include 'd_pit.inc'
-      include 'd_isdum.inc'
+      use kcon
+      use press
+      use hcon
+      use equat
+      use temp
+      use pit
+      use isdumm
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1935,20 +1935,20 @@
 !
 !        SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_jtxx.inc'
-      include 'd_dumm.inc'
-      include 'd_dumm3.inc'
-      include 'd_trxx.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_plott.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_disch.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use jtxx
+      use dumm
+      use dumm3
+      use trxx
+      use trxxh
+      use trxv
+      use plott
+      use rpropsh
+      use scon
+      use disch
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2113,7 +2113,7 @@
 !  WRITE CONCENTRATION TO FILE 8
 !
 !      IF(SOLUTE) THEN
-!      include 'd_dumm3Alloc.inc'
+!      use dumm3Alloc
 !     DO 51 J=1,NLY   
 !      do 46 N=1,NXR
 !      IN = NLY*(N-1)+J
@@ -2131,7 +2131,7 @@
 !       WRITE(08,4010) (DUM3(M,N),N=K,NNODES-NLY+K,NLY)
 !     end if
 !52  CONTINUE 
-!     include 'd_dumm3Dealloc.inc'    
+!     use dumm3Dealloc    
 !      END IF
       END IF
 !      end if     
@@ -2254,14 +2254,14 @@
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
 !
-      include 'd_press.inc'
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_dumm1.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_mprop.inc'
-      include 'd_rpropsh.inc'
+      use press
+      use rspac
+      use kcon
+      use dumm1
+      use trxxh
+      use trxv
+      use mprop
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2280,7 +2280,8 @@
 !
 !-------------------------------------------------------------------
 !
-      include 'd_dumm1Alloc.inc'
+      !!@@include 'd_dumm1Alloc.inc'
+      allocate(DUM1(NNODES))
       WRITE (06,4000) ZUNIT,ZUNIT
       WRITE (06,4010)(RX(K),K=2,NXRR)
       DO 30 J=2,NLYY
@@ -2335,7 +2336,8 @@
       WRITE (19,4031) (DUM1(N),N=2,NXRR)   
       END IF  
    30 CONTINUE
-      include 'd_dumm1Dealloc.inc'
+      !!@@include 'd_dumm1Dealloc.inc'
+      deallocate(DUM1)
       RETURN
  4000 FORMAT(1H ,1X,5HZ, IN/2X,A4,20X,20HX OR R DISTANCE, IN ,A4)
  4010 FORMAT(1H ,9X,99999(F11.3)/(9X,13(F9.2)))
@@ -2352,10 +2354,10 @@
 !      PURPOSE: TO PRINT TWO DIMENSIONAL ARRAY
 !-------------------------------------------------------
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_dumm2.inc'
-      include 'd_compnamm.inc'
+      use rspac
+      use kcon
+      use dumm2
+      use compnam
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2370,7 +2372,8 @@
       COMMON/LOG2/F7P,F11P,F8P,F9P,F6P,PRNT,o9p,o11p,o12p,  &
       o13p,F14P,F15P,F16P,F17P,F18P,F19P
       DIMENSION VPRNTS(Nsol,NNODES)
-      include 'd_dumm2Alloc.inc'
+      !!@@include 'd_dumm2Alloc.inc'
+      allocate(DUM2(Nsol,NNODES))
 !-----------------------------------------------------------------      
       WRITE (06,4000) ZUNIT,ZUNIT 
       WRITE (06,4010) (RX(K),K=2,NXRR) 
@@ -2398,7 +2401,8 @@
       WRITE (06,4030) DZZ(NLY-J+1),(DUM2(M,N),N=2,NXRR)
       WRITE (15,4031)(DUM2(M,K),K=2,NXRR) 
    30 CONTINUE 
-      include 'd_dumm2Dealloc.inc'
+      !!@@include 'd_dumm2Dealloc.inc'
+      deallocate(DUM2)
       return
  4000 FORMAT(1H ,1X,5HZ, IN/2X,A4,20X,20HX OR R DISTANCE, IN ,A4) 
  4001 FORMAT(A10)
@@ -2423,11 +2427,11 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_equat.inc'
+      use rspac
+      use kcon
+      use press
+      use disch
+      use equat
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2557,10 +2561,10 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_spfc.inc'
+      use rspac
+      use kcon
+      use press
+      use spfc
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2650,12 +2654,12 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_hcon.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_ptet.inc'
+      use rspac
+      use kcon
+      use hcon
+      use press
+      use disch
+      use ptet
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2728,13 +2732,13 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_hcon.inc'
-      include 'd_ptet.inc'
-      include 'd_dumm.inc'
+      use rspac
+      use kcon
+      use press
+      use disch
+      use hcon
+      use ptet
+      use dumm
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol

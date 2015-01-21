@@ -21,7 +21,7 @@
       print*,'Code took ', secs, ' seconds' 
       stop
       end
-      include 'd_modules.inc'
+      !include 'd_modules.inc'
       SUBROUTINE SETUP( filen)
 ! *** THIS SUBROUTINE IS THE FIRST HALF OF THE ORIGINAL MAIN CODE
 ! *** THAT READS THE SIMULATION DATA
@@ -47,38 +47,76 @@
 !
 !      SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_hcon.inc'
-      include 'd_equat.inc'
-      include 'd_jtxx.inc'
-      include 'd_dumm.inc'
-      include 'd_ptet.inc'
-      include 'd_trxx.inc'
-      include 'd_trxy1.inc'
-      include 'd_pit.inc'
-      include 'd_sip.inc'
-      include 'd_plott.inc'
-      include 'd_spfc.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_equats.inc'
-      include 'd_trxy2.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
-      include 'd_solmassb.inc'
-      include 'd_tempcc.inc'
-      include 'd_compnamm.inc'
-      include 'd_solmassb.inc'
-      include 'd_pricont.inc'
-      include 'd_coordin.inc'
-      include 'd_solindex.inc'    
-      include 'd_phreecc.inc'
-      include 'd_react.inc'
+      use BF
+      use COORDIN
+      use DISCH
+      use DUMM
+      use DUMM1
+      use DUMM2
+      use DUMM3
+      use EQUAT
+      use EQUATS
+      use HCON
+      use IDUMM
+      use IHDUMM
+      use ISDUMM
+      use ITEMBLO
+      use ITEMTXB
+      use JTXX
+      use KCON
+      use MPROP
+      use PHREECC
+      use PIT
+      use PLOTT
+      use PRESS
+      use PRICON
+      use PTET
+      use RPROPSH
+      use RSPAC
+      use SCON
+      use SIP
+      use SOLINDEX
+      use SOLMASS
+      use SPFC
+      use TEMP
+      use TEMPCC
+      use TRXV
+      use TRXX
+      use TRXXH
+      use TRXY1
+      use TRXY2
+
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use hcon
+      use equat
+      use jtxx
+      use dumm
+      use ptet
+      use trxx
+      use trxy1
+      use pit
+      use sip
+      use plott
+      use spfc
+      use rpropsh
+      use scon
+      use equats
+      use trxy2
+      use trxxh
+      use trxv
+      use temp
+      use solmass
+      use tempcc
+      use compnam
+      use pricon
+      use coordin
+      use solindex    
+      use phreecc
+      use react
       USE vs2dt_rm
       USE PhreeqcRM
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
@@ -129,7 +167,8 @@
       common/conversion/CNVTM,CNVTMI     
       CHARACTER*10 SCOMPNAME(50)
       common/ITEMK/KNLY,KNXR,KNNODE
-      include 'd_kdum.inc'
+      !!@@include 'd_kdum.inc'
+      integer, allocatable::KDUM(:,:)
 !     include 'c_kdum.inc'
 ! *** Set version, hydraulic function type, and sorption type
 !--------------------------------------------------------------------------------------------
@@ -313,7 +352,44 @@
       KNLY=NlY-2
       KNXR=NXR-2
       KNNODE=KNLY*KNXR
-      include 'd_arrays.inc' 
+      !!@@include 'd_arrays.inc' 
+!     allocate arrays
+      allocate(DELZ(NLY),DZZ(NLY),DXR(NXR),RX(NXR))
+      allocate(HX(NNODES),NTYP(NNODES))
+      allocate(THETA(NNODES),THLST(NNODES),SATUR(NNODES),POROSITY(NNODES))
+      allocate(P(NNODES),PXXX(NNODES),THEAD(NNODES))
+      allocate(Q(NNODES),QQ(NNODES))
+      allocate(HCND(NNODES),HKLL(NNODES),HKTT(NNODES))
+      allocate(A(NNODES),B(NNODES),C(NNODES),D(NNODES),E(NNODES),  &
+         RHS(NNODES),XI(NNODES))
+     allocate(AS(NNODES),BS(NNODES),CS(NNODES),DS(NNODES),ES(NNODES),  &
+         RHSS(NNODES),XIS(NNODES))
+      allocate(JTEX(NNODES))
+      allocate(DUM(NNODES),PDUM(KNXR))
+      allocate(DPTH(NNODES),RT(NNODES))
+      allocate(DX1(NNODES),DX2(NNODES),DZ1(NNODES),DZ2(NNODES),  &
+          TT(NNODES),TTOLD(NNODES),TS(NNODES),  &
+         QT(NNODES),NHTYP(NNODES))
+     allocate(VX(NNODES),VZ(NNODES))
+     allocate(RHO(NNODES),RHOOLD(NNODES))
+     allocate(DXS1(NNODES),DXS2(NNODES),DZS1(NNODES),DZS2(NNODES),  &
+          CC(Nsol,NNODES),CCOLD(Nsol,NNODES),CSS(Nsol,NNODES),  &
+          QS(NNODES),NCTYP(NNODES),CONC(Nsol))
+      allocate(AO(NNODES),BO(NNODES),CO(NNODES),DO(NNODES),EO(NNODES))
+      allocate(AOC(NNODES),BOC(NNODES),COC(NNODES),DOC(NNODES),EOC(NNODES))
+      allocate(PITT(NNODES))
+      allocate(DEL(NNODES),ETA(NNODES),V(NNODES))
+      allocate(TempC(NNODES))
+      allocate(XNODE(NNODES),ZNODE(NNODES))
+      allocate(phreeC(Nodesol))
+      allocate(CMIXFARC(7,NNODES),BCSOL(Nsol),INDSOL1(7,NNODES),INDSOL2(7,NNODES))
+	  allocate(ic1_reordered(nnodes,7))
+      allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES))
+      allocate(BLSOL(Nsol,36),bl62I(Nsol),bl62IT(Nsol),bl62O(Nsol),bl62OT(Nsol), &
+             bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol),bltemp36(Nsol),bltemp39(Nsol), &
+             bltemp42(Nsol),bltemp45(Nsol),bltemp60(Nsol))
+      allocate(COMPNAME(Nsol))       
+      allocate(CCBR(Nsol,NNODES),CCAR(Nsol,NNODES))      
       IF (SOLUTE) THEN  
       DO 7 I=1,Nsol 
       compname(I)  = scompname(I)
@@ -549,13 +625,15 @@
       o11p = o9p
       IF(F8P) THEN
       READ (05,*) NPLT
-      include 'd_obst.inc'
+      !!@@include 'd_obst.inc'
+      allocate(PLTIM(NPLT+1))
 !      include 'c_obst.inc'
       IF(NPLT.EQ.0)NPLT=1
       READ (05,*) (PLTIM(K),K=1,NPLT)
       WRITE (06,4140) (PLTIM(K),K=1,NPLT)
       else
-      include 'd_obst.inc'
+      !!@@include 'd_obst.inc'
+      allocate(PLTIM(NPLT+1))      
       END IF
       IF(F11P) THEN
       READ (05,*) NOBS
@@ -563,7 +641,10 @@
        nobs = -nobs
        o11p = .true.
       end if
-      include 'd_obsp.inc'
+      !!@@include 'd_obsp.inc'
+      allocate(IJOBS(NOBS))
+      if (allocated(KDUM)) deallocate(KDUM)
+      allocate(KDUM(NOBS,2))      
       READ (05,*) ((KDUM(K,J),J=1,2),K=1,NOBS)
       WRITE (06,4150) ((KDUM(K,J),J=1,2),K=1,NOBS)
 !      include 'c_obsp.inc'
@@ -665,7 +746,8 @@
       IFET=0
       IFET2=0
       CALL VSOUTP
-      include 'd_kdumDealloc.inc'
+      !!@@include 'd_kdumDealloc.inc'
+      if(allocated(kdum)) deallocate(kdum)
       RETURN
  4000 FORMAT(A80)
  4001 FORMAT(A15)
@@ -779,33 +861,33 @@
 ! *** PROGRAM. THE SUBROUTINE RETURNS THE SIMULATION TIME, TIME STEP,
 ! *** AND THE FLAG JSTP. WHEN JSTP EQUALS 1, THIS SIGNIFIES
 ! *** END OF SIMULATION.
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_hcon.inc'
-      include 'd_equat.inc'
-      include 'd_jtxx.inc'
-      include 'd_dumm.inc'
-      include 'd_ptet.inc'
-      include 'd_trxx.inc'
-      include 'd_trxy1.inc'
-      include 'd_plott.inc'
-      include 'd_spfc.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_equats.inc'
-      include 'd_trxy2.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
-      include 'd_tempcc.inc'   
-      include 'd_pricont.inc'
-      include 'd_coordin.inc'
-      include 'd_solindex.inc'
-      include 'd_phreecc.inc'
-      include 'd_react.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use hcon
+      use equat
+      use jtxx
+      use dumm
+      use ptet
+      use trxx
+      use trxy1
+      use plott
+      use spfc
+      use rpropsh
+      use scon
+      use equats
+      use trxy2
+      use trxxh
+      use trxv
+      use temp
+      use tempcc   
+      use pricon
+      use coordin
+      use solindex
+      use phreecc
+      use react
       use SCON
       USE vs2dt_rm
       USE PhreeqcRM   
@@ -1064,31 +1146,31 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_jtxx.inc'
-      include 'd_dumm.inc'
-      include 'd_ptet.inc'
-      include 'd_trxx.inc'
-      include 'd_idumm.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_equat.inc'
-      include 'd_BF.inc'
-      include 'd_equats.inc'
-      include 'd_trxy2.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
-      include 'd_coordin.inc'
-      include 'd_solindex.inc'
-      include 'd_phreecc.inc'
-      include 'd_compnamm.inc'
-      include 'd_itemblo.inc'
-      include 'd_itemtxb.inc'
-      include 'd_react.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use jtxx
+      use dumm
+      use ptet
+      use trxx
+      use idumm
+      use rpropsh
+      use scon
+      use equat
+      use BF
+      use equats
+      use trxy2
+      use trxxh
+      use trxv
+      use temp
+      use coordin
+      use solindex
+      use phreecc
+      use compnam
+      use itemblo
+      use itemtxb
+      use react
       USE vs2dt_rm
       USE PhreeqcRM
       USE PRICON
@@ -1132,9 +1214,12 @@
       logical axes(2) 
       common/axis/axes
       common/ITEMK/KNLY,KNXR,KNNODE
-      include 'd_idummAlloc.inc'
-      include 'd_itembloAlloc.inc'
-      include 'd_itemtxbAlloc.inc'
+      !!@@include 'd_idummAlloc.inc'
+      allocate(IDUM(NXR))
+      !!@@include 'd_itembloAlloc.inc'
+      allocate(ITEMBL(KNNODE),ITBDUM(KNXR))
+      !!@@include 'd_itemtxbAlloc.inc'
+      allocate(ITEMTX(KNNODE),ITDUM(KNXR))
       
 !-----------------------------------------------------------------------
 !
@@ -1164,7 +1249,11 @@
 !  revision for Rossi-Nimmo
 !
       if (hydraulicFunctionType.eq.4) nprop = 19
-      include 'd_rpropshAlloc.inc'
+      !!@@include 'd_rpropshAlloc.inc'
+      allocate(HK(NTEX,NPROP))
+      allocate(HT(NTEX,6))
+      allocate(HS(NTEX,3))
+      allocate(ANIZ(NTEX))      
       if (hydraulicFunctionType.eq.4) nprop = 6
 !
 !  end revision
@@ -1186,8 +1275,9 @@
       END IF
       END IF
       WRITE (6,4080) NTEX,NPROP,NHTPROP,NSTPROP,MINIT,ITMAX
-      include 'd_sconAlloc.inc'
-!      include 'c_sconItmax.inc'
+      !!@@include 'd_sconAlloc.inc'
+      allocate (DHMX(ITMAX+1))
+!      include 'c_sconItmax
       WRITE (06,4100)
       IF (HEAT) WRITE(06,4110)
       IF (SOLUTE) WRITE(06,4111)
@@ -1516,7 +1606,10 @@
       READ(05,*)NPV,ETCYC
       npv1 = npv
       if(npv.lt.0) npv = -npv
-      include 'd_ptetAlloc.inc'
+      !!@@include 'd_ptetAlloc.inc'
+      allocate(PEVAL(NPV))
+      allocate(PTVAL(NPV))
+      allocate(RDC(6,NPV))
       DO 713 I=1,NPV
       PEVAL(I) = 0.0D0
       PTVAL(I) = 0.0D0
@@ -1746,7 +1839,17 @@
 !
       if (f7p) then
        read(5,*) numBF, maxnumcells
-       include 'd_BFAlloc.inc'
+       !!@@include 'd_BFAlloc.inc'
+!      if (allocated(idBF)) deallocate(idBF)
+!      if (allocated(numcellsBF)) deallocate(numcellsBF)
+!      if (allocated(nodenum)) deallocate(nodenum)
+!      if (allocated(totalBF)) deallocate(totalBF)
+!      if (allocated(currentBF)) deallocate(currentBF)
+      allocate(idBF(numBF))
+      allocate(numcellsBF(numBF))
+      allocate(nodenum(numBF,maxnumcells))
+      allocate(totalBF(numBF,2))
+      allocate(currentBF(numBF,4))       
        do 250 i = 1,numBF
         read(5,*) idBF(i), numcellsBF(i)
         do 250 j = 1,numcellsBF(i)
@@ -1754,8 +1857,11 @@
          nodenum(i,j) = nly*(nn-1) + jj
  250   continue
       end if
-       include 'd_itembloDealloc.inc'
-       include 'd_itemtxbDealloc.inc'
+       !!@@include 'd_itembloDealloc.inc'
+      if(allocated(itembl)) deallocate(ITBDUM)
+	  if(allocated(itbdum)) deallocate(itbdum)
+       !!@@include 'd_itemtxbDealloc.inc'
+       deallocate(ITEMTX,ITDUM)
 !     write(*,*)"Finshed reading initial data................................"    
       RETURN
  4000 FORMAT(10X,27HINITIAL MOISTURE PARAMETERS/10X,27(1H_)// &
@@ -1843,20 +1949,20 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_trxx.inc'
-      include 'd_plott.inc'
-      include 'd_idumm.inc'
-      include 'd_spfc.inc'
-      include 'd_scon.inc'
-      include 'd_isdum.inc'
-      include 'd_ihdum.inc'
-      include 'd_trxxh.inc'
-      include 'd_solindex.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use trxx
+      use plott
+      use idumm
+      use spfc
+      use scon
+      use isdumm
+      use ihdumm
+      use trxxh
+      use solindex
       use PhreeqcRM
       use vs2dt_rm
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
@@ -1888,8 +1994,10 @@
       double precision, allocatable, dimension(:) :: f1
       integer, allocatable, dimension(:) :: ibsol1, ibsol2
       SAVE STERR
-      include 'd_ihdummAlloc.inc'
-      include 'd_isdummAlloc.inc'
+      !!@@include 'd_ihdummAlloc.inc'
+      allocate(IHDUM(NXR))
+      !!@@include 'd_isdummAlloc.inc'
+      allocate(ISDUM(NXR))
 !-------------------------------------------------------------------
 !
 !   ADVANCE TO NEXT TIME STEP
@@ -1950,7 +2058,13 @@
 !
       IF(SEEP) THEN
       READ (05,*) NFCS
-      include 'd_spfcAlloc.inc'
+      !!@@include 'd_spfcAlloc.inc'
+      if (allocated(JSPX)) deallocate(JSPX)
+      if (allocated(NFC)) deallocate(NFC)
+      if (allocated(JLAST)) deallocate(JLAST)
+      allocate(JSPX(3,NXR+NLY,NFCS))
+      allocate(NFC(NFCS))
+      allocate(JLAST(NFCS))
       DO 50 K=1,NFCS 
       READ (05,*) JJ,JLAST(K) 
       NFC(K)=JJ 
@@ -2287,8 +2401,10 @@
       WRITE(6,4080)
       END IF
       END IF
-      include 'd_ihdummDealloc.inc'
-      include 'd_isdummDealloc.inc'
+      !!@@include 'd_ihdummDealloc.inc'
+      deallocate(IHDUM)
+      !!@@include 'd_isdummDealloc.inc'
+      deallocate(ISDUM)
       RETURN
  4000 FORMAT(6X,'DATA FOR RECHARGE PERIOD ',I9//10X, &
       23HLENGTH OF THIS PERIOD =,1PE14.5,1X,A4,/10X, &
@@ -2342,21 +2458,21 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_hcon.inc'
-      include 'd_equat.inc'
-      include 'd_jtxx.inc'
-      include 'd_ptet.inc'
-      include 'd_pit.inc'
-      include 'd_plott.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_equats.inc'
-      include 'd_temp.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use hcon
+      use equat
+      use jtxx
+      use ptet
+      use pit
+      use plott
+      use rpropsh
+      use scon
+      use equats
+      use temp
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol

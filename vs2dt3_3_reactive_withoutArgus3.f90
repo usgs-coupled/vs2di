@@ -12,7 +12,7 @@
 !
 !    SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_ptet.inc'
+      use ptet
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
@@ -83,7 +83,7 @@
 !
 !-------------------------------------------------------------------
 !
-      include 'd_ptet.inc'
+      use ptet
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !     include 'c_ptet.inc'
 !
@@ -122,7 +122,7 @@
 !          HK(I,5)=RESIDUAL MOISTURE CONTENT
 !          HK(I,6)=BETA PRIME
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSDTHUVG=0.0D0
@@ -152,7 +152,7 @@
 !
 !    VAN GENUCHTEN FUNCTION
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/JCON/JSTOP,JFLAG,jflag1
 !      include 'c_rpropsh.inc'
@@ -188,7 +188,7 @@
 !
 ! VAN GENUCHTEN FUNCTION
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSTHUVG=HK(I,3)
@@ -218,7 +218,7 @@
 !   VAN GENUCHTEN FUNCTION
 !
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rprop.inc'
       VSHKUVG=1.0D0
@@ -250,7 +250,7 @@
 !  VAN GENUCHTEN FUNCTION
 !
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       LOGICAL TRANS,TRANS1,TRANS2,SSTATE
@@ -297,7 +297,7 @@
 !          HK(I,5)=RESIDUAL MOISTURE CONTENT
 !          HK(I,6)=LAMBDA
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSDTHUBC=0.0D0
@@ -315,7 +315,7 @@
 !
 !    BROOKS AND COREY, CSU HYDROLOGY PAPER NO. 17 , PP.3-4
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/JCON/JSTOP,JFLAG,jflag1
 !      include 'c_rpropsh.inc'
@@ -342,7 +342,7 @@
 !
 !    BROOKS AND COREY, CSU HYDROLOGY PAPER NO.17, PP.3-4
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSTHUBC=HK(I,3)
@@ -358,7 +358,7 @@
 !
 !    BROOKS AND COREY, CSU HYDROLOGY PAPER NO. 3
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSHKUBC=1.0D0
@@ -376,7 +376,7 @@
 !
 !    BROOKS AND COREY, CSU HYDROLOGY PAPER NO. 3
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       LOGICAL TRANS,TRANS1,TRANS2,SSTATE
@@ -411,7 +411,7 @@
 !          HK(I,7)=ALPHA
 !          HK(I,8)=BETA
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSDTHUHK=0.0D0
@@ -435,7 +435,7 @@
 !
 !    HAVERKAMP FUNCTION
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/JCON/JSTOP,JFLAG,jflag1
 !      include 'c_rpropsh.inc'
@@ -461,7 +461,7 @@
 !
 !  HAVERKAMP FUNCTION
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !     include 'c_rpropsh.inc'
       VSTHUHK=HK(I,3)
@@ -479,7 +479,7 @@
 !  HAVERKAMP FUNCTION
 !
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       VSHKUHK=1.0D0
@@ -497,7 +497,7 @@
 !  HAVERKAMP FUNCTION
 !
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       LOGICAL TRANS,TRANS1,TRANS2,SSTATE
@@ -540,7 +540,7 @@
 !   NEXT ENTER THE VOLUMETRIC MOISTURE CONTENT FOR EACH PRESSURE
 !   HEAD, FINALLY ENTER THE NUMBER 99.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/hinterp/ DELPP,nprop,I1,I2,I3,I4,I5,I6
@@ -584,7 +584,7 @@
 !  DETERMINED BY LINEAR INTERPOLATION OF KR VS HP TABLE WHICH IS
 !   INPUT BY USER.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/hinterp/ DELPP,nprop,I1,I2,I3,I4,I5,I6
@@ -606,7 +606,7 @@
 !  DETERMINED BY LINEAR INTERPOLATION OF KR VS HP TABLE WHICH IS
 !   INPUT BY USER.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/hinterp/ DELPP,nprop,I1,I2,I3,I4,I5,I6
@@ -631,7 +631,7 @@
 !   DETERMINED FROM TABLE OF THETA VS HP WHICH IS INPUT
 !   BY USER.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/hinterp/ DELPP,nprop,I1,I2,I3,I4,I5,I6
@@ -653,7 +653,7 @@
 !   AS DETERMINED BY LINEAR INTERPOLATION OF THETA VS HP TABLE
 !   WHICH IS INPUT BY USER.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/hinterp/ DELPP,nprop,I1,I2,I3,I4,I5,I6
@@ -673,7 +673,7 @@
 !             ROUTINES.  INITIAL CONDITIONS MUST BE INPUT IN TERMS OF
 !              PRESSURE HEADS NOT MOISTURE CONTENTS.
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/JCON/JSTOP,JFLAG,jflag1
 !     include 'c_rpropsh.inc'
@@ -696,7 +696,7 @@
 !
 !    FIRST DERIVATIVE OF MOISTURE CONTENT AS A FUNCTION OF PRESSURE HEAD
 !         USER-SUPPLIED FUNCTION
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       COMMON/JCON/JSTOP,JFLAG,jflag1
@@ -728,7 +728,7 @@
 !    MOISTURE CONTENT
 !        USER-SUPPLIED FUNCTION
 
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       vsthnvot=0.0D0
@@ -761,7 +761,7 @@
 !   PRESSURE: = POROSITY ELSEWHERE
 !        USER-SUPPLIED FUNCTION
 
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       vsthuot=hk(i,3)
@@ -794,7 +794,7 @@
 !
 !    RELATIVE HYDRAULIC CONDUCTIVITY WITH RESPECT TO PRESSURE HEAD
  !     USER-SUPPLIED FUNCTION
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !     include 'c_rpropsh.inc'
       vshkuot=1.0D0
@@ -826,7 +826,7 @@
 !
 !    RELATIVE HYDRAULIC CONDUCTIVITY WITH RESPECT TO PRESSURE HEAD
 !      USER-SUPPLIED FUNCTION
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_rpropsh.inc'
       LOGICAL TRANS,TRANS1,TRANS2,SSTATE
@@ -868,14 +868,14 @@
 !    VZ IS VELOCITY IN Z-DIRECTION BETWEEN CURRENT NODE AND NODE
 !    ABOVE.
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_hcon.inc'
-      include 'd_trxx.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use hcon
+      use trxx
+      use trxv
+      use temp
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -978,13 +978,13 @@
 !   CONTAINED IN ARRAYS DX1 AND DZ1.  CROSS PRODUCT TERMS
 !    ARE IN DX2 AND DZ2
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxv.inc'
-      include 'd_rpropsh.inc'
-      include 'd_trxxh.inc'
+      use rspac
+      use kcon
+      use mprop
+      use jtxx
+      use trxv
+      use rpropsh
+      use trxxh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1157,13 +1157,13 @@
 !   CONTAINED IN ARRAYS DX1 AND DZ1.  CROSS PRODUCT TERMS
 !    ARE IN DX2 AND DZ2
 !
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxv.inc'
-      include 'd_rpropsh.inc'
-      include 'd_trxx.inc'
+      use rspac
+      use kcon
+      use mprop
+      use jtxx
+      use trxv
+      use rpropsh
+      use trxx
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1333,22 +1333,22 @@
 !    ROUTINE TO ASSEMBLE MATRIX EQUATIONS FOR ADVECTION-DISPERSION
 !    EQUATIONS AND TO CALL MATRIX SOLVER.
 !
-      include 'd_press.inc'
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_dumm.inc'
-      include 'd_disch.inc'
-      include 'd_equat.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxy1.inc'
-      include 'd_rpropsh.inc'
-      include 'd_ptet.inc'
-      include 'd_scon.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
-      include 'd_pit.inc'
+      use press
+      use rspac
+      use kcon
+      use mprop
+      use dumm
+      use disch
+      use equat
+      use jtxx
+      use trxxh
+      use trxy1
+      use rpropsh
+      use ptet
+      use scon
+      use trxv
+      use temp
+      use pit
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -1725,23 +1725,23 @@
 !    ROUTINE TO ASSEMBLE MATRIX EQUATIONS FOR ADVECTION-DISPERSION
 !    EQUATIONS AND TO CALL MATRIX SOLVER.
 !
-      include 'd_press.inc'
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_dumm.inc'
-      include 'd_disch.inc'
-      include 'd_equats.inc'
-      include 'd_jtxx.inc'
-      include 'd_trxx.inc'
-      include 'd_trxy2.inc'
-      include 'd_rpropsh.inc'
-      include 'd_scon.inc'
-      include 'd_trxv.inc'
-      include 'd_temp.inc'
-      include 'd_pit.inc'
-      include 'd_tempcc.inc'
-      include 'd_react.inc'
+      use press
+      use rspac
+      use kcon
+      use mprop
+      use dumm
+      use disch
+      use equats
+      use jtxx
+      use trxx
+      use trxy2
+      use rpropsh
+      use scon
+      use trxv
+      use temp
+      use pit
+      use tempcc
+      use react
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2161,7 +2161,7 @@
 !
 ! DENSITY AS A FUNCTION OF TEMPERATURE CC
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_rpropsh.inc'
 !c      VTRHO=HT(I,6)+HT(I,8)*(CC-HT(I,7))
@@ -2175,7 +2175,7 @@
 !
 ! THERMAL CONDUCTIVITY AS FUNCTION OF THETA
 !
-      include 'd_rpropsh.inc'
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       integer hydraulicFunctionType
       common/functiontype/ hydraulicFunctionType
@@ -2212,12 +2212,12 @@
 !
 !   SPECIFICATIONS FOR ARRAYS AND SCALARS
 !
-      include 'd_kcon.inc'
-      include 'd_hcon.inc'
-      include 'd_disch.inc'
-      include 'd_press.inc'
-      include 'd_rspac.inc'
-      include 'd_trxx.inc'
+      use kcon
+      use hcon
+      use disch
+      use press
+      use rspac
+      use trxx
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -2261,7 +2261,7 @@
       SUBROUTINE GETDX(DX, NX)
 !C *** GET THE CELL SIZES IN THE X DIRECTION AND RETURN IT IN THE
 !C *** ARRAY DX PROVIDED BY THE CALLING PROGRAM
-      include 'd_rspac.inc'
+      use rspac
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_rspac.inc'
       DIMENSION DX(NX)
@@ -2274,7 +2274,7 @@
       SUBROUTINE GETDZ(DZ, NZ)
 !C *** GET THE CELL SIZES IN THE Z DIRECTION AND RETURN IT IN THE
 !C *** ARRAY DZ PROVIDED BY THE CALLING PROGRAM
-      include 'd_rspac.inc'
+      use rspac
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_rspac.inc'
       DIMENSION DZ(NZ)
@@ -2287,7 +2287,7 @@
       SUBROUTINE GETCONC(C, N,NC)
 !C *** GET THE CONCENTRATION ARRAY AND PUT IT IN C, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_trxx.inc'
+      use trxx
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_trxx.inc'
       DIMENSION C(N,NC)
@@ -2301,7 +2301,7 @@
       SUBROUTINE GETKSAT(HX1, NN)
 !C *** GET THE SATURATED HYDRAULIC CONDUCTIVITY AND RETURN IT IN HX1, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_kcon.inc'
+      use kcon
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_kcon.inc'
       DIMENSION HX1(NN)
@@ -2314,7 +2314,7 @@
       SUBROUTINE GETTEX(JT, NN)
 !C *** GET THE TEXTURAL CLASS MAP AND RETURN IT IN JT, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_jtxx.inc'
+      use jtxx
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_jtxx.inc'
       DIMENSION JT(NN)
@@ -2326,7 +2326,7 @@
       SUBROUTINE GETMOIST(THETA1, NN)
 !C *** GET THE MOISTURE CONTENTS AND RETURN IT IN THETA1, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_mprop.inc'
+      use mprop
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !      include 'c_mprop.inc'
       DIMENSION THETA1(NN)
@@ -2339,9 +2339,9 @@
       SUBROUTINE GETSAT(SAT, NN)
 !C *** GET THE SATURATION AND RETURN IT IN SAT, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_mprop.inc'
-      include 'd_jtxx.inc'
-      include 'd_rpropsh.inc'
+      use mprop
+      use jtxx
+      use rpropsh
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_mprop.inc'
 !c      include 'c_jtxx.inc'
@@ -2364,8 +2364,8 @@
       SUBROUTINE GETPHEAD(PHEAD, NN)
 !C *** GET THE PRESSURE HEAD AND RETURN IT IN PHEAD, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_press.inc'
-      include 'd_rspac.inc'
+      use press
+      use rspac
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_press.inc'
 !c      include 'c_rspac.inc'
@@ -2422,55 +2422,181 @@
       END
 
       SUBROUTINE RELEASEMEMORY
-      include 'd_rspac.inc'
-      include 'd_kcon.inc'
-      include 'd_mprop.inc'
-      include 'd_press.inc'
-      include 'd_disch.inc'
-      include 'd_hcon.inc'
-      include 'd_equat.inc'
-      include 'd_equats.inc'
-      include 'd_temp.inc'
-      include 'd_jtxx.inc'
-      include 'd_dumm.inc'
-      include 'd_dumm1.inc'
-      include 'd_dumm2.inc'
-      include 'd_dumm3.inc'
-      include 'd_ptet.inc'
-      include 'd_trxx.inc'
-      include 'd_trxxh.inc'
-      include 'd_trxv.inc'
-      include 'd_trxy1.inc'
-      include 'd_trxy2.inc'
-      include 'd_pit.inc'
-      include 'd_sip.inc'
-      include 'd_idumm.inc'
-      include 'd_plott.inc'
-      include 'd_rpropsh.inc'
-      include 'd_spfc.inc'
-      include 'd_scon.inc'
-      include 'd_ptet.inc'
-      include 'd_tempcc.inc'
-      include 'd_coordin.inc'
-      include 'd_solindex.inc'
-      include 'd_phreecc.inc'
-      include 'd_pricont.inc'
-      include 'd_solmassb.inc'
-      include 'd_compnamm.inc'
-      include 'd_BF.inc'
-      include 'd_isdum.inc'
-      include 'd_ihdum.inc'
-      include 'd_itemblo.inc'
-      include 'd_itemtxb.inc'
-      include 'd_react.inc'
-      include 'd_cleanup.inc'
+      use rspac
+      use kcon
+      use mprop
+      use press
+      use disch
+      use hcon
+      use equat
+      use equats
+      use temp
+      use jtxx
+      use dumm
+      use dumm1
+      use dumm2
+      use dumm3
+      use ptet
+      use trxx
+      use trxxh
+      use trxv
+      use trxy1
+      use trxy2
+      use pit
+      use sip
+      use idumm
+      use plott
+      use rpropsh
+      use spfc
+      use scon
+      use ptet
+      use tempcc
+      use coordin
+      use solindex
+      use phreecc
+      use pricon
+      use solmass
+      use compnam
+      use BF
+      use isdumm
+      use ihdumm
+      use itemblo
+      use itemtxb
+      use react
+      !!@@include 'd_cleanup.inc'
+      if (allocated(idum)) deallocate(idum)
+      if (allocated(delz)) deallocate(delz)
+      if (allocated(DZZ)) deallocate(DZZ)
+      if (allocated(DXR)) deallocate(DXR)
+      if (allocated(RX)) deallocate(RX)
+      if (allocated(HX)) deallocate(HX)
+      if (allocated(NTYP)) deallocate(NTYP)
+      if (allocated(THETA)) deallocate(THETA)
+      if (allocated(THLST)) deallocate(THLST)
+      IF (allocated(SATUR)) deallocate(SATUR)
+      IF (allocated(POROSITY)) deallocate(POROSITY)
+      if (allocated(P)) deallocate(P)
+      if (allocated(PXXX)) deallocate(PXXX)
+      if (allocated(THEAD)) deallocate(THEAD)
+      if (allocated(Q)) deallocate(Q)
+      if (allocated(QQ)) deallocate(QQ)
+      if (allocated(HCND)) deallocate(HCND)
+      if (allocated(HKLL)) deallocate(HKLL)
+      if (allocated(HKTT)) deallocate(HKTT)
+      if (allocated(A)) deallocate(A)
+      if (allocated(B)) deallocate(B)
+      if (allocated(C)) deallocate(C)
+      if (allocated(D)) deallocate(D)
+      if (allocated(E)) deallocate(E)
+      if (allocated(RHS)) deallocate(RHS)
+      if (allocated(XI)) deallocate(XI)
+       if (allocated(AS)) deallocate(AS)
+      if (allocated(BS)) deallocate(BS)
+      if (allocated(CS)) deallocate(CS)
+      if (allocated(DS)) deallocate(DS)
+      if (allocated(ES)) deallocate(ES)
+      if (allocated(RHSS)) deallocate(RHSS)
+      if (allocated(XIS)) deallocate(XIS) 
+      if (allocated(JTEX)) deallocate(JTEX)
+      if (allocated(DUM)) deallocate(DUM)
+      if (allocated(PDUM)) deallocate(PDUM)  
+      if (allocated(DUM1)) deallocate(DUM1)
+      if (allocated(DUM2)) deallocate(DUM2)  
+      if (allocated(DPTH)) deallocate(DPTH)
+      if (allocated(RT)) deallocate(RT)
+      if (allocated(DX1)) deallocate(DX1)
+      if (allocated(DX2)) deallocate(DX2)
+      if (allocated(DZ1)) deallocate(DZ1)
+      if (allocated(DZ2)) deallocate(DZ2)
+      if (allocated(DXS1)) deallocate(DXS1)
+      if (allocated(DXS2)) deallocate(DXS2)
+      if (allocated(DZS1)) deallocate(DZS1)
+      if (allocated(DZS2)) deallocate(DZS2) 
+      if (allocated(VX)) deallocate(VX)
+      if (allocated(VZ)) deallocate(VZ)
+      if (allocated(CC)) deallocate(CC)
+      if (allocated(CCOLD)) deallocate(CCOLD)
+      if (allocated(CS)) deallocate(CS)
+      if (allocated(QT)) deallocate(QT)
+      if (allocated(NCTYP)) deallocate(NCTYP)
+      if (allocated(CONC)) deallocate(CONC)  
+      if (allocated(TT)) deallocate(TT)
+      if (allocated(TTOLD)) deallocate(TTOLD)
+      if (allocated(TS)) deallocate(TS)
+      if (allocated(QT)) deallocate(QT)
+      if (allocated(NHTYP)) deallocate(NHTYP) 
+      if (allocated(AO)) deallocate(AO)
+      if (allocated(BO)) deallocate(BO)
+      if (allocated(CO)) deallocate(CO)
+      if (allocated(DO)) deallocate(DO)
+      if (allocated(EO)) deallocate(EO)
+      if (allocated(AOC)) deallocate(AOC)
+      if (allocated(BOC)) deallocate(BOC)
+      if (allocated(COC)) deallocate(COC)
+      if (allocated(DOC)) deallocate(DOC)
+      if (allocated(EOC)) deallocate(EOC) 
+      if (allocated(PITT)) deallocate(PITT)
+      if (allocated(DEL)) deallocate(DEL)
+      if (allocated(ETA)) deallocate(ETA)
+      if (allocated(V)) deallocate(V)
+      if (allocated(pltim)) deallocate(pltim)
+      if (allocated(ijobs)) deallocate(ijobs)
+      if (allocated(hk)) deallocate(hk)
+      if (allocated(ht)) deallocate(ht)
+      if (allocated(hs)) deallocate(hs) 
+      if (allocated(aniz)) deallocate(aniz)
+      if (allocated(jspx)) deallocate(jspx)
+      if (allocated(nfc)) deallocate(nfc)
+      if (allocated(jlast)) deallocate(jlast)
+      if (allocated(dhmx)) deallocate(dhmx)
+      if (allocated(PEVAL)) deallocate(PEVAL)
+      if (allocated(PTVAL)) deallocate(PTVAL)
+      if (allocated(RDC)) deallocate(RDC)
+      if (allocated(JSPX)) deallocate(JSPX)
+      if (allocated(NFC)) deallocate(NFC)
+      if (allocated(JLAST)) deallocate(JLAST)
+      if (allocated(RHO))deallocate(RHO)
+      if (allocated(RHOOLD))deallocate(RHOOLD)
+      if (allocated(TempC))deallocate(TempC)
+      if (allocated(XNODE))deallocate(XNODE)
+      if (allocated(ZNODE))deallocate(ZNODE)
+      if (allocated(phreeC))deallocate(phreeC)
+      if (allocated(CMIXFARC))deallocate(CMIXFARC)
+      if (allocated(BCSOL))deallocate(BCSOL)
+      if (allocated(INDSOL1))deallocate(INDSOL1)
+      if (allocated(INDSOL2))deallocate(INDSOL2)
+      if (allocated(ic1_reordered))deallocate(ic1_reordered)
+      if (allocated(NPRCHEM))deallocate(NPRCHEM)
+      if (allocated (NPRCHXZ))deallocate(NPRCHXZ) 
+      if (allocated(BLSOL))deallocate(BLSOL)
+      if (allocated(bl62I))deallocate(bl62I)
+      if (allocated(bl62IT))deallocate(bl62IT)
+      if (allocated(bl62O))deallocate(bl62O)
+      if (allocated(bl62OT))deallocate(bl62OT)
+      if (allocated(bcmtt))deallocate(bcmtt)
+      if (allocated(bcmt))deallocate(bcmt)
+      if (allocated(bcmtr))deallocate(bcmtr)
+      if (allocated(bltemp36))deallocate(bltemp36)
+      if (allocated(bltemp39))deallocate(bltemp39)
+      if (allocated(bltemp42))deallocate(bltemp42)
+      if (allocated(bltemp45))deallocate(bltemp45)
+      if (allocated(bltemp60))deallocate(bltemp60)
+      if (allocated(COMPNAME))deallocate(COMPNAME)
+      if (allocated(idBF)) deallocate(idBF)
+      if (allocated(numcellsBF)) deallocate(numcellsBF)
+      if (allocated(nodenum)) deallocate(nodenum)
+      if (allocated(totalBF)) deallocate(totalBF)
+      if (allocated(currentBF)) deallocate(currentBF)
+      if (allocated(CCBR)) deallocate(CCBR)
+      if (allocated(CCAR)) deallocate(CCAR)    
+      
       RETURN
       END
 
       SUBROUTINE GETFLOWMBERR(ERR)
 !C *** GET TOTAL AND RATE FLOW MASS BALANCE ERRORS AND RETURN IN ERR
-      include 'd_scon.inc'
-      include 'd_solmassb.inc'
+      use scon
+      use solmass
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c     include 'c_scon.inc'      
       COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
@@ -2514,8 +2640,8 @@
 
       SUBROUTINE GETHEATTRANSMBERR(ERR)
 !C *** GET TOTAL AND RATE CHEMICAL MASS BALANCE ERRORS AND RETURN IN ERR
-      include 'd_scon.inc'
-      include 'd_solmassb.inc'
+      use scon
+      use solmass
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_scon.inc'
       COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
@@ -2559,8 +2685,8 @@
       SUBROUTINE GETVX(VELX, NN)
 !C *** GET THE X VELOCITY AND RETURN IT IN VELX, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_kcon.inc'
-      include 'd_trxv.inc'
+      use kcon
+      use trxv
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_kcon.inc'
 !c      include 'c_trxx.inc'
@@ -2584,8 +2710,8 @@
       SUBROUTINE GETVZ(VELZ, NN)
 !C *** GET THE Z VELOCITY AND RETURN IT IN VELZ, WHICH IS PROVIDED
 !C *** BY THE CALLING PROGRAM
-      include 'd_kcon.inc'
-      include 'd_trxv.inc'
+      use kcon
+      use trxv
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 !c      include 'c_kcon.inc'
 !c      include 'c_trxx.inc'

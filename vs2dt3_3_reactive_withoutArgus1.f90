@@ -226,10 +226,11 @@
       JSTOP=0
       READ (05,4000) TITL
       READ (5,*) TMAX,STIM,ANG
-      READ (05,4010) ZUNIT
-      READ (05,4011) TUNIT
-      READ (05,4010) CUNX
-      READ (05,4010) HUNX
+      READ (05,4010) ZUNIT,TUNIT,CUNX,HUNX
+!      READ (05,4011) TUNIT
+!      READ (05,4010) CUNX
+!      READ (05,4010) HUNX
+      CNVTM = 1.D0
       IF(TUNIT.EQ.'s'.or.TUNIT.EQ.'seconds')then
       CNVTM= 1.D0
       ELSE IF (TUNIT.EQ.'min'.or.TUNIT.EQ.'minutes')then
@@ -2029,7 +2030,7 @@
 !
       jflag1 = 1
       jflag2 = 1
-      IF(TPER.GE.999998.D0) THEN
+      IF(TPER.LT.0) THEN
       WRITE (06,4070) TMAX,STIM
       jstop=5
       return
@@ -2112,7 +2113,7 @@
       IF(IBC.GT.0) GO TO 80 
    70 IF (TRANS)THEN
       READ (05,*) JJ,NN,NTX,PFDUM
-      IF(JJ.GE.999998) GO TO 130 
+      IF(JJ.LT.0) GO TO 130 
       IF(HEAT) THEN
       READ (05,*)NTT,TF
       ELSE
@@ -2139,7 +2140,7 @@
       ELSE
       READ (05,*) JJ,NN,NTX,PFDUM
       END IF
-      IF(JJ.GE.999998) GO TO 130 
+      IF(JJ.LT.0) GO TO 130 
       JJT=JJ 
       JJB=JJ 
       NNL=NN 
@@ -2147,7 +2148,7 @@
       GO TO 90 
   80  IF(TRANS)THEN
       READ(05,*) JJT,JJB,NNL,NNR,NTX,PFDUM
-      IF(JJT.GE.999998) GO TO 130
+      IF(JJT.LT.0) GO TO 130
       IF(HEAT) THEN
       READ (05,*)NTT,TF
       ELSE
@@ -2173,6 +2174,7 @@
       END IF
       ELSE
       READ(05,*) JJT,JJB,NNL,NNR,NTX,PFDUM
+      IF(JJT.LT.0) GO TO 130
       END IF 
 !
   90  CONTINUE 

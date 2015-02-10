@@ -832,7 +832,7 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 						char line_buff[132];
 						//sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", "y",
 						//	"z", "time", "in");
-						sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", 
+						sprintf(line_buff, "%15s\t%15s\t%15s\t%2s\t", "x", 
 							"z", "time", "in");
 						this->Get_io()->punch_msg(line_buff);
 

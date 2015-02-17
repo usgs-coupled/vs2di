@@ -297,7 +297,7 @@
       END IF
       IF(TRANS) READ(05,*)CIS,CIT
       IF(SOLUTE)THEN
-      READ (05,*)NPRCONC,NPSCRN,IPRNTCHE,INPRXZ,IPOUT
+      READ (05,*)IPRNTCHE,INPRXZ,IPOUT
   !    DO 5 I=1,NNODES
   !    NPRCHEM(I)= IPRNTCHE
   !    NPRCHXZ(I)= INPRXZ
@@ -1742,20 +1742,28 @@
           DO 185 I=1, Nsol
               Solcomp(I)=0.0d0
 185       continue  
-          DO I=1, NLY
-              DO J=1, NXR
+          DO 187 I=1, NLY
+              DO 186 J=1, NXR
                   IN=NLY*(J-1)+I  
                   if (I.eq.1.or.I.eq.NLY)then
                       INDSOL1(1,IN)=-1
-                   else if (J.eq.1.or.J.eq.NXR)then
+                      NPRCHEM(IN)=0
+                      NPRCHXZ(IN)=0
+                   else 
+                    if (J.eq.1.or.J.eq.NXR)then
                       INDSOL1(1,IN)=-1
-                    else if (HX(IN).LE.0.0D0) then
-                      INDSOL1(1,IN)=-1
-!                    end if
-!                   end if 
-                  end if    
-              END DO       
-          END DO
+                      NPRCHEM(IN)=0
+                      NPRCHXZ(IN)=0
+                     else 
+                      if (HX(IN).LE.0.0D0) then
+                       INDSOL1(1,IN)=-1
+                       NPRCHEM(IN)=0
+                       NPRCHXZ(IN)=0
+                     end if
+                    end if 
+                   end if    
+ 186           continue      
+ 187         continue 
           !      do 184 I=1,7
           !      do 183 J=1, NNODES  
           !     write(6,*)"INDSOL1(",I,",",J,")=",INDSOL1(I,J)
@@ -1781,6 +1789,7 @@
           enddo  
           
           ! Set ccold
+          do 203 J=1,NLY
           DO 203 N=1,NXR
               DO 201 M=1,Nsol
                   IN=NLY*(N-1)+J

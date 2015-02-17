@@ -69,7 +69,7 @@ SUBROUTINE InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
 
         ! ... Send data to threads or workers
         ! 1 mg/L, 2 mol/L, 3 kg/kgs
-        status = RM_SetUnitsSolution(rm_id, 2)
+        status = RM_SetUnitsSolution(rm_id, 1)
         
         ! 0 mol/L rv, 1 mol/L water, 2 mol/L rock
         status = RM_SetUnitsExchange(rm_id, 1)

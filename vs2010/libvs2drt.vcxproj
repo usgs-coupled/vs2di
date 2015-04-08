@@ -146,12 +146,6 @@
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PhreeqcRM\vs2008\PhreeqcRM.vcxproj">
-      <Project>{5049778d-3e59-4dd4-a63c-d7648864ef4b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

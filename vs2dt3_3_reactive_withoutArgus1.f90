@@ -3594,6 +3594,7 @@
 !   bcmf is water mass added to system by change in flow BC
 !   bcmt is solute mass added to system by change in flow BC
 !
+
       IF(KTIM.EQ.1) THEN
       DO 10 I=1,99
       BL(I)=0.0D0
@@ -4202,7 +4203,7 @@
 !   would not be updated until a final solution had been
 !   reached
 !
-      if(cit.and.nctyp(in).ne.1) then
+      if(cit.and.nhtyp(in).ne.1) then
       AO(IN)=A(IN)
       BO(IN)=B(IN)
       CO(IN)=C(IN)
@@ -4651,15 +4652,15 @@
 !
       IF(WUS.EQ.0.0D0) THEN
       IF(HEAT)THEN
-      A(IN)=HKLL(IN)*DSQRT(HCND(NM1)*RHO(NM1)*HCND(IN)*RHO(IN))
-      B(IN)=HKTT(IN)*DSQRT(HCND(JM1)*RHO(JM1)*HCND(IN)*RHO(IN))
-      C(IN)=HKLL(NP1)*DSQRT(HCND(NP1)*RHO(NP1)*HCND(IN)*RHO(IN))
-      D(IN)=HKTT(JP1)*DSQRT(HCND(JP1)*RHO(JP1)*HCND(IN)*RHO(IN))
+      A1=HKLL(IN)*DSQRT(HCND(NM1)*RHO(NM1)*HCND(IN)*RHO(IN))
+      B1=HKTT(IN)*DSQRT(HCND(JM1)*RHO(JM1)*HCND(IN)*RHO(IN))
+      C1=HKLL(NP1)*DSQRT(HCND(NP1)*RHO(NP1)*HCND(IN)*RHO(IN))
+      D1=HKTT(JP1)*DSQRT(HCND(JP1)*RHO(JP1)*HCND(IN)*RHO(IN))
       ELSE  
-      A(IN)=HKLL(IN)*DSQRT(HCND(NM1)*HCND(IN))
-      B(IN)=HKTT(IN)*DSQRT(HCND(JM1)*HCND(IN))
-      C(IN)=HKLL(NP1)*DSQRT(HCND(NP1)*HCND(IN))
-      D(IN)=HKTT(JP1)*DSQRT(HCND(JP1)*HCND(IN))
+      A1=HKLL(IN)*DSQRT(HCND(NM1)*HCND(IN))
+      B1=HKTT(IN)*DSQRT(HCND(JM1)*HCND(IN))
+      C1=HKLL(NP1)*DSQRT(HCND(NP1)*HCND(IN))
+      D1=HKTT(JP1)*DSQRT(HCND(JP1)*HCND(IN))
       END IF
       ELSE
       IF(P(NM1).GT.P(IN).AND.HX(NM1).NE.0.0D0) THEN
@@ -4695,28 +4696,28 @@
 !   DETERMINE FLUXES
 !     
       IF(HEAT)THEN
-      A(IN)=(ALA*HCND(NM1)*RHO(NM1)+BTA*HCND(IN)*RHO(IN))*HKLL(IN)
-      B(IN)=(ALB*HCND(JM1)*RHO(JM1)+BTB*HCND(IN)*RHO(IN))*HKTT(IN)
-      C(IN)=(ALC*HCND(NP1)*RHO(NP1)+BTC*HCND(IN)*RHO(IN))*HKLL(NP1)
-      D(IN)=(ALD*HCND(JP1)*RHO(JP1)+BTD*HCND(IN)*RHO(IN))*HKTT(JP1)
+      A1=(ALA*HCND(NM1)*RHO(NM1)+BTA*HCND(IN)*RHO(IN))*HKLL(IN)
+      B1=(ALB*HCND(JM1)*RHO(JM1)+BTB*HCND(IN)*RHO(IN))*HKTT(IN)
+      C1=(ALC*HCND(NP1)*RHO(NP1)+BTC*HCND(IN)*RHO(IN))*HKLL(NP1)
+      D1=(ALD*HCND(JP1)*RHO(JP1)+BTD*HCND(IN)*RHO(IN))*HKTT(JP1)
       ELSE  
-      A(IN)=(ALA*HCND(NM1)+BTA*HCND(IN))*HKLL(IN)
-      B(IN)=(ALB*HCND(JM1)+BTB*HCND(IN))*HKTT(IN)
-      C(IN)=(ALC*HCND(NP1)+BTC*HCND(IN))*HKLL(NP1)
-      D(IN)=(ALD*HCND(JP1)+BTD*HCND(IN))*HKTT(JP1)
+      A1=(ALA*HCND(NM1)+BTA*HCND(IN))*HKLL(IN)
+      B1=(ALB*HCND(JM1)+BTB*HCND(IN))*HKTT(IN)
+      C1=(ALC*HCND(NP1)+BTC*HCND(IN))*HKLL(NP1)
+      D1=(ALD*HCND(JP1)+BTD*HCND(IN))*HKTT(JP1)
       END IF
       END IF
       
       if(ntyp(in).eq.1) then
-       if(ntyp(nm1).eq.1) a(in) = 0.0d0
-       if(ntyp(jm1).eq.1) b(in) = 0.0d0
-       if(ntyp(np1).eq.1) c(in) = 0.0d0
-       if(ntyp(jp1).eq.1) d(in) = 0.0d0
+       if(ntyp(nm1).eq.1) a1 = 0.0d0
+       if(ntyp(jm1).eq.1) b1 = 0.0d0
+       if(ntyp(np1).eq.1) c1 = 0.0d0
+       if(ntyp(jp1).eq.1) d1 = 0.0d0
       end if
-      QL=-A(IN)*(P(IN)-P(NM1))
-      QA=-B(IN)*(P(IN)-P(JM1))
-      QR=-C(IN)*(P(IN)-P(NP1))
-      QB=-D(IN)*(P(IN)-P(JP1))
+      QL=-A1*(P(IN)-P(NM1))
+      QA=-B1*(P(IN)-P(JM1))
+      QR=-C1*(P(IN)-P(NP1))
+      QB=-D1*(P(IN)-P(JP1))
 !
 !    COMPUTE NET FLUX IN (+) OR OUT (-)
 !

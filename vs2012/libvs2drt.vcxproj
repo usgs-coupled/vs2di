@@ -84,11 +84,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='openmp_debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../PhreeqcRM/src;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../PhreeqcRM/src;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -102,7 +102,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src;../x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src;../x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -119,9 +119,9 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>../PhreeqcRM/src;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../PhreeqcRM/src;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common;../win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
@@ -137,7 +137,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src;../phreeqcpp/phreeqc;../phreeqcpp;../x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp;../PhreeqcRM/src/IPhreeqcPhast/IPhreeqc;../PhreeqcRM/src/IPhreeqcPhast;../PhreeqcRM/src;../phreeqcpp/phreeqc;../phreeqcpp;../x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader />

@@ -183,7 +183,7 @@
       blank = ' '
       open(12,file='fort.12',FORM='UNFORMATTED',ACTION='WRITE',  &
       POSITION='REWIND')
-      open(2,file=filen)
+      open(2,file=trim(filen))
       read(2,9090)f5
       read(2,9090)f6
       read(2,9090)f7

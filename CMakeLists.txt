@@ -3,9 +3,6 @@ cmake_minimum_required (VERSION 2.8)
 # project
 project(vs2drt C CXX Fortran)
 
-## name
-#set(PROJECT_NAME "vs2drt")
-
 # source
 SET(vs2drt_SOURCES
 include/c_arrays.inc
@@ -120,10 +117,6 @@ vs2dt3_3_reactive_withoutArgus1.f90
 
 # executable
 add_executable(vs2drt ${vs2drt_SOURCES})
-
-
-# project
-project(libvs2drt CXX)
 
 # Disable deprecation warnings for standard C and STL functions in VS2005
 # and later

@@ -3,8 +3,8 @@ cmake_minimum_required (VERSION 2.8)
 # project
 project(vs2drt C CXX Fortran)
 
-# source
-SET(vs2drt_SOURCES
+# header files
+SET(vs2drt_HEADERS
 include/c_arrays.inc
 include/c_disch.inc
 include/c_dumm.inc
@@ -109,11 +109,24 @@ include/d_trxx.inc
 include/d_trxxh.inc
 include/d_trxy1.inc
 include/d_trxy2.inc
+)
+
+# F90 source
+SET(vs2drt_F90_SOURCES
 Call_RM.F90
-modules.f90
 PhreeqcRM/src/RM_interface.F90
+)
+
+# source
+SET(vs2drt_SOURCES
+${vs2drt_HEADERS}
+${vs2drt_F90_SOURCES}
+modules.f90
 vs2dt3_3_reactive_withoutArgus1.f90
 )
+
+source_group("Header Files" FILES ${vs2drt_HEADERS})
+source_group("Source Files" FILES ${vs2drt_F90_SOURCES})
 
 # executable
 add_executable(vs2drt ${vs2drt_SOURCES})
@@ -161,7 +174,7 @@ include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
 
 # dll/shared objects
-OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+##OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
 SET(LIB_TYPE STATIC)
 if (BUILD_SHARED_LIBS)
   SET(LIB_TYPE SHARED)
@@ -314,6 +327,25 @@ else ()
   endif ()
 endif ()
 
+# set PhreeqcRM defaults for vs2drt
+#
+
+# BUILD_SHARED_LIBS (must be static on windows)
+if (MSVC)
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "doc" FORCE)
+  mark_as_advanced(BUILD_SHARED_LIBS)
+endif()
+
+# PHREEQCRM_USE_ZLIB (must be enabled)
+set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)
+mark_as_advanced(PHREEQCRM_USE_ZLIB)
+
+# PHREEQCRM_BUILD_MPI (must be disabled)
+set(PHREEQCRM_BUILD_MPI OFF CACHE INTERNAL "doc" FORCE)
+mark_as_advanced(PHREEQCRM_BUILD_MPI)
+
+# PHREEQCRM_FORTRAN_TESTING (just hide)
+mark_as_advanced(PHREEQCRM_FORTRAN_TESTING)
 
 # subdirs
 add_subdirectory(PhreeqcRM)

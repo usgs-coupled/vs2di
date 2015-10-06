@@ -147,7 +147,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
 	ix = nx;
 	iz = nz;
 	ixz = ix*iz;
-	if (axes(1) == .false. .and. axes(2) == .false. ) then
+	if (axes(1) .eqv. .false. .and. axes(2) .eqv. .false. ) then
 		status = RM_ErrorMessage(rm_id, "No active coordinate direction in DIMENSIONS keyword.")
 		STOP "No active coordinate direction in DIMENSIONS keyword."
 	endif
@@ -159,7 +159,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
 
 	n = 0;
 	! x and y
-	if ((axes(1) == .true.) .and. (axes(2) == .true.)) then
+	if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .true.)) then
 		n = 0;
         do i = 1, ixz
 			if (initial_conditions(1,i) .ge. 0 .or. initial_conditions(1,i) .le. -100) then
@@ -172,7 +172,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
 		enddo
 		count_chem = n;
 	! x only
-	else if ((axes(1) == .true.) .and. (axes(2) == .false.)) then
+	else if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .false.)) then
 		if (iz .ne. 2) then
 			status = RM_ErrorMessage(rm_id, "z direction should contain only three nodes for this 1D problem.")
 			STOP "z direction should contain only three nodes for this 1D problem."
@@ -194,7 +194,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
 		enddo
 		count_chem = n;
 	!  Copy z line
-	else if ((axes(1) == .false.) .and. (axes(2) == .true.)) then
+	else if ((axes(1) .eqv. .false.) .and. (axes(2) .eqv. .true.)) then
 		n = 0
         do i = 1, ixz
 			if (initial_conditions(1,i) .lt. 0 .and. initial_conditions(1,i) > -100) then

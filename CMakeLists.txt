@@ -214,6 +214,17 @@ if (BUILD_SHARED_LIBS)
   endif()
 endif()
 
+##{{
+# check for openmp
+find_package(OpenMP)
+
+if (OPENMP_FOUND)
+  ADD_DEFINITIONS(-DUSE_OPENMP)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   ${OpenMP_C_FLAGS}")
+endif()
+##}}
+
 # set PhreeqcRM defaults for vs2drt
 #
 
@@ -235,12 +246,13 @@ add_subdirectory(PhreeqcRM)
 if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
   set(EXTRA_LIBS ${EXTRA_LIBS} ${ZLIB_LIBRARIES})
 endif()
+target_link_libraries(vs2drt ${EXTRA_LIBS})
 
-if (OPENMP_FOUND)
-  ADD_DEFINITIONS(-DUSE_OPENMP)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-  set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   ${OpenMP_C_FLAGS}")
-  if (PHREEQCRM_FORTRAN_TESTING)
-    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
-  endif()
-endif()
+##if (OPENMP_FOUND)
+##  ADD_DEFINITIONS(-DUSE_OPENMP)
+##  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+##  set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   ${OpenMP_C_FLAGS}")
+##  if (PHREEQCRM_FORTRAN_TESTING)
+##    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
+##  endif()
+##endif()

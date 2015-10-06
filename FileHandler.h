@@ -1,8 +1,15 @@
-/*! @file IPhreeqc.h
+/*! @file FileWriter.h
 	@brief C/Fortran Documentation
 */
 #ifndef FileWriter_H
 #define FileWriter_H
+
+#if defined(_WINDLL)
+#define IPQ_DLL_EXPORT __declspec(dllexport)
+#else
+#define IPQ_DLL_EXPORT
+#endif
+
 #if defined(_MSC_VER)
 #define FC_FUNC_(name,NAME) NAME
 #endif
@@ -19,13 +26,13 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-void FH_FinalizeFiles();
+IPQ_DLL_EXPORT void FH_FinalizeFiles();
 //void FH_ProcessRestartFiles(int *id, int *initial_conditions1_in, int *initial_conditions2_in, 
 //	double *fraction1_in);
-void FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation = NULL, int *mapping = NULL);
-void FH_SetRestartName(const char *name, long nchar);
-void FH_WriteFiles(int *id, int *print_hdf, int *print_media, int *print_xyz, int *xyz_mask, int *print_restart);
-void FH_WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
+IPQ_DLL_EXPORT void FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation = NULL, int *mapping = NULL);
+IPQ_DLL_EXPORT void FH_SetRestartName(const char *name, long nchar);
+IPQ_DLL_EXPORT void FH_WriteFiles(int *id, int *print_hdf, int *print_media, int *print_xyz, int *xyz_mask, int *print_restart);
+IPQ_DLL_EXPORT void FH_WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
 #if defined(__cplusplus)
 }
 #endif

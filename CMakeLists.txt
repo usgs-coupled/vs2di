@@ -145,12 +145,9 @@ if(NOT ZLIB_ROOT)
     set(ZLIB_ROOT $ENV{ZLIB_ROOT})
   endif()
 endif()
-find_package(ZLIB QUIET)
-if (ZLIB_FOUND)
-  option(PHREEQCRM_USE_ZLIB "Use zlib compression for dump files" ON)
-else()
-  option(PHREEQCRM_USE_ZLIB "Use zlib compression for dump files" OFF)
-endif()
+
+# default PHREEQCRM_USE_ZLIB is OFF
+option(PHREEQCRM_USE_ZLIB "Use zlib compression for dump files" OFF)
 if (PHREEQCRM_USE_ZLIB)
   find_package(ZLIB REQUIRED)
 endif()
@@ -209,14 +206,16 @@ else ()
   endif ()
 endif ()
 
+# when building shared objects must include link libs
+if (BUILD_SHARED_LIBS)
+  target_link_libraries(libvs2drt PhreeqcRM)
+  if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
+    target_link_libraries(libvs2drt ${ZLIB_LIBRARIES})
+  endif()
+endif()
+
 # set PhreeqcRM defaults for vs2drt
 #
-
-# BUILD_SHARED_LIBS (must be static on windows)
-if (MSVC)
-  set(BUILD_SHARED_LIBS OFF CACHE BOOL "doc" FORCE)
-  mark_as_advanced(BUILD_SHARED_LIBS)
-endif()
 
 # PHREEQCRM_USE_ZLIB (must be enabled)
 set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)

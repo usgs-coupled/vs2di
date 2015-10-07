@@ -156,8 +156,23 @@ if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
   include_directories(${ZLIB_INCLUDE_DIRS})
 endif()
 
+# fortran name mangling
+include(FortranCInterface)
+FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
+FH_FinalizeFiles
+FH_ProcessRestartFiles
+FH_SetPointers
+FH_SetRestartName
+FH_WriteFiles
+FH_WriteBcRaw
+)
+
+# define CMAKE_FC
+add_definitions(-DCMAKE_FC)
+
 # source
 SET(libvs2drt_SOURCES
+${PROJECT_BINARY_DIR}/FC.h
 FileHandler.cpp
 FileHandler.h
 )
@@ -169,6 +184,7 @@ include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
+include_directories("${PROJECT_BINARY_DIR}")
 
 # dll/shared objects
 ##OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)

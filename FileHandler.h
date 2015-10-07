@@ -23,6 +23,11 @@
 #define FH_WriteFiles                   FC_FUNC_ (fh_writefiles,                    FH_WRITEFILES)
 #define FH_WriteBcRaw                   FC_FUNC_ (fh_writebcraw,                    FH_WRITEBCRAW)
 #endif
+
+#if defined(CMAKE_FC)
+#include "FC.h"
+#endif
+
 #if defined(__cplusplus)
 extern "C" {
 #endif

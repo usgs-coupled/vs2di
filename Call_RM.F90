@@ -147,7 +147,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
 	ix = nx;
 	iz = nz;
 	ixz = ix*iz;
-	if (axes(1) .eqv. .false. .and. axes(2) .eqv. .false. ) then
+	if ((.not. axes(1)) .and. (.not. axes(2))) then
 		status = RM_ErrorMessage(rm_id, "No active coordinate direction in DIMENSIONS keyword.")
 		STOP "No active coordinate direction in DIMENSIONS keyword."
 	endif

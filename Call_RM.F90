@@ -20,7 +20,7 @@ Module vs2dt_rm
     
     ! ... make a reaction module, makes instances of IPhreeqc and IPhreeqcPhast with same rm_id
     solute_rm = solute
-    nthreads = 1
+    !nthreads = 1
     rm_id = RM_Create(NNODES, nthreads)
     status = RM_SetFilePrefix(rm_id, PREFIX)
     status = RM_OpenFiles(rm_id)  

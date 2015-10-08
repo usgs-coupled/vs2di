@@ -13,7 +13,7 @@
       if (count_args .ge. 1) then
           call get_command_argument(1, arg)
           if (len_trim(arg) > 0) then
-              READ(arg,"(I)") i
+              READ(arg,"(I5)") i
               if (i > 1) then
                   nthreads = i
               endif

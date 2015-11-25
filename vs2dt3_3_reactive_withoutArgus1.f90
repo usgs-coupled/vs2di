@@ -1233,6 +1233,7 @@
       logical axes(2) 
       common/axis/axes
       common/ITEMK/KNLY,KNXR,KNNODE
+      integer :: iu = 101
       !!@@include 'd_idummAlloc.inc'
       allocate(IDUM(NXR))
       !!@@include 'd_itembloAlloc.inc'

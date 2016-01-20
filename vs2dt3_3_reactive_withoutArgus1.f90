@@ -1116,7 +1116,9 @@
           status = RM_SetSaturation(rm_id, satur)
           !if (npscrn .ne. 0) then
               write(msg,"(A,F12.2)") "Chemistry at time: ", stim
+              status = RM_SetScreenOn(rm_id, 1)
               status = RM_ScreenMessage(rm_id, msg)
+              status = RM_SetScreenOn(rm_id, 0)
           !endif
           status = RM_RunCells(rm_id)
           call GetConcentrationsRM(cc)
@@ -1431,37 +1433,37 @@
       HX(IN)=HK(J22,1)
   40 JTEX(IN)=J22
   50 CONTINUE
-     ELSE
-!
-!    READ TEXTURE CLASSES BY BLOCK--EITHER CONTINUOUS LAYERS OR
-!    LAYERS BOUNDED BY VERTICAL DISCONTINUITIES.
-!
-      WRITE (06,4040)
-      JTP=1
-   60 READ (05,*) IL,IR,JBT,JRD
-      DO 70 N=IL,IR
-      IDUM(N)=JRD
-   70 CONTINUE
-      IF(IR.LT.NXR) GO TO 60
-      DO 80 J=JTP,JBT
-      if (ntex.gt.9) then
-       write (06,4151) j,(idum(n),n=1,nxr)
-      else
-       WRITE (06,4150) J,(IDUM(N),N=1,NXR)
-      end if
-   80 continue
-      DO 90 J=JTP,JBT
-      DO 90 N=1,NXR
-      IN=NLY*(N-1)+J
-      J22=IDUM(N)
-      HX(IN)=HK(J22,1)
-      JTEX(IN)=J22
-   90 CONTINUE
-      IF(JBT.EQ.NLY) GO TO 100
-      JTP=JBT+1
-      GO TO 60
+      ELSE
+          !
+          !    READ TEXTURE CLASSES BY BLOCK--EITHER CONTINUOUS LAYERS OR
+          !    LAYERS BOUNDED BY VERTICAL DISCONTINUITIES.
+          !
+          WRITE (06,4040)
+          JTP=1
+60        READ (05,*) IL,IR,JBT,JRD
+          DO 70 N=IL,IR
+              IDUM(N)=JRD
+70        CONTINUE
+          IF(IR.LT.NXR) GO TO 60
+          DO 80 J=JTP,JBT
+              if (ntex.gt.9) then
+                  write (06,4151) j,(idum(n),n=1,nxr)
+              else
+                  WRITE (06,4150) J,(IDUM(N),N=1,NXR)
+              end if
+80        continue
+          DO 90 J=JTP,JBT
+              DO 90 N=1,NXR
+                  IN=NLY*(N-1)+J
+                  J22=IDUM(N)
+                  HX(IN)=HK(J22,1)
+                  JTEX(IN)=J22
+90        CONTINUE
+          IF(JBT.EQ.NLY) GO TO 100
+          JTP=JBT+1
+          GO TO 60
       END IF
-  100 CONTINUE
+100   CONTINUE
 !
 !   BORDERS OF DOMAIN ARE ALL SET TO NO FLOW BOUNDARIES
 !

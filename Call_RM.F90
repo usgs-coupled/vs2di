@@ -78,7 +78,8 @@ SUBROUTINE InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
         status = RM_SetUnitsPPassemblage(rm_id, 1)
         status = RM_SetUnitsSSassemblage(rm_id, 1)
         status = RM_SetUnitsSurface(rm_id, 1)            
-        status = RM_SetTimeConversion(rm_id, 1.0d0)
+        status = RM_SetTimeConversion(rm_id, 1.0d0)   
+        status = RM_SetScreenOn(rm_id, 0)
 
         ! set rv
         allocate (temp(nxyz))

@@ -1,5 +1,6 @@
       Program Main
       USE vs2dt_rm
+      USE PhreeqcRM
       Integer JSTOP
       character*80 filen
       integer :: clock0, clock1, clockmax, clockrate, ticks
@@ -9,6 +10,7 @@
       
 !     Argument is number of threads for OpenMP
       nthreads = 1
+#ifdef USE_OPENMP      
       count_args = command_argument_count()  
       if (count_args .ge. 1) then
           call get_command_argument(1, arg)
@@ -19,6 +21,22 @@
               endif
           endif
       endif
+#endif  
+#ifdef USE_MPI
+  ! MPI
+      call MPI_INIT(status)
+      if (status .ne. MPI_SUCCESS) then
+          stop "Failed to get mpi_myself"
+      endif
+      call MPI_Comm_rank(MPI_COMM_WORLD, mpi_myself, status)
+      call MPI_Comm_size(MPI_COMM_WORLD, mpi_tasks, status)
+      if (mpi_myself > 0) then
+          rm_id = RM_Create(nxyz, MPI_COMM_WORLD)
+          status = RM_MpiWorker(rm_id)
+          status = RM_Destroy(rm_id)
+          stop
+      endif
+#endif
       
       filen = 'vs2drt.fil'
       JSTOP = 0

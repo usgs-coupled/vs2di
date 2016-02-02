@@ -34,6 +34,7 @@
           rm_id = RM_Create(nxyz, MPI_COMM_WORLD)
           status = RM_MpiWorker(rm_id)
           status = RM_Destroy(rm_id)
+          call MPI_FINALIZE(status)
           stop
       endif
 #endif
@@ -51,6 +52,13 @@
       !ticks = clock1-clock0
       !ticks = mod(ticks+clockmax, clockmax)   ! reset negative numbers
       !secs = float(ticks)/float(clockrate)
+#ifdef USE_MPI
+      status = RM_MpiWorkerBreak(rm_id)
+#endif
+      status = RM_Destroy(rm_id)
+#ifdef USE_MPI
+      call MPI_FINALIZE(status)
+#endif
       call system_clock(clock1, clockrate, clockmax)
       secs = real( clock1 - clock0) / real(clockrate)
       print*,'JSTOP = ',JSTOP

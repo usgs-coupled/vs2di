@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<TITLE>Tutorial: Transport Options</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Tutorial: Transport Options</H2>
+
+
+
+<P>In the <A HREF="transportOptions.html">transport</A> panel, 
+"Centered" differencing in space and time are selected.  The centered
+schemes are more accurate than the backward schemes
+and should be used whenever possible.  However, if the spatial grid
+is too coarse, centered differencing may produce oscillations in results
+(overshoot and undershoot of true solution).  This
+occurs when the cell Peclet number exceeds 2.  Oscillations may
+be avoided by the use of backward differencing.  However this option
+will introduce numerical dispersion, or artificial smearing of
+sharp concentration fronts.</P>
+
+<P>No adsorption or ion exchange occurs in this simulation.</P>
+
+<P><HR WIDTH="50%" ALIGN=LEFT></P>
+ 
+<P>Next step: <A HREF="tutorial_SolverOptions.html">Solver Options</A></P>
+<P>Previous step: <A HREF="tutorial_FlowOptions.html">Flow Options</A></P>
+
+
+</BODY>
+</HTML>

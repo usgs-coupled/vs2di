@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>Transport Boundary Conditions</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Transport Boundary Conditions</H2>
+
+<P>You may select from the transport boundary conditions listed below.</P>
+
+<P><B>No energy flux.</B> The energy flux across the boundary is zero.
+This boundary condition is available only for boundary segments that
+are assigned a "no flow" boundary condition.</P>
+
+<P><B>Specified temperature at boundary.</B> The temperature
+at the boundary is set at the specified value. In the model, this is
+implemented by setting the temperature at boundary cells to the specified
+value.</P>
+
+<P><B>Specified temperature of inflow.</B> The temperature of flow
+across the boundary into the domain is set at the specified value.
+This boundary condition effectively sets the energy flux across the
+boundary into the domain. This energy flux is equal to the inflow temperature
+times the heat capacity of the fluid times the fluid flux.</P>
+
+<P><B>Specified conductive flux at boundary.</B> The energy flux
+by conduction across the boundary into the domain (in units of [Q/LT], or [J/ms]
+for SI units) is set at the specified value.
+This boundary condition is available only for boundary segments that
+are assigned a "no flow" boundary condition.</P>
+
+<P><B>Default outflow.</B> This boundary condition must be specified
+along boundaries of possible seepage faces, evaporation/transpiration,
+and where flux or volumetric flow rate is specified in the
+direction out of the domain. For all the above cases except evaporation,
+the energy flux out of the domain is computed by multiplying the
+temperature at boundary cell by the fluid heat capacity and the outflow flux (dispersive flux
+out of the domain is not allowed). For evaporation,
+the evaporating water is assumed remove no energy from the domain.</P>
+
+<P><B>Transport Boundary Condition Options</B></P>
+<P>For any boundary segment,
+the available options for transport boundary conditions depend on the
+flow boundary condition specified for that segment.</P>
+
+<P>For boundary segments that are assigned "no flow" boundary condition,
+the options for transport boundary conditions are:</P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">No energy flux</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Specified temperature at boundary</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Specified conductive flux at boundary</td>
+</tr>
+</table>
+
+<P>For boundary segments that are assigned flow boundary conditions of
+"specified pressure head", "specified total head", "specified flux into domain",
+or "specified volumetric flow into domain", the options for transport
+boundary conditions are:</P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Specified temperature of inflow</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Specified temperature at boundary</td>
+</tr>
+</table>
+
+<P>For boundary segments that are assigned flow boundary conditions of
+"possible seepage face" or "gravity drain", the options for transport boundary condition are:
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Default outflow</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Specified temperature at boundary</td>
+</tr>
+</table>
+
+<P>For boundary segments that are assigned flow boundary conditions of
+"specified flux out of domain", "specified volumetric flow out of domain",
+or "evaporation/transpiration", the sole option
+for transport boundary condition is:
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Default outflow</td>
+</tr>
+</table>
+
+<P>For information about <b>Assignment Options</b>, click 
+<a href="bcAssignmentOption.html">here</a>.
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: trimesh - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSPDB05.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "C:\j2sdk1.4.2\include" /I "C:\j2sdk1.4.2\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TRIMESH_EXPORTS" /Fp"Release/trimesh.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Dev\mp2\mp2_dev_java2\src\trimesh\triangle.c"
+"C:\Dev\mp2\mp2_dev_java2\src\trimesh\trimesh.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSPDB05.tmp" 
+Creating temporary file "C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSPDB06.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/trimesh.pdb" /machine:I386 /out:"Release/trimesh.dll" /implib:"Release/trimesh.lib" 
+.\Release\triangle.obj
+.\Release\trimesh.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSPDB06.tmp"
+<h3>Output Window</h3>
+Compiling...
+triangle.c
+trimesh.c
+Linking...
+   Creating library Release/trimesh.lib and object Release/trimesh.exp
+
+
+
+<h3>Results</h3>
+trimesh.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

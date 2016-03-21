@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>Computation Mode</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Computation Mode</H2>
+
+<p> The standalone postprocessor operates in computation mode when
+a namelist file (for example, vs2dt.fil or vs2dh.fil) is loaded.</p> 
+
+<p><B>Note:</B> The computation mode is intended for knowledgeable users who want
+to modify model data exported from VS2DTI or VS2DHI.</p>
+
+<P>If you have exported data from the <B>VS2DTI</B> preprocessor, the
+following 2 files are created:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The namelist file (vs2dt.fil), which contains
+the names of input and output files to be opened by VS2DT 3.3.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The model data file (vs2dt.dat), which contains the 
+  input data to VS2DT 3.3.</td>
+</tr>
+</table>
+
+<P>Similarly, if you have exported data from the <b>VS2DHI</b> preprocessor, the
+following 2 files are created:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The namelist file (vs2dh.fil), which contains
+the names of input and output files to be opened by VS2DH 3.3.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The model data file (vs2dh.dat), which contains the 
+  input data to VS2DH 3.3.</td>
+</tr>
+</table>
+
+<p>You may modify the model data file in a text processor.</p>
+
+<p>In addition, migration procedures are available so that 
+model input files originally prepared for VS2DT 2.5 or VS2DH 1.0
+may be used for running simulations in the standalone postprocessor.</p>
+
+</BODY>
+</HTML>

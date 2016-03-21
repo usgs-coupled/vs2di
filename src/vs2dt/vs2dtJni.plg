@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: vs2dtJni - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSP74C.tmp" with contents
+[
+/assume:underscore /compile_only /iface:nomixed_str_len_arg /include:"Release/" /include:"include/" /dll /libs:static /names:lowercase /nologo /warn:nofileopt /module:"Release/" /object:"Release/" 
+"F:\pahsieh_992\Dev\vs2di\vs2di_1.3\src\vs2dt\vs2dt3_3.f"
+]
+Creating temporary file "C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSP74D.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "C:\Program Files\Java\jdk1.7.0_01\include" /I "C:\Program Files\Java\jdk1.7.0_01\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "VS2DTJNI_EXPORTS" /Fp"Release/vs2dtJni.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\pahsieh_992\Dev\vs2di\vs2di_1.3\src\vs2dt\vs2dtJni.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSP74D.tmp" 
+Creating temporary file "C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSP74E.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/vs2dtJni.pdb" /machine:I386 /nodefaultlib:"libcmt" /out:"Release/vs2dtJni.dll" /implib:"Release/vs2dtJni.lib" 
+.\Release\vs2dtJni.obj
+.\Release\vs2dt3_3.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\pahsieh\LOCALS~1\Temp\RSP74E.tmp"
+<h3>Output Window</h3>
+Compiling Fortran...
+F:\pahsieh_992\Dev\vs2di\vs2di_1.3\src\vs2dt\vs2dt3_3.f
+Compiling...
+vs2dtJni.c
+Linking...
+   Creating library Release/vs2dtJni.lib and object Release/vs2dtJni.exp
+
+
+
+<h3>Results</h3>
+vs2dtJni.dll - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

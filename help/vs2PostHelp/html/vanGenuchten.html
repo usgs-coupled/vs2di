@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>van Genuchten Model</TITLE>
+</HEAD>
+<BODY>
+
+<H2>van Genuchten Model</H2>
+
+<P><B>For h &lt; 0</B>:
+<br>s<sub>e </sub> = 1 / (1 + |alpha*h|<sup>beta</sup>)<sup>gamma</sup>
+<br>Kr = ( 1 - C * D<sup> (-gamma) </sup>)<sup>2</sup> / D<sup> (gamma/2)</sup>
+<br>C = |alpha*h|<sup> (beta-1)</sup>
+<br>D = 1 + |alpha*h|<sup> beta</sup>
+
+<P><B>For h &gt;= 0</B>:
+<br>s<sub>e </sub> = 1
+<br>Kr = 1</P>
+
+<P><B>where</B>
+
+<br>s<sub>e </sub> = effective saturation = (VMC - RMC)/(porosity - RMC)
+<br>VMC = volumetric moisture content 
+<br>RMC = residual moisture content
+<br>Kr = relative hydraulic conductivity
+<br>h = pressure head
+<br>alpha = parameter, see note below.
+<br>beta = parameter
+<br>gamma = 1 - 1/beta
+
+<P>Note: The van Genuchten parameter "alpha" as implemented in
+this program is same as the one defined by van Genuchten (1980).
+In other words, "alpha" is the absolute value of the reciprocal of "alpha-prime"
+as used in VS2DT 2.5 and described in the
+program documentations Lappala and other (1987) and Healy (1990).</P>
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>Evaporation Parameters</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Evaporation Parameters</H2>
+
+<P><I>Note</I>: All parameters are defined at the beginning of an
+evapotranspiration period and are assumed to vary linearly from
+the beginning of one period to the beginning of the next period.</P>
+
+<P><B>Potential Evaporation (PEVAL)</B>: [L]/[T]. May be estimated using, say,
+the Penman equation.</P>
+
+<P><B>Surface resistance (SRES)</B>: 1/[L]. In absence of a surface crust, 
+the value should be set to the reciprocal of the depth of the top node.
+If a surface crust is present, the value may be reduced to account for
+a lower permeability in the crust relative to the soil.</P>
+
+<P><B>Pressure potential of atmosphere (HA)</B>: [L]. May be computed 
+using the Kelvin equation</P>
+
+<P>HA = R * T * ln(h<sub>a</sub>) / (M<sub>w</sub> * g)</P>
+
+<P>where</p>
+
+<P>R = universal gas constant</P>
+<P>T = temperature in degrees Kelvin</P>
+<P>h<sub>a</sub> = relative humidity of atmosphere</P>
+<P>M<sub>w</sub> = molecular weight of water</P>
+<P>g = acceleration due to gravity</P>
+
+
+</BODY>
+</HTML>

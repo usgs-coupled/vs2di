@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>Basic Options</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Basic Options</H2>
+
+<P><B>Title</B>: A description of the simulation. Must be 80 characters or less.</P>
+
+<P><B>Length, Time, and Energy Units</B>: The most commonly used units
+are SI units (meters, seconds, and joules).  The user may
+specify different units. The same units apply to all data. For example, if
+units are meter (m) and second (s), then hydraulic conductivity will be in
+m/s. Temperature is always in degrees Celsius.</P>
+
+<P><I>Note</I>: The program does not convert values if units are changed
+after data entry. Data always maintain their numerical values as entered 
+by the user.</P>
+
+<P><B>Use radial coordinates</B>: Select this option to simulate
+flow (and transport) in a cylindrical domain with axial symmetry.</P>
+
+<P><B>Simulate transport</B>: Select this option to include energy
+transport in the simulation.</P>
+
+<P><B>Simulate Evaporation</B>: Select this option to include
+evaporation (over bare soil) in the simulation.</P>
+
+<P><B>Simulate Transpiration</B>: Select this option to include 
+transpiration (plant-root extraction) in the simulation.</P>
+
+<P>NOTE -- The user is cautioned on the use of evaporation and evapotranspiration
+in VS2DH.  These processes can influence and be influenced by soil temperature.
+As described in Lappala and others (1987) and implemented in VS2DH, these processes
+are assumed to be isothermal.  Users should evaluate the ramifications of this
+assumption in their applications.  If these processes are an integral component of
+an application, then use of another  numerical model that treats evaporation and
+evaotranspiration in a more realistic fashion may be warranted.</P>
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,33 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "trimesh"=.\trimesh.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    Vs2di version 1.2
+    ..\..\..\..\vs2di\vs2di_1.2\src\trimesh
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

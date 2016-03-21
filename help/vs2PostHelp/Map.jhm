@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+	<mapID target="animationSpeed" url="html/animationSpeed.html" />
+	<mapID target="computationMode" url="html/computationMode.html" />
+	<mapID target="bitmap" url="html/bitmap.html" />
+	<mapID target="displayResults" url="html/displayResults.html" />
+	<mapID target="drawingOptions" url="html/drawingOptions.html" />
+	<mapID target="fullMigrationVs2dh1p0" url="html/fullMigrationVs2dh1p0.html" />
+	<mapID target="fullMigrationVs2dt2p5" url="html/fullMigrationVs2dt2p5.html" />
+	<mapID target="graphicsBuffering" url="html/graphicsBuffering.html" />
+	<mapID target="loadSavedSimulationFile" url="html/loadSavedSimulationFile.html" />
+	<mapID target="migrationVs2dh1p0" url="html/migrationVs2dh1p0.html" />
+	<mapID target="migrationVs2dt2p5" url="html/migrationVs2dt2p5.html" />
+	<mapID target="partialMigrationVs2dh1p0" url="html/partialMigrationVs2dh1p0.html" />
+	<mapID target="partialMigrationVs2dt2p5" url="html/partialMigrationVs2dt2p5.html" />
+	<mapID target="playbackControl" url="html/playbackControl.html" />
+	<mapID target="playbackMode" url="html/playbackMode.html" />
+	<mapID target="postprocessor" url="html/postprocessor.html" />
+	<mapID target="print" url="html/print.html" />
+	<mapID target="loadNamelistFile" url="html/loadNamelistFile.html" />
+	<mapID target="saveSimulation" url="html/saveSimulation.html" />
+	<mapID target="simulationControl" url="html/simulationControl.html" />
+	<mapID target="vanGenuchten" url="html/vanGenuchten.html" />
+	<mapID target="zooming" url="html/zooming.html" />	
+</map>

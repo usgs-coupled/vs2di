@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>Tutorial: Recharge Periods</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Tutorial: Recharge Periods</H2>
+
+
+
+<P>
+To view  the <A HREF="rechargePeriods.html">
+recharge periods</A> window, select "Recharge Period 
+Window" from the "Show" menu.  The window will also be
+displayed if "Boundary Conditions" is
+selected from the 
+"Active Data" Selector (see  
+<object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
+<param name="content" value="./fig_prewindow.html">
+<param name="text" value="figure">
+<param name="textFontFamily" value="Serif">
+<param name="textColor" value="blue">
+<param name="viewerActivator" value="javax.help.LinkLabel">
+<param name="viewerStyle" value="javax.help.SecondaryWindow">
+<param name="viewerName" value="secondary_window">
+<param name="viewerLocation" value="400,220">
+<param name="viewerSize" value="400,340">
+</object>
+).</P>
+<P>
+There are 2 recharge periods for the example simulation, the first
+lasting 10 days and the second lasting 100 days.  
+Aside from boundary conditions all other parameters for the 
+2 recharge periods are identical.  The initial time step size
+is 0.0001 days.  The time step size will be increased for each
+successive step by a factor of 1.2 until a maximum step size of
+1 day is reached.  If convergence of the solver is not attained,
+the time step size will be reduced by a factor of 0.1.  The maximum
+allowed change in head is 10 m.  Steady state will only be assumed
+when there is no change in computed heads between adjacent time steps.
+If the applied infiltration rate exceeds the ability of the soil
+to imbibe water, then ponding will occur in the simulation with 
+the elevation of ponded water being equal to that of land surface.
+</P>
+
+<P><HR WIDTH="50%" ALIGN=LEFT></P>
+ 
+<P>Next step: <A HREF="tutorial_BoundaryConditions.html">Boundary Conditions</A></P>
+<P>Previous step: <A HREF="tutorial_InitialConcentration.html">Initial Concentration</A></P>
+
+
+</BODY>
+</HTML>

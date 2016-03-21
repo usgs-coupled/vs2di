@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<TITLE>VS2DT 3.3 Model Input Files</TITLE>
+</HEAD>
+<BODY>
+
+<H2>VS2DT 3.3 Model Input Files</H2>
+
+<P>Model Input Files contain ASCII data that are read by the numerical
+model VS2DT 3.3. </p>
+
+<P>When you have entered all required data in the preprocessor,
+and you invoke the postprocessor (by selecting "Postprocessor" 
+from the "Show" menu), two model input files (vs2dh.fil and vs2dh.dat) are 
+generated in the working directory (see 
+<object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
+<param name="content" value="./fig_files.html">
+<param name="text" value="figure">
+<param name="textFontFamily" value="Serif">
+<param name="textColor" value="blue">
+<param name="viewerActivator" value="javax.help.LinkLabel">
+<param name="viewerStyle" value="javax.help.SecondaryWindow">
+<param name="viewerName" value="secondary_window">
+<param name="viewerLocation" value="100,100">
+<param name="viewerSize" value="640,600">
+</object>). This is done automatically and requires no handling by the user.</p>
+
+<P><B>Therefore, in most cases, users may ignore the model input files.</B></p>
+
+<P>The information below is provided for knowledgeable users who want
+to generate model input files without invoking the postprocessor. 
+This is known as <B>exporting</B>, and can be done as follows:</P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Make sure all required simulation setup data are entered in the
+    preprocessor.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "File" menu, and select "Export data". The Export Data
+     dialog box is displayed.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">Navigate to the desired folder and enter the name of the namelist file
+     (see below). By convention, this file should end with the 
+     extension ".fil"--this convention is recommended but is not required.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Click "OK"</td>
+</tr>
+</table>
+
+<P>The export process generates two files in the specified folder:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The <B>namelist file</B>, as specified in step 3 above, contains 
+    the names of input and output files to be opened by VS2DT 3.3. </td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The <B>model data file,</B> which is always named vs2dt.dat, 
+    contains the input data to VS2DT 3.3.</td>
+</tr>
+</table>
+
+<P>Exporting provides the flexibility for knowledgeable users to manually
+alter the model data file (using a text editor). Such modification is necessary if
+the preprocessor is not able to create a model setup in a particular
+configuration. The modified model data can be run by 
+<a href="standalone.html">launching the standalone postprocessor.</A></P>
+
+
+</BODY>
+</HTML>

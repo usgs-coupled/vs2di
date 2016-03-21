@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<TITLE>Displaying Simulation Results</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Displaying Simulation Results</H2>
+
+<P>There are five options for displaying simulation results.</P>
+
+<P><B>Output Variable.</B> The output variables are total head, pressure head,
+moisture content, saturation, temperature, and velocity or flux magnitude.
+You may display an output variable by selecting it in the drop-down
+list box next to the label "Display". You may switch the display from
+one variable to another when the model is not running, but you may not
+switch the display when the model is running.</P>
+
+<P><B>Cell versus Contour.</B> This option is selected in the drop-down
+list box next to the Output Variable box. When "Cell" is selected,
+the display consists of active cells each colored uniformly according to
+the color scale on the right. When "Contour" is selected, the display
+consists of contours with the regions between contours filled with
+a uniform color according to the color scale on the right. You may switch
+between the display between "Cell" and "Contour" when the model is not running,
+but you may not switch the display when the model is running.</P>
+
+<P><I>Note:</I> Displaying contours requires additional computation
+that will significantly slow down the simulation.</P>
+
+<P><B>Color scale.</B> The color scale represents values using a spectrum
+of colors from blue to red. To set the color scale:</P>
+
+<p>1. Click the "Options" menu and select "Color Scale..."
+  The Color Scale dialog box is displayed.</p>
+
+<p>2. Enter the following 4 values:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left">Value at the red limit.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left">Value at the blue limit. Note that either red or
+    blue may be used to represent the upper or lower limit.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left">Contour interval. Specifies the number of contour
+    intervals. For example, if the value at the red limit is set to 100, the
+    value at the blue limit is set to 0, the contour interval is set to 20, then
+    5 contour intervals will be displayed: 0-20, 20-40, 40-60, 60-80 and 80-100.
+    This value has no effect when the display is set to "Cell".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left">Label interval. This controls the label frequency of the color scale.</td>
+</tr>
+</table>
+
+<p>3. Click "OK"</p>
+
+
+<P><B>Velocity or Flux Vectors.</B> </P>
+<P>Velocity or flux vectors are drawn at cell centers as a line oriented in the direction of
+the vector and whose length is proportional to the vector magnitude. </P>
+
+<P>If the bottom button on the toolbar displays <IMG src="images/velobutton.gif">, the
+vectors represent velocity. If the bottom button displays <IMG src="images/fluxbutton.gif">,
+the vectors represent flux (velocity times porosity).</P>
+
+<P>To control how vectors are drawn, click the "Options" menu and select "Vector..."
+The Vector dialog box is display. Enter/select the following:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left"><b>velocity</b> or <b><i>flux:</i></b>Select the quantity represented by the vector.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left"><b>scale:</b> the magnitude represented by a vector one
+  inch long.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left"><b>column interval:</b> A integral value of n means draw a vector every n-th column.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left"><b>row interval:</b> A integral value of n means draw a vector every n-th row.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•</td>
+  <td width="99%" valign="top" align="left"><B>show stem:</B> Select this option if you desire a small black square at the start of the vector</td>
+</tr>
+</table>
+
+<p><i>Note:</i>To display all vectors, enter 1 for both column interval and row interval.
+
+<P><STRONG>Textural Zone Boundaries</STRONG></p>
+<P>To show or hide the boundaries of the
+different textural zones you  drew in the Preprocessor, click the <IMG src="images/zonation.gif">&nbsp;button.</p>
+
+</BODY>
+</HTML>

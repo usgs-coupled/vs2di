@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<TITLE>Specifying Evapotranspiration Cycle</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Specifying Evapotranspiration Cycle</H2>
+
+<P><I>Note</I>: If neither evaporation (over bare soil) nor transpiration 
+(plant root extraction) is simulated, this step may be skipped.</P>
+
+<P>Evapotranspiration (evaporation + transpiration) is simulated as
+a recurring cycle (see 
+<object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
+<param name="content" value="./fig_etcycle.html">
+<param name="text" value="figure">
+<param name="textFontFamily" value="Serif">
+<param name="textColor" value="blue">
+<param name="viewerActivator" value="javax.help.LinkLabel">
+<param name="viewerStyle" value="javax.help.SecondaryWindow">
+<param name="viewerLocation" value="380,100">
+<param name="viewerSize" value="380,380">
+</object>). The cycle is composed of evapotranspiration periods
+of equal duration. Evapotranspiration parameters are defined at the
+beginning of each period, and are assumed to vary linearly from the 
+beginning of one period to the beginning of the next period.</P>
+
+<p>Evapotranspiration periods are contained in a table in the 
+Evapotranspiration Window. If this window is not visible, 
+display it by clicking the "Show" menu and selecting "Evapotranspiration 
+Window". If this menu item is grayed out, you will have to first open
+the <A HREF="modelOptions.html">Model Options</A> dialog box and
+select "simulate evaporation" and/or "simulate transpiration".
+</P> 
+
+<P>The columns of the table contains evapotranspiration parameters,
+which are divided into two panes:
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="evaporationParameters.html">Evaporation</A> (if evaporation is simulated.)
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="transpirationParameters.html">Transpiration</A> (if transpiration is simulated.)
+</p>
+
+<P>Cells in the table are not directly editable. Instead, use the buttons
+below the table to:
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="setEvapotranspirationPeriodLength.html">Set the evapotranspiration period length</A>
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="addEvapotranspirationPeriod.html">Add an evapotranspiration period</A>
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="editEvapotranspirationPeriod.html">Edit an evapotranspiration period</A>
+<br>&nbsp;•&nbsp;&nbsp;<A HREF="deleteEvapotranspirationPeriod.html">Delete an evapotranspiration period</A>
+</p>
+
+<P><HR WIDTH="50%" ALIGN=LEFT></P>
+
+<P>Next step: <A HREF="drawingOptions.html">Set up the drawing area</A></P>
+<P>Previous step: <A HREF="texturalClasses.html">Specify textural classes</A></P>
+
+
+</BODY>
+</HTML>

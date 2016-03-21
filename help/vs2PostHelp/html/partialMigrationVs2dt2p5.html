@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<TITLE>Partial Migration Procedure for Data Prepared for VS2DT 2.5</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Partial Migration Procedure for Data Prepared for VS2DT 2.5</H2>
+
+<P>For data originally prepared for VS2DT 2.5, the partial
+migration procedure requires:</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">no change in the model data file</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">creating a namelist file</td>
+</tr>
+</table>
+
+<P>The namelist file must contain the following 9 lines. The commonly
+used file names are indicated in parentheses.</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">The name of the model data file (vs2dt.dat).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">The name of the main output file (vs2dt.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">The line containing "file07.out" (without quotes). 
+  This is the name of an auxiliary file that is not currently used.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing heads and concentrations (variables.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing selected fluid and solute balance
+components (balance.out)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing heads, concentrations, etc.
+for selected observation points (obsPoints.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">If initial pressure heads or moisture contents are specified in
+    an array, then enter the name of the file containing this array.
+    (If this array is in the model data file, repeat line 1 here.)
+    If initial pressure heads or moisture contents are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">8. </td>
+  <td width="99%" valign="top" align="left">If initial concentrations are specified in an array, then enter the
+    name of the file containing this array. (If this array is in the model data file,
+    repeat line 1 here.) If initial concentrations are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">9. </td>
+  <td width="99%" valign="top" align="left">The line containing "# vs2dt2.5xn" (without quotes), where the letter 'x' is replaced by
+    a single-character code that indicates the type of hydraulic characteristic
+    function, and n is a single-integer code that indicates the type of
+    adsorption or ion exchange.
+    <br>Replace 'x' by one of the following letters:
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;b - Brooks Corey
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;v - van Genuchten
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;h - Haverkamp
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;t - tabular data
+    <br>Replace 'n' by one of the following integers:
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;1 - no adsorption, no ion exchange
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;2 - adsorption by Langmuir isotherm
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;3 - adsorption by Freundlich isotherm
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;4 - Monovalent-monovalent ion exchange
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;5 - Monovalent-divalent ion exchange
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;6 - Divalent-monovalent ion exchange
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;7 - Divalent-divalent ion exchange
+    <br>For example, the line "# vs2dt2.5v3" indicates use of the
+    van Genuchten hydraulic characteristic function, and
+    adsorption described by the Freundlich isotherm.
+    </td>
+</tr>
+</table>
+
+<P><B>Note:</B> The namelist file must be placed in the same directory
+as the model data file.</p>
+
+<P>To view sample files after full migration, please click the following:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A HREF="partialMigrationExample_vs2dt_dat.html">vs2dt.dat</A> (model data file, no change required) </td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A HREF="partialMigrationExample_vs2dt_fil.html">vs2dt.fil</A> (namelist file)</td>
+</tr>
+</table>
+
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<TITLE>Full Migration Procedure for Data Prepared for VS2DH 1.0</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Full Migration Procedure for Data Prepared for VS2DH 1.0</H2>
+
+<P>For data originally prepared for VS2DH 1.0, the full
+migration procedure requires:</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">modifying the model data file</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">creating a nameList file</td>
+</tr>
+</table>
+
+<P>The model data file must be modified as follows.</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">After "Card B-5", insert an extra line containing 2 integers
+    separated by one or more spaces. The first integer indicates
+    the type of hydraulic characteristic function to be use. The options
+    are:
+    <br>&nbsp;&nbsp;&nbsp;0 - Brooks Corey
+    <br>&nbsp;&nbsp;&nbsp;1 - van Genuchten
+    <br>&nbsp;&nbsp;&nbsp;2 - Haverkamp
+    <br>&nbsp;&nbsp;&nbsp;3 - tabular data
+    <br>The second integer is a dummy place holder and can be any value,
+    for example, 1.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">If the van Genuchten hydraulic characteristic function is used, replace
+      the 5th parameter in "Card B-7", alpha-prime, by the inverse of its absolute value,
+      alpha.  VS2DH 3.3 now uses the definition for alpha as it was originally proposed
+      by van Genuchten (1980). (For example, if the original value is -25, it should be replaced as
+      0.04.) See van Genuchten 
+        <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
+        <param name="content" value="./vanGenuchten.html">
+        <param name="text" value="formula">
+        <param name="textFontFamily" value="Serif">
+        <param name="textColor" value="blue">
+        <param name="viewerActivator" value="javax.help.LinkLabel">
+        <param name="viewerStyle" value="javax.help.SecondaryWindow">
+        <param name="viewerLocation" value="380,100">
+        <param name="viewerSize" value="400,640">
+        </object>        &nbsp;for the equations used in VS2DH 3.3.</td>
+</tr>
+</table>
+
+<P>The namelist file must contain the following.  The commonly
+used file names are indicated in parentheses.</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">The name of the model data file (vs2dh.dat).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">The name of the main output file (vs2dh.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">The line containing "file07.out" (without quotes). 
+  This is the name of an auxiliary file that is not currently used.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing heads and temperatures(variables.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing selected fluid and energy balance
+components (balance.out)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing 
+  heads, temperatures, etc. for selected observation points (obsPoints.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">If initial pressure heads or moisture contents are specified in
+    an array, then enter the name of the file containing this array.
+    (If this array is in the model data file, repeat line 1 here.)
+    If initial pressure heads or moisture contents are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">8. </td>
+  <td width="99%" valign="top" align="left">If initial temperatures are specified in an array, then enter the
+    name of the file containing this array. (If this array is in the model data file,
+    repeat line 1 here.) If initial temperatures are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">9. </td>
+  <td width="99%" valign="top" align="left">The line containing "# vs2dh3.3" (without quotes). 
+  This is always the last line of the namelist file.</td>
+</tr>
+</table>
+
+<P><B>Note:</B> The namelist file must be placed in the same directory
+as the model data file.</p>
+
+
+<P>To view sample files after full migration, please click on the following:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A href="fullMigrationExample_vs2dh_dat.html">vs2dh.dat</A> (model data file)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A href="fullMigrationExample_vs2dh_fil.html">vs2dh.fil</A> (namelist file)</td>
+</tr>
+</table>
+
+
+
+</BODY>
+</HTML>

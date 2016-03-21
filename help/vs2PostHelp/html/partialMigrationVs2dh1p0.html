@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<TITLE>Partial Migration Procedure for Data Prepared for VS2DH 1.0</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Partial Migration Procedure for Data Prepared for VS2DH 1.0</H2>
+
+<P>For data originally prepared for VS2DH 1.0, the partial
+migration procedure requires:</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">no change in the model data file</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">creating a namelist file</td>
+</tr>
+</table>
+
+<P>The namelist file must contain the following 9 lines.  The commonly
+used file names are indicated in parentheses.</p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">The name of the model data file (vs2dh.dat).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">The name of the main output file (vs2dh.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">The line containing "file07.out" (without quotes). 
+  This is the name of an auxiliary file that is not currently used.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing heads and temperatures (variables.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing selected fluid and energy balance
+components (balance.out)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">The name of the auxiliary output file containing heads, temperatures, etc.
+for selected observation points (obsPoints.out).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">If initial pressure heads or moisture contents are specified in
+    an array, then enter the name of the file containing this array.
+    (If this array is in the model data file, repeat line 1 here.)
+    If initial pressure heads or moisture contents are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">8. </td>
+  <td width="99%" valign="top" align="left">If initial temperatures are specified in an array, then enter the
+    name of the file containing this array. (If this array is in the model data file,
+    repeat line 1 here.) If initial temperatures are not specified in
+    an array, then skip this line. (Do not enter a blank line.)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">9. </td>
+  <td width="99%" valign="top" align="left">The line containing "# vs2dh1.0x" (without quotes), where the letter 'x' is replaced by
+    a single-character code that indicates the type of hydraulic characteristic
+    function. Replace 'x' by one of the following letters:
+    <br>&nbsp;&nbsp;&nbsp;b - Brooks Corey
+    <br>&nbsp;&nbsp;&nbsp;v - van Genuchten
+    <br>&nbsp;&nbsp;&nbsp;h - Haverkamp
+    <br>&nbsp;&nbsp;&nbsp;t - tabular data
+    <br>For example, the line "# vs2dh1.0v" indicates use of the
+    van Genuchten hydraulic characteristic function.
+    </td>
+</tr>
+</table>
+
+<P><B>Note:</B> The namelist file must be placed in the same directory
+as the model data file.</p>
+
+
+<P>To view sample files after partial migration, please click the following:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A HREF="partialMigrationExample_vs2dh_dat.html">vs2dh.dat</A> (model data file, no change required)</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><A HREF="partialMigrationExample_vs2dh_fil.html">vs2dh.fil</A> (namelist file)</td>
+</tr>
+</table>
+
+</BODY>
+</HTML>

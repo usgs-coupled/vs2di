@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+         "../dtd/toc_2_0.dtd">
+<toc version="2.0">
+
+   <tocitem text="Overview" target="overview" expand="true">
+       <tocitem text="Preprocessor" target="preprocessor"/>
+       <tocitem text="VS2DT 3.3" target="vs2dt3p3"/>
+       <tocitem text="Postprocessor" target="postprocessor"/>
+       <tocitem text="New Features in Version 1.3 " target="newFeatures"/>
+       <tocitem text="Zooming and Stretching the Display" target="zooming"/>
+       <tocitem text="Graphics Buffering" target="graphicsBuffering"/>
+   </tocitem>
+
+   <tocitem text="How to Set Up a Simulation" target="setupSimulation" expand="true">
+
+      <tocitem text="Create a New VS2 file" target="newVS2File"/>
+
+      <tocitem text="Select Model Options" target="modelOptions" expand="false">
+         <tocitem text="Basic" target="basicOptions"/>
+         <tocitem text="Flow" target="flowOptions"/>
+         <tocitem text="Transport" target="transportOptions"/>
+         <tocitem text="Solver" target="solverOptions"/>
+         <tocitem text="Output" target="outputOptions"/>
+         <tocitem text="Fluid Balance" target="fluidBalanceOptions"/>
+         <tocitem text="Solute Balance" target="soluteBalanceOptions"/>
+      </tocitem>
+
+      <tocitem text="Specify Textural Classes" target="texturalClasses" expand="false">
+         <tocitem text="Flow Properties" target="flowProperties"/>
+         <tocitem text="Transport Properties" target="transportProperties"/>
+         <tocitem text="Add textural class" target="addTexturalClass"/>
+         <tocitem text="Edit textural class" target="editTexturalClass"/>
+         <tocitem text="Delete textural class" target="deleteTexturalClass"/>
+         <tocitem text="Import or export textural class data" target="importTexturalClass"/>
+         <tocitem text="Tabular Data" target="workingWithTabularData"/>
+      </tocitem>
+
+      <tocitem text="Specify Evapotranspiration (ET) Cycle" target="evapotranspirationCycle" expand="false">
+         <tocitem text="Evaporation Parameters" target="evaporationParameters"/>
+         <tocitem text="Transpiration Parameters" target="transpirationParameters"/>
+         <tocitem text="Set ET period length" target="setEvapotranspirationPeriodLength"/>
+         <tocitem text="Add ET period" target="addEvapotranspirationPeriod"/>
+         <tocitem text="Edit ET period" target="editEvapotranspirationPeriod"/>
+         <tocitem text="Delete ET period" target="deleteEvapotranspirationPeriod"/>
+         <tocitem text="Import or export ET data" target="importETData"/>
+      </tocitem>
+
+      <tocitem text="Set up the Drawing Area" target="drawingOptions"/>
+
+      <tocitem text="Load a Site Map (Optional)" target="siteMap" expand="false">
+         <tocitem text="Move site map" target="moveSiteMap"/>
+         <tocitem text="Resize site map" target="resizeSiteMap"/>
+         <tocitem text="Resize site map about a fixed point" target="fixedPointResizeSiteMap"/>
+         <tocitem text="Delete site map" target="deleteSiteMap"/>
+      </tocitem>
+
+      <tocitem text="Draw the Domain" target="domain" expand="false">
+         <tocitem text="Draw exterior boundary" target="drawExteriorBoundary"/>
+         <tocitem text="Draw interior boundary" target="drawInteriorBoundary"/>
+         <tocitem text="Reshape a boundary" target="reshapeBoundary"/>
+         <tocitem text="Move boundary" target="moveBoundaries"/>
+         <tocitem text="Insert vertex on a boundary" target="insertVertexOnBoundary"/>
+         <tocitem text="Delete interior boundaries" target="deleteInteriorBoundaries"/>
+      </tocitem>
+
+      <tocitem text="Draw the Textural Map" target="texturalMap" expand="false">
+         <tocitem text="Draw textural zone" target="drawTexturalZone"/>
+         <tocitem text="Reshape textural zone" target="reshapeTexturalZone"/>
+         <tocitem text="Move textural zones" target="moveTexturalZones"/>
+         <tocitem text="Insert vertex on textural zone" target="insertVertexOnTexturalZone"/>
+         <tocitem text="Bring textural zones to front" target="bringTexturalZonesToFront"/>
+         <tocitem text="Send textural zones to back" target="sendTexturalZonesToBack"/>
+         <tocitem text="Delete textural zone" target="deleteTexturalZones"/>
+      </tocitem>
+
+      <tocitem text="Specify Initial Hydraulic Condition" target="initialHydraulicCondition" expand="false">
+         <tocitem text="Initial equilibrium profile" target="initialEquilibriumProfile"/>
+         <tocitem text="Initial pressure head" target="initialPressureHead"/>
+         <tocitem text="Initial moisture content" target="initialMoistureContent"/>
+         <tocitem text="Change type of initial hydraulic condition" target="changeInitialHydraulicCondition"/>
+      </tocitem>
+
+      <tocitem text="Specify Initial Concentration" target="initialConcentration"/>
+
+      <tocitem text="Specify Recharge Periods" target="rechargePeriods" expand="false">
+         <tocitem text="Recharge period parameters" target="rechargePeriodParameters"/>
+         <tocitem text="Add recharge period" target="addRechargePeriod"/>
+         <tocitem text="Edit recharge period" target="editRechargePeriod"/>
+         <tocitem text="Deleting recharge period" target="deleteRechargePeriod"/>
+      </tocitem>
+
+      <tocitem text="Specify Boundary Conditions" target="boundaryConditions" expand="false">
+         <tocitem text="Flow boundary condition" target="flowBoundaryConditions"/>
+         <tocitem text="Transport boundary condition" target="transportBoundaryConditions"/>
+         <tocitem text="Assign boundary condition" target="assignBoundaryConditions"/>
+         <tocitem text="Assignment Options" target="bcAssignmentOption"/>
+         <tocitem text="Copy boundary condition" target="copyBoundaryConditions"/>
+         <tocitem text="Boundary condition label" target="showHideBoundaryConditions"/>
+         <tocitem text="Corner policy" target="setCornerPolicy"/>
+      </tocitem>
+
+      <tocitem text="Specify Source/Sink Points (Optional)" target="sourcesSinks" expand="false">
+         <tocitem text="Create source/sink point" target="createSourceSink"/>
+         <tocitem text="Edit source/sink point" target="editSourceSink"/>
+         <tocitem text="Move source/sink point" target="moveSourceSink"/>
+         <tocitem text="Delete source/sink point" target="deleteSourceSink"/>
+         <tocitem text="Source/sink point dialog box" target="sourceSinkDialog"/>
+      </tocitem>
+
+      <tocitem text="Specify Observation Points (Optional)" target="observationPoints" expand="false">
+         <tocitem text="Draw observation point" target="drawObservationPoints"/>
+         <tocitem text="Move observation point" target="moveObservationPoints"/>
+         <tocitem text="Delete observation point" target="deleteObservationPoints"/>
+      </tocitem>
+
+      <tocitem text="Lay out the Grid" target="grid" expand="false">
+         <tocitem text="Grid window" target="gridWindow"/>
+         <tocitem text="Create uniform grid" target="uniformGrid"/>
+         <tocitem text="Move grid" target="moveGrid"/>
+         <tocitem text="Resize grid" target="resizeGrid"/>
+         <tocitem text="Add grid line" target="addGridLines"/>
+         <tocitem text="Move grid line" target="moveGridLine"/>
+         <tocitem text="Delete grid line" target="deleteGridLines"/>
+         <tocitem text="Subdivide grid interval" target="subdivideGridInterval"/>
+      </tocitem>
+
+      <tocitem text="Evaluate the Discretization" target="discretization"/>
+
+   </tocitem>
+
+   <tocitem text="Contour Drawing and Interpolation" target="contourDrawing" expand="false">
+      <tocitem text="Draw contour" target="drawContours"/>
+      <tocitem text="Reshape contour" target="reshapeContour"/>
+      <tocitem text="Move contour" target="moveContours"/>
+      <tocitem text="Insert vertex on contour" target="insertVertexOnContour"/>
+      <tocitem text="Change value of contour" target="changeContourValue"/>
+      <tocitem text="Delete contour" target="deleteContours"/>
+      <tocitem text="Interpolation method" target="interpolationMethods"/>
+   </tocitem>
+
+   <tocitem text="How to Run a Simulation" target="runSimulation" expand="true">
+      <tocitem text="Display Simulation Results" target="displayResults"/>
+      <tocitem text="Simulation Control" target="simulationControl"/>
+      <tocitem text="Save Simulation Results on Disk" target="saveSimulation"/>
+      <tocitem text="Evaluate Fluid and Solute Mass Balance" target="balance"/>
+      <tocitem text="Animation Speed" target="animationSpeed"/>
+   </tocitem>
+
+   <tocitem text="File Management" target="fileManagement">
+      <tocitem text="VS2 File" target="VS2File"/>
+      <tocitem text="VS2DT 3.3 Model Input Files" target="modelInputFiles"/>
+      <tocitem text="VS2DT 3.3 Model Output Files" target="modelOutputFiles"/>
+      <tocitem text="How to Control VS2DT 3.3 Output" target="howToOutput"/>
+      <tocitem text="Saved Simulation File" target="savedSimulationFiles"/>
+   </tocitem>
+
+   <tocitem text="The Standalone Postprocessor" target="standalone"/>
+   <tocitem text="Printing" target="print"/>
+   <tocitem text="Exporting the drawing as a bitmap" target="bitmap"/>
+
+   <tocitem text="Tutorial" target="tutorial"  expand="false">
+      <tocitem text="Model Options" target="tutorial_ModelOptions"/>
+      <tocitem text="Flow Options" target="tutorial_FlowOptions"/>
+      <tocitem text="Transport Options" target="tutorial_TransportOptions"/>
+      <tocitem text="Solver Options" target="tutorial_SolverOptions"/>
+      <tocitem text="Output Options" target="tutorial_OutputOptions"/>
+      <tocitem text="Fluid Balance Options" target="tutorial_FluidBalanceOptions"/>
+      <tocitem text="Solute Balance Options" target="tutorial_SoluteBalanceOptions"/>
+      <tocitem text="Textural Classes" target="tutorial_TexturalClasses"/>
+      <tocitem text="Drawing Area" target="tutorial_DrawingArea"/>
+      <tocitem text="Domain" target="tutorial_Domain"/>
+      <tocitem text="Textural Map" target="tutorial_TexturalMap"/>
+      <tocitem text="Initial Hydraulic Condition" target="tutorial_InitialHydraulicCondition"/>
+      <tocitem text="Initial Concentration" target="tutorial_InitialConcentration"/>
+      <tocitem text="Recharge Periods" target="tutorial_RechargePeriods"/>
+      <tocitem text="Boundary Conditions" target="tutorial_BoundaryConditions"/>
+      <tocitem text="Grid Layout" target="tutorial_Grid"/>
+      <tocitem text="Postprocessor" target="tutorial_Postprocessor"/>
+      <tocitem text="Summary" target="tutorial_Summary"/>
+   </tocitem>
+
+</toc>

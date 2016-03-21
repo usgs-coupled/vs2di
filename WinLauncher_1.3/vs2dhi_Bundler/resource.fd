@@ -1,0 +1,6 @@
+!MS$FREEFORM
+! Microsoft Developer Studio generated include file.
+! Used by AppBundler.rc
+!
+      integer, parameter :: IDI_ICON1                       = 101
+      integer, parameter :: IDI_APPICON                     = 103

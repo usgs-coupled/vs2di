@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE>Output Options</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Output Options</H2>
+
+<P>Output options are used to control writing of 
+<A href="modelOutputFiles.html">VS2DT 3.3 model output files</A>. 
+See also: <A href="howToOutput.html">How to Control VS2DT 3.3 output</A>.</P>
+
+<P><B>"Main Output File" Group</B>: This group of options specifies what is written
+to the main output file (vs2dt.out). You may select the variables (head, moisture content, etc.)
+to be written to the main output file. The output policy is determined by the 
+"Print Result" option of the 
+<A href="rechargePeriodParameters.html">recharge period parameters.</A>
+If the "Print Result" option is selected, output variables are written
+after every time step in the recharge period. Otherwise, output variables
+are written at "output times" (see below) and at the end of a recharge
+period. If transport is simulated, concentration is automatically
+included as an output variable and is written according to output policy.
+In addition, the mass balance components may be written to the main output file
+at "output times" (see below) or at every time step.
+</P>
+
+<P><B>"Auxiliary Output Files" Group</B>: This group of options specifies what is
+written to the two auxiliary output files: obsPoints.out (containing simulated variables 
+observation points) and balance.out (mass balance components).  Output may be written to file at
+"output times" (see below) or at every time step. In addition, you may specify
+"normal" or "high" precision output.</P>
+
+<P><B>Output Times</B>: Specify times 
+at which selected output variables and mass balance components are written to the main
+output file. In addition, pressure heads and concentrations (if transport is simulated) 
+are written to the auxiliary file variables.out at the same output times.
+Default output times are the ending times for all recharge periods.
+To use "at specified time" option, enter an  output time in the space below
+"Time:" and click "Add". The list of output times is shown on
+the right. Use the "Modify" and "Delete" buttons to edit this list.</P>
+
+
+</BODY>
+</HTML>

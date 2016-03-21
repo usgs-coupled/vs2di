@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>Saving Simulation Results</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Saving Simulation Results</H2>
+
+<P>When the postprocessor is in <A HREF="simulationControl.html">computational mode</A>
+You may save simulation results for later playback.
+
+<P>To save simulation results:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Options" menu, then click "Simulation...". A dialog box is displayed.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Enter the "Target time interval between save". Simulation results will be
+    saved when integral multiples of target time interval have elapsed.
+    For example, if the time step size is 1.6 and the target time interval
+    between save is 4, then results will be saved at 4.8, 8.0, 12.8, 16, 20.8, etc.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">Activate (check) the option "Save simulation".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Select the type of output to be saved. The options are: moisture content,
+    saturation, and velocity/flux vectors. By default, pressure head is always saved.
+    If solute transport is simulated, then concentration is always saved.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Click OK.</td>
+</tr>
+</table>
+
+<P>When results are being saved during a simulation, you may not change the type
+of saved output (moisture content, saturation, etc) in the middle of the
+simulation. If you want to change the type of saved output, you must
+restart the computation from the beginning by clicking the "Action" menu
+and then clicking "Restart computation."</p>
+
+<P>The simulation results are saved in a file named vs2dt.sim in the 
+<A HREF="fileManagement.html">working directory</A>. This file is in binary format 
+and can be read only by the postprocessor.</p>
+
+</BODY>
+</HTML>

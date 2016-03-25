@@ -90,5 +90,12 @@
         <copy file="${dist.dir}/vs2dtiHelp.jar" todir="lib"/>
         <copy file="${dist.dir}/vs2postHelp.jar" todir="lib"/>
         <copy file="${dist.jar}" todir="lib"/>
-    </target>    
+    </target>
+    
+    <target name="-post-clean">
+        <delete file="lib/vs2dhiHelp.jar"/>
+        <delete file="lib/vs2dtiHelp.jar"/>
+        <delete file="lib/vs2postHelp.jar"/>
+        <delete file="lib/vs2di.jar"/>
+    </target>
 </project>

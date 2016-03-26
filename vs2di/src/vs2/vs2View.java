@@ -475,4 +475,8 @@ public class vs2View extends mp2View implements vs2Constants {
         domainView.setUseRadialCoordinates(b);
         super.setUseRadialCoordinates(b);
     }
+
+    public vs2TexturalClassWindow getTexturalClassWindow() {
+        return texturalClassWindow;
+    }
 }

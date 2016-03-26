@@ -77,7 +77,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
                         mp2App app) {
         // Call super class constructor
         super(frame, "Textural Class", new Point(260, 80), tableData);
-	    mp2JavaHelp.hb.enableHelpOnButton(helpButton, "texturalClasses", null);
+        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "texturalClasses", null);
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         theApp = app;
@@ -286,11 +286,11 @@ public class vs2TexturalClassWindow extends mp2TableWindow
      * Invoked when the custom button is clicked to load user's textural class data
      */
     protected void onCustomButton() {
-		vs2TexturalClassCustomDialog dlg;
-		dlg = new vs2TexturalClassCustomDialog (theApp,
+        vs2TexturalClassCustomDialog dlg;
+        dlg = new vs2TexturalClassCustomDialog (theApp,
                     (vs2TexturalClassData) tableData, modelOptions.soilModel,
                     activeTable.getSelectedRow());
-		dlg.setVisible(true);
+        dlg.setVisible(true);
     }
 
     /**
@@ -533,6 +533,12 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         if (b && activeTable.getSelectedRow() == 0) {
             editButton.setEnabled(false);
             deleteButton.setEnabled(false);
+        }
+    }
+
+    public void selectRow(int r) {
+        if (r >= 0 && r < activeTable.getRowCount())    {
+            activeTable.addRowSelectionInterval(r, r);
         }
     }
 }

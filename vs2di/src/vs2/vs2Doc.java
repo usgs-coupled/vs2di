@@ -295,7 +295,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // Card A-13 and A-14
         switch (modelOptions.outputTimeOption) {
         case vs2ModelOptions.INTERVAL_OUTPUT_TIME:
-	        int ts = Math.max (1, (int) (maximumSimulationTime / modelOptions.outputTimeInterval));
+            int ts = Math.max (1, (int) (maximumSimulationTime / modelOptions.outputTimeInterval));
             //if (ts > MAX_OUTPUT_TIMES) ts = MAX_OUTPUT_TIMES;
             pw.println(ts + "     /A13 -- NPLT. A14 begins next line: PLTIM");
             double outputTime;
@@ -308,7 +308,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                     pw.println();
                     j = 0;
                 }
-		        pw.print(((float) outputTime) + " ");
+                pw.print(((float) outputTime) + " ");
             }
             pw.println();
             break;
@@ -691,7 +691,9 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             if (!isNewDoc &&
                     (!modelOptions.lengthUnit.equals(dlg.basicPanel.lengthUnit)
                      || !modelOptions.timeUnit.equals(dlg.basicPanel.timeUnit))) {
+                int r = ((vs2View) view).getTexturalClassWindow().getSelectedRow();
                 texturalClassData.convertGenericProperties();
+                ((vs2View) view).getTexturalClassWindow().selectRow(r);
             }
             modelOptions.lengthUnit = dlg.basicPanel.lengthUnit;
             modelOptions.timeUnit = dlg.basicPanel.timeUnit;

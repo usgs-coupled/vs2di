@@ -25,6 +25,15 @@ public class mp2SplashScreen extends Window {
         owner.addWindowListener(new WindowListener());
     }
     
+    public mp2SplashScreen(Frame owner, java.net.URL imageURL) {
+        super(owner);
+        this.imageFileName = imageURL.toString();
+        tk = Toolkit.getDefaultToolkit();
+        splashImage = loadSplashImage(imageURL);
+        showSplashScreen();
+        owner.addWindowListener(new WindowListener());
+    }    
+    
     public Image loadSplashImage() {
         MediaTracker tracker = new MediaTracker(this);
         Image result;
@@ -39,6 +48,22 @@ public class mp2SplashScreen extends Window {
         splashHeight = result.getHeight(this);
         return (result);
     }
+    
+    public Image loadSplashImage(java.net.URL url) {
+        MediaTracker tracker = new MediaTracker(this);
+        Image result;
+        result = tk.getImage(url);
+        tracker.addImage(result, 0);
+        try { 
+            tracker.waitForAll(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        splashWidth = result.getWidth(this);
+        splashHeight = result.getHeight(this);
+        return (result);
+    }
+    
 
     public void showSplashScreen() {
         Dimension screenSize = tk.getScreenSize();

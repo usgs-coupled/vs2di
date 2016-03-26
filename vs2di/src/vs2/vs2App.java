@@ -26,6 +26,13 @@ public class vs2App extends mp2App implements vs2Constants {
     }
 
     /**
+     * Creates the vs2dti application
+     */
+    public vs2App(java.net.URL splashScreenURL, java.net.URL appIconURL, String homeDir) {
+        super(splashScreenURL, appIconURL, false, homeDir);
+    }
+
+    /**
      * Creates a document
      */
     protected mp2Doc createDoc() {
@@ -143,7 +150,10 @@ public class vs2App extends mp2App implements vs2Constants {
         if (homeDir == null)  {
             homeDir = System.getProperty("user.dir");
         }
-        theApp = new vs2App(splashScreenFile, appIconFile, homeDir);
+        //theApp = new vs2App(splashScreenFile, appIconFile, homeDir);
+        theApp = new vs2App(ClassLoader.getSystemResource("images/" + splashScreenFile),
+                ClassLoader.getSystemResource("images/" + appIconFile),
+                homeDir);
     }
     
     /**

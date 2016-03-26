@@ -74,21 +74,18 @@
     <property name="file.reference.jh.jar" value="lib/jh.jar"/>
     
     <target name="-pre-jar" depends="-pre-pre-jar">
-        <jar destfile="${dist.dir}/vs2dhiHelp.jar">
+        <jar destfile="lib/vs2dhiHelp.jar">
             <fileset dir="help/vs2dhiHelp/html" />
         </jar>
-        <jar destfile="${dist.dir}/vs2dtiHelp.jar">
+        <jar destfile="lib/vs2dtiHelp.jar">
             <fileset dir="help/vs2dtiHelp/html" />
         </jar>
-        <jar destfile="${dist.dir}/vs2postHelp.jar">
+        <jar destfile="lib/vs2postHelp.jar">
             <fileset dir="help/vs2PostHelp/html" />
         </jar>
     </target>
     
     <target name="-post-jar">
-        <copy file="${dist.dir}/vs2dhiHelp.jar" todir="lib"/>
-        <copy file="${dist.dir}/vs2dtiHelp.jar" todir="lib"/>
-        <copy file="${dist.dir}/vs2postHelp.jar" todir="lib"/>
         <copy file="${dist.jar}" todir="lib"/>
     </target>
     

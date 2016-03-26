@@ -40,14 +40,14 @@ public abstract class mp2App implements mp2Constants {
      * The application's home directory.
      */
     protected String homeDirectory;
-    
+
     protected String currentDirectory;
 
     /**
      * The frame window for post processing.
      */
     protected mp2PostProcessorFrame postProcessorFrame;
-    
+
     /**
      * Application properties saved on disk.
      */
@@ -57,10 +57,10 @@ public abstract class mp2App implements mp2Constants {
      * The application's view.
      */
     protected mp2View view;
-    
+
     /**
      * Defines the type of help window.
-     * If true, display help pages in JavaHelp window. 
+     * If true, display help pages in JavaHelp window.
      * If false, display help pages in web browser
      */
     protected static boolean useJavaHelp = true;
@@ -68,46 +68,46 @@ public abstract class mp2App implements mp2Constants {
     /**
      * Creates the application framework with no splash screen,
      * default icon, and for a single model.
-     * 
+     *
      * @param  homeDir  The pathname to the application's home
      *                  directory.
      */
     public mp2App(String homeDir) {
-        this(null, null, false, homeDir);
+        this((String)null, (String)null, false, homeDir);
     }
 
     /**
      * Creates the application framework with specified splash screen,
      * default icon, and for a single model.
-     * 
+     *
      * @param  splashScreenFile  name of the gif file containing
-     *                 the splash screen. If null, then no 
+     *                 the splash screen. If null, then no
      *                 splash screen is display.
-     * 
+     *
      * @param  homeDir  The pathname to the application's home
      *                  directory.
      */
     public mp2App(String splashScreenFile, String homeDir) {
         this(splashScreenFile, null, false, homeDir);
     }
-    
+
 
     /**
      * Creates the application framework with specified splash screen,
      * specified icon, and for a single model.
-     * 
+     *
      * @param  splashScreenFile  name of the gif file containing
-     *                 the splash screen. If null, then no 
+     *                 the splash screen. If null, then no
      *                 splash screen is display.
-     * 
+     *
      * @param  appIconFile  name of the gif file containing the
      *                 application icon. If null, then the default
      *                 icon is used.
-     * 
+     *
      * @param  homeDir  The pathname to the application's home
      *                  directory.
      */
-    public mp2App(String splashScreenFile, String appIconFile, 
+    public mp2App(String splashScreenFile, String appIconFile,
             String homeDir) {
         this(splashScreenFile, appIconFile, false, homeDir);
     }
@@ -117,21 +117,21 @@ public abstract class mp2App implements mp2Constants {
      * specified icon, and specified multiple model.
      *
      * @param  splashScreenFile  name of the gif file containing
-     *                 the splash screen. If null, then no 
+     *                 the splash screen. If null, then no
      *                 splash screen is display.
-     * 
+     *
      * @param  appIconFile  name of the gif file containing the
      *                 application icon. If null, then the default
      *                 icon is used.
-     * 
+     *
      * @param  hasMultipleModel  if <code>true</code> menu bar contains
      *                 a "Model" menu. Otherwise, menu bar does not
      *                 contain a "Model" menu.
-     * 
+     *
      * @param  homeDir  The pathname to the application's home
      *                  directory.
      */
-    public mp2App(String splashScreenFile, String appIconFile, 
+    public mp2App(String splashScreenFile, String appIconFile,
                     boolean multipleModels, String homeDir) {
         homeDirectory = homeDir;
         String fileSeparator = System.getProperty("file.separator");
@@ -140,12 +140,12 @@ public abstract class mp2App implements mp2Constants {
 
         // create the frame
         frame = new mp2Frame(multipleModels);
-        
+
         // display splash screen while program loads
         if (splashScreenFile != null) {
             new mp2SplashScreen(frame, imageDirectory + splashScreenFile);
         }
-        
+
         // Continue with application startup
         properties = new Properties();
         readAppProperties();
@@ -156,7 +156,7 @@ public abstract class mp2App implements mp2Constants {
                 appExit();
             }
         });
-        frame.init(this);  
+        frame.init(this);
         frame.setManager(createFrameManager());
         postProcessorFrame = createPostProcessorFrame();
         if (appIconFile != null) {
@@ -180,13 +180,84 @@ public abstract class mp2App implements mp2Constants {
         frame.pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();
-        frame.setLocation((screenSize.width-frameSize.width)/2, 
+        frame.setLocation((screenSize.width-frameSize.width)/2,
                           (screenSize.height-frameSize.height)/2);
         frame.pack();
         frame.setVisible(true);
         frame.requestFocus();
     }
 
+    /**
+     * Creates the application framework with specified splash screen,
+     * specified icon, and specified multiple model.
+     *
+     * @param  splashScreenURL  URL of the gif file containing
+     *                 the splash screen. If null, then no
+     *                 splash screen is display.
+     *
+     * @param  appIconURL  URL of the gif file containing the
+     *                 application icon. If null, then the default
+     *                 icon is used.
+     *
+     * @param  hasMultipleModel  if <code>true</code> menu bar contains
+     *                 a "Model" menu. Otherwise, menu bar does not
+     *                 contain a "Model" menu.
+     *
+     * @param  homeDir  The pathname to the application's home
+     *                  directory.
+     */
+    public mp2App(java.net.URL splashScreenURL, java.net.URL appIconURL,
+                    boolean multipleModels, String homeDir) {
+        homeDirectory = homeDir;
+
+        // create the frame
+        frame = new mp2Frame(multipleModels);
+
+        // display splash screen while program loads
+        if (splashScreenURL != null) {
+            new mp2SplashScreen(frame, splashScreenURL);
+        }
+
+        // Continue with application startup
+        properties = new Properties();
+        readAppProperties();
+        currentDirectory = properties.getProperty("directory");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                appExit();
+            }
+        });
+        frame.init(this);
+        frame.setManager(createFrameManager());
+        postProcessorFrame = createPostProcessorFrame();
+        if (appIconURL != null) {
+            Image appIcon = Toolkit.getDefaultToolkit().getImage(appIconURL);
+            frame.setIconImage(appIcon);
+            postProcessorFrame.setIconImage(appIcon);
+        }
+        doc = createDoc();
+        view = createView();
+        doc.init(this);
+        view.init(this);
+        postProcessorFrame.reset();
+        frame.loadComponents();
+        frame.setView(view);
+        frameTitle = getFrameTitle();
+        frame.setTitle(frameTitle + ": " + doc.getFileName());
+        frame.validate();
+
+        // Show the frame in the middle of the screen
+        frame.pack();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = frame.getSize();
+        frame.setLocation((screenSize.width-frameSize.width)/2,
+                          (screenSize.height-frameSize.height)/2);
+        frame.pack();
+        frame.setVisible(true);
+        frame.requestFocus();
+    }
+    
     /**
      * Handles application shutdown. If the document has been
      * changed since it was last saved, query the user on
@@ -246,12 +317,12 @@ public abstract class mp2App implements mp2Constants {
             File f = fc.getSelectedFile();
             int result = doc.exportData(fc.getCurrentDirectory().getPath(), f.getName());
             if (result == mp2Doc.UNABLE_TO_EXPORT_ERROR) {
-                mp2MessageBox.showMessageDialog("Unable to export data", 
+                mp2MessageBox.showMessageDialog("Unable to export data",
                         "Error");
             } else if (result == mp2Doc.ILLEGAL_FILE_NAME_ERROR) {
                 mp2MessageBox.showMessageDialog("The file name \"" +
                         f.getName() + "\" is not allowed. " +
-                        "Please specify a different file name.", 
+                        "Please specify a different file name.",
                         "Error");
             } else {
                 currentDirectory = new String(fc.getCurrentDirectory().getPath());
@@ -282,8 +353,8 @@ public abstract class mp2App implements mp2Constants {
     /**
      * Gets this application's main frame window.
      */
-    public mp2Frame getFrame() {  
-        return frame; 
+    public mp2Frame getFrame() {
+        return frame;
     }
 
     /**
@@ -366,7 +437,7 @@ public abstract class mp2App implements mp2Constants {
         view = createView();
         doc.init(this);
         view.init(this);
-        
+
         // Put the new view in the frame, update the title,
         // and disallow exporting.
         frame.setView(view);
@@ -412,7 +483,7 @@ public abstract class mp2App implements mp2Constants {
             try {
                 // Create an input stream for object deserialization.
                 FileInputStream input = new FileInputStream(inFile);
-                ObjectInputStream objectIn = new ObjectInputStream(input); 
+                ObjectInputStream objectIn = new ObjectInputStream(input);
 
                 // Create the document by deserialization from file
                 mp2Doc d = (mp2Doc) objectIn.readObject();
@@ -463,12 +534,12 @@ public abstract class mp2App implements mp2Constants {
             }
             catch(IOException e2) {
                 mp2MessageBox.showMessageDialog(
-                    "Unable to read from file " + inFile.getName(), 
+                    "Unable to read from file " + inFile.getName(),
                     "IO Error");
             }
             catch(ClassNotFoundException  e3) {
                 mp2MessageBox.showMessageDialog(
-                    "Unable to read from file " + inFile.getName(), 
+                    "Unable to read from file " + inFile.getName(),
                     "IO Error");
             }
             frame.setCursor(Cursor.getDefaultCursor());
@@ -477,7 +548,7 @@ public abstract class mp2App implements mp2Constants {
     }
 
     /**
-     * Querys the user if the current document should be saved. 
+     * Querys the user if the current document should be saved.
      *
      * @return  <code>true</code> if the user answered yes and
      *          the document was saved.
@@ -485,7 +556,7 @@ public abstract class mp2App implements mp2Constants {
      */
     protected boolean querySaveDocument() {
 
-        String query = "The data in " + doc.getFileName() + 
+        String query = "The data in " + doc.getFileName() +
         " have changed. Do you want to save the changes?";
 
         int result = mp2MessageBox.showConfirmDialog(query, frameTitle);
@@ -501,7 +572,7 @@ public abstract class mp2App implements mp2Constants {
             return true;
         }
 
-        // The remaining cases are (1) user answers "Cancel" or 
+        // The remaining cases are (1) user answers "Cancel" or
         // (2) user closes the dialog box. For either case, return false
         else {
             return false;
@@ -538,22 +609,22 @@ public abstract class mp2App implements mp2Constants {
      *          <code>false</code> otherwise.
      */
     public boolean saveDocument() {
-        // If the document is new (that is, it has a default file name), 
-        // then call the saveDocumentAs method so user can specify 
+        // If the document is new (that is, it has a default file name),
+        // then call the saveDocumentAs method so user can specify
         // a file name to save the document
         if (doc.getFileName().equals(DEFAULT_FILE_NAME)) {
             return saveDocumentAs();
         }
 
-        // If the document is not new, save data to document's 
+        // If the document is not new, save data to document's
         // file name
         else {
             frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             try {
-                File outFile = new File(doc.getDirectory(), 
+                File outFile = new File(doc.getDirectory(),
                                         doc.getFileName());
                 FileOutputStream out = new FileOutputStream(outFile);
-                ObjectOutputStream objectOut = 
+                ObjectOutputStream objectOut =
                         new ObjectOutputStream(out);
                 objectOut.writeObject(doc);
                 objectOut.flush();
@@ -561,12 +632,12 @@ public abstract class mp2App implements mp2Constants {
                 view.docSaved();
                 frame.setCursor(Cursor.getDefaultCursor());
                 return true;
-            } catch(IOException e) { 
+            } catch(IOException e) {
                 mp2MessageBox.showMessageDialog(
                         "Unable to write to file", "IO Error");
                 frame.setCursor(Cursor.getDefaultCursor());
                 return false;
-            }    
+            }
         }
     }
 
@@ -596,7 +667,7 @@ public abstract class mp2App implements mp2Constants {
         }
         fc.setSelectedFile(new File(doc.getFileName()));
 
-        // If the user specified file name is not null, then 
+        // If the user specified file name is not null, then
         // save the document
         if (fc.showSaveDialog(frame) == mp2FileChooser.APPROVE_OPTION) {
             frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -608,7 +679,7 @@ public abstract class mp2App implements mp2Constants {
 
             try {
                 FileOutputStream out = new FileOutputStream(f);
-                ObjectOutputStream objectOut = 
+                ObjectOutputStream objectOut =
                         new ObjectOutputStream(out);
                 objectOut.writeObject(doc);
                 objectOut.flush();
@@ -616,8 +687,8 @@ public abstract class mp2App implements mp2Constants {
                 view.docSaved();
                 frame.setCursor(Cursor.getDefaultCursor());
                 return true;
-            } 
-            catch(IOException e) { 
+            }
+            catch(IOException e) {
                 mp2MessageBox.showMessageDialog(
                         "Unable to write to file", "IO Error");
                 frame.setCursor(Cursor.getDefaultCursor());
@@ -625,8 +696,8 @@ public abstract class mp2App implements mp2Constants {
             }
         }
 
-        // If the file name is null, that means user has either 
-        // clicked the "Cancel" button in the dialog box or 
+        // If the file name is null, that means user has either
+        // clicked the "Cancel" button in the dialog box or
         // closed the dialog box. In either case, return false.
         else {
             return false;

@@ -75,13 +75,13 @@
     
     <target name="-pre-jar" depends="-pre-pre-jar">
         <jar destfile="lib/vs2dhiHelp.jar">
-            <fileset dir="help/vs2dhiHelp/html" />
+            <fileset dir="help/vs2dhiHelp" />
         </jar>
         <jar destfile="lib/vs2dtiHelp.jar">
-            <fileset dir="help/vs2dtiHelp/html" />
+            <fileset dir="help/vs2dtiHelp" />
         </jar>
         <jar destfile="lib/vs2postHelp.jar">
-            <fileset dir="help/vs2PostHelp/html" />
+            <fileset dir="help/vs2PostHelp" />
         </jar>
     </target>
     

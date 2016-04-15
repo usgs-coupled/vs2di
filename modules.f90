@@ -8,6 +8,10 @@
       integer, allocatable::IDUM(:)
       end module IDUMM
       
+      module ITEXS
+      integer, allocatable:: ITEXSOL(:,:)
+      end module ITEXS
+      
       module ITEMBLO
       integer, allocatable::ITEMBL(:),ITBDUM(:)
       end module ITEMBLO

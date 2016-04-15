@@ -1222,6 +1222,7 @@
       USE PhreeqcRM
       USE PRICON
       use SCON
+      use ITEXS
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
       common/conversion/CNVTM,CNVTMI 
@@ -1301,7 +1302,8 @@
       allocate(HK(NTEX,NPROP))
       allocate(HT(NTEX,6))
       allocate(HS(NTEX,3))
-      allocate(ANIZ(NTEX))      
+      allocate(ANIZ(NTEX))
+      allocate (ITEXSOL(NTEX,7))      
       if (hydraulicFunctionType.eq.4) nprop = 6
 !
 !  end revision
@@ -1333,14 +1335,16 @@
 !   READ AND WRITE MATERIAL PROPERTIES FOR EACH TEXTURAL CLASS
 !
 
-      DO 21 J22=1,NTEX
+      DO 22 J22=1,NTEX
       DO 10 J23=1,NPROP
    10 HK(J22,J23)=0.0D0
       DO 20 J23=1,NHTPROP
    20 HT(J22,J23)=0.0D0
       DO 21 J23=1,NSTPROP
    21 HS(J22,J23)=0.0D0
-      
+      DO 22 J23=1,7
+   22 ITEXSOL(J22,J23) = -1  
+
       DO 30 J22=1,NTEX
       READ (5,*) J
       READ (5,*) ANIZ(J),(HK(J,I),I=1,NPROP)
@@ -1357,8 +1361,8 @@
 !
 !  modification to read for solute transport
 !
-      read(5,*) (HS(j,I),I=1,3)
-      write(6,4130)(HS(j,I),I=1,3)
+      read(5,*) (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
+      write(6,4131)(HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
       END IF
 !
 !  revsion for Rossi-Nimmo
@@ -1748,7 +1752,16 @@
 !    BE SOLVED
 !      
       IF (SOLUTE) THEN
-          READ(05,*) IREAD
+!
+! ASSIGN INDSOL1(1-7) BY TEXTURAL CLASS
+!
+      DO 277 K=1,7
+      DO 277 J=1,NLY
+      DO 277 N=1,NXR
+       IN = NLY*(N-1) + J
+       INDSOL1(K,IN) = ITEXSOL(JTEX(IN),K)
+ 277   CONTINUE
+!          READ(05,*) IREAD
           insol2 = -1
           indsol2 = -1
           cmixfarc = 1.0d0
@@ -1760,31 +1773,31 @@
           !        CMIXFARC(I,J) = 1.0d0
           !    END DO
           !END DO  
-          IF(IREAD.EQ.0) THEN
-              READ(05,*)(INSOL1(I),I=1,7)
-              INSOL2(1)=2
-              DO 212 I=2,7
-                  INSOL2(I)=-1
-212           CONTINUE       
-              DO 182 I=1,7
-                  DO 181 J=1,NNODES
-                      INDSOL1(I,J) = INSOL1(I)
-                      !      INDSOL2(I,J) = INSOL2(I)
-                      !      CMIXFARC(I,J) = 1.0d0
-181               CONTINUE
-182           CONTINUE
-          ELSE if (IREAD.EQ.1)then
-              DO 403 K=1,7  
-                  DO 402 J=1,NLY
-                      READ (05,*)(DUM(N),N=1,NXR)
-                      DO 401 N=1,NXR
-                          IN=NLY*(N-1)+J
-                          INDSOL1(K,IN)=DUM(N)
-                          !      write(*,*)"INDSOL1(",K,",",NI,")=ITEMTX(",IN,")=",INDSOL1(K,NI),ITEMTX(IN)
-401                   continue
-402               continue
-403           continue
-          END IF 
+!          IF(IREAD.EQ.0) THEN
+!              READ(05,*)(INSOL1(I),I=1,7)
+!              INSOL2(1)=2
+!              DO 212 I=2,7
+!                  INSOL2(I)=-1
+!212           CONTINUE       
+!              DO 182 I=1,7
+!                  DO 181 J=1,NNODES
+!                      INDSOL1(I,J) = INSOL1(I)
+!                      !      INDSOL2(I,J) = INSOL2(I)
+!                      !      CMIXFARC(I,J) = 1.0d0
+!181               CONTINUE
+!182           CONTINUE
+!          ELSE if (IREAD.EQ.1)then
+!              DO 403 K=1,7  
+!                  DO 402 J=1,NLY
+!                      READ (05,*)(DUM(N),N=1,NXR)
+!                      DO 401 N=1,NXR
+!                          IN=NLY*(N-1)+J
+!                          INDSOL1(K,IN)=DUM(N)
+!                          !      write(*,*)"INDSOL1(",K,",",NI,")=ITEMTX(",IN,")=",INDSOL1(K,NI),ITEMTX(IN)
+!401                   continue
+!402               continue
+!403           continue
+!          END IF 
           DO 185 I=1, Nsol
               Solcomp(I)=0.0d0
 185       continue  
@@ -1922,6 +1935,7 @@
 	  if(allocated(itbdum)) deallocate(itbdum)
        !!@@include 'd_itemtxbDealloc.inc'
        deallocate(ITEMTX,ITDUM)
+      IF (ALLOCATED(ITEXSOL)) DEALLOCATE(ITEXSOL)
 !     write(*,*)"Finshed reading initial data................................"    
       RETURN
  4000 FORMAT(10X,27HINITIAL MOISTURE PARAMETERS/10X,27(1H_)// &
@@ -1963,6 +1977,7 @@
  4111 FORMAT(12X,'ALPHAL',8X,'ALPHAT',6X,'DM')
  4120 FORMAT(1X,7HCLASS #,I2,/9X,3(1PD12.3),14(7(1PD12.3),/))
  4130 FORMAT(9X,10(1PD12.3))
+ 4131 FORMAT(9X,3(1PD12.3),7I4)
  4140 FORMAT(6X,24HTEXTURAL CLASS INDEX MAP//   )
  4150 FORMAT(1H ,5X,I5,2X,100(99999I1))
  4151 FORMAT(1H ,5X,I5,2X,100(99999I2))

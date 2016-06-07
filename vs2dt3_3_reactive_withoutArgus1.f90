@@ -185,7 +185,7 @@
       CHARACTER*6 ZUNIT,CUNX,HUNX
       CHARACTER*7 TUNIT
       COMMON/SCHAR/TITL,ZUNIT,TUNIT,CUNX,HUNX
-      COMMON/MASSB/ BL(99),bcmft,bcmth,bl29I,bl29IT,bl29O,bl29OT,  &
+      COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT,  &
       bl95I,bl95IT,bl95o,bl95OT
       integer hydraulicFunctionType,iuTemperature,iuHead,iuConcentration
       common/functiontype/ hydraulicFunctionType
@@ -442,6 +442,8 @@
    7  CONTINUE       
       END IF 
 !      include 'c_arrays.inc'
+      elimit1 = 1.0d-70
+      elimit2 = 0.0d0
 ! *** SET ALL ARRAYS TO ZERO
       DO 710 I=1, NLY
       DELZ(I) = 0.0D0
@@ -1533,7 +1535,10 @@
       IF(IREAD.EQ.0) THEN
       WRITE (6,4170) FACTOR
       ELSE 
-      IF(IREAD.EQ.1)READ(05,*)IU,IFMT
+      IF(IREAD.EQ.1)then 
+        READ(05,*)IU,IFMT
+        WRITE (06,4180) IU,FACTOR
+      end if
       END IF
 !      if(IFMT.eq.UNFORMATTED) then
       if(iread.eq.3) then
@@ -1560,7 +1565,7 @@
        jstop = 11
        return
       else
-      WRITE (06,4180) IU,FACTOR
+!      WRITE (06,4180) IU,FACTOR
        
       DO 160 J=1,NLY
       do I=1,NXR
@@ -1974,10 +1979,12 @@
       36X,7HSTORAGE)
  4110 FORMAT(12X,'ALPHAL',8X,'ALPHAT',6X,'Cs',9X,'KT MIN',  &
       4X,' KT MAX ',4X,'   Cw   ')
- 4111 FORMAT(12X,'ALPHAL',8X,'ALPHAT',6X,'DM')
+ 4111 FORMAT(12X,'ALPHAL',8X,'ALPHAT',6X,'DM',8X,'SOLUTION',4X, &
+      'EQ_PHASE',4X,'EXCHANGE',4X,'SURFACE ',4X,'GAS_PHAS',4X &
+      'SOLID_SO',4X,'KINETICS')
  4120 FORMAT(1X,7HCLASS #,I2,/9X,3(1PD12.3),14(7(1PD12.3),/))
  4130 FORMAT(9X,10(1PD12.3))
- 4131 FORMAT(9X,3(1PD12.3),7I4)
+ 4131 FORMAT(9X,3(1PD12.3),7(I4,8X))
  4140 FORMAT(6X,24HTEXTURAL CLASS INDEX MAP//   )
  4150 FORMAT(1H ,5X,I5,2X,100(99999I1))
  4151 FORMAT(1H ,5X,I5,2X,100(99999I2))
@@ -3629,7 +3636,7 @@
       F14P,F15P,F16P,F17P,F18P,F19P
       integer hydraulicFunctionType
       common/functiontype/ hydraulicFunctionType
-      character*20 label9(99,3)
+      character*20 label9(72,3),label9SOL(36,3)      
       CHARACTER*80 TITL
       CHARACTER*6 ZUNIT,CUNX,HUNX
       CHARACTER*7 TUNIT
@@ -3643,7 +3650,8 @@
       bl95I,bl95IT,bl95O,bl95OT
       common/massb1/bcmf,bcmh, &
       bltemp69,bltemp72,bltemp75,bltemp78,bltemp91
-      common/massb2/label9
+      common/massb2/j91,j92,j93,indexBL(72),indexBLSOL(36),  &
+      indexFLOW(33),indexHT(39),label9,label9SOL      
      
 !-------------------------------------------------------------------
 !
@@ -3734,10 +3742,10 @@
       LABEL9(31,1) = LABEL9(28,1)
       LABEL9(32,1) = LABEL9(28,1)
       LABEL9(33,1) = LABEL9(28,1)
-      LABEL9(34,1) = ' SOLUTE IN '
+      LABEL9(34,1) = ' ENERGY IN '
       LABEL9(35,1) = LABEL9(34,1)
       LABEL9(36,1) = LABEL9(34,1)
-      LABEL9(37,1) = ' SOLUTE OUT'
+      LABEL9(37,1) = ' ENERGY OUT'
       LABEL9(38,1) = LABEL9(37,1)
       LABEL9(39,1) = LABEL9(37,1)
       LABEL9(40,1) = LABEL9(34,1)
@@ -3758,48 +3766,21 @@
       LABEL9(55,1) = LABEL9(52,1)
       LABEL9(56,1) = LABEL9(52,1)
       LABEL9(57,1) = LABEL9(52,1)
-      LABEL9(58,1) = ' SOLUTE OUT'
+      LABEL9(58,1) = ' ENERGY OUT'
       LABEL9(59,1) = LABEL9(58,1)
       LABEL9(60,1) = LABEL9(58,1)
-      LABEL9(61,1) = ' SOLUTE '
+      LABEL9(61,1) = ' ENERGY '
       LABEL9(62,1) = LABEL9(61,1)
       LABEL9(63,1) = LABEL9(61,1)
       LABEL9(64,1) = LABEL9(61,1)
       LABEL9(65,1) = LABEL9(61,1)
       LABEL9(66,1) = LABEL9(61,1)
-      LABEL9(67,1) = ' ENERGY IN '
+      LABEL9(67,1) = LABEL9(61,1)
       LABEL9(68,1) = LABEL9(61,1)
       LABEL9(69,1) = LABEL9(61,1)
-      LABEL9(70,1) = ' ENERGY OUT '
+      LABEL9(70,1) = LABEL9(61,1)
       LABEL9(71,1) = LABEL9(61,1)
       LABEL9(72,1) = LABEL9(61,1)
-      LABEL9(73,1) = LABEL9(61,1)
-      LABEL9(74,1) = LABEL9(61,1)
-      LABEL9(75,1) = LABEL9(61,1)
-      LABEL9(76,1) = LABEL9(61,1)
-      LABEL9(77,1) = LABEL9(61,1)
-      LABEL9(78,1) = LABEL9(61,1)
-      LABEL9(79,1) = ' DISPERSION '
-      LABEL9(80,1) = LABEL9(61,1)
-      LABEL9(81,1) = LABEL9(61,1)
-      LABEL9(82,1) = LABEL9(61,1)
-      LABEL9(83,1) = LABEL9(61,1)
-      LABEL9(84,1) = LABEL9(61,1)
-      LABEL9(85,1) = ' TOTAL '
-      LABEL9(86,1) = LABEL9(61,1)
-      LABEL9(87,1) = LABEL9(61,1)
-      LABEL9(88,1) = LABEL9(61,1)
-      LABEL9(89,1) = LABEL9(61,1)
-      LABEL9(90,1) = LABEL9(61,1)
-      LABEL9(91,1) = ' ENERGY '
-      LABEL9(92,1) = LABEL9(61,1)
-      LABEL9(93,1) = LABEL9(61,1)
-      LABEL9(94,1) = LABEL9(61,1)
-      LABEL9(95,1) = LABEL9(61,1)
-      LABEL9(96,1) = LABEL9(61,1)
-      LABEL9(97,1) = ' ENERGY OUT '
-      LABEL9(98,1) = LABEL9(61,1)
-      LABEL9(99,1) = LABEL9(61,1)
 !
       LABEL9(1,2) = ' SP HEAD '
       LABEL9(2,2) = LABEL9(1,2)
@@ -3855,53 +3836,24 @@
       LABEL9(52,2) = LABEL9(34,1)
       LABEL9(53,2) = LABEL9(34,1)
       LABEL9(54,2) = LABEL9(34,1)
-
       LABEL9(55,2) = LABEL9(37,1)
       LABEL9(56,2) = LABEL9(37,1)
       LABEL9(57,2) = LABEL9(37,1)
       LABEL9(58,2) = ' ET '
       LABEL9(59,2) = LABEL9(58,2)
       LABEL9(60,2) = LABEL9(58,2)
-      LABEL9(61,2) = LABEL9(28,2)
-      LABEL9(62,2) = LABEL9(28,2)
-      LABEL9(63,2) = LABEL9(28,2)
-      LABEL9(64,2) = ' MASS BAL  '
+      LABEL9(61,2) = ' DECAY '
+      LABEL9(62,2) = LABEL9(61,2)
+      LABEL9(63,2) = LABEL9(61,2)
+      LABEL9(64,2) = ' ADSORPTION '
       LABEL9(65,2) = LABEL9(64,2)
       LABEL9(66,2) = LABEL9(64,2)
-
-      LABEL9(67,2) = LABEL9(1,2)
-      LABEL9(68,2) = LABEL9(1,2)
-      LABEL9(69,2) = LABEL9(1,2)
-      LABEL9(70,2) = LABEL9(1,2)
-      LABEL9(71,2) = LABEL9(1,2)
-      LABEL9(72,2) = LABEL9(1,2)
-      LABEL9(73,2) = LABEL9(7,2)
-      LABEL9(74,2) = LABEL9(7,2)
-      LABEL9(75,2) = LABEL9(7,2)
-      LABEL9(76,2) = LABEL9(7,2)
-      LABEL9(77,2) = LABEL9(7,2)
-      LABEL9(78,2) = LABEL9(7,2)
-      LABEL9(79,2) = ' IN '
-      LABEL9(80,2) = LABEL9(79,2)
-      LABEL9(81,2) = LABEL9(79,2)
-      LABEL9(82,2) = ' OUT '
-      LABEL9(83,2) = LABEL9(49,2)
-      LABEL9(84,2) = LABEL9(49,2)
-      LABEL9(85,2) = LABEL9(67,1)
-      LABEL9(86,2) = LABEL9(67,1)
-      LABEL9(87,2) = LABEL9(67,1)
-      LABEL9(88,2) = LABEL9(70,1)
-      LABEL9(89,2) = LABEL9(70,1)
-      LABEL9(90,2) = LABEL9(70,1)
-      LABEL9(91,2) = LABEL9(28,2)
-      LABEL9(92,2) = LABEL9(28,2)
-      LABEL9(93,2) = LABEL9(28,2)
-      LABEL9(94,2) = ' MASS BAL '
-      LABEL9(95,2) = LABEL9(61,1)
-      LABEL9(96,2) = LABEL9(61,1)
-      LABEL9(97,2) = ' ET '
-      LABEL9(98,2) = LABEL9(61,1)
-      LABEL9(99,2) = LABEL9(61,1)
+      LABEL9(67,2) = LABEL9(28,2)
+      LABEL9(68,2) = LABEL9(28,2)
+      LABEL9(69,2) = LABEL9(28,2)
+      LABEL9(70,2) = ' BALANCE    '
+      LABEL9(71,2) = LABEL9(70,2)
+      LABEL9(72,2) = LABEL9(70,2)
       LABEL9(1,3) = ' TOTAL '
       LABEL9(2,3) = ' TIME STEP '
       LABEL9(3,3) = ' RATE '
@@ -3910,6 +3862,86 @@
       LABEL9(K3+2,3) = LABEL9(2,3)
       LABEL9(K3+3,3) = LABEL9(3,3)
  771  CONTINUE
+      LABEL9SOL(1,1) = ' SOLUTE IN '
+      LABEL9SOL(2,1) = LABEL9SOL(1,1)
+      LABEL9SOL(3,1) = LABEL9SOL(1,1)
+      LABEL9SOL(4,1) = ' SOLUTE OUT'
+      LABEL9SOL(5,1) = LABEL9SOL(4,1)
+      LABEL9SOL(6,1) = LABEL9SOL(4,1)
+      LABEL9SOL(7,1) = LABEL9SOL(1,1)
+      LABEL9SOL(8,1) = LABEL9SOL(1,1)
+      LABEL9SOL(9,1) = LABEL9SOL(1,1)
+      LABEL9SOL(10,1) = LABEL9SOL(4,1)
+      LABEL9SOL(11,1) = LABEL9SOL(4,1)
+      LABEL9SOL(12,1) = LABEL9SOL(4,1)
+      LABEL9SOL(13,1) = ' DISPERSION'
+      LABEL9SOL(14,1) = LABEL9SOL(13,1)
+      LABEL9SOL(15,1) = LABEL9SOL(13,1)
+      LABEL9SOL(16,1) = LABEL9SOL(13,1)
+      LABEL9SOL(17,1) = LABEL9SOL(13,1)
+      LABEL9SOL(18,1) = LABEL9SOL(13,1)
+      LABEL9SOL(19,1) = ' TOTAL '
+      LABEL9SOL(20,1) = LABEL9SOL(19,1)
+      LABEL9SOL(21,1) = LABEL9SOL(19,1)
+      LABEL9SOL(22,1) = LABEL9SOL(19,1)
+      LABEL9SOL(23,1) = LABEL9SOL(19,1)
+      LABEL9SOL(24,1) = LABEL9SOL(19,1)
+      LABEL9SOL(25,1) = ' SOLUTE OUT'
+      LABEL9SOL(26,1) = LABEL9SOL(25,1)
+      LABEL9SOL(27,1) = LABEL9SOL(25,1)
+      LABEL9SOL(28,1) = ' SOLUTE '
+      LABEL9SOL(29,1) = LABEL9SOL(28,1)
+      LABEL9SOL(30,1) = LABEL9SOL(28,1)
+      LABEL9SOL(31,1) = LABEL9SOL(28,1)
+      LABEL9SOL(32,1) = LABEL9SOL(28,1)
+      LABEL9SOL(33,1) = LABEL9SOL(28,1)
+      LABEL9SOL(34,1) = LABEL9SOL(28,1)
+      LABEL9SOL(35,1) = LABEL9SOL(28,1)
+      LABEL9SOL(36,1) = LABEL9SOL(28,1)    
+      LABEL9SOL(1,2) = LABEL9(1,2)
+      LABEL9SOL(2,2) = LABEL9(1,2)
+      LABEL9SOL(3,2) = LABEL9(1,2)
+      LABEL9SOL(4,2) = LABEL9(1,2)
+      LABEL9SOL(5,2) = LABEL9(1,2)
+      LABEL9SOL(6,2) = LABEL9(1,2)
+      LABEL9SOL(7,2) = LABEL9(7,2)
+      LABEL9SOL(8,2) = LABEL9(7,2)
+      LABEL9SOL(9,2) = LABEL9(7,2)
+      LABEL9SOL(10,2) = LABEL9(7,2)
+      LABEL9SOL(11,2) = LABEL9(7,2)
+      LABEL9SOL(12,2) = LABEL9(7,2)
+      LABEL9SOL(13,2) = ' IN '
+      LABEL9SOL(14,2) = LABEL9SOL(13,2)
+      LABEL9SOL(15,2) = LABEL9SOL(13,2)
+      LABEL9SOL(16,2) = ' OUT '
+      LABEL9SOL(17,2) = LABEL9SOL(16,2)
+      LABEL9SOL(18,2) = LABEL9SOL(16,2)
+      LABEL9SOL(19,2) = LABEL9SOL(1,1)
+      LABEL9SOL(20,2) = LABEL9SOL(1,1)
+      LABEL9SOL(21,2) = LABEL9SOL(1,1)
+      LABEL9SOL(22,2) = LABEL9SOL(4,1)
+      LABEL9SOL(23,2) = LABEL9SOL(4,1)
+      LABEL9SOL(24,2) = LABEL9SOL(4,1)
+      LABEL9SOL(25,2) = ' ET '
+      LABEL9SOL(26,2) = LABEL9SOL(25,2)
+      LABEL9SOL(27,2) = LABEL9SOL(25,2)
+      LABEL9SOL(28,2) = LABEL9(28,2)
+      LABEL9SOL(29,2) = LABEL9SOL(28,2)
+      LABEL9SOL(30,2) = LABEL9SOL(28,2)
+      LABEL9SOL(31,2) = ' BALANCE    '
+      LABEL9SOL(32,2) = LABEL9SOL(31,2)
+      LABEL9SOL(33,2) = LABEL9SOL(31,2)
+      LABEL9SOL(34,2) = ' REACTION '
+      LABEL9SOL(35,2) = LABEL9SOL(34,2)
+      LABEL9SOL(36,2) = LABEL9SOL(34,2)
+      LABEL9SOL(1,3) = ' TOTAL '
+      LABEL9SOL(2,3) = ' TIME STEP '
+      LABEL9SOL(3,3) = ' RATE '
+      DO 772 K3 = 3,33,3
+      LABEL9SOL(K3+1,3) = LABEL9SOL(1,3)
+      LABEL9SOL(K3+2,3) = LABEL9SOL(2,3)
+      LABEL9SOL(K3+3,3) = LABEL9SOL(3,3)
+ 772  CONTINUE      
       END IF
 !
 !   INITIALIZE MASS BALANCE VARIABLES USED FOR CURRENT
@@ -3941,6 +3973,8 @@
       bcmf = 0.0D0
       bcmh = 0.0D0
       bltemp2 = 0.0D0
+      bl29I = 0.0D0
+      bl29O = 0.0D0
       bl95I = 0.0D0
       bl95O = 0.0D0
       Do 111 M=1,nsol
@@ -4439,35 +4473,161 @@
 !
 !   WRITE RESULTS TO FILE 9
 !
+!      IF(F9P) then
+!       if(ktim.eq.1) then
+!        if(o13p) then
+!         write(09,4002) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
+!         write(09,4002) '      ',(label9(mb9(im),2), im=1,nmb9)
+!         write(09,4002) '      ',(label9(mb9(im),3), im=1,nmb9)
+!        else
+!         write(09,4001) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
+!         write(09,4001) '      ',(label9(mb9(im),2), im=1,nmb9)
+!         write(09,4001) '      ',(label9(mb9(im),3), im=1,nmb9)
+!        end if
+!       end if
+!       if(.not.o9p.or.jplt.eq.1) then
+!        do 42 IM = 1,NMB9
+!         if(dabs(BL(MB9(IM))).lt.elimit1) then
+!          dum(IM) = elimit2
+!         else
+!          dum(IM) = BL(MB9(IM))
+!         end if
+! 42      continue
+!        if(o13p) then
+!         WRITE(09,4003) STIM,(BL(MB9(IM)),IM=1,NMB9)
+!         WRITE(09,4003) STIM,(dum(IM),IM=1,NMB9)
+!        else
+!         WRITE(09,4000) STIM,(dum(IM),IM=1,NMB9)
+!         WRITE(09,4000) STIM,(BL(MB9(IM)),IM=1,NMB9)
+!        end if
+!       end if
+!      end if
+!
+!   revision May 2016 for output to mass balance summary file 9
+!
       IF(F9P) then
        if(ktim.eq.1) then
-        if(o13p) then
-         write(09,4002) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
-         write(09,4002) '      ',(label9(mb9(im),2), im=1,nmb9)
-         write(09,4002) '      ',(label9(mb9(im),3), im=1,nmb9)
-        else
-         write(09,4001) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
-         write(09,4001) '      ',(label9(mb9(im),2), im=1,nmb9)
-         write(09,4001) '      ',(label9(mb9(im),3), im=1,nmb9)
-        end if
-       end if
+        j91 = 0
+        j92 = 0
+        j93 = 0
+        j94 = 0
+        do i = 1, nmb9
+         i1 = mb9(i)
+         if (i1.lt.34) then
+           j91 = j91 + 1
+           indexBL(j91) = i1
+           j93 = j93 + 1
+           indexFLOW(j93) = i1
+         else
+          if (HEAT) then
+           if (i1.lt.61) then
+           j91 = j91 + 1
+           indexBL(j91) = i1 + 33
+           else
+           if (i1.gt.66) then
+            j91 = j91 + 1
+            indexBL(j91) = i1 + 27
+           end if
+           end if
+           j94 = j94 + 1 
+           indexHT(j94) = i1           
+          end if
+          if (SOLUTE) then
+           j92 = j92 + 1
+           if(i1.lt.61) then
+            indexBLSOL(j92) = i1 - 33
+           else
+            if (i1.gt.66) then
+             indexBLSOL(j92) = i1 -39
+            end if
+           end if
+          end if
+         end if
+        end do
+!
+!           WRITE LABELS
+!
+     if (.not.SOLUTE) then
+      if (o13p) then
+       write(09,4002) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
+       write(09,4002) '      ',(label9(mb9(im),2), im=1,nmb9)
+       write(09,4002) '      ',(label9(mb9(im),3), im=1,nmb9)
+       write(09,4002) '      '
+      else
+       write(09,4001) ' TIME ',(label9(mb9(im),1), im=1,nmb9)
+       write(09,4001) '      ',(label9(mb9(im),2), im=1,nmb9)
+       write(09,4001) '      ',(label9(mb9(im),3), im=1,nmb9)
+       write(09,4001) '      '
+      end if
+     else
+      if (O13p) then
+       write(09,4004) ' TIME ',(label9(indexFLOW(im),1), im=1,j93), &
+        (label9(indexHT(im),1), im=1,j94), &
+        ((label9SOL(im3,1), im3=34,36),(label9SOL(indexBLSOL(im2),1)&
+        , im2=1,j92), im1=1,nsol)
+       write(09,4004) '      ',(label9(indexFLOW(im),2), im=1,j93), &
+         (label9(indexHT(im),2), im=1,j94), &
+         ((label9SOL(im3,2), im3=34,36),(label9SOL(indexBLSOL(im2),2)&
+         , im2=1,j92), im1=1,nsol)
+       write(09,4004) '      ',(label9(indexFLOW(im),3), im=1,j93), &
+        (label9(indexHT(im),3), im=1,j94), &
+        ((label9SOL(im3,3), im3=34,36),(label9SOL(indexBLSOL(im2),3)&
+        , im2=1,j92), im1=1,nsol)
+       write(09,4004) '      ',(' ', im=1,j91), ((COMPNAME(im1),&
+         im2=1,j92+3),im1=1,nsol)
+      else
+       write(09,4001) ' TIME ',(label9(indexFLOW(im),1), im=1,j93), &
+        (label9(indexHT(im),1), im=1,j94), &
+        ((label9SOL(im3,1), im3=34,36),(label9SOL(indexBLSOL(im2),1),&
+        im2=1,j92), im1=1,nsol)
+       write(09,4001) '      ',(label9(indexFLOW(im),2), im=1,j93), &
+        (label9(indexHT(im),2), im=1,j94), &
+        ((label9SOL(im3,2), im3=34,36),(label9SOL(indexBLSOL(im2),2),&
+         im2=1,j92), im1=1,nsol)
+       write(09,4001) '      ',(label9(indexFLOW(im),3), im=1,j93), &
+        (label9(indexHT(im),3), im=1,j94), &
+        ((label9SOL(im3,3), im3=34,36),(label9SOL(indexBLSOL(im2),3),&
+        im2=1,j92), im1=1,nsol)
+       write(09,4001) '      ',(' ', im=1,j91), ((COMPNAME(im1),&
+         im2=1,j92+3),im1=1,nsol)
+      end if
+      end if
+      end if
        if(.not.o9p.or.jplt.eq.1) then
-        do 42 IM = 1,NMB9
-         if(dabs(BL(MB9(IM))).lt.elimit1) then
+        do 42 IM = 1,j91
+         if(dabs(BL(indexBL(IM))).lt.elimit1) then
           dum(IM) = elimit2
          else
-          dum(IM) = BL(MB9(IM))
+          dum(IM) = BL(indexBL(IM))
          end if
  42      continue
-        if(o13p) then
-!         WRITE(09,4003) STIM,(BL(MB9(IM)),IM=1,NMB9)
-         WRITE(09,4003) STIM,(dum(IM),IM=1,NMB9)
-        else
-         WRITE(09,4000) STIM,(dum(IM),IM=1,NMB9)
-!         WRITE(09,4000) STIM,(BL(MB9(IM)),IM=1,NMB9)
+        IF (SOLUTE) then
+        do 43 im1 = 1,nsol
+        do 43 IM = 1,j92
+         if(dabs(BLSOL(im1,indexBLSOL(IM))).lt.elimit1) then
+          BLSOL(im1,indexBLSOL(IM)) = elimit2
+         end if
+ 43      continue
         end if
-       end if
-      end if
+        if(o13p) then
+         if (.not.SOLUTE) then
+          WRITE(09,4003) STIM,(dum(IM),IM=1,j91)
+         else
+          WRITE(09,4003) STIM,(dum(IM),IM=1,j91), &
+          ((BLSOL(im1,im3),im3=34,36),  &
+          (BLSOL(im1,indexBLSOL(im2)),im2=1,j92),im1=1,nsol)
+         end if
+        else
+         if (.not.SOLUTE) then
+          WRITE(09,4000) STIM,(dum(IM),IM=1,j91)
+         else
+          WRITE(09,4000) STIM,(dum(IM),IM=1,j91), &
+          ((BLSOL(im1,im3),im3=34,36),  &
+          (BLSOL(im1,indexBLSOL(im2)),im2=1,j92),im1=1,nsol)
+         end if       
+        end if
+       end if   
+      end if        
 !
 !  revision Aug 2008 to print boundary segment fluxes
 !
@@ -4585,10 +4745,11 @@
       jflag1 = jflag
       jflag2 = jflag
       RETURN
- 4000 FORMAT(1pe14.6,73(1PE11.3))
- 4003 FORMAT(1pe18.10,73(1PE21.13))
- 4001 format(a14,1X,73a11)
- 4002 format(a18,1X,73a21)
+ 4000 FORMAT(1pe14.6,7300(1PE11.3))
+ 4003 FORMAT(1pe18.10,7300(1PE21.13))
+ 4001 format(a14,1X,7300a11)
+ 4002 format(a18,1X,7300a21)
+ 4004 format(a18,1X,7300(a11,10x))
  4010 FORMAT(21X,10(1H-),1X,'MASS BALANCE SUMMARY FOR TIME STEP', &
        I9,1X,10(1H-)/25X,'RECHARGE PERIOD NUMBER ',I9/25X, &
       'TOTAL ELAPSED SIMULATION TIME = ',1PE14.6,1X,A4 &
@@ -8338,9 +8499,9 @@
       END IF
       TMB1 = BL(85)
       TMB2 = BL(88)+BL(91)
-      TMB3 = bl68IT
-      TMB4 = bl68OT
-      TMB5 = BL(54)
+      TMB3 = bl95IT
+      TMB4 = bl95OT
+      TMB5 = BL(87)
       TMB6 = BL(90)+BL(93)
       TMB7 = bl95I/DELT
       TMB8 = bl95O/DELT

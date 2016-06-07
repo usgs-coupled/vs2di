@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioUserFile ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A35940C4-7A25-405E-9211-44EB3C8F607C}">
 	<Configurations>
-		<Configuration Name="openmp_debug|Win32"/>
+		<Configuration Name="openmp_debug|Win32" WorkingDirectory="C:\temp\Runner\Runner"/>
 		<Configuration Name="openmp|Win32"/>
 		<Configuration Name="openmp_debug|x64"/>
 		<Configuration Name="openmp|x64"/></Configurations></VisualStudioUserFile>

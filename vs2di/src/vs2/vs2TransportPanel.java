@@ -3,9 +3,7 @@
  */
 package vs2;
 
-import mp2.*;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -15,19 +13,33 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
     public boolean doSpaceCentered;
     public boolean doTimeCentered;
     public int reactionOption;
-
+    public String chemFile;          // new in 1.4
+    public String databaseFile;      // new in 1.4
+    public String prefix;            // new in 1.4
+    public int iprntcheOption;       // new in 1.4
+    public int ipoutOption;          // new in 1.4
+    
     protected JRadioButton spaceCentered;
     protected JRadioButton spaceBackward;
     protected JRadioButton timeCentered;
     protected JRadioButton timeBackward;
-    protected JRadioButton noAdsorption;
-    protected JRadioButton linearAdsorption;
-    protected JRadioButton freundlichIsotherm;
-    protected JRadioButton langmuirIsotherm;
-    protected JRadioButton monoMonovalent;
-    protected JRadioButton monoDivalent;
-    protected JRadioButton diMonovalent;
-    protected JRadioButton diDivalent;
+    
+    protected JTextField chemfileTextField;
+    protected JTextField databasefileTextField;
+    protected JTextField prefixTextField;
+    
+    protected JLabel chemfileLabel;
+    protected JLabel databasefileLabel;
+    protected JLabel prefixLabel;
+    
+    // IPRNTCHE
+    protected JRadioButton noPhreeqcOutputRadioButton;
+    protected JRadioButton selectedOutputRadioButton;
+    
+    // IPOUT
+    protected JRadioButton ipoutNoPhreeqcOutputRadioButton;
+    protected JRadioButton ipoutExtensivePhreeqcOutputRadioButton;
+    
 
     /**
      * Constructs the panel for transport options
@@ -68,42 +80,111 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
         bg.add(timeCentered);
         bg.add(timeBackward);
 
-        if (!vs2App.doHeat()) {
-            // sorption options
-            add(panel = new JPanel(new GridLayout(1, 2), false));
-            c.insets = new Insets(10, 0, 0, 0);
-            gridbag.setConstraints(panel, c);
-            panel.setBorder(new CompoundBorder(
-                    BorderFactory.createTitledBorder("Adsorption/Ion Exchange"),
-                    new EmptyBorder(4, 10, 10, 10)));
+        // phreeqc options
+        add(panel = new JPanel(false));
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        gridbag.setConstraints(panel, c);
+        panel.setBorder(new CompoundBorder(
+                BorderFactory.createTitledBorder("Phreeqc options"),
+                new EmptyBorder(4, 10, 10, 10)));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-            panel.add(subPanel = new JPanel(new GridLayout(4, 1)));
-            subPanel.add(noAdsorption = new JRadioButton("None"));
-            subPanel.add(linearAdsorption = new JRadioButton("Linear isotherm"));
-            subPanel.add(freundlichIsotherm = new JRadioButton("Freundlich isotherm"));
-            subPanel.add(langmuirIsotherm = new JRadioButton("Langmuir isotherm"));
+        JPanel filesPanel = new JPanel(false);
+        filesPanel.setLayout(new BoxLayout(filesPanel, BoxLayout.X_AXIS));
+        panel.add(filesPanel);
 
-            panel.add(subPanel = new JPanel(new GridLayout(4, 1)));
-            subPanel.add(monoMonovalent = new JRadioButton(
-                                "Monovalent-monovalent ion exchange"));
-            subPanel.add(monoDivalent = new JRadioButton(
-                                "Monovalent-divalent ion exchange"));
-            subPanel.add(diMonovalent = new JRadioButton(
-                                "Divalent-monovalent ion exchange"));
-            subPanel.add(diDivalent = new JRadioButton(
-                                "Divalent-divalent ion exchange"));
+        // Make a left panel to hold the labels
+        JPanel transLeftPanel = new JPanel(false);
+        transLeftPanel.setLayout(new GridLayout(0, 1, 5, 5));
+        filesPanel.add(transLeftPanel);
 
-            bg = new ButtonGroup();
-            bg.add(noAdsorption);
-            bg.add(linearAdsorption);
-            bg.add(freundlichIsotherm);
-            bg.add(langmuirIsotherm);
-            bg.add(monoMonovalent);
-            bg.add(monoDivalent);
-            bg.add(diMonovalent);
-            bg.add(diDivalent);
-        }
+        // Put space between the left and right panels
+        filesPanel.add(Box.createHorizontalStrut(5));
+
+        // Make a right panel to hold the text fields
+        JPanel transRightPanel = new JPanel(false);
+        transRightPanel.setLayout(new GridLayout(0, 1, 5, 5));
+        filesPanel.add(transRightPanel);           
+
+        // add labels and text fields for transport parameters
+        transLeftPanel.add(chemfileLabel = new JLabel("Phreeqc input file name", SwingConstants.RIGHT));
+        transRightPanel.add(chemfileTextField = new JTextField(20));
+
+        transLeftPanel.add(databasefileLabel = new JLabel("Database file name", SwingConstants.RIGHT));
+        transRightPanel.add(databasefileTextField = new JTextField(20));
+
+        transLeftPanel.add(prefixLabel = new JLabel("Prefix name", SwingConstants.RIGHT));
+        transRightPanel.add(prefixTextField = new JTextField(20));
+
+        JPanel optionsPanel = new JPanel(false);
+        panel.add(optionsPanel);
+
+        // create radio panels side by side
+        JPanel radioPanel = new JPanel(false);
+        radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
+        panel.add(radioPanel);
+
+        // Phreeqc Output (0 -> None) (1 -> Selected output)
+        radioPanel.add(subPanel = new JPanel(gridbag, false));
+        subPanel.setBorder(new CompoundBorder(
+                BorderFactory.createTitledBorder("IPRNTCHE"),
+                new EmptyBorder(5, 2, 5, 2)));
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(0, 0, 0, 0);
+
+        noPhreeqcOutputRadioButton = new JRadioButton("No phreeqc output");
+        gridbag.setConstraints(noPhreeqcOutputRadioButton, c);
+        subPanel.add(noPhreeqcOutputRadioButton);
+
+        selectedOutputRadioButton = new JRadioButton("Selected output");
+        gridbag.setConstraints(selectedOutputRadioButton, c);
+        subPanel.add(selectedOutputRadioButton);
+
+        bg = new ButtonGroup();
+        bg.add(noPhreeqcOutputRadioButton);
+        bg.add(selectedOutputRadioButton);
+
+        // Phreeqc Chemistry??? Output (0 -> None) (1 -> Extensive)
+        radioPanel.add(subPanel = new JPanel(gridbag, false));
+        subPanel.setBorder(new CompoundBorder(
+                BorderFactory.createTitledBorder("IPOUT"),
+                new EmptyBorder(5, 2, 5, 2)));
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(0, 0, 0, 0);
+
+        ipoutNoPhreeqcOutputRadioButton = new JRadioButton("No phreeqc output");
+        gridbag.setConstraints(ipoutNoPhreeqcOutputRadioButton, c);
+        subPanel.add(ipoutNoPhreeqcOutputRadioButton);
+
+        ipoutExtensivePhreeqcOutputRadioButton = new JRadioButton("Extensive phreeqc output");
+        gridbag.setConstraints(ipoutExtensivePhreeqcOutputRadioButton, c);
+        subPanel.add(ipoutExtensivePhreeqcOutputRadioButton);
+
+        bg = new ButtonGroup();
+        bg.add(ipoutNoPhreeqcOutputRadioButton);
+        bg.add(ipoutExtensivePhreeqcOutputRadioButton);
     }
+    
+    public void doSoluteTransport(boolean b) {
+        chemfileLabel.setEnabled(b);
+        databasefileLabel.setEnabled(b);
+        prefixLabel.setEnabled(b);
+        
+        chemfileTextField.setEnabled(b);
+        databasefileTextField.setEnabled(b);
+        prefixTextField.setEnabled(b);
+        
+        noPhreeqcOutputRadioButton.setEnabled(b);
+        selectedOutputRadioButton.setEnabled(b);        
+        
+        ipoutNoPhreeqcOutputRadioButton.setEnabled(b);
+        ipoutExtensivePhreeqcOutputRadioButton.setEnabled(b);
+        revalidate();
+    }
+    
 
     /**
      * Puts values in the components in the panel
@@ -114,22 +195,26 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
         timeCentered.setSelected(doTimeCentered);
         timeBackward.setSelected(!doTimeCentered);
 
-        if (!vs2App.doHeat()) {
-            noAdsorption.setSelected(reactionOption == 
-                                    N0_ADSORPTION_NO_ION_EXCHANGE);
-            linearAdsorption.setSelected(reactionOption == 
-                                                LINEAR_ADSORPTION);
-            freundlichIsotherm.setSelected(reactionOption == FREUNDLICH);
-            langmuirIsotherm.setSelected(reactionOption == LANGMUIR);
-            monoMonovalent.setSelected(reactionOption == 
-                                    MONO_MONOVALENT_ION_EXCHANGE);
-            monoDivalent.setSelected(reactionOption == 
-                                    MONO_DIVALENT_ION_EXCHANGE);
-            diMonovalent.setSelected(reactionOption == 
-                                    DI_MONOVALENT_ION_EXCHANGE);
-            diDivalent.setSelected(reactionOption == 
-                                    DI_DIVALENT_ION_EXCHANGE);
-        }
+        // CHEMFILE
+        chemfileTextField.setText(chemFile);                
+
+        // DATABASEFILE
+        databasefileTextField.setText(databaseFile);                
+
+        // PREFIX
+        prefixTextField.setText(prefix);                
+
+        // IPRNTCHE
+        noPhreeqcOutputRadioButton.setSelected(
+                iprntcheOption == IPRNTCHE_NO_PHREEQC_OUTPUT);
+        selectedOutputRadioButton.setSelected(
+                iprntcheOption == IPRNTCHE_SELECTED_OUTPUT);
+
+        // IPOUT
+        ipoutNoPhreeqcOutputRadioButton.setSelected(
+                ipoutOption == IPOUT_NO_PHREEQC_OUTPUT);
+        ipoutExtensivePhreeqcOutputRadioButton.setSelected(
+                ipoutOption == IPOUT_EXTENSIVE_PHREEQC_OUTPUT);
     }
 
     /**
@@ -140,30 +225,30 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
         doSpaceCentered = spaceCentered.isSelected();
         doTimeCentered = timeCentered.isSelected();
 
-        if (!vs2App.doHeat()) {
-            if (noAdsorption.isSelected()) {
-                reactionOption = N0_ADSORPTION_NO_ION_EXCHANGE;
+        if (true) {
+            // CHEMFILE
+            chemFile = chemfileTextField.getText();
+
+            // DATABASEFILE
+            databaseFile = databasefileTextField.getText();
+
+            // PREFIX
+            prefix = prefixTextField.getText();
+            
+            // IPRNTCHE
+            if (noPhreeqcOutputRadioButton.isSelected()) {
+                iprntcheOption = IPRNTCHE_NO_PHREEQC_OUTPUT;
             }
-            else if (linearAdsorption.isSelected()) {
-                reactionOption = LINEAR_ADSORPTION;
+            else {
+                iprntcheOption = IPRNTCHE_SELECTED_OUTPUT;
             }
-            else if (freundlichIsotherm.isSelected()) {
-                reactionOption = FREUNDLICH;
+            
+            // IPOUT
+            if (ipoutNoPhreeqcOutputRadioButton.isSelected()) {
+                ipoutOption = IPOUT_NO_PHREEQC_OUTPUT;
             }
-            else if (langmuirIsotherm.isSelected()) {
-                reactionOption = LANGMUIR;
-            }
-            else if (monoMonovalent.isSelected()) {
-                reactionOption = MONO_MONOVALENT_ION_EXCHANGE;
-            }
-            else if (monoDivalent.isSelected()) {
-                reactionOption = MONO_DIVALENT_ION_EXCHANGE;
-            }
-            else if (diMonovalent.isSelected()) {
-                reactionOption = DI_MONOVALENT_ION_EXCHANGE;
-            }
-            else if (diDivalent.isSelected()) {
-                reactionOption = DI_DIVALENT_ION_EXCHANGE;
+            else {
+                ipoutOption = IPOUT_EXTENSIVE_PHREEQC_OUTPUT;
             }
         }
         return true;

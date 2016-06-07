@@ -30,6 +30,14 @@ public class vs2dh extends vs2ComputationalModel {
     public native void start(int jold, int jhydr, int jsorp, String dataFile);
     
     public native boolean getDoTransport();
+    
+    public boolean getDoEnergyTransport() {
+        return getDoTransport();
+    }    
+    
+    public boolean getDoSoluteTransport() {
+        return false;
+    }    
 
     public native int advanceOneStep();
 

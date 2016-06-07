@@ -108,23 +108,6 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
                                     SwingConstants.RIGHT));
         rightPanel.add(epsTextField = new JTextField(6));
 
-        
-//        if (vs2App.doHeat()) {
-//            leftPanel.add(eps1Label = new JLabel(
-//                                "Closure criterion for temperature", 
-//                                SwingConstants.RIGHT));
-//            rightPanel.add(eps1TextField = new JTextField(6));
-//            leftPanel.add(eps2Label = new JLabel(
-//                                "Closure criterion for velocity", 
-//                                SwingConstants.RIGHT));
-//            rightPanel.add(eps2TextField = new JTextField(6));
-//        } else {
-//            leftPanel.add(eps1Label = new JLabel(
-//                                "Closure criterion for concentration", 
-//                                SwingConstants.RIGHT));
-//            rightPanel.add(eps1TextField = new JTextField(6));
-//        }
-
         leftPanel.add(eps1Label = new JLabel(
                 "Closure criterion for temperature",
                 SwingConstants.RIGHT));
@@ -152,25 +135,9 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
         maxStepTextField.setText(String.valueOf(maxStep));
         epsTextField.setText(String.valueOf(eps));
         eps1TextField.setText(String.valueOf(eps1));
-//        if (vs2App.doHeat()) {
-//            eps2TextField.setText(String.valueOf(eps2));
-//        }
-        //{{
         eps2TextField.setText(String.valueOf(eps2));
         eps3TextField.setText(String.valueOf(eps3));
-        //}}
     }
-
-//    public void doTransport(boolean b) {
-//        assert(false);
-//        eps1Label.setVisible(b);
-//        eps1TextField.setVisible(b);
-//        if (vs2App.doHeat()) {
-//            eps2Label.setVisible(b);
-//            eps2TextField.setVisible(b);
-//        }
-//        revalidate();
-//    }
 
     public void doEnergyTransport(boolean b) {
         doEnergyTransport = b;

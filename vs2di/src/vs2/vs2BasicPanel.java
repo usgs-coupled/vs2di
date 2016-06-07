@@ -17,7 +17,8 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
     public String massUnit;
     public String energyUnit;
     public boolean useRadialCoord;
-    public boolean doTransport;
+    public boolean doEnergyTransport;    // new in Version 1.4
+    public boolean doSoluteTransport;    // new in Version 1.4   
     public boolean doEvaporation;
     public boolean doTranspiration;
     public boolean radialCoordinatesEnabled;
@@ -47,7 +48,8 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
     protected JRadioButton calRadioButton;
     protected JRadioButton otherEnergyRadioButton;
     protected JCheckBox useRadialCoordCheckBox;
-    protected JCheckBox doTransportCheckBox;
+    protected JCheckBox doEnergyTransportCheckBox;    // new in Version 1.4
+    protected JCheckBox doSoluteTransportCheckBox;    // new in Version 1.4
     protected JCheckBox doEvaporationCheckBox;
     protected JCheckBox doTranspirationCheckBox;
 
@@ -166,71 +168,70 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         // Mass units
         panel.add(subPanel = new JPanel(gridbag, false));
         bg = new ButtonGroup();
-        if (vs2App.doHeat()) {
-            subPanel.setBorder(new CompoundBorder(
-                   BorderFactory.createTitledBorder("Energy Unit"),
-                   new EmptyBorder(5, 2, 5, 2)));
+        subPanel.setBorder(new CompoundBorder(
+                BorderFactory.createTitledBorder("Mass Unit"),
+                new EmptyBorder(5, 2, 5, 2)));
 
-            jouleRadioButton = new JRadioButton("Joule");
-            gridbag.setConstraints(jouleRadioButton, c);
-            subPanel.add(jouleRadioButton);
+        mgRadioButton = new JRadioButton("mg");
+        gridbag.setConstraints(mgRadioButton, c);
+        subPanel.add(mgRadioButton);
 
-            calRadioButton = new JRadioButton("cal");
-            gridbag.setConstraints(calRadioButton, c);
-            subPanel.add(calRadioButton);
+        gRadioButton = new JRadioButton("g");
+        gridbag.setConstraints(gRadioButton, c);
+        subPanel.add(gRadioButton);
 
-            otherEnergyRadioButton = new JRadioButton("other");
-            c.gridwidth = GridBagConstraints.RELATIVE;
-            gridbag.setConstraints(otherEnergyRadioButton, c);
-            subPanel.add(otherEnergyRadioButton);
+        kgRadioButton = new JRadioButton("Kg");
+        gridbag.setConstraints(kgRadioButton, c);
+        subPanel.add(kgRadioButton);
 
-            otherEnergyUnitTextField = new JTextField(4);
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            gridbag.setConstraints(otherEnergyUnitTextField, c);
-            subPanel.add(otherEnergyUnitTextField);
-            
-            bg.add(jouleRadioButton);
-            bg.add(calRadioButton);
-            bg.add(otherEnergyRadioButton);
+        lbRadioButton = new JRadioButton("lb");
+        gridbag.setConstraints(lbRadioButton, c);
+        subPanel.add(lbRadioButton);
 
-        } else {
-            subPanel.setBorder(new CompoundBorder(
-                    BorderFactory.createTitledBorder("Mass Unit"),
-                    new EmptyBorder(5, 2, 5, 2)));
+        otherMassRadioButton = new JRadioButton("other");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridbag.setConstraints(otherMassRadioButton, c);
+        subPanel.add(otherMassRadioButton);
 
-            mgRadioButton = new JRadioButton("mg");
-            gridbag.setConstraints(mgRadioButton, c);
-            subPanel.add(mgRadioButton);
+        otherMassUnitTextField = new JTextField(4);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridbag.setConstraints(otherMassUnitTextField, c);
+        subPanel.add(otherMassUnitTextField);
 
-            gRadioButton = new JRadioButton("g");
-            gridbag.setConstraints(gRadioButton, c);
-            subPanel.add(gRadioButton);
+        bg.add(mgRadioButton);
+        bg.add(gRadioButton);
+        bg.add(kgRadioButton);
+        bg.add(lbRadioButton);
+        bg.add(otherMassRadioButton);
+        
+        // Energy units
+        panel.add(subPanel = new JPanel(gridbag, false));
+        bg = new ButtonGroup();
+        subPanel.setBorder(new CompoundBorder(
+               BorderFactory.createTitledBorder("Energy Unit"),
+               new EmptyBorder(5, 2, 5, 2)));
 
-            kgRadioButton = new JRadioButton("Kg");
-            gridbag.setConstraints(kgRadioButton, c);
-            subPanel.add(kgRadioButton);
+        jouleRadioButton = new JRadioButton("Joule");
+        gridbag.setConstraints(jouleRadioButton, c);
+        subPanel.add(jouleRadioButton);
 
-            lbRadioButton = new JRadioButton("lb");
-            gridbag.setConstraints(lbRadioButton, c);
-            subPanel.add(lbRadioButton);
+        calRadioButton = new JRadioButton("cal");
+        gridbag.setConstraints(calRadioButton, c);
+        subPanel.add(calRadioButton);
 
-            otherMassRadioButton = new JRadioButton("other");
-            c.gridwidth = GridBagConstraints.RELATIVE;
-            gridbag.setConstraints(otherMassRadioButton, c);
-            subPanel.add(otherMassRadioButton);
+        otherEnergyRadioButton = new JRadioButton("other");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridbag.setConstraints(otherEnergyRadioButton, c);
+        subPanel.add(otherEnergyRadioButton);
 
-            otherMassUnitTextField = new JTextField(4);
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            gridbag.setConstraints(otherMassUnitTextField, c);
-            subPanel.add(otherMassUnitTextField);
-            
-            bg.add(mgRadioButton);
-            bg.add(gRadioButton);
-            bg.add(kgRadioButton);
-            bg.add(lbRadioButton);
-            bg.add(otherMassRadioButton);
-            
-        }
+        otherEnergyUnitTextField = new JTextField(4);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridbag.setConstraints(otherEnergyUnitTextField, c);
+        subPanel.add(otherEnergyUnitTextField);
+
+        bg.add(jouleRadioButton);
+        bg.add(calRadioButton);
+        bg.add(otherEnergyRadioButton);
 
         // Create a panel to hold misc options
         add(panel = new JPanel(new GridLayout(2, 2, 10, 1), false));
@@ -245,13 +246,20 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
                     new JCheckBox("Use radial coordinates"));
         panel.add(doEvaporationCheckBox = 
                     new JCheckBox("Simulate evaporation"));
-        panel.add(doTransportCheckBox = 
-                    new JCheckBox("Simulate transport", true));
+        panel.add(doEnergyTransportCheckBox = 
+                    new JCheckBox("Simulate heat transport", true));
+        panel.add(doSoluteTransportCheckBox = 
+                    new JCheckBox("Simulate solute transport", true));
         panel.add(doTranspirationCheckBox = 
                     new JCheckBox("Simulate transpiration"));
-        doTransportCheckBox.addItemListener(new ItemListener() {
+        doEnergyTransportCheckBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                onTransportCheckBox();
+                onEnergyTransportCheckBox();
+            }
+        });
+        doSoluteTransportCheckBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                onSoluteTransportCheckBox();
             }
         });
     }
@@ -265,7 +273,8 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         setSelectedUnits();
 
         useRadialCoordCheckBox.setSelected(useRadialCoord);
-        doTransportCheckBox.setSelected(doTransport);
+        doEnergyTransportCheckBox.setSelected(doEnergyTransport);  // new in Version 1.4
+        doSoluteTransportCheckBox.setSelected(doSoluteTransport);  // new in Version 1.4
         doEvaporationCheckBox.setSelected(doEvaporation);
         doTranspirationCheckBox.setSelected(doTranspiration);
 
@@ -273,19 +282,36 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
     }
 
     /**
-     * Restore or remove the transport panel when the transport check box is
+     * Restore or remove the transport panel when the heat transport check box is
      * checked or unchecked.
      */
-    protected void onTransportCheckBox() {
-        if (doTransportCheckBox.isSelected()) {
-            parentDialog.restoreTransportPanel();
-            parentDialog.solverPanel.doTransport(true);
+    protected void onEnergyTransportCheckBox() {
+        if (doEnergyTransportCheckBox.isSelected() || doSoluteTransportCheckBox.isSelected()) {
+            parentDialog.transportPanel.setEnabled(false);
         } else {
-            parentDialog.removeTransportPanel();
-            parentDialog.solverPanel.doTransport(false);
+            parentDialog.transportPanel.setEnabled(true);
         }
+        parentDialog.solverPanel.doEnergyTransport(
+                doEnergyTransportCheckBox.isSelected());
     }
+            
+    /**
+     * Restore or remove the transport panel when the solute transport check box is
+     * checked or unchecked.
+     */
+    protected void onSoluteTransportCheckBox() {
+        if (doEnergyTransportCheckBox.isSelected() || doSoluteTransportCheckBox.isSelected()) {
+            parentDialog.transportPanel.setEnabled(false);
+        } else {
+            parentDialog.transportPanel.setEnabled(true);
+        }
+        parentDialog.solverPanel.doSoluteTransport(
+                doSoluteTransportCheckBox.isSelected());
 
+        parentDialog.transportPanel.doSoluteTransport(
+                doSoluteTransportCheckBox.isSelected());
+    }
+    
     /**
      * Get values from components.
      */
@@ -293,11 +319,8 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         title = titleTextField.getText();
         boolean b = lengthUnit.equals(getSelectedLengthUnit());
         b = b && timeUnit.equals(getSelectedTimeUnit());
-        if (vs2App.doHeat()) {
-            b = b && energyUnit.equals(getSelectedEnergyUnit());
-        } else {
-            b = b && massUnit.equals(getSelectedMassUnit());
-        }
+        b = b && energyUnit.equals(getSelectedEnergyUnit());
+        b = b && massUnit.equals(getSelectedMassUnit());
         
         if (unitChangeWarningEnabled && !b) {
             String [] messageLines = new String [3];
@@ -317,19 +340,18 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         }
         lengthUnit = getSelectedLengthUnit();
         timeUnit = getSelectedTimeUnit();
-        if (vs2App.doHeat()) {
-            energyUnit = getSelectedEnergyUnit();
-        } else {
-            massUnit = getSelectedMassUnit();
-        }
+        energyUnit = getSelectedEnergyUnit();
+        massUnit = getSelectedMassUnit();
         useRadialCoord = useRadialCoordCheckBox.isSelected();
-        doTransport = doTransportCheckBox.isSelected();
+        doEnergyTransport = doEnergyTransportCheckBox.isSelected();    // new in Version 1.4
+        doSoluteTransport = doSoluteTransportCheckBox.isSelected();    // new in Version 1.4
         doEvaporation = doEvaporationCheckBox.isSelected();
         doTranspiration = doTranspirationCheckBox.isSelected();
         return true;
     }
 
     protected void setSelectedUnits() {
+        // length units
         if (lengthUnit.equals("mm  ")) {
             mmRadioButton.setSelected(true);
         }
@@ -347,6 +369,7 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
             otherLengthUnitTextField.setText(lengthUnit);
         }
 
+        // time units
         if (timeUnit.equals("sec ")) {
             secRadioButton.setSelected(true);
         }
@@ -364,34 +387,34 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
             otherTimeUnitTextField.setText(timeUnit);
         }
 
-        if (vs2App.doHeat()) {
-            if (energyUnit.equals("J   ")) {
-                jouleRadioButton.setSelected(true);
-            }
-            else if (energyUnit.equals("cal ")) {
-                calRadioButton.setSelected(true);
-            }
-            else {
-                otherEnergyRadioButton.setSelected(true);
-                otherEnergyUnitTextField.setText(energyUnit);
-            }
-        } else {
-            if (massUnit.equals("mg  ")) {
-                mgRadioButton.setSelected(true);
-            }
-            else if (massUnit.equals("g   ")) {
-                gRadioButton.setSelected(true);
-            }
-            else if (massUnit.equals("Kg  ")) {
-                kgRadioButton.setSelected(true);
-            }
-            else if (massUnit.equals("lb  ")) {
-                lbRadioButton.setSelected(true);
-            }
-            else {
-                otherMassRadioButton.setSelected(true);
-                otherMassUnitTextField.setText(massUnit);
-            }
+        // energy units
+        if (energyUnit.equals("J   ")) {
+            jouleRadioButton.setSelected(true);
+        }
+        else if (energyUnit.equals("cal ")) {
+            calRadioButton.setSelected(true);
+        }
+        else {
+            otherEnergyRadioButton.setSelected(true);
+            otherEnergyUnitTextField.setText(energyUnit);
+        }
+        
+        // mass units
+        if (massUnit.equals("mg  ")) {
+            mgRadioButton.setSelected(true);
+        }
+        else if (massUnit.equals("g   ")) {
+            gRadioButton.setSelected(true);
+        }
+        else if (massUnit.equals("Kg  ")) {
+            kgRadioButton.setSelected(true);
+        }
+        else if (massUnit.equals("lb  ")) {
+            lbRadioButton.setSelected(true);
+        }
+        else {
+            otherMassRadioButton.setSelected(true);
+            otherMassUnitTextField.setText(massUnit);
         }
     }
 

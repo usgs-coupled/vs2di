@@ -17,6 +17,7 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
     public double eps;
     public double eps1;
     public double eps2;
+    public double eps3;                         // new in Version 1.4
     public boolean itstop;
     public int maxStep;
 
@@ -26,10 +27,15 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
     protected JTextField epsTextField;
     protected JTextField eps1TextField;
     protected JTextField eps2TextField;
+    protected JTextField eps3TextField;         // new in Version 1.4
     protected JLabel eps1Label;
     protected JLabel eps2Label;
+    protected JLabel eps3Label;                 // new in Version 1.4
     protected JTextField maxStepTextField;
-    protected JRadioButton itstopRadioButton;
+    protected JCheckBox itstopCheckBox;
+    
+    protected boolean doEnergyTransport;        // new in Version 1.4
+    protected boolean doSoluteTransport;        // new in Version 1.4
 
 
     /**
@@ -75,14 +81,15 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
                                     SwingConstants.RIGHT));
         rightPanel.add(itmaxTextField = new JTextField(6));
 
-        panel.add(itstopRadioButton = new JRadioButton(
+        panel.add(itstopCheckBox = new JCheckBox(
                         "Stop simulation at convergence failure"));
         c.fill = GridBagConstraints.NONE;
         c.insets = new Insets(10, 0, 20, 0);
         c.gridwidth = GridBagConstraints.REMAINDER;
-        gridbag.setConstraints(itstopRadioButton, c);
+        gridbag.setConstraints(itstopCheckBox, c);
 
-        int rows = vs2App.doHeat() ? 4 : 3;
+        //int rows = vs2App.doHeat() ? 4 : 3;
+        int rows = 5;
         panel.add(leftPanel = new JPanel(new GridLayout(rows, 1, 0, 10)));
         c.fill = GridBagConstraints.VERTICAL;
         c.insets = new Insets(0, 0, 0, 10);
@@ -102,21 +109,36 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
         rightPanel.add(epsTextField = new JTextField(6));
 
         
-        if (vs2App.doHeat()) {
-            leftPanel.add(eps1Label = new JLabel(
-                                "Closure criterion for temperature", 
-                                SwingConstants.RIGHT));
-            rightPanel.add(eps1TextField = new JTextField(6));
-            leftPanel.add(eps2Label = new JLabel(
-                                "Closure criterion for velocity", 
-                                SwingConstants.RIGHT));
-            rightPanel.add(eps2TextField = new JTextField(6));
-        } else {
-            leftPanel.add(eps1Label = new JLabel(
-                                "Closure criterion for concentration", 
-                                SwingConstants.RIGHT));
-            rightPanel.add(eps1TextField = new JTextField(6));
-        }
+//        if (vs2App.doHeat()) {
+//            leftPanel.add(eps1Label = new JLabel(
+//                                "Closure criterion for temperature", 
+//                                SwingConstants.RIGHT));
+//            rightPanel.add(eps1TextField = new JTextField(6));
+//            leftPanel.add(eps2Label = new JLabel(
+//                                "Closure criterion for velocity", 
+//                                SwingConstants.RIGHT));
+//            rightPanel.add(eps2TextField = new JTextField(6));
+//        } else {
+//            leftPanel.add(eps1Label = new JLabel(
+//                                "Closure criterion for concentration", 
+//                                SwingConstants.RIGHT));
+//            rightPanel.add(eps1TextField = new JTextField(6));
+//        }
+
+        leftPanel.add(eps1Label = new JLabel(
+                "Closure criterion for temperature",
+                SwingConstants.RIGHT));
+        rightPanel.add(eps1TextField = new JTextField(6));
+
+        leftPanel.add(eps2Label = new JLabel(
+                "Closure criterion for velocity",
+                SwingConstants.RIGHT));
+        rightPanel.add(eps2TextField = new JTextField(6));
+
+        leftPanel.add(eps3Label = new JLabel(
+                "Closure criterion for concentration",
+                SwingConstants.RIGHT));
+        rightPanel.add(eps3TextField = new JTextField(6));
     }
 
     /**
@@ -126,22 +148,43 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
         hmaxTextField.setText(String.valueOf(hmax));
         minitTextField.setText(String.valueOf(minit));
         itmaxTextField.setText(String.valueOf(itmax));
-        itstopRadioButton.setSelected(itstop);
+        itstopCheckBox.setSelected(itstop);
         maxStepTextField.setText(String.valueOf(maxStep));
         epsTextField.setText(String.valueOf(eps));
         eps1TextField.setText(String.valueOf(eps1));
-        if (vs2App.doHeat()) {
-            eps2TextField.setText(String.valueOf(eps2));
-        }
+//        if (vs2App.doHeat()) {
+//            eps2TextField.setText(String.valueOf(eps2));
+//        }
+        //{{
+        eps2TextField.setText(String.valueOf(eps2));
+        eps3TextField.setText(String.valueOf(eps3));
+        //}}
     }
 
-    public void doTransport(boolean b) {
-        eps1Label.setVisible(b);
-        eps1TextField.setVisible(b);
-        if (vs2App.doHeat()) {
-            eps2Label.setVisible(b);
-            eps2TextField.setVisible(b);
-        }
+//    public void doTransport(boolean b) {
+//        assert(false);
+//        eps1Label.setVisible(b);
+//        eps1TextField.setVisible(b);
+//        if (vs2App.doHeat()) {
+//            eps2Label.setVisible(b);
+//            eps2TextField.setVisible(b);
+//        }
+//        revalidate();
+//    }
+
+    public void doEnergyTransport(boolean b) {
+        doEnergyTransport = b;
+        eps1Label.setEnabled(b);
+        eps1TextField.setEnabled(b);
+        eps2Label.setEnabled(b);
+        eps2TextField.setEnabled(b);
+        revalidate();
+    }
+    
+    public void doSoluteTransport(boolean b) {
+        doSoluteTransport = b;
+        eps3Label.setEnabled(b);
+        eps3TextField.setEnabled(b);
         revalidate();
     }
 
@@ -149,18 +192,24 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
      * Get values from components
      */
     public boolean retrieveData() {
-        itstop = itstopRadioButton.isSelected();
+        itstop = itstopCheckBox.isSelected();
+        if (doEnergyTransport) assert(eps1TextField.isEnabled());
+        if (doEnergyTransport) assert(eps2TextField.isEnabled());
+        if (doSoluteTransport) assert(eps3TextField.isEnabled());
         try {
             hmax = Double.valueOf(hmaxTextField.getText()).doubleValue();
             minit = Integer.parseInt(minitTextField.getText());
             itmax = Integer.parseInt(itmaxTextField.getText());
             maxStep = Integer.parseInt(maxStepTextField.getText());
             eps = Double.valueOf(epsTextField.getText()).doubleValue();
-            if (eps1TextField.isVisible()) {
+            if (doEnergyTransport && eps1TextField.isEnabled()) {
                 eps1 = Double.valueOf(eps1TextField.getText()).doubleValue();
             }
-            if (vs2App.doHeat() && eps2TextField.isVisible()) {
+            if (doEnergyTransport && eps2TextField.isEnabled()) {
                 eps2 = Double.valueOf(eps2TextField.getText()).doubleValue();
+            }
+            if (doSoluteTransport && eps3TextField.isEnabled()) {
+                eps3 = Double.valueOf(eps3TextField.getText()).doubleValue();
             }
         } catch (NumberFormatException e) {
             mp2MessageBox.showMessageDialog("Please check your input",
@@ -193,13 +242,18 @@ public class vs2SolverPanel extends vs2ModelOptionsPanel {
                     mp2Dialog.IS_POSITIVE, epsTextField)) {
             return false;
         }
-        if (eps1TextField.isVisible() &&
-                    !mp2Dialog.dataCheck(eps1, "\"Closure criterion for concentration\"", 
+        if (doEnergyTransport && eps1TextField.isEnabled() &&
+                    !mp2Dialog.dataCheck(eps1, "\"Closure criterion for temperature\"", 
                      mp2Dialog.IS_POSITIVE, eps1TextField)) {
             return false;
         }
-        if (vs2App.doHeat() && eps2TextField.isVisible() &&
+        if (doEnergyTransport && eps2TextField.isEnabled() &&
                     !mp2Dialog.dataCheck(eps2, "\"Closure criterion for velocity\"", 
+                     mp2Dialog.IS_POSITIVE, eps2TextField)) {
+            return false;
+        }
+        if (doSoluteTransport && eps3TextField.isEnabled() &&
+                    !mp2Dialog.dataCheck(eps3, "\"Closure criterion for concentration\"", 
                      mp2Dialog.IS_POSITIVE, eps2TextField)) {
             return false;
         }

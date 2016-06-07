@@ -1,6 +1,0 @@
-      if (allocated(JSPX)) deallocate(JSPX)
-      if (allocated(NFC)) deallocate(NFC)
-      if (allocated(JLAST)) deallocate(JLAST)
-      allocate(JSPX(3,NXR+NLY,NFCS))
-      allocate(NFC(NFCS))
-      allocate(JLAST(NFCS))

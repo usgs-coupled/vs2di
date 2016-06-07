@@ -1,3 +1,0 @@
-      DIMENSION IDUM(6000)
-
-

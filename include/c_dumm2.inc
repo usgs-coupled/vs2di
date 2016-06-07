@@ -1,1 +1,0 @@
-      DIMENSION DUM2(50,6000)

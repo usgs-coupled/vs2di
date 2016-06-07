@@ -1,1 +1,0 @@
-      allocate(IHDUM(NXR))

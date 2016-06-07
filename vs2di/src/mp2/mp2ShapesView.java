@@ -128,7 +128,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
                                 + "images" + fileSeparator;
 
         selectAndEditButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "arrow.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/arrow.gif")), true);
         selectAndEditButton.setToolTipText("Select or Edit");
         selectAndEditButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -138,7 +138,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
             }
         });
         addVertexButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "addvertex.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/addvertex.gif")), false);
         addVertexButton.setToolTipText("Add a vertex");
         addVertexButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

@@ -131,17 +131,17 @@ public class mp2RectilinearGridView extends mp2GraphicalDataView {
         String imageDirectory = homeDirectory + fileSeparator + "images" + fileSeparator;
 
         editGridButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "movegrid.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/movegrid.gif")));
         editLineButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "moveline.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/moveline.gif")));
         addVLineButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "addvline.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/addvline.gif")));
         addHLineButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "addhline.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/addhline.gif")));
         gridWindowButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "gridwindow.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/gridwindow.gif")));
         discretizeButton = new mp2ToggleButton(
-                            new ImageIcon(imageDirectory + "discretize.gif"));
+                            new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")));
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(editGridButton);

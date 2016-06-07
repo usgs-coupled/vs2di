@@ -117,10 +117,6 @@ public abstract class mp2PostProcessorFrame extends JFrame
         }
         playbackBinaryModel = createPlaybackModel();
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator + 
-                                "images" + fileSeparator;
-
         // Menus
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -170,17 +166,17 @@ public abstract class mp2PostProcessorFrame extends JFrame
         toolBar.setFloatable(false);
         getContentPane().add(toolBar, BorderLayout.WEST);
 
-        toolBar.add(runButton = new mp2Button(new ImageIcon(imageDirectory + "run.gif")));
-        toolBar.add(stopButton = new mp2Button(new ImageIcon(imageDirectory + "stop.gif")));
+        toolBar.add(runButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/run.gif"))));
+        toolBar.add(stopButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/stop.gif"))));
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(stepButton = new mp2Button(new ImageIcon(imageDirectory + "step.gif")));
+        toolBar.add(stepButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/step.gif"))));
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(resetButton = new mp2Button(new ImageIcon(imageDirectory + "reset.gif")));
+        toolBar.add(resetButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/reset.gif"))));
         toolBar.add(Box.createVerticalStrut(10));
-        toolBar.add(zoomButton = new mp2ToggleButton(new ImageIcon(imageDirectory + "zoom.gif")));
+        toolBar.add(zoomButton = new mp2ToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/zoom.gif"))));
         toolBar.add(Box.createVerticalStrut(10));
-        velocityImageIcon = new ImageIcon(imageDirectory + "velvector.gif");
-        fluxImageIcon = new ImageIcon(imageDirectory + "fluxvector.gif");
+        velocityImageIcon = new ImageIcon(ClassLoader.getSystemResource("images/velvector.gif"));
+        fluxImageIcon = new ImageIcon(ClassLoader.getSystemResource("images/fluxvector.gif"));
         toolBar.add(vectorButton = new mp2ToggleButton(velocityImageIcon));
         runButton.setToolTipText("Run");
         stopButton.setToolTipText("Stop");

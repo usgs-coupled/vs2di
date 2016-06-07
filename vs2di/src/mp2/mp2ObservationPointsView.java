@@ -26,7 +26,7 @@ public class mp2ObservationPointsView extends mp2ShapesView {
                                 + "images" + fileSeparator;
 
         createPointButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "diamond.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/diamond.gif")), false);
         createPointButton.setToolTipText("Add a point");
         createPointButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -36,7 +36,7 @@ public class mp2ObservationPointsView extends mp2ShapesView {
             }
         });
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
         discretizeButton.setToolTipText("Discretize");
         discretizeButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

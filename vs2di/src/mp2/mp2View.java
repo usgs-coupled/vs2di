@@ -243,7 +243,7 @@ public abstract class mp2View extends mp2Drawing implements mp2Constants,
         String imageDirectory = theApp.getHomeDirectory() + fileSeparator
                                 + fileSeparator + "images" + fileSeparator;
         XORButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "xor.gif"));
+                new ImageIcon(ClassLoader.getSystemResource("images/xor.gif")));
 
         XORButton.setToolTipText("XOR mode");
         XORButton.addItemListener(new ItemListener() {

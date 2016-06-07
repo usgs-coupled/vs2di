@@ -42,9 +42,9 @@ public class mp2ColorCodedMapView extends mp2BufferedShapesView {
                                 + "images" + fileSeparator;
 
         createZoneButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "polygon.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/polygon.gif")), false);
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
 
         createZoneButton.setToolTipText("Add polygon zone");
         discretizeButton.setToolTipText("Discretize");

@@ -64,7 +64,7 @@ public class mp2SiteMapView extends mp2GraphicalDataView
                                             "images" + fileSeparator;
 
         selectAndEditButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "arrow.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/arrow.gif")), true);
         selectAndEditButton.setToolTipText("Move or resize the map");
         selectAndEditButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -74,7 +74,7 @@ public class mp2SiteMapView extends mp2GraphicalDataView
             }
         });
         fixedPointResizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "fixedpoint.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/fixedpoint.gif")), true);
         fixedPointResizeButton.setToolTipText("Resize with fixed point");
         fixedPointResizeButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -89,7 +89,7 @@ public class mp2SiteMapView extends mp2GraphicalDataView
         bg.add(zoomButton);
 
         loadSiteMapButton = new mp2Button(new ImageIcon(
-                                    imageDirectory + "sitemap.gif"));
+                                    ClassLoader.getSystemResource("images/sitemap.gif")));
         loadSiteMapButton.setToolTipText("Load site map");
         loadSiteMapButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

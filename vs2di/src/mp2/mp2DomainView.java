@@ -46,11 +46,11 @@ public class mp2DomainView extends mp2ShapesView {
                                 + "images" + fileSeparator;
 
         createExteriorBoundaryButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "polygon.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/polygon.gif")), false);
         createInteriorBoundaryButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "polydotted.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/polydotted.gif")), false);
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
 
         createExteriorBoundaryButton.setToolTipText("Create the exterior boundary");
         createInteriorBoundaryButton.setToolTipText("Create an interior boundary");

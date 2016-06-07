@@ -60,7 +60,7 @@ public abstract class mp2GraphicalDataView implements mp2Constants {
         String imageDirectory = homeDirectory + fileSeparator + 
                                             "images" + fileSeparator;
         zoomButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "zoom.gif"));
+                new ImageIcon(ClassLoader.getSystemResource("images/zoom.gif")));
         zoomButton.setToolTipText("Zoom");
         zoomButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

@@ -10,6 +10,14 @@
             </bookmark>
         </file>
         <file>
+            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
+            <bookmark id="26">
+                <name/>
+                <line>111</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>src/vs2/vs2Doc.java</url>
             <bookmark id="6">
                 <name/>
@@ -42,14 +50,6 @@
             <bookmark id="25">
                 <name/>
                 <line>55</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
-            <bookmark id="26">
-                <name/>
-                <line>111</line>
                 <key/>
             </bookmark>
         </file>
@@ -93,11 +93,14 @@
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/vs2/vs2App.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/vs2/vs2FrameManager.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/vs2/vs2PostProcessorFrame.java</file>
+            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2ComputationalModel.java</file>
+            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2TablePanel.java</file>
+            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2JavaHelp.java</file>
+            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/test/vs2/vs2AppTest.java</file>
+            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/vs2/vs2drt.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/test/vs2/vs2PostProcessorFrameTest.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2PostProcessorFrame.java</file>
-            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2ComputationalModel.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2Frame.java</file>
-            <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/test/vs2/vs2AppTest.java</file>
             <file>file:/C:/Users/charlton/Programs/vs2di-trunk/vs2di/src/mp2/mp2App.java</file>
         </group>
     </open-files>

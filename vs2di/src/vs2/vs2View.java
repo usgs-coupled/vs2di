@@ -24,7 +24,7 @@ public class vs2View extends mp2View implements vs2Constants {
     protected vs2InitialEquilibriumProfileView initialEquilibriumProfileView;
     protected mp2ContourMapView initialPressureHeadView;
     protected mp2ContourMapView initialMoistureContentView;
-    protected mp2ContourMapView initialTransportView;
+    protected mp2ContourMapView initialTemperatureView;
     protected vs2BoundaryConditionsView boundaryConditionsView;
     protected vs2FluidSourceView fluidSourceView;
     protected mp2ObservationPointsView observationPointsView;
@@ -88,12 +88,9 @@ public class vs2View extends mp2View implements vs2Constants {
                 gridData, homeDirectory);
         initialMoistureContentView.setMinimumContourValue(0);
         initialMoistureContentView.setMaximumContourValue(1);
-        initialTransportView = new mp2ContourMapView(this,
-                (vs2InitialData) doc.getData(INITIAL_TRANSPORT),
+        initialTemperatureView = new mp2ContourMapView(this,
+                (vs2InitialData) doc.getData(INITIAL_TEMPERATURE),
                 gridData, homeDirectory);
-        if (! vs2App.doHeat()) {
-            initialTransportView.setMinimumContourValue(0);
-        }
         boundaryConditionsView = new vs2BoundaryConditionsView(this,
                 (vs2BoundaryConditionsData) doc.getData(BOUNDARY_CONDITIONS),
                 gridData, modelOptions,
@@ -171,8 +168,8 @@ public class vs2View extends mp2View implements vs2Constants {
                 break;
             }
             break;
-        case INITIAL_TRANSPORT:
-            activeDataView = initialTransportView;
+        case INITIAL_TEMPERATURE:
+            activeDataView = initialTemperatureView;
             break;
         case BOUNDARY_CONDITIONS:
             activeDataView = boundaryConditionsView;
@@ -245,10 +242,10 @@ public class vs2View extends mp2View implements vs2Constants {
             }
             repaint();
             break;
-        case INITIAL_TRANSPORT:
-            initialTransportView.setVisible(b);
+        case INITIAL_TEMPERATURE:
+            initialTemperatureView.setVisible(b);
             mp2BufferedShapesView.remakeImage();
-            if (!b && activeDataView.equals(initialTransportView)) {
+            if (!b && activeDataView.equals(initialTemperatureView)) {
                 frame.getDataChooser().setSelectedIndex(0);
             }
             repaint();
@@ -328,7 +325,7 @@ public class vs2View extends mp2View implements vs2Constants {
             vs2ModelOptions modelOptions =
                     (vs2ModelOptions) doc.getData(MODEL_OPTIONS);
 
-            if (activeDataView == initialTransportView) {
+            if (activeDataView == initialTemperatureView) {
                 switch (modelOptions.initialFlowType) {
                 case INITIAL_EQUILIBRIUM_PROFILE:
                     initialEquilibriumProfileView.paint(g);
@@ -343,9 +340,9 @@ public class vs2View extends mp2View implements vs2Constants {
                     initialMoistureContentView.paint(g);
                     break;
                 }
-                initialTransportView.paint(g);
+                initialTemperatureView.paint(g);
             } else {
-                initialTransportView.paint(g);
+                initialTemperatureView.paint(g);
                 switch (modelOptions.initialFlowType) {
                 case INITIAL_EQUILIBRIUM_PROFILE:
                     initialEquilibriumProfileView.paint(g);
@@ -387,8 +384,8 @@ public class vs2View extends mp2View implements vs2Constants {
                     break;
                 }
             }
-            else if (activeDataView == initialTransportView) {
-                initialTransportView.paint(g);
+            else if (activeDataView == initialTemperatureView) {
+                initialTemperatureView.paint(g);
             }
             else {
                 if (texturalMapView.isVisible()) {
@@ -406,8 +403,8 @@ public class vs2View extends mp2View implements vs2Constants {
                             && initialMoistureContentView.isVisible()) {
                     initialMoistureContentView.paint(g);
                 }
-                else if (initialTransportView.isVisible()) {
-                    initialTransportView.paint(g);
+                else if (initialTemperatureView.isVisible()) {
+                    initialTemperatureView.paint(g);
                 }
             }
             if (drawInXORMode) {
@@ -438,7 +435,7 @@ public class vs2View extends mp2View implements vs2Constants {
         initialEquilibriumProfileView.setEditable(b);
         initialPressureHeadView.setEditable(b);
         initialMoistureContentView.setEditable(b);
-        initialTransportView.setEditable(b);
+        initialTemperatureView.setEditable(b);
         boundaryConditionsView.setEditable(b);
         fluidSourceView.setEditable(b);
         observationPointsView.setEditable(b);

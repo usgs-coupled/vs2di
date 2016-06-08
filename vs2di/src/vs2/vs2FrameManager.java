@@ -43,9 +43,9 @@ public class vs2FrameManager extends mp2FrameManager
     protected JCheckBoxMenuItem initialFlowMenuItem;
 
     /**
-     * Menu item to display or hide the initial concentration/temperature on the view
+     * Menu item to display or hide the initial temperature on the view
      */
-    protected JCheckBoxMenuItem initialTransportMenuItem;
+    protected JCheckBoxMenuItem initialTemperatureMenuItem;
 
     /**
      * Menu item to display or hide the boundary conditions on the view
@@ -105,7 +105,7 @@ public class vs2FrameManager extends mp2FrameManager
             {"Domain",
              "Textural Map",
              "Initial Equilibrium Profile",
-             "Initial Concentration",
+             "Initial Temperature",
              "Boundary Conditions",
              "Source/Sink Points",
              "Observation Points",
@@ -120,36 +120,46 @@ public class vs2FrameManager extends mp2FrameManager
 
         texturalClassMenuItem =
                 new JCheckBoxMenuItem("Textural Class Window", false);
+        texturalClassMenuItem.setMnemonic(KeyEvent.VK_T);
         evapotranspirationMenuItem =
                 new JCheckBoxMenuItem("Evapotranspiration Window", false);
+        evapotranspirationMenuItem.setMnemonic(KeyEvent.VK_E);
         rechargePeriodMenuItem =
                 new JCheckBoxMenuItem("Recharge Period Window", false);
+        rechargePeriodMenuItem.setMnemonic(KeyEvent.VK_R);
         texturalMapMenuItem =
                 new JCheckBoxMenuItem("Textural Map", false);
+        texturalMapMenuItem.setMnemonic(KeyEvent.VK_M);
         initialFlowMenuItem =
                 new JCheckBoxMenuItem("Initial Pressure Head", false);
-        if (vs2App.doHeat()) {
-            DATA_CHOOSER_ITEM[3] = "Initial Temperature";
-            initialTransportMenuItem =
-                    new JCheckBoxMenuItem("Initial Temperature", false);
-        } else {
-            initialTransportMenuItem =
-                    new JCheckBoxMenuItem("Initial Concentration", false);
-        }
+        initialFlowMenuItem.setMnemonic(KeyEvent.VK_I);
+        initialTemperatureMenuItem
+                = new JCheckBoxMenuItem("Initial Temperature", false);
+        initialTemperatureMenuItem.setMnemonic(KeyEvent.VK_N);
         boundaryConditionsMenuItem =
                 new JCheckBoxMenuItem("Boundary Conditions", false);
+        boundaryConditionsMenuItem.setMnemonic(KeyEvent.VK_B);
         fluidSourceMenuItem =
                 new JCheckBoxMenuItem("Source/Sink Points", false);
+        fluidSourceMenuItem.setMnemonic(KeyEvent.VK_U);
         observationPointsMenuItem =
                 new JCheckBoxMenuItem("Observation Points", false);
+        observationPointsMenuItem.setMnemonic(KeyEvent.VK_O);
         gridMenuItem =
                 new JCheckBoxMenuItem("Grid", false);
+        gridMenuItem.setMnemonic(KeyEvent.VK_G);
         siteMapMenuItem =
                 new JCheckBoxMenuItem("Site Map", false);
+        siteMapMenuItem.setMnemonic(KeyEvent.VK_S);
         postProcessorMenuItem =
                 new JCheckBoxMenuItem("Postprocessor", false);
+        postProcessorMenuItem.setMnemonic(KeyEvent.VK_P);
+        postProcessorMenuItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
         helpMenuItem = new JMenuItem("Contents...");
+        helpMenuItem.setMnemonic(KeyEvent.VK_C);
         aboutMenuItem = new JMenuItem("About...");
+        aboutMenuItem.setMnemonic(KeyEvent.VK_A);
 
         boundaryConditionsLabel = new JLabel("", JLabel.RIGHT);
         rechargePeriodLabel = new JLabel("", JLabel.RIGHT);
@@ -179,9 +189,9 @@ public class vs2FrameManager extends mp2FrameManager
                 onShowMenuItem(INITIAL_FLOW, e);
             }
         });
-        initialTransportMenuItem.addItemListener(new ItemListener() {
+        initialTemperatureMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                onShowMenuItem(INITIAL_TRANSPORT, e);
+                onShowMenuItem(INITIAL_TEMPERATURE, e);
             }
         });
         boundaryConditionsMenuItem.addItemListener(new ItemListener() {
@@ -220,17 +230,14 @@ public class vs2FrameManager extends mp2FrameManager
             }
         });
         bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false);
+        bufferedGraphicsMenuItem.setMnemonic(KeyEvent.VK_B);
         bufferedGraphicsMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 onBufferedGraphics(e.getStateChange()==ItemEvent.SELECTED);
             }
         });
         if (mp2App.useJavaHelp()) {
-            if (vs2App.doHeat()) {
-                mp2JavaHelp.initialize("vs2dhiHelp");
-            } else {
-                mp2JavaHelp.initialize("vs2dtiHelp");
-            }
+            mp2JavaHelp.initialize("vs2dtiHelp");
             helpMenuItem.addActionListener(new CSH.DisplayHelpFromSource(mp2JavaHelp.hb));
         } else {
             helpMenuItem.addActionListener(new ActionListener() {
@@ -271,7 +278,8 @@ public class vs2FrameManager extends mp2FrameManager
      */
     public void prepareFrame(mp2Frame frame) {
 
-        String helpFolder = vs2App.doHeat() ? "energy" : "solute";
+//        String helpFolder = vs2App.doHeat() ? "energy" : "solute";
+        String helpFolder = "solute";
         if (!mp2App.useJavaHelp()) {
             mp2HelpWindow.setup(theApp.getHomeDirectory(), helpFolder);
         }
@@ -285,7 +293,7 @@ public class vs2FrameManager extends mp2FrameManager
         showMenu.addSeparator();
         showMenu.add(texturalMapMenuItem);
         showMenu.add(initialFlowMenuItem);
-        showMenu.add(initialTransportMenuItem);
+        showMenu.add(initialTemperatureMenuItem);
         showMenu.add(boundaryConditionsMenuItem);
         showMenu.add(fluidSourceMenuItem);
         showMenu.add(observationPointsMenuItem);
@@ -367,8 +375,8 @@ public class vs2FrameManager extends mp2FrameManager
             initialFlowMenuItem.setSelected(true);
         }
         else if (dataName.equals(DATA_CHOOSER_ITEM[3])) {
-            view.setActiveDataView(INITIAL_TRANSPORT);
-            initialTransportMenuItem.setSelected(true);
+            view.setActiveDataView(INITIAL_TEMPERATURE);
+            initialTemperatureMenuItem.setSelected(true);
         }
         else if (dataName.equals(DATA_CHOOSER_ITEM[4])) {
             if (domainData.getBoundary(0) == null) {
@@ -498,7 +506,7 @@ public class vs2FrameManager extends mp2FrameManager
         rechargePeriodMenuItem.setSelected(false);
         texturalMapMenuItem.setSelected(false);
         initialFlowMenuItem.setSelected(false);
-        initialTransportMenuItem.setSelected(false);
+        initialTemperatureMenuItem.setSelected(false);
         boundaryConditionsMenuItem.setSelected(false);
         fluidSourceMenuItem.setSelected(false);
         observationPointsMenuItem.setSelected(false);
@@ -544,7 +552,7 @@ public class vs2FrameManager extends mp2FrameManager
         }
         dataChooser.removeAllItems();
         for (int i=0; i<DATA_CHOOSER_ITEM.length; i++) {
-            if (!((i==3 && !modelOptions.doTransport) || (i==5 && modelOptions.useRadialCoord))) {
+            if (!((i==3 && !modelOptions.doEnergyTransport) || (i==5 && modelOptions.useRadialCoord))) {
                 dataChooser.addItem(DATA_CHOOSER_ITEM[i]);
             }
         }
@@ -559,6 +567,7 @@ public class vs2FrameManager extends mp2FrameManager
 
         // Update the show menu
         initialFlowMenuItem.setText(DATA_CHOOSER_ITEM[2]);
+        initialFlowMenuItem.setMnemonic(KeyEvent.VK_I);
         JMenu showMenu = frame.getMenu(SHOW_MENU);
         showMenu.removeAll();
         showMenu.add(texturalClassMenuItem);
@@ -569,10 +578,10 @@ public class vs2FrameManager extends mp2FrameManager
         showMenu.addSeparator();
         showMenu.add(texturalMapMenuItem);
         showMenu.add(initialFlowMenuItem);
-        if (modelOptions.doTransport) {
-            showMenu.add(initialTransportMenuItem);
+        if (modelOptions.doEnergyTransport) {
+            showMenu.add(initialTemperatureMenuItem);
         } else {
-            initialTransportMenuItem.setSelected(false);
+            initialTemperatureMenuItem.setSelected(false);
         }
         showMenu.add(boundaryConditionsMenuItem);
         if (modelOptions.useRadialCoord) {
@@ -590,7 +599,7 @@ public class vs2FrameManager extends mp2FrameManager
     class AboutDialog extends JDialog {
 
         public AboutDialog(JFrame frame) {
-            super(frame, "About " + (vs2App.doHeat() ? "VS2DHI" : "VS2DTI"), true);
+            super(frame, "About VS2DRTI", true);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             getContentPane().setLayout(new BorderLayout());
 
@@ -605,7 +614,7 @@ public class vs2FrameManager extends mp2FrameManager
             c.weightx = 2;
             gridbag.setConstraints(panel, c);
             centerPanel.add(panel);
-            String program = vs2App.doHeat() ? "VS2DHI" : "VS2DTI";
+            String program = "VS2DRTI";
             panel.add(new JLabel(program + " - Version " + VS2_VERSION, SwingConstants.CENTER));
             panel.add(new JLabel("U.S. Geological Survey", SwingConstants.CENTER));
 

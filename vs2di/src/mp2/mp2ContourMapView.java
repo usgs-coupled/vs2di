@@ -66,9 +66,9 @@ public class mp2ContourMapView extends mp2BufferedShapesView {
             }
         });
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator
-                                + "images" + fileSeparator;
+//        String fileSeparator = System.getProperty("file.separator");
+//        String imageDirectory = homeDirectory + fileSeparator
+//                                + "images" + fileSeparator;
 
         createPolygonButton = new mp2ToggleButton(
                 new ImageIcon(ClassLoader.getSystemResource("images/polygon.gif")), false);

@@ -48,17 +48,19 @@ public abstract class mp2GraphicalDataView implements mp2Constants {
         // The accelerators are then set to the menu items.
         JMenu dummyMenu = new JMenu("dummy");
         undoMenuItem = dummyMenu.add(undoAction);
+        undoMenuItem.setMnemonic(KeyEvent.VK_U);
         undoMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));
         redoMenuItem = dummyMenu.add(redoAction);
+        redoMenuItem.setMnemonic(KeyEvent.VK_R);
         redoMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));
         undoCount = 0;
         docSavedIndex = 0;
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator + 
-                                            "images" + fileSeparator;
+//        String fileSeparator = System.getProperty("file.separator");
+//        String imageDirectory = homeDirectory + fileSeparator + 
+//                                            "images" + fileSeparator;
         zoomButton = new mp2ToggleButton(
                 new ImageIcon(ClassLoader.getSystemResource("images/zoom.gif")));
         zoomButton.setToolTipText("Zoom");

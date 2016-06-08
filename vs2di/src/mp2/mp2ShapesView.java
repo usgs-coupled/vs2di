@@ -123,9 +123,9 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
         intersectSelfErrorMessage = "Self intersection not allowed";
 
         // Create buttons for tool bar
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator
-                                + "images" + fileSeparator;
+//        String fileSeparator = System.getProperty("file.separator");
+//        String imageDirectory = homeDirectory + fileSeparator
+//                                + "images" + fileSeparator;
 
         selectAndEditButton = new mp2ToggleButton(
                 new ImageIcon(ClassLoader.getSystemResource("images/arrow.gif")), true);
@@ -150,6 +150,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
 
         // Create menu items for the "Edit" menu
         selectAllMenuItem = new JMenuItem("Select All");
+        selectAllMenuItem.setMnemonic(KeyEvent.VK_A);
         selectAllMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
         selectAllMenuItem.addActionListener(new ActionListener() {
@@ -158,6 +159,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
             }
         });
         deleteMenuItem = new JMenuItem("Delete");
+        deleteMenuItem.setMnemonic(KeyEvent.VK_D);
         deleteMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
         deleteMenuItem.addActionListener(new ActionListener() {
@@ -166,6 +168,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
             }
         });
         bringToFrontMenuItem = new JMenuItem("Bring to Front");
+        bringToFrontMenuItem.setMnemonic(KeyEvent.VK_B);
         bringToFrontMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK));
         bringToFrontMenuItem.addActionListener(new ActionListener() {
@@ -174,6 +177,7 @@ public abstract class mp2ShapesView extends mp2GraphicalDataView {
             }
         });
         sendToBackMenuItem = new JMenuItem("Send to Back");
+        sendToBackMenuItem.setMnemonic(KeyEvent.VK_S);
         sendToBackMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK));
         sendToBackMenuItem.addActionListener(new ActionListener() {

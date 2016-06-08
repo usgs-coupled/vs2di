@@ -53,6 +53,7 @@ public abstract class mp2BoundaryConditionsView extends mp2GraphicalDataView {
 
         // Create the "Copy All to" menu item
         copyAllToMenuItem = new JMenuItem("Copy All To...");
+        copyAllToMenuItem.setMnemonic(KeyEvent.VK_C);
         copyAllToMenuItem.setEnabled(false);
         copyAllToMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +63,7 @@ public abstract class mp2BoundaryConditionsView extends mp2GraphicalDataView {
 
         // Create the "Corner Policy" menu item
         cornerPolicyMenuItem = new JMenuItem("Corner Policy...");
+        cornerPolicyMenuItem.setMnemonic(KeyEvent.VK_P);
         cornerPolicyMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCornerPolicy();

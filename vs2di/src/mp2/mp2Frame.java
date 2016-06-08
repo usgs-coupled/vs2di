@@ -162,7 +162,9 @@ public class mp2Frame extends JFrame implements
         // Construct the "File" menu 
         JMenuItem item;
         menuBar.add(fileMenu = new JMenu("File"));
+        fileMenu.setMnemonic(KeyEvent.VK_F);
         fileMenu.add(item = new JMenuItem("New"));
+        item.setMnemonic(KeyEvent.VK_N);
         item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -170,6 +172,7 @@ public class mp2Frame extends JFrame implements
             }
         });
         fileMenu.add(item = new JMenuItem("Open..."));
+        item.setMnemonic(KeyEvent.VK_O);
         item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -177,6 +180,7 @@ public class mp2Frame extends JFrame implements
             }
         });
         fileMenu.add(item = new JMenuItem("Save"));
+        item.setMnemonic(KeyEvent.VK_S);
         item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -184,6 +188,7 @@ public class mp2Frame extends JFrame implements
             }
         });
         fileMenu.add(item = new JMenuItem("Save As..."));
+        item.setMnemonic(KeyEvent.VK_V);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onFileSaveAs();
@@ -191,6 +196,7 @@ public class mp2Frame extends JFrame implements
         });
         fileMenu.addSeparator();
         fileMenu.add(item = new JMenuItem("Print..."));
+        item.setMnemonic(KeyEvent.VK_P);
         item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -198,12 +204,14 @@ public class mp2Frame extends JFrame implements
             }
         });
         fileMenu.add(item = new JMenuItem("Export bitmap..."));
+        item.setMnemonic(KeyEvent.VK_B);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onFileExportBitmap();
             }
         });
         fileMenu.add(item = new JMenuItem("Export data..."));
+        item.setMnemonic(KeyEvent.VK_D);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onFileExportData();
@@ -211,6 +219,7 @@ public class mp2Frame extends JFrame implements
         });
         fileMenu.addSeparator();
         fileMenu.add(item = new JMenuItem("Exit"));
+        item.setMnemonic(KeyEvent.VK_X);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onFileExit();
@@ -220,16 +229,20 @@ public class mp2Frame extends JFrame implements
         // Add the "Edit" menu. Menu item will be filled
         // according to application
         menuBar.add(editMenu = new JMenu("Edit"));
+        editMenu.setMnemonic(KeyEvent.VK_E);
 
         // Add the "Option" menu
         menuBar.add(optionsMenu = new JMenu("Options"));
+        optionsMenu.setMnemonic(KeyEvent.VK_O);
         drawingOptionsMenuItem = new JMenuItem("Drawing...");
+        drawingOptionsMenuItem.setMnemonic(KeyEvent.VK_D);
         drawingOptionsMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onDrawingOptions();
             }
         });
         modelOptionsMenuItem = new JMenuItem("Model...");
+        modelOptionsMenuItem.setMnemonic(KeyEvent.VK_M);
         modelOptionsMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onModelOptions();
@@ -240,14 +253,17 @@ public class mp2Frame extends JFrame implements
 
         // Add the "Show" menu
         menuBar.add(showMenu = new JMenu("Show"));
+        showMenu.setMnemonic(KeyEvent.VK_S);
 
         // Add the "Model" menu
         if (hasMultipleModels) {
             menuBar.add(modelMenu = new JMenu("Model"));
+            modelMenu.setMnemonic(KeyEvent.VK_M);
         }
 
         // Add the "Help" menu
         menuBar.add(helpMenu = new JMenu("Help"));
+        helpMenu.setMnemonic(KeyEvent.VK_H);
 
         // Create the data chooser
         chooserPanel = new JPanel(new GridLayout(1,0));

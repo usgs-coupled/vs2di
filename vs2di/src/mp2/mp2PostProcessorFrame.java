@@ -130,18 +130,32 @@ public abstract class mp2PostProcessorFrame extends JFrame
             exitLabel = "Exit";
         }
         menuBar.add(fileMenu = new JMenu(fileLabel));
+        if (theApp != null) {
+            fileMenu.setMnemonic(KeyEvent.VK_A);
+        } else {
+            fileMenu.setMnemonic(KeyEvent.VK_F);
+        }
         loadMenuItem = new JMenuItem("Load...");
+        loadMenuItem.setMnemonic(KeyEvent.VK_L);
         loadSettingsMenuItem = new JMenuItem("Load Settings...");
+        loadSettingsMenuItem.setMnemonic(KeyEvent.VK_L);
         saveSettingsMenuItem = new JMenuItem("Save Settings...");
+        saveSettingsMenuItem.setMnemonic(KeyEvent.VK_S);
         terminateComputationMenuItem = new JMenuItem("Terminate computation");
+        terminateComputationMenuItem.setMnemonic(KeyEvent.VK_T);
         restartComputationMenuItem = new JMenuItem("Restart computation");
+        restartComputationMenuItem.setMnemonic(KeyEvent.VK_R);
         printMenuItem = new JMenuItem("Print");
+        printMenuItem.setMnemonic(KeyEvent.VK_P);
         exportBitmapMenuItem = new JMenuItem("Export bitmap...");
+        exportBitmapMenuItem.setMnemonic(KeyEvent.VK_B);
         exitMenuItem = new JMenuItem(exitLabel);
         if (theApp != null) {
+            exitMenuItem.setMnemonic(KeyEvent.VK_D);
             fileMenu.add(terminateComputationMenuItem);
             fileMenu.add(restartComputationMenuItem);
         } else {
+            exitMenuItem.setMnemonic(KeyEvent.VK_X);
             fileMenu.add(loadMenuItem);
         }
         fileMenu.addSeparator();
@@ -151,6 +165,7 @@ public abstract class mp2PostProcessorFrame extends JFrame
         fileMenu.add(exitMenuItem);
 
         menuBar.add(optionMenu = new JMenu("Options"));
+        optionMenu.setMnemonic(KeyEvent.VK_O);
         optionMenu.add(drawingMenuItem = new JMenuItem("Drawing..."));
         optionMenu.add(colorMenuItem = new JMenuItem("Color Scale..."));
         optionMenu.add(vectorMenuItem = new JMenuItem("Vector..."));

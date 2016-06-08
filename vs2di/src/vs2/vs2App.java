@@ -226,9 +226,9 @@ public class vs2App extends mp2App implements vs2Constants {
             }
 
             frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            currentDirectory = new String(inFile.getPath());
+            currentDirectory = new String(inFile.getParent());
             doc = d;
-            doc.setDirectory(inFile.getPath());
+            doc.setDirectory(inFile.getParent());
             doc.setFileName(inFile.getName());
             if (!doc.getSerializedVersion().equals(doc.getCurrentVersion())) {
                 doc.convertToCurrentVersion();
@@ -273,6 +273,7 @@ public class vs2App extends mp2App implements vs2Constants {
             mp2MessageBox.showMessageDialog(
                 "Unable to read from file " + inFile.getName(),
                 "IO Error");
-        }        
+        }
+        mp2Math.changeDirectory(doc.getDirectory() + ".");        
     }
 }

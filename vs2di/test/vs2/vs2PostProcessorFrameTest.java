@@ -50,8 +50,11 @@ public class vs2PostProcessorFrameTest {
         System.out.println("onExit");
         try {
             vs2App.main(null);
-
-            java.io.File inFile = new java.io.File("C:\\Users\\charlton\\Programs\\vs2di-trunk\\vs2di1.3_examples\\Example11\\vs2drti\\ex11.vs2");
+            
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(java.nio.file.Files.exists(path), true);
+            
+            java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
             java.awt.Robot robot = new java.awt.Robot();
@@ -59,10 +62,8 @@ public class vs2PostProcessorFrameTest {
             robot.setAutoWaitForIdle(true);
 
             // show postprocessor
-            robot.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
             robot.keyPress(java.awt.event.KeyEvent.VK_F6);
             robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_CONTROL);            
             
             Thread.sleep(100);
             
@@ -104,7 +105,7 @@ public class vs2PostProcessorFrameTest {
             robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
             
-            instance.getStepButton().doClick();         // this used to cause an EXCEPTION_ACCESS_VIOLATION
+            instance.getStepButton().doClick();    // this used to cause an EXCEPTION_ACCESS_VIOLATION
 
             Thread.sleep(100);
             
@@ -135,19 +136,6 @@ public class vs2PostProcessorFrameTest {
             // answer yes (The computation is not finished. Do you want to quit anyway?)
             robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-//            Thread.sleep(3000);
-//            
-//            // exit app
-//            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-//            robot.keyPress(java.awt.event.KeyEvent.VK_F);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_F);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);            
-//            
-//            robot.keyPress(java.awt.event.KeyEvent.VK_X);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_X);
-//            
-//            Thread.sleep(3000);
         }
         catch (java.awt.AWTException e) {
         }

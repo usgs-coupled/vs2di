@@ -261,17 +261,17 @@ public class vs2App extends mp2App implements vs2Constants {
         }
         catch(FileNotFoundException e1) {
             mp2MessageBox.showMessageDialog(
-                "Unable to open file " + inFile.getName(),
+                "Unable to open file " + inFile.getAbsolutePath(),
                 "IO Error");
         }
         catch(IOException e2) {
             mp2MessageBox.showMessageDialog(
-                "Unable to read from file " + inFile.getName(),
+                "Unable to read from file " + inFile.getAbsolutePath(),
                 "IO Error");
         }
         catch(ClassNotFoundException  e3) {
             mp2MessageBox.showMessageDialog(
-                "Unable to read from file " + inFile.getName(),
+                "Unable to read from file " + inFile.getAbsolutePath(),
                 "IO Error");
         }
         mp2Math.changeDirectory(doc.getDirectory() + ".");        

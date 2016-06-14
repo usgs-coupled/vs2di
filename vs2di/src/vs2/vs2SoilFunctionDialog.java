@@ -58,11 +58,34 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
 
         // Create a sub panel to hold hydraulic and transport properties
         JPanel subPanel = new JPanel(false);
-        subPanel.setLayout(new GridLayout(1, 2, 20, 0));
+        subPanel.setLayout(new GridLayout(1, 3, 20, 0));
         centerPanel.add(subPanel);
 
         // Create panels for hydraulic properties and for transport properties
         JPanel hydraulicPanel = new JPanel(false);
+        String type = "Flow properties";
+        switch (modelOptions.soilModel) {
+            case BROOKS_COREY:
+                type = "Flow properties (Brooks-Corey function)";
+                break;
+            case VAN_GENUCHTEN:
+                type = "Flow properties (van Genuchten function)";
+                break;
+            case HAVERKAMP:
+                type = "Flow properties (Haverkamp function)";
+                break;
+            case TABULAR_DATA:
+                type = "Flow properties (tabular data)";
+                break;
+            case ROSSI_NIMMO:
+                type = "Flow properties (Rossi-Nimmo function)";
+                break;
+            default:
+                assert(false);            
+        }
+        hydraulicPanel.setBorder(new CompoundBorder(
+            BorderFactory.createTitledBorder(type),
+            new EmptyBorder(4, 10, 10, 10)));
         hydraulicPanel.setLayout(new BoxLayout(hydraulicPanel, BoxLayout.X_AXIS));
         subPanel.add(hydraulicPanel);
 
@@ -92,13 +115,8 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
                     OnGenericSoilCheckBox(e);
                 }
             });
+            hydraulicRows++;
         }
-        // For other cases, use horizontal strut for spacing
-        else {
-            hydrLeftPanel.add(Box.createHorizontalStrut(80));
-            hydrRightPanel.add(Box.createHorizontalStrut(80));
-        }
-        hydraulicRows ++;
 
         // Create a name panel that holds the name text field
         hydrLeftPanel.add(new JLabel("name", SwingConstants.RIGHT));
@@ -193,10 +211,7 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
             break;
         }
 
-        if (modelOptions.doTransport) {
-            MakeContentsForTransport(subPanel, hydrLeftPanel,
-                        hydrRightPanel, hydraulicRows);
-        }
+        MakeContentsForTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
     }
 
     /**
@@ -248,7 +263,7 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
                 flow3TextField.setText(String.valueOf(((Double) aRow[41]).doubleValue()));
                 break;
             }
-            if (modelOptions.doTransport) {
+            if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
                 SetTextFieldsForTransport();
             }
         }
@@ -494,7 +509,7 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
             break;
         }
 
-        if (modelOptions.doTransport) {
+        if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
             if (!RetrieveDataForTransport()) return false;
         }
 

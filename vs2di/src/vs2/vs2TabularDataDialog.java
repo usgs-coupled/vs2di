@@ -105,11 +105,15 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
         hydraulicRows += 4;
 
 
-        if (!modelOptions.doTransport) {
+        if (!(modelOptions.doEnergyTransport && modelOptions.doSoluteTransport)) {
             subPanel.add(new JLabel(" "));
         } else {
-            MakeContentsForTransport(subPanel, hydrLeftPanel, 
-                                hydrRightPanel, hydraulicRows);
+            if (modelOptions.doEnergyTransport) {
+                MakeContentsForHeatTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
+            }
+            if (modelOptions.doSoluteTransport) {
+                MakeContentsForSoluteTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
+            }
         }
 
         // Create the table
@@ -196,7 +200,7 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
                 deleteButton.setEnabled(true);
             }
 
-            if (modelOptions.doTransport) {
+            if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
                 SetTextFieldsForTransport();
             }
         } else {
@@ -413,7 +417,7 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
             return false;
         }
 
-        if (modelOptions.doTransport) {
+        if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
             if (!RetrieveDataForTransport()) {
                 return false;
             }

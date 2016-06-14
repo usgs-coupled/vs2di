@@ -20,9 +20,9 @@ public class vs2TexturalMapData extends mp2ColorCodedMapData implements Serializ
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numColNoBorder = rectGridData.getXCoords().length - 1;
         int numRowNoBorder = rectGridData.getYCoords().length - 1;
-        // Card B-8 (Always read texture class for each row)
-        pw.println("0" + "     /B8 -- IROW. B9 begins next line: JTEX");
-        // Card B-9
+        // Card B-10 (Always read texture class for each row)
+        pw.println("0" + "     /B10 -- IROW. B11 begins next line: JTEX");
+        // Card B-11
         // first, write the top border
         for (c=0; c<numColNoBorder+2; c++) {
             pw.print("1 ");
@@ -44,6 +44,6 @@ public class vs2TexturalMapData extends mp2ColorCodedMapData implements Serializ
             pw.print("1 ");
         }
         pw.println();
-        // Note that Card B-10 is not used.
+        // Note that Card B-12 is not used.
     }
 }

@@ -23,40 +23,60 @@ public class vs2TexturalClassData extends mp2TableData implements
         // Common hydraulic parameters  (Note that "Id" and "Generic" are never
         // used by table but required for spacing)
         "Id", "Color", "Name", "Kzz/Khh", "Ss", "Porosity", "RMC", "Generic",
+        //0      1        2        3       4        5         6        7
 
         // Brooks-Corey
         "Sat Khh", "hb", "lambda",
+        //  8        9       10
 
         // Van Genuchten
         "Sat Khh", "alpha", "beta",
+        //  11       12       13
 
         // Haverkamp
         "Sat Khh", "A'", "B'", "alpha", "beta",
+        //  14      15    16      17      18
 
         // Tabular Data  (Note that "Hkm Data" is never used, but required for
         // spacing)
         "Sat Khh", "Hkm Data",
+        //  19         20
 
         // Common Transport parameters
         "alpha-L", "alpha-T", "mole. diff", "decay", "density",
+        //  21         22          23          24       25
 
         // Linear Adsorption isotherm
         "Kd",
+        //26
 
         // Langmuir isotherm
         "K1", "Q",
+        //27  28
 
         // Freundlich isotherm
         "Kf", "n",
+        //29   30
 
         // Ion Exchange
         "Km", "Q^", "C0",
+        //31   32    33
 
         // Energy transport parameters
         "Cs", "KTr", "KTs", "Cw",
+        //34   35     36     37
 
         // Rossi-Nimmo
-        "Sat Khh", "psi0", "psiD", "lambda"
+        "Sat Khh", "psi0", "psiD", "lambda",
+        // 38        39      40       41
+        
+        // Solute parameters
+        "alpha-L", "alpha-T",
+        // 42         43
+        
+        // INSOL(7)
+        "Solution", "Eq phases", "Exchange", "Surface", "Gas phase", "Solid solns", "Kinetics"
+        // 44          45            46         47          48            49            50
     };
 
     protected static final Class [] COLUMN_CLASS = {
@@ -68,7 +88,12 @@ public class vs2TexturalClassData extends mp2TableData implements
         Double.class, Double.class, Double.class, Double.class, Double.class,
         Double.class, Double.class, Double.class, Double.class, Double.class,
         Double.class, Double.class, Double.class, Double.class, Double.class,
-        Double.class, Double.class, Double.class, Double.class, Double.class};
+        Double.class, Double.class, Double.class, Double.class, Double.class,
+        // new for 1.4 Long disp, Trans disp, INSOL(7)
+        Double.class, Double.class,
+        Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, 
+        Integer.class, Integer.class
+    };
 
     protected static final String [] TOOL_TIP_TEXT = {
         // Common hydraulic parameters  (Note that "Id" and "generic" are never
@@ -137,7 +162,20 @@ public class vs2TexturalClassData extends mp2TableData implements
         "saturated hydraulic conductivity",
         "psi0 parameter in Rossi-Nimmo model",
         "psiD parameter in Rossi-Nimmo model",
-        "lambda parameter in Rossi-Nimmo model"
+        "lambda parameter in Rossi-Nimmo model",
+        
+        // SOLUTE
+        "longitudinal dispersivity",
+        "transverse dispersivity",
+        
+        // INSOL(7)
+        "SOLUTION number",
+        "EQUILIBRIUM_PHASES number",
+        "EXCHANGE number",
+        "SURFACE number",
+        "GAS_PHASE number",
+        "SOLID_SOLUTIONS number",
+        "KINETICS number"
     };
 
     /**
@@ -145,6 +183,9 @@ public class vs2TexturalClassData extends mp2TableData implements
      */
     public vs2TexturalClassData() {
         super ();
+        assert(COLUMN_NAME.length == 51);
+        assert(COLUMN_NAME.length == COLUMN_CLASS.length);
+        assert(COLUMN_NAME.length == TOOL_TIP_TEXT.length);
         idCounter = 0;
         // Start off with a default row in the data set
         Object [] aRow = createDefaultRow();
@@ -205,9 +246,9 @@ public class vs2TexturalClassData extends mp2TableData implements
         int maxTabDataSize = getMaxTabularDataRows();
         for (int i=0; i<dataRows.size(); i++) {
             aRow = (Object []) dataRows.elementAt(i);
-            // Card B-6
-            pw.println((i+1) + "     /B6 -- ITEX. B7 to begin next line: HK");
-            // Card B-7
+            // Card B-8
+            pw.println((i+1) + "     /B8 -- ITEX. B9 to begin next line: HK");
+            // Card B-9
             switch (modelOptions.soilModel) {
             case BROOKS_COREY:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
@@ -269,46 +310,28 @@ public class vs2TexturalClassData extends mp2TableData implements
                 }
                 break;
             }
-            // Card B-7A
-            if (modelOptions.doTransport) {
-                if (vs2App.doHeat()) {
-                    pw.println(((Double) aRow[21]).doubleValue() + " " +
-                               ((Double) aRow[22]).doubleValue() + " " +
-                               ((Double) aRow[34]).doubleValue() + " " +
-                               ((Double) aRow[35]).doubleValue() + " " +
-                               ((Double) aRow[36]).doubleValue() + " " +
-                               ((Double) aRow[37]).doubleValue() + " " + "     /B7A -- HT");
-                } else {
-                    pw.print(((Double) aRow[21]).doubleValue() + " " +
-                             ((Double) aRow[22]).doubleValue() + " " +
-                             ((Double) aRow[23]).doubleValue() + " " +
-                             ((Double) aRow[24]).doubleValue() + " " +
-                             ((Double) aRow[25]).doubleValue() + " ");
-                    switch (modelOptions.reactionOption) {
-                    case N0_ADSORPTION_NO_ION_EXCHANGE:
-                        pw.println("0" + "     /B7A -- HT");
-                        break;
-                    case LINEAR_ADSORPTION:
-                        pw.println(((Double) aRow[26]).doubleValue() + " 1.0" + "     /B7A -- HT");
-                        break;
-                    case LANGMUIR:
-                        pw.println(((Double) aRow[27]).doubleValue() + " " +
-                        ((Double) aRow[28]).doubleValue() + "     /B7A -- HT");
-                        break;
-                    case FREUNDLICH:
-                        pw.println(((Double) aRow[29]).doubleValue() + " " +
-                        ((Double) aRow[30]).doubleValue() + "     /B7A -- HT");
-                    break;
-                    case MONO_MONOVALENT_ION_EXCHANGE:  // fall through
-                    case MONO_DIVALENT_ION_EXCHANGE:    // fall through
-                    case DI_MONOVALENT_ION_EXCHANGE:    // fall through
-                    case DI_DIVALENT_ION_EXCHANGE:
-                        pw.println(((Double) aRow[31]).doubleValue() + " " +
-                        ((Double) aRow[32]).doubleValue() + " " +
-                        ((Double) aRow[33]).doubleValue() + "     /B7A -- HT");
-                        break;
-                    }
-                }
+            
+            // Card B-9A (was B-7A - VS2DH)
+            if (modelOptions.doEnergyTransport) {
+                pw.println(((Double) aRow[21]).doubleValue() + " " +
+                           ((Double) aRow[22]).doubleValue() + " " +
+                           ((Double) aRow[34]).doubleValue() + " " +
+                           ((Double) aRow[35]).doubleValue() + " " +
+                           ((Double) aRow[36]).doubleValue() + " " +
+                           ((Double) aRow[37]).doubleValue() + " " + "     /B9A -- HT");
+            }
+            // Card B-9B (was B-7A - VS2DT)
+            if (modelOptions.doSoluteTransport) {
+                pw.println(((Double) aRow[21]).doubleValue() + " " +
+                           ((Double) aRow[22]).doubleValue() + " " +
+                           ((Double) aRow[23]).doubleValue() + " " +
+                           ((Integer)aRow[44]).intValue()    + " " +
+                           ((Integer)aRow[45]).intValue()    + " " +
+                           ((Integer)aRow[46]).intValue()    + " " +
+                           ((Integer)aRow[47]).intValue()    + " " +
+                           ((Integer)aRow[48]).intValue()    + " " +
+                           ((Integer)aRow[49]).intValue()    + " " +
+                           ((Integer)aRow[50]).intValue()    + " " + "     /B9B -- HS INSOL");
             }
         }
     }
@@ -393,6 +416,18 @@ public class vs2TexturalClassData extends mp2TableData implements
         aRow[39] = new Double(0.0);        // psi0
         aRow[40] = new Double(0.0);        // psiD
         aRow[41] = new Double(0.0);        // lambda
+        
+        // Chemistry
+        aRow[42] = new Double(0.0);        // longitudinal dispersivity (solute)
+        aRow[43] = new Double(0.0);        // transverse dispersivity (solute)
+        
+        aRow[44] = new Integer(-1);        // solution
+        aRow[45] = new Integer(-1);        // equilibrium_phases
+        aRow[46] = new Integer(-1);        // exchange
+        aRow[47] = new Integer(-1);        // surface
+        aRow[48] = new Integer(-1);        // gas_phase
+        aRow[49] = new Integer(-1);        // solid_solutions
+        aRow[50] = new Integer(-1);        // kinetics
 
         // Increment idCounter for next time
         idCounter++;

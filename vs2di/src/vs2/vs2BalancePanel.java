@@ -1,5 +1,5 @@
 /*
- * vs2EnergyBalancePanel.java
+ * vs2BalancePanel.java
  */
 package vs2;
 

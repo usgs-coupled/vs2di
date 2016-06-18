@@ -3,114 +3,6 @@ cmake_minimum_required (VERSION 2.8)
 # project
 project(vs2drt C CXX Fortran)
 
-# header files
-SET(vs2drt_HEADERS
-include/c_arrays.inc
-include/c_disch.inc
-include/c_dumm.inc
-include/c_dumm1.inc
-include/c_dumm2.inc
-include/c_equat.inc
-include/c_equats.inc
-include/c_hcon.inc
-include/c_idumm.inc
-include/c_ihdum.inc
-include/c_isdum.inc
-include/c_jtxx.inc
-include/c_kcon.inc
-include/c_kdum.inc
-include/c_mprop.inc
-include/c_obsp.inc
-include/c_obst.inc
-include/c_pit.inc
-include/c_plott.inc
-include/c_press.inc
-include/c_ptet.inc
-include/c_rprop.inc
-include/c_rpropsh.inc
-include/c_rspac.inc
-include/c_scon.inc
-include/c_sconItmax.inc
-include/c_sip.inc
-include/c_spfc.inc
-include/c_temp.inc
-include/c_trxv.inc
-include/c_trxx.inc
-include/c_trxxh.inc
-include/c_trxy1.inc
-include/c_trxy2.inc
-include/d_arrays.inc
-include/d_BF.inc
-include/d_BFAlloc.inc
-include/d_cleanup.inc
-include/d_cleanup1.inc
-include/d_compnam.inc
-include/d_compname.inc
-include/d_compnamm.inc
-include/d_coordin.inc
-include/d_disch.inc
-include/d_dumm.inc
-include/d_dumm1.inc
-include/d_dumm1Alloc.inc
-include/d_dumm1Dealloc.inc
-include/d_dumm2.inc
-include/d_dumm2Alloc.inc
-include/d_dumm2Dealloc.inc
-include/d_dumm3.inc
-include/d_dumm3Alloc.inc
-include/d_dumm3Dealloc.inc
-include/d_equat.inc
-include/d_equats.inc
-include/d_hcon.inc
-include/d_idumm.inc
-include/d_idummAlloc.inc
-include/d_ihdum.inc
-include/d_ihdummAlloc.inc
-include/d_ihdummDealloc.inc
-include/d_isdum.inc
-include/d_isdummAlloc.inc
-include/d_isdummDealloc.inc
-include/d_itemblo.inc
-include/d_itembloAlloc.inc
-include/d_itembloDealloc.inc
-include/d_itemtxb.inc
-include/d_itemtxbAlloc.inc
-include/d_itemtxbDealloc.inc
-include/d_jtxx.inc
-include/d_kcon.inc
-include/d_kdum.inc
-include/d_kdumDealloc.inc
-##include/d_modules.inc
-include/d_mprop.inc
-include/d_obsp.inc
-include/d_obst.inc
-include/d_phreecc.inc
-include/d_pit.inc
-include/d_plott.inc
-include/d_press.inc
-include/d_pricont.inc
-include/d_ptet.inc
-include/d_ptetAlloc.inc
-include/d_react.inc
-include/d_rpropsh.inc
-include/d_rpropshAlloc.inc
-include/d_rspac.inc
-include/d_scon.inc
-include/d_sconAlloc.inc
-include/d_sip.inc
-include/d_solindex.inc
-include/d_solmassb.inc
-include/d_spfc.inc
-include/d_spfcAlloc.inc
-include/d_temp.inc
-include/d_tempcc.inc
-include/d_trxv.inc
-include/d_trxx.inc
-include/d_trxxh.inc
-include/d_trxy1.inc
-include/d_trxy2.inc
-)
-
 # F90 source
 SET(vs2drt_F90_SOURCES
 Call_RM.F90
@@ -119,13 +11,11 @@ PhreeqcRM/src/RM_interface.F90
 
 # source
 SET(vs2drt_SOURCES
-${vs2drt_HEADERS}
 ${vs2drt_F90_SOURCES}
 modules.f90
 vs2dt3_3_reactive_withoutArgus1.f90
 )
 
-source_group("Header Files" FILES ${vs2drt_HEADERS})
 source_group("Source Files" FILES ${vs2drt_F90_SOURCES})
 
 # executable

@@ -13,7 +13,7 @@ PhreeqcRM/src/RM_interface.F90
 SET(vs2drt_SOURCES
 ${vs2drt_F90_SOURCES}
 modules.f90
-vs2dt3_3_reactive_withoutArgus1.f90
+vs2dt3_3_reactive_withoutArgus1.F90
 )
 
 source_group("Source Files" FILES ${vs2drt_F90_SOURCES})

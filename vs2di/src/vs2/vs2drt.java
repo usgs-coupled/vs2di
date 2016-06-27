@@ -77,8 +77,6 @@ public class vs2drt extends vs2ComputationalModel {
     @Override
     public native void getConcentration(int index, float [] value);
     
-    ///public native void getConcentrations(float [][] value);    
-    
     @Override
     public native int getComponentCount();
     
@@ -121,7 +119,13 @@ public class vs2drt extends vs2ComputationalModel {
 
     @Override
     public native void getTransportMassBalanceErrors(double [] err);
+    
+    @Override
+    public native void getHeatTransportMassBalanceErrors(double [] err);
 
+    @Override
+    public native void getSoluteTransportMassBalanceErrors(int index, double [] err);
+    
     @Override
     public native void cleanup();
 

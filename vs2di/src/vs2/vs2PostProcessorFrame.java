@@ -15,6 +15,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
 
     protected int usage;
     protected mp2ToggleButton zonationButton;
+    protected int firstComponentIndex;
 
     /**
      * Creates a post processor in interactive mode
@@ -29,11 +30,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     public vs2PostProcessorFrame(mp2App app, String home) {
         super(app, home);
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                usage = ENERGY_TRANSPORT;
-            } else {
-                usage = SOLUTE_TRANSPORT;
-            }
+            usage = SOLUTE_AND_ENERGY_TRANSPORT;
         } else {
             usage = USAGE_UNDEFINED;    
         }
@@ -41,18 +38,17 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         displayChooser.addItem("Pressure Head");
         displayChooser.addItem("Moisture Content");
         displayChooser.addItem("Saturation");
-        if (usage == SOLUTE_TRANSPORT) {
-            displayChooser.addItem("Concentration");
-        } else if (usage == ENERGY_TRANSPORT) {
-            displayChooser.addItem("Temperature");
-        }
+        displayChooser.addItem("Temperature");
+        displayChooser.addItem("Concentration");
         displayChooser.addItem("Vector");
         displayChooser.addItem("None");
         displayChooser.setMaximumRowCount(10);
         
         JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
         JMenuItem helpMenuItem;
         helpMenuItem = new JMenuItem("Postprocessor Help...");
+        helpMenuItem.setMnemonic(KeyEvent.VK_P);
         menuBar.add(helpMenu);
         helpMenu.add(helpMenuItem);
         
@@ -81,11 +77,8 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             }
         }
         
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator + 
-                                "images" + fileSeparator;
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(zonationButton = new mp2ToggleButton(new ImageIcon(imageDirectory + "zonation.gif")));
+        toolBar.add(zonationButton = new mp2ToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/zonation.gif"))));
         zonationButton.setToolTipText("Show or hide boundaries between textural classes");
         zonationButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -123,7 +116,10 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         }
         super.onExit();
         if (model.getType() == mp2Model.COMPUTATIONAL) {
-            ((vs2ComputationalModel) model).releaseMemory();
+            // release memory if not cancelled in super.onExit() / quitOK
+            if (theApp != null && !theApp.getFrame().getMenuItem(POST_PROCESSOR).isSelected()) {
+                ((vs2ComputationalModel) model).releaseMemory();
+            }
         }
     }
 
@@ -132,11 +128,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      */
     protected mp2ComputationalModel createComputationalModel() {
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                return  new vs2dh();
-            } else {
-                return new vs2dt();
-            }
+            return new vs2drt();
         } else {
             return null;
         }
@@ -161,18 +153,14 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * write binary data
      */
     protected String getComputationalOutputFile() {
-        return (usage == ENERGY_TRANSPORT) ? "vs2dh.sim" : "vs2dt.sim";
+        return "vs2drt.sim";
     }
     
     protected String getPostprocessorTitle() {
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                return "VS2DHI Postprocessor";
-            } else {
-                return "VS2DTI Postprocessor";
-            }
+            return "VS2DRTI Postprocessor";
         } else {
-            return "VS2D Postprocessor--Standalone Mode";
+            return "VS2DRTI Postprocessor--Standalone Mode";
         }
     }
 
@@ -216,9 +204,17 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
             vs2ModelOptions modelOptions = (vs2ModelOptions) theApp.getDoc().getData(MODEL_OPTIONS);
-            if (modelOptions.doTransport) {
-                if (vs2App.doHeat()) {
-                    displayChooser.addItem("Temperature");
+            if (modelOptions.doEnergyTransport) {
+                displayChooser.addItem("Temperature");
+            }
+            if (modelOptions.doSoluteTransport) {
+                assert(computationalModel != null);
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -244,9 +240,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("Pressure Head");
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
-            if (((vs2ComputationalModel) computationalModel).getDoTransport()) {
-                if (usage == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (((vs2ComputationalModel) computationalModel).getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (((vs2ComputationalModel) computationalModel).getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -269,9 +272,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             if (pb.getDoSaturation()) {
                 displayChooser.addItem("Saturation");
             }
-            if (pb.getDoTransport()) {
-                if (pb.getUsage() == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (pb.getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (pb.getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = pb.getComponents();
+                if (comps != null) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -330,7 +340,11 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             in.close ();
             if (line != null && line.length() > 3 && line.startsWith("#")) {
                 String code = line.substring(1).trim().toLowerCase();
-                if (code.startsWith("vs2dt3.")) {
+                if (code.startsWith("vs2drt1.")) {
+                    usage = SOLUTE_AND_ENERGY_TRANSPORT;
+                    computationalModel = new vs2drt();
+                    return true;
+                } else if (code.startsWith("vs2dt3.")) {
                     usage = SOLUTE_TRANSPORT;
                     computationalModel = new vs2dt();
                     return true;
@@ -433,35 +447,22 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Entry point when running post processor as standalone app
      */
     public static void main(String [] args) {
-        String homeDir = null;
         mp2FileChooser.useJFileChooser(true);
-        for (int i=0; i<Math.min(args.length, 2); i++) {
-            if (args[i].equalsIgnoreCase("-w")) {
-                try {
-                    // Use windows look and feel
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    // When launched by a windows exe program to run on jre, the
-                    // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
-                    // instead
-                    mp2FileChooser.useJFileChooser(false);
-                } catch (Exception e) {
-                    System.out.println("Error loading L&F: " + e);
-                }
-                
-            } else {
-                homeDir = args[i];
+        try {
+            // Use windows look and feel when running under windows
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                // When launched by a windows exe program to run on jre, the
+                // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
+                // instead
+                mp2FileChooser.useJFileChooser(false);
             }
+        } catch (Exception e) {
+            System.out.println("Error loading L&F: " + e);
         }
-        if (homeDir == null)  {
-            homeDir = System.getProperty("user.dir");
-        }
-        
-        vs2PostProcessorFrame frame = new vs2PostProcessorFrame(null, homeDir);
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDir + fileSeparator
-                                + "images" + fileSeparator;
+        vs2PostProcessorFrame frame = new vs2PostProcessorFrame(null);
         Image appIcon = Toolkit.getDefaultToolkit().getImage(
-                                    imageDirectory + "posticon.gif");
+                                    ClassLoader.getSystemResource("images/posticon.gif"));
         frame.setIconImage(appIcon);
         frame.setVisible(true);
     }
@@ -480,8 +481,15 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         else if (item.equals("Saturation")) {
             view.setDisplay(vs2PostProcessorView.SATURATION);
         }
-        else if (item.equals("Concentration")||item.equals("Temperature")) {
-            view.setDisplay(vs2PostProcessorView.TRANSPORT);
+        else if (item.equals("Temperature")) {
+            view.setDisplay(vs2PostProcessorView.ENERGY_TRANSPORT);
+        }
+        else if (item.startsWith("Concentration")) {
+            ((vs2PostProcessorView)view).setDisplayString(item);
+            int n = displayChooser.getSelectedIndex() - firstComponentIndex;
+            ((vs2PostProcessorView)view).setComponentIndex(n);
+            // must set index before setting display
+            view.setDisplay(vs2PostProcessorView.SOLUTE_TRANSPORT);
         }
         else if (item.equals("Vector")) {
             view.setDisplay(vs2PostProcessorView.VECTOR);
@@ -517,9 +525,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             if (pb.getDoSaturation()) {
                 displayChooser.addItem("Saturation");
             }
-            if (pb.getDoTransport()) {
-                if (pb.getUsage() == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (pb.getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (pb.getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = pb.getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -549,11 +564,8 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("Pressure Head");
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
-            if (usage == ENERGY_TRANSPORT) {
-                displayChooser.addItem("Temperature");
-            } else {
-                displayChooser.addItem("Concentration");
-            }
+            displayChooser.addItem("Temperature");
+            displayChooser.addItem("Concentration");
             displayChooser.addItem("Vector");
             displayChooser.addItem("None");
             displayChooser.revalidate();
@@ -625,7 +637,13 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             break;
         case 11:
             mp2MessageBox.showMessageDialog(this,
-                    "Convergence of flow and transport equation not attained."
+                    "Convergence of flow and transport equation not attained. "
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 12:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in PhreeqcRM. See *.log.txt file. "
                     + "Simulation halted.",
                     "Warning");
             break;
@@ -709,5 +727,13 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         } catch (Exception e) {
             throw e;
         }
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return step JButton
+     */
+    public JButton getStepButton() {
+        return this.stepButton;        
     }
 }

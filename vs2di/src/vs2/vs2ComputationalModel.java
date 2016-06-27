@@ -97,14 +97,25 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
                     bout.writeFloat(buffer[i]);
                 }
             }
+            bout.writeUTF("<Error>");
             getFlowMassBalanceErrors(err);
             bout.writeDouble(err[0]);
             bout.writeDouble(err[1]);
-            if (doEnergyTransport || doSoluteTransport) {          // TODO
-                getTransportMassBalanceErrors(err);
+            if (doEnergyTransport) {
+                getHeatTransportMassBalanceErrors(err);
                 bout.writeDouble(err[0]);
                 bout.writeDouble(err[1]);
             }
+            if (doSoluteTransport) {
+                for (int j=0; j<componentCount; j++) {
+                    getSoluteTransportMassBalanceErrors(j, err);
+                    bout.writeDouble(err[0]);
+                    bout.writeDouble(err[1]);
+                }
+            } else {
+                assert(componentCount == 0);
+            }
+            bout.writeUTF("</Error>");
         } catch (IOException e) {
             System.out.println("Error in write data");
             throw e;
@@ -163,6 +174,8 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
                 for (i=0; i<componentCount; i++) {
                     bout.writeUTF(components[i]);
                 }
+            } else {
+                assert(componentCount == 0);
             }
             bout.writeBoolean(saveMoistureContent);
             bout.writeBoolean(saveSaturation);
@@ -266,7 +279,15 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
     
     public void getConcentration(int index, float [] value) {
         getTransport(value);
-    }    
+    }
+    
+    public void getHeatTransportMassBalanceErrors(double [] err) {
+        getTransportMassBalanceErrors(err);
+    }
+    
+    public void getSoluteTransportMassBalanceErrors(int index, double [] err) {
+        getTransportMassBalanceErrors(err);        
+    }
 
     public int getComponentCount() {
         return 0;

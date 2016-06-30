@@ -26,7 +26,9 @@ public class vs2BoundaryCondition extends mp2BoundaryCondition
     private double transportValue;
     private int energyType;      // new in version 1.1
     private double energyValue;  // new in version 1.1
-
+    private int soluteType;      // new in version 1.4
+    private int soluteValue;     // new in version 1.4
+    
     public void copy(mp2BoundaryCondition bc) {
         if (bc instanceof vs2BoundaryCondition) {
             vs2BoundaryCondition vs2bc = (vs2BoundaryCondition) bc;
@@ -36,6 +38,8 @@ public class vs2BoundaryCondition extends mp2BoundaryCondition
             transportValue = vs2bc.transportValue;
             energyType = vs2bc.energyType;
             energyValue = vs2bc.energyValue;
+            soluteType = vs2bc.soluteType;    // new in version 1.4
+            soluteValue = vs2bc.soluteValue;  // new in version 1.4
         } else {
             // should throw an exception for trying to
             // copy the wrong type of bc
@@ -48,34 +52,37 @@ public class vs2BoundaryCondition extends mp2BoundaryCondition
     // transport or solute transport.
     
     public void setTransportType(int t) {
-        if (vs2App.doHeat()) {
-            energyType = t;
-        } else {
-            transportType = t;
-        }
+        assert(false);
+    }
+    
+    public void setEnergyTransportType(int t) {
+        energyType = t;
+    }
+    public void setSoluteTransportType(int t) {
+        soluteType = t;
     }
     
     public void setTransportValue(double v) {
-        if (vs2App.doHeat()) {
-            energyValue = v;
-        } else {
-            transportValue = v;
-        }
+        assert(false);
+    }
+    public void setEnergyTransportValue(double v) {
+        energyValue = v;
+    }
+    public void setSoluteTransportValue(int v) {
+        soluteValue = v;
     }
         
-    public int getTransportType() {
-        if (vs2App.doHeat()) {
-            return energyType;
-        } else {
-            return transportType;
-        }
+    public int getEnergyTransportType() {
+        return energyType;
+    }    
+    public int getSoluteTransportType() {
+        return soluteType;
     }
     
-    public double getTransportValue() {
-        if (vs2App.doHeat()) {
-            return energyValue;
-        } else {
-            return transportValue;
-        }
+    public double getEnergyTransportValue() {
+        return energyValue;
+    }    
+    public int getSoluteTransportValue() {
+        return soluteValue;
     }
 }

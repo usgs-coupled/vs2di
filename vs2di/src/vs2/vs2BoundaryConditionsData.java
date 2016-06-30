@@ -256,7 +256,7 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
             }
         }
 
-        // rest of card C-6
+        // rest of card C-6 (BCIT and ETSIM printed in rechargePeriodData.exportPeriod)
         pw.println((numberOfSeepageFaces > 0 ? "T" : "F")
                 + "     /C6 -- BCIT, ETSIM, SEEP");
         if (numberOfSeepageFaces > 0) {
@@ -285,7 +285,7 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
         }
 
         // Card C-10 (BC always read by individual node)
-        pw.println("0" + "     /C10 -- IBC. C11 begins next line: JJ, NN, NTX, PFDUM, (NTC, CF)");
+        pw.println("0" + "     /C10 -- IBC");
 
         // Card C-11
         boolean doExport;
@@ -307,34 +307,36 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
 //                allows for specifying temperature for seepage face.
                     if (p == 0) {
                         // if first period, print non default bc
-                        if (modelOptions.doTransport) {
-                            doExport = !(bc.flowType == NO_FLOW_BC && bc.getTransportType() == DEFAULT_CONC_BC);
-                        } else {
-                            doExport = (bc.flowType != NO_FLOW_BC);
-                        }
+                        doExport = !(
+                                (bc.flowType == NO_FLOW_BC) &&
+                                (modelOptions.doEnergyTransport ? (bc.getEnergyTransportType() == DEFAULT_CONC_BC) : true ) &&
+                                (modelOptions.doSoluteTransport ? (bc.getSoluteTransportType() == DEFAULT_CONC_BC) : true )
+                                );
+                        
                     } else {
                         // if not first period, print bcs that have changed since last period
                         Vector lastPeriodSegments =
                             (Vector) lastPeriod.elementAt(j);
                         vs2BoundaryCondition lastPeriodBc =
                             (vs2BoundaryCondition) lastPeriodSegments.elementAt(k);
-                        if (modelOptions.doTransport) {
-                            doExport = !(bc.flowType == lastPeriodBc.flowType
-                                        && bc.flowValue == lastPeriodBc.flowValue
-                                        && bc.getTransportType() == lastPeriodBc.getTransportType()
-                                        && bc.getTransportValue() == lastPeriodBc.getTransportValue());
-                        } else {
-                            doExport = !(bc.flowType == lastPeriodBc.flowType
-                                        && bc.flowValue == lastPeriodBc.flowValue);
-                        }
+                        doExport = !(
+                                (bc.flowType  == lastPeriodBc.flowType)  &&
+                                (bc.flowValue == lastPeriodBc.flowValue) &&
+                                (modelOptions.doEnergyTransport ? (bc.getEnergyTransportType()  == lastPeriodBc.getEnergyTransportType() ) : true) &&
+                                (modelOptions.doEnergyTransport ? (bc.getEnergyTransportValue() == lastPeriodBc.getEnergyTransportValue()) : true) &&
+                                (modelOptions.doSoluteTransport ? (bc.getSoluteTransportType()  == lastPeriodBc.getSoluteTransportType() ) : true) &&
+                                (modelOptions.doSoluteTransport ? (bc.getSoluteTransportValue() == lastPeriodBc.getSoluteTransportValue()) : true)
+                                );
                     }
                     if (doExport) {
                         double adjustedFlowValue = bc.flowValue;
-                        double adjustedTransportValue = bc.getTransportValue();
+                        //double adjustedTransportValue = bc.getTransportValue();
+                        double adjustedEnergyTransportValue = bc.getEnergyTransportValue();
+                        ///int adjustedSoluteTransportValue = bc.getSoluteTransportValue();
                         // adjust for differences between VS2DTI and VS2DT for normal flux
                         // and vertical flux
                         if (bc.flowType == VERTICAL_FLUID_FLUX_BC || bc.flowType == NORMAL_FLUID_FLUX_BC
-                               || bc.getTransportType() == DIFFUSIVE_FLUX_BC) {
+                               || bc.getEnergyTransportType() == DIFFUSIVE_FLUX_BC) {
                             mp2Polygon poly = domainData.getBoundary(j);
                             double [] v1 = poly.getVertex(k);
                             double [] v2 = poly.getVertex((k+1)%poly.getNumberOfVertices());
@@ -357,7 +359,7 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                             if (modelOptions.useRadialCoord) {
                                 double lateralSurfaceOfFrustrum = Math.PI * segDist * (v1[0] + v2[0]);
                                 double totalFlow = lateralSurfaceOfFrustrum * bc.flowValue;
-                                double totalMassRate = lateralSurfaceOfFrustrum * bc.getTransportValue();
+                                double totalEnergyMassRate = lateralSurfaceOfFrustrum * bc.getEnergyTransportValue();
                                 double sumOfCellRings = 0;
                                 for (m=0; m<cell.length; m++) {
                                     row = cell[m]/numCol;
@@ -368,8 +370,8 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                 if (bc.flowType == NORMAL_FLUID_FLUX_BC && sumOfCellRings > 0) {
                                     adjustedFlowValue = totalFlow/sumOfCellRings;
                                 }
-                                if (bc.getTransportType() == DIFFUSIVE_FLUX_BC && sumOfCellRings > 0) {
-                                    adjustedTransportValue = totalMassRate/sumOfCellRings;
+                                if (bc.getEnergyTransportType() == DIFFUSIVE_FLUX_BC && sumOfCellRings > 0) {
+                                    adjustedEnergyTransportValue = totalEnergyMassRate/sumOfCellRings;
                                 }
                             }
                             // Adjustment for flux BC for x-z case:
@@ -382,7 +384,7 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                             // by the sum of the cell x-spacings.
                             else {
                                 double totalFlow = segDist*bc.flowValue;
-                                double totalMassRate = segDist*bc.getTransportValue();
+                                double totalEnergyMassRate = segDist*bc.getEnergyTransportValue();
                                 double cellDist = 0;
                                 for (m=0; m<cell.length; m++) {
                                     row = cell[m]/numCol;
@@ -393,8 +395,8 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                        && cellDist > 0) {
                                     adjustedFlowValue = totalFlow/cellDist;
                                 }
-                                if (bc.getTransportType() == DIFFUSIVE_FLUX_BC && cellDist > 0) {
-                                    adjustedTransportValue = totalMassRate/cellDist;
+                                if (bc.getEnergyTransportType() == DIFFUSIVE_FLUX_BC && cellDist > 0) {
+                                    adjustedEnergyTransportValue = totalEnergyMassRate/cellDist;
                                 }
                             }
                         }
@@ -417,13 +419,19 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                             for (m=0; m<cell.length; m++) {
                                 row = cell[m]/numCol;
                                 col = cell[m] - row*numCol;
-                                pw.print((row+2) + " " + (col+2) + " " +
-                                         +  bcFlowType + " " + (float) adjustedFlowValue);
-                                if (modelOptions.doTransport) {
-                                    pw.println(" " + bc.getTransportType() + " " + (float) adjustedTransportValue);
-                                } else {
-                                    pw.println();
+                                pw.println((row+2) + " " + (col+2) + " " +
+                                        +  bcFlowType + " " + (float) adjustedFlowValue +
+                                        "     /C11 -- JJ, NN, NTX, PFDUM");
+                                if (modelOptions.doEnergyTransport) {
+                                    pw.println(bc.getEnergyTransportType() + " " +
+                                            (float) adjustedEnergyTransportValue +
+                                            "     /C12 -- NTT, TF");
                                 }
+                                if (modelOptions.doSoluteTransport) {
+                                    pw.println(bc.getSoluteTransportType() + " " +
+                                            bc.getSoluteTransportValue() +
+                                            " -1 1.   /C13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                                }                                
                             }
                         }
                         else {
@@ -454,17 +462,22 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                 col = cell[m] - row*numCol;
                                 adjustedFlowValue = fluidFlux * Math.PI *
                                         (xCoord[col+1] * xCoord[col+1] - xCoord[col] * xCoord[col]);
-                                pw.print((row+2) + " " + (col+2) + " " +
-                                         +  bc.flowType + " " + (float) adjustedFlowValue);
-                                if (modelOptions.doTransport) {
-                                    pw.println(" " + bc.getTransportType() + " " + (float) adjustedTransportValue);
-                                } else {
-                                    pw.println();
+                                pw.println((row+2) + " " + (col+2) + " " +
+                                        +  bc.flowType + " " + (float) adjustedFlowValue +
+                                        "     /C11 -- JJ, NN, NTX, PFDUM");
+                                if (modelOptions.doEnergyTransport) {
+                                    pw.println(bc.getEnergyTransportType() + " " +
+                                            (float) adjustedEnergyTransportValue +
+                                            "     /C12 -- NTT, TF");                                    
+                                }
+                                if (modelOptions.doSoluteTransport) {
+                                    pw.println(bc.getSoluteTransportType() + " " +
+                                            bc.getSoluteTransportValue() +
+                                            " -1 1.   /C13 -- NTC, INSBC1, INSBC2, SBFRAC");
                                 }
                             }
                         }
                     }
-                //}
             }
         }
     }

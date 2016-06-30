@@ -18,6 +18,10 @@ public class vs2InitialData extends mp2ContourMapData
     }
 
     public void exportData(PrintWriter pw, String label1, String label2) {
+        exportData(pw, label1, label2, false);
+    }    
+
+    public void exportData(PrintWriter pw, String label1, String label2, boolean skipIUandIFMT) {
 
         // If there is only one contour, then the initial condition is
         // a uniform value
@@ -34,10 +38,22 @@ public class vs2InitialData extends mp2ContourMapData
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numColNoBorder = rectGridData.getXCoords().length - 1;
         int numRowNoBorder = rectGridData.getYCoords().length - 1;
-        // Card B-24  Always read ic from file, with mult factor set to 1.
-        pw.println("1 1.0" + "     /" + label1 + " -- IREAD, FACTOR");
-        // Card B-25   Assume unit number is 5, use free format
-        pw.println("5 'free'" + "     /" + label2 + " -- IU, IFMT. Initial values to follow.");
+        // Card B-XX  Always read ic from file, with mult factor set to 1.
+        // XX=13 for initial pressure head and intial moisture content
+        // XX=26 for initial temperature
+        // XX=28 for phreeqc initial chemistry
+        if (skipIUandIFMT) {
+            pw.println("1 1.0" + "     /" + label1 + " -- IREAD, FACTOR. Initial values to follow.");
+        } else {
+            pw.println("1 1.0" + "     /" + label1 + " -- IREAD, FACTOR");            
+        }
+        // Card B-XX  Assume unit number is 5, use free format
+        // XX=15 initial head or moisture content
+        // XX=27 initial temperature
+        // for solute transport IU, IFMT isn't read
+        if (!skipIUandIFMT) {
+            pw.println("5 'free'" + "     /" + label2 + " -- IU, IFMT. Initial values to follow.");
+        }
         // first, write the concentration of cells on top border
         for (c=0; c<numColNoBorder+2; c++) {
             pw.print(nullValue + " ");

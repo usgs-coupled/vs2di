@@ -13,14 +13,14 @@ public class vs2SourceStrengthData extends mp2TableData
     
     protected static final String [] COLUMN_NAME = {"Period No.", "Variable", "Value", "Variable", "Value", "Variable", "Value"};
 
-    protected static final Class [] COLUMN_CLASS = {Integer.class, String.class, Double.class, String.class, Double.class, String.class, Double.class};
+    protected static final Class [] COLUMN_CLASS = {Integer.class, String.class, Double.class, String.class, Integer.class, String.class, Double.class};
 
     protected static final String [] TOOL_TIP_TEXT = {
         "recharge period number",
         "The type of hydraulic variable specified for this source/sink point",
         "The value of the hydraulic variable",
-        "The type of concentration variable, Ci or C, specified for this source/sink point",
-        "The value of the concentration variable",
+        "The type of solution, Si or S, specified for this source/sink point",
+        "The value of the solution number",
         "The type of temperature variable, Ti or T, specified for this source/sink point",
         "The value of the temperature variable"};
 
@@ -35,8 +35,8 @@ public class vs2SourceStrengthData extends mp2TableData
         aRow[0] = null;                               // Not used but needed for spacing
         aRow[1] = new Integer(NORMAL_FLUID_FLUX_BC);  // The type of hydraulic variable specified for this source.
         aRow[2] = new Double(0.0);                    // The value of the hydraulic variable
-        aRow[3] = new Integer(DEFAULT_CONC_BC);       // The type of concentration variable, Ci or C, specified for this source
-        aRow[4] = new Double(0.0);                    // The value of the concentration variable
+        aRow[3] = new Integer(DEFAULT_CONC_BC);       // The type of solution variable, Si or S, specified for this source
+        aRow[4] = new Integer(1);                     // The value of the solution variable
         aRow[5] = new Integer(DEFAULT_CONC_BC);       // The type of temperature variable, Ti or T, specified for this source
         aRow[6] = new Double(0.0);                    // The value of the temperature variable
         return aRow;
@@ -60,10 +60,11 @@ public class vs2SourceStrengthData extends mp2TableData
         case 3:
             switch (((Integer)super.getObjectAt(r, c)).intValue()) {
             case DEFAULT_CONC_BC:   
-                return "Ci";
+                return "Si";
             case SPECIFIED_CONC_BC:
-                return "C";
+                return "S";
             case DIFFUSIVE_FLUX_BC:
+                assert(false);
                 return "M";
             default:
                 return "unknown";

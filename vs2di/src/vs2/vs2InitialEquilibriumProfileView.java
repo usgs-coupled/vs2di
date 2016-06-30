@@ -59,7 +59,7 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
                                 + "images" + fileSeparator;
 
         selectAndEditButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "arrow.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/arrow.gif")), true);
         selectAndEditButton.setToolTipText("Select or Edit");
         selectAndEditButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -69,7 +69,7 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
             }
         });
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
         discretizeButton.setToolTipText("Discretize");
         discretizeButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -85,7 +85,7 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
 		bg.add(zoomButton);
 
         equilibriumProfileButton = new mp2Button(
-                new ImageIcon(imageDirectory + "watertable.gif"));
+                new ImageIcon(ClassLoader.getSystemResource("images/watertable.gif")));
         equilibriumProfileButton.setToolTipText("set equilibrium profile");
         equilibriumProfileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

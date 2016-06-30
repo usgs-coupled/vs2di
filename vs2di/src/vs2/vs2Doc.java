@@ -59,11 +59,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         currentVersion = vs2Constants.VS2_VERSION;
         serializedVersion = currentVersion;
 
-        if (vs2App.doHeat()) {
-            usage = ENERGY_TRANSPORT;
-        } else {
-            usage = SOLUTE_TRANSPORT;
-        }
+        usage = SOLUTE_AND_ENERGY_TRANSPORT;
 
         // Create the model options and post processor options data
         modelOptions = new vs2ModelOptions();
@@ -116,6 +112,28 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         texturalClassData.convertToCurrentVersion();
         // extra entries in model options need to be initialized.
         modelOptions.convertToCurrentVersion();
+
+        switch (usage) {
+            case SOLUTE_TRANSPORT:
+                // 1.3 or previous version
+                modelOptions.doSoluteTransport = modelOptions.doTransport;
+                modelOptions.doEnergyTransport = false;
+                break;
+            case ENERGY_TRANSPORT:
+                // 1.3 or previous version
+                modelOptions.doEnergyTransport = modelOptions.doTransport;
+                modelOptions.doSoluteTransport = false;
+                break;
+            case SOLUTE_AND_ENERGY_TRANSPORT:
+                // 1.4 or newer version
+                // No-Op
+                break;
+            default:
+                assert(false);
+                break;
+        }
+        usage = SOLUTE_AND_ENERGY_TRANSPORT;
+
         // version 1.1 file doesn't have initial temperature data,
         // so we create one here.
         if (initialTemperatureData == null) {
@@ -162,11 +180,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             pw.println("variables.out");
             pw.println("balance.out");
             pw.println("obsPoints.out");
-            if (vs2App.doHeat()) {
-                pw.println("# vs2dh3.3");
-            } else {
-                pw.println("# vs2dt3.3");
-            }
+            pw.println("# vs2drt1.1");
             pw.flush();
             fos.close();
 
@@ -201,39 +215,47 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // Card A-3
         pw.print(modelOptions.lengthUnit
                  + modelOptions.timeUnit);
-        if (vs2App.doHeat()) {
-            pw.print(modelOptions.energyUnit);
-        } else {
-            pw.print(modelOptions.massUnit);
-        }
-        pw.println("    /A3 -- ZUNIT, TUNIT, CUNX");
-        // Card A-4 (assumes grid data DO NOT include border cells
+        pw.print(modelOptions.massUnit);
+        pw.print(modelOptions.energyUnit);
+        pw.println("    /A3 -- ZUNIT, TUNIT, CUNX, HUNX");
+        // Card A-5 (assumes grid data DO NOT include border cells
         pw.println((xCoord.length + 1) + " " + (yCoord.length + 1) +
-                "    /A4 -- NXR, NLY");
-        // Card A-5
+                "    /A5 -- NXR, NLY");
+        // Card A-6
         pw.print(rechargePeriodData.getNumberOfRows() + " ");
         if (modelOptions.highPrecisionAuxiliaryOutput) {
-            pw.println(-modelOptions.maxNumberOfTimeSteps +  "    /A5 -- NRECH, NUMT");
+            pw.println(-modelOptions.maxNumberOfTimeSteps +  "    /A6 -- NRECH, NUMT");
         } else {
-            pw.println(modelOptions.maxNumberOfTimeSteps +  "    /A5 -- NRECH, NUMT");
+            pw.println(modelOptions.maxNumberOfTimeSteps +  "    /A6 -- NRECH, NUMT");
         }
-        // Card A-6
+        // Card A-7
         pw.println((modelOptions.useRadialCoord ? "T " : "F ")
                  + (modelOptions.itstop ? "T " : "F ")
-                 + (modelOptions.doTransport ? "T " : "F ")
-                 + "     /A6 -- RAD, ITSTOP, TRANS");
-        // Card A-6A
-        if (modelOptions.doTransport) {
+                 + (modelOptions.doEnergyTransport ? "T " : "F ")
+                 + (modelOptions.doSoluteTransport ? "T " : "F ")
+                 + "       /A7 -- RAD, ITSTOP, HEAT, SOLUTE");
+        if (modelOptions.doSoluteTransport) {
+            // Card A-8 -- CHEMFILE
+            pw.println(modelOptions.chemFile);
+            // Card A-9 -- DATABASEFILE
+            pw.println(modelOptions.databaseFile);
+            // Card A-10 -- PREFIX
+            pw.println(modelOptions.prefix);
+        }
+
+        if (modelOptions.doSoluteTransport || modelOptions.doEnergyTransport) {
+            // Card A-11
             pw.print((modelOptions.doSpaceCentered ? "T " : "F ")
                      + (modelOptions.doTimeCentered ? "T " : "F "));
-            if (vs2App.doHeat()) {
-                pw.println("     /A6A -- CIS, CIT");
-            } else {
-                pw.println((this.doNonlinearSorption() ? "T " : "F")
-                    + "     /A6A -- CIS, CIT, SORP");
-            }
+            pw.println("           /A11 -- CIS, CIT");
         }
-        // Card A-7.  The current implementation assumes if
+        if (modelOptions.doSoluteTransport) {
+            // Card A-12
+            pw.print(modelOptions.iprntcheOption + " " + modelOptions.iprntcheOption + " " + modelOptions.ipoutOption);
+            pw.println("          /A12 -- IPRNTCHE, INPRXZ, IPOUT");
+        }
+        
+        // Card A-13.  The current implementation assumes if
         // a. F11P is "T" if user specified observation points in the
         //    observation points view
         // b. F7P is always "F", that is maximum head change in each
@@ -250,17 +272,17 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                 + (f8p ? "T " : "F ")
                 + ((nmb9 > 0) ? "T " : "F ")
                 + (modelOptions.outputMassBalanceEveryTimeStep ? "T" : "F")
-                + "     /A7 -- F11P, F7P, F8P, F9P, F6P");
-        // Card A-8.
+                + "      /A13 -- F11P, F7P, F8P, F9P, F6P");
+        // Card A-14.
         pw.println((modelOptions.moistureContentOut ? "T " : "F ")
                  + (modelOptions.saturationOut ? "T " : "F ")
                  + (modelOptions.pressureHeadOut ? "T " : "F ")
                  + (modelOptions.totalHeadOut ? "T " : "F ")
                  + (modelOptions.velocityOut ? "T " : "F ")
-                 + "     /A8 -- THPT, SPNT, PPNT, HPNT, VPNT");
-        // Card A-9 (Always set IFAC = 0, FACX = 1)
-        pw.println("0 1" + "     /A9 -- IFAC, FACX. A10 begins next line: DXR");
-        // Card A-10 (Grid spacing in x direction. Assumes grid
+                 + "     /A14 -- THPT, SPNT, PPNT, HPNT, VPNT");
+        // Card A-15 (Always set IFAC = 0, FACX = 1)
+        pw.println("0 1" + "            /A15 -- IFAC, FACX. A16 begins next line: DXR");
+        // Card A-16 (Grid spacing in x direction. Assumes grid
         // DOES NOT include border. Border cells are added to
         // the export file at  both ends of rows and columns.)
         pw.print((float) (xCoord[1] - xCoord[0]) + " ");       // Border cell
@@ -276,9 +298,11 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         pw.println((float) (xCoord[xCoord.length-1]
                           - xCoord[xCoord.length-2]));         // Border cell
-        // Card A-11 (Always set JFAC = 0, FACY = 1)
-        pw.println("0 1" + "     /A11 -- JFAC, FACZ. A12 begins next line: DELZ");
-        // Card A-12 (Grid spacing in y direction)
+        // No Card A-17
+        // Card A-18 (Always set JFAC = 0, FACZ = 1)
+        pw.println("0 1" + "            /A18 -- JFAC, FACZ. A20 begins next line: DELZ");
+        // No Card A-19
+        // Card A-20 (Grid spacing in y direction)
         pw.print((float) (yCoord[1] - yCoord[0]) + " ");       // Border cell
         for (i=0, j=1; i<yCoord.length-1; i++, j++) {
             if (j == 10) {
@@ -292,12 +316,13 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         pw.println((float) (yCoord[yCoord.length-1]
                           - yCoord[yCoord.length-2]));         // Border cell
-        // Card A-13 and A-14
+        // No Card A-21
+        // Card A-22 and A-23
         switch (modelOptions.outputTimeOption) {
         case vs2ModelOptions.INTERVAL_OUTPUT_TIME:
             int ts = Math.max (1, (int) (maximumSimulationTime / modelOptions.outputTimeInterval));
             //if (ts > MAX_OUTPUT_TIMES) ts = MAX_OUTPUT_TIMES;
-            pw.println(ts + "     /A13 -- NPLT. A14 begins next line: PLTIM");
+            pw.println(ts + "     /A22 -- NPLT. A23 begins next line: PLTIM");
             double outputTime;
             for (i=1, j=0; i<=ts; i++, j++) {
                 outputTime = i * modelOptions.outputTimeInterval;
@@ -314,7 +339,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             break;
         case vs2ModelOptions.SPECIFIED_OUTPUT_TIMES:
             pw.println(modelOptions.outputTimes.size()
-                    + "     /A13 -- NPLT. A14 begins next line: PLTIM");
+                    + "              /A22 -- NPLT. A23 begins next line: PLTIM");
             for (i=0, j=0; i<modelOptions.outputTimes.size(); i++, j++) {
                 if (j == 10) {
                     pw.println();
@@ -328,38 +353,38 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         if (numObservationCell > 0) {
             observationPointsData.exportData(pw, modelOptions.outputToAuxFilesEveryTimeStep);
         }
-        // Cards A-17 and A-18
+        // Cards A-26 and A-27
         if (nmb9 > 0) {
             // To output mass balance to File 9 at specified times, set nmb9 to negative.
             if (!modelOptions.outputToAuxFilesEveryTimeStep) {
                 pw.print("-");
             }
-            pw.println(nmb9 + "     /A17 -- NMB9");
-            pw.println(modelOptions.getMassBalanceIndices() + "     /A18 -- MB9");  // fluid + solute or energy
+            pw.println(nmb9 + "     /A26 -- NMB9");
+            pw.println(modelOptions.getMassBalanceIndices() + "     /A27 -- MB9");  // fluid + solute or energy
         }
 
         // Card B-1
-        pw.print(modelOptions.closureCriterionForHead + " "
-                 + modelOptions.relaxationParameter + " "
-                 + modelOptions.getIntercellWeightingValue() + " ");
-        if (vs2App.doHeat()) {
+        pw.println(modelOptions.closureCriterionForHead + " "
+                + modelOptions.relaxationParameter + " "
+                + modelOptions.getIntercellWeightingValue() + "     /B1 -- EPS, HMAX, WUS");
+        if (modelOptions.doEnergyTransport) {
             pw.println(modelOptions.closureCriterionForTemp + " "
                     +  modelOptions.closureCriterionForVelocity
-                    + "     /B1 -- EPS, HMAX, WUS, EPS1, EPS2");
-        } else {
-            pw.println(modelOptions.closureCriterionForConc
-                    + "     /B1 -- EPS, HMAX, WUS, EPS1");
+                    + "     /B2 -- EPS1, EPS2");
         }
-        // There is no card B-2
-        // Card B-3
+        if (modelOptions.doSoluteTransport) {
+            pw.println(modelOptions.closureCriterionForConc
+                    + "     /B3 -- EPS3");
+        }
+        // Card B-4
         pw.println(modelOptions.minIterationsPerTimeStep + " "
                  + modelOptions.maxIterationsPerTimeStep
-                 + "     /B3 -- MINIT, ITMAX");
-        // Card B-4  (initial flow conditions)
+                 + "     /B4 -- MINIT, ITMAX");
+        // Card B-5  (initial flow conditions)
         pw.println(((modelOptions.initialFlowType ==
                     INITIAL_MOISTURE_CONTENT) ? "F" : "T")
-                    + "     /B4 -- PHRD");
-        // Card B-5
+                    + "     /B5 -- PHRD");
+        // Card B-6
         pw.print(texturalClassData.getNumberOfRows() + " ");
         switch (modelOptions.soilModel) {
         case BROOKS_COREY: // fall through
@@ -374,61 +399,18 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             pw.print((3*texturalClassData.getMaxTabularDataRows()+6) + " ");
             break;
         }
-        if (modelOptions.doTransport) {
-            if (vs2App.doHeat()) {
-                pw.println("6" + "     /B5 -- NTEX, NPROP, NPROP1");
-                pw.println(modelOptions.soilModel + " 1"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType (not used)");
-                //Not clear why we need to read adsorption type for heat flow
-            } else {
-                switch (modelOptions.reactionOption) {
-                case N0_ADSORPTION_NO_ION_EXCHANGE:
-                    pw.println("6" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 1"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case LANGMUIR:
-                    pw.println("7" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 2"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case LINEAR_ADSORPTION:  // Fall through
-                case FREUNDLICH:
-                    pw.println("7" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 3"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case MONO_MONOVALENT_ION_EXCHANGE:
-                    pw.println("8" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 4"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case MONO_DIVALENT_ION_EXCHANGE:
-                    pw.println("8" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 5"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case DI_MONOVALENT_ION_EXCHANGE:
-                    pw.println("8" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 6"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                case DI_DIVALENT_ION_EXCHANGE:
-                    pw.println("8" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 7"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                    break;
-                default:  // Assume no adsorption
-                    pw.println("6" + "     /B5 -- NTEX, NPROP, NPROP1");
-                    pw.println(modelOptions.soilModel + " 1"
-                            + "     /B5A -- hydraulicFunctionType, adsorptionType");
-                }
-            }
-        } else {
-            pw.println("     /B5 -- NTEX, NPROP");  // needed to terminate card B-5
-            pw.println(modelOptions.soilModel + "     /B5A -- hydraulicFunctionType");
-        }
+        pw.println("     /B6 -- NTEX, NPROP");
+        
+        // Card B-7
+        pw.println(modelOptions.soilModel + "     /B7 -- HFT hydraulicFunctionType");       
+
         // Cards B-6, B-7, B-7A, B-8, B-9
+        // Cards B-8, B-9, B-9A, B-9B, B-10, B-11
+        // B-6  -> B-8
+        // B-7  -> B-9
+        // B-7A -> B-9A and B-9B
+        // B-8  -> B-10
+        // B-9  -> B-11
         texturalClassData.exportData(pw, modelOptions);
         texturalMapData.exportData(pw, texturalClassData);
 
@@ -440,40 +422,43 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             initialEquilibriumProfileData.exportData(pw, yCoord);
             break;
         case INITIAL_PRESSURE_HEAD:
-            initialPressureHead.exportData(pw, "B11", "B13");
+            initialPressureHead.exportData(pw, "B13", "B15");
             break;
         case INITIAL_MOISTURE_CONTENT:
-            initialMoistureContent.exportData(pw, "B11", "B13");
+            initialMoistureContent.exportData(pw, "B13", "B15");
             break;
         }
-        // Card B-14
+        // Card B-16
         boolean doEvaporation = rechargePeriodData.isEvaporationSimulated()
                                 && modelOptions.doEvaporation;
         boolean doTranspiration = rechargePeriodData.isTranspirationSimulated()
                                 && modelOptions.doTranspiration;
         pw.println((doEvaporation ? "T " : "F ")
                  + (doTranspiration ? "T " : "F ")
-                 + "     /B14 -- BCIT, ETSIM");
-        // Card B-15 through B-23
+                 + "     /B16 -- BCIT, ETSIM");
+        // Card B-17 through B-25
         if (doEvaporation || doTranspiration) {
             evapotranspirationData.exportData(pw, doEvaporation,
                                                   doTranspiration);
         }
-        // Cards B-24 and B-25
-        if (modelOptions.doTransport) {
-            if (vs2App.doHeat()) {
-                initialTemperatureData.exportData(pw, "B24", "B25");
-            } else {
-                initialConcentrationData.exportData(pw, "B24", "B25");
-            }
+        // Cards B-26 and B-27
+        if (modelOptions.doEnergyTransport) {
+            initialTemperatureData.exportData(pw, "B26", "B27");
         }
+//        // Cards B-28, B-29 and B-30 (REPLACED BY TEXTURAL CLASS)
+//        if (modelOptions.doSoluteTransport) {
+//            initialConcentrationData.exportConcentrationData(pw);
+//        }
+        
+        // Since F7P is always "F"
+        // B-29?? through B-31?? are not used
 
         // All Cards C
         for (i=0; i<rechargePeriodData.getNumberOfRows(); i++) {
-            rechargePeriodData.exportPeriod(pw, i, modelOptions);
+            rechargePeriodData.exportPeriod(pw, i, modelOptions);      // no changes for C-1 through C-6 (VS2DRT)
             boundaryConditionsData.exportPeriod(pw, i, modelOptions);
             fluidSourceData.exportPeriod(pw, i, modelOptions);
-            pw.println("-999999 / C13 -- End of data for recharge period " + (i+1));
+            pw.println("-999999 / C19 -- End of data for recharge period " + (i+1));
         }
         pw.println("-999999 / End of input data file");
     }
@@ -489,13 +474,6 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
     public void init(mp2App theApp) {
         super.init(theApp);
 
-        if (vs2App.doHeat() && usage == SOLUTE_TRANSPORT) {
-            usage = ENERGY_TRANSPORT;
-            isChanged = true;
-        } else if (!vs2App.doHeat() && usage == ENERGY_TRANSPORT) {
-            usage = SOLUTE_TRANSPORT;
-            isChanged = true;
-        }
         texturalClassData.init(this);
         evapotranspirationData.init(this);
         rechargePeriodData.init(this);
@@ -544,13 +522,11 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         dlg.basicPanel.title = modelOptions.title;
         dlg.basicPanel.lengthUnit = modelOptions.lengthUnit;
         dlg.basicPanel.timeUnit = modelOptions.timeUnit;
-        if (vs2App.doHeat()) {
-            dlg.basicPanel.energyUnit = modelOptions.energyUnit;
-        } else {
-            dlg.basicPanel.massUnit = modelOptions.massUnit;
-        }
+        dlg.basicPanel.energyUnit = modelOptions.energyUnit;
+        dlg.basicPanel.massUnit = modelOptions.massUnit;
         dlg.basicPanel.useRadialCoord = modelOptions.useRadialCoord;
-        dlg.basicPanel.doTransport = modelOptions.doTransport;
+        dlg.basicPanel.doEnergyTransport = modelOptions.doEnergyTransport;
+        dlg.basicPanel.doSoluteTransport = modelOptions.doSoluteTransport;
         dlg.basicPanel.doEvaporation = modelOptions.doEvaporation;
         dlg.basicPanel.doTranspiration = modelOptions.doTranspiration;
         dlg.basicPanel.radialCoordinatesEnabled = true;
@@ -568,20 +544,26 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         dlg.flowPanel.weightingOption = modelOptions.weightingOption;
         dlg.flowPanel.soilModel = modelOptions.soilModel;
         dlg.flowPanel.initialFlowType = modelOptions.initialFlowType;
+        // transport panel
         dlg.transportPanel.doSpaceCentered = modelOptions.doSpaceCentered;
-        dlg.transportPanel.doTimeCentered = modelOptions.doTimeCentered;
+        dlg.transportPanel.doTimeCentered  = modelOptions.doTimeCentered;
+        if (modelOptions.doSoluteTransport) {
+            // new for Version 1.4
+            dlg.transportPanel.chemFile       = modelOptions.chemFile;
+            dlg.transportPanel.databaseFile   = modelOptions.databaseFile;
+            dlg.transportPanel.prefix         = modelOptions.prefix;
+            dlg.transportPanel.iprntcheOption = modelOptions.iprntcheOption;
+            dlg.transportPanel.ipoutOption    = modelOptions.ipoutOption;
+        }
+        // solver panel
         dlg.solverPanel.hmax = modelOptions.relaxationParameter;
         dlg.solverPanel.minit = modelOptions.minIterationsPerTimeStep;
         dlg.solverPanel.itmax = modelOptions.maxIterationsPerTimeStep;
         dlg.solverPanel.maxStep = modelOptions.maxNumberOfTimeSteps;
         dlg.solverPanel.eps = modelOptions.closureCriterionForHead;
-        if (vs2App.doHeat()) {
-            dlg.solverPanel.eps1 = modelOptions.closureCriterionForTemp;
-            dlg.solverPanel.eps2 = modelOptions.closureCriterionForVelocity;
-        } else {
-            dlg.transportPanel.reactionOption = modelOptions.reactionOption;
-            dlg.solverPanel.eps1 = modelOptions.closureCriterionForConc;
-        }
+        dlg.solverPanel.eps1 = modelOptions.closureCriterionForTemp;
+        dlg.solverPanel.eps2 = modelOptions.closureCriterionForVelocity;
+        dlg.solverPanel.eps3 = modelOptions.closureCriterionForConc;   // eps3 is new for Version 1.4
         dlg.solverPanel.itstop = modelOptions.itstop;
 
         for (int i=0; i<modelOptions.outputTimes.size(); i++) {
@@ -631,58 +613,29 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                             modelOptions.changeInStorage;
         dlg.fluidBalancePanel.fluidBalance =
                             modelOptions.fluidBalance;
-
-        if (vs2App.doHeat()) {
-            dlg.energyBalancePanel.inEnergySpecifiedHead =
-                                modelOptions.inEnergySpecifiedHead;
-            dlg.energyBalancePanel.outEnergySpecifiedHead =
-                                modelOptions.outEnergySpecifiedHead;
-            dlg.energyBalancePanel.inEnergySpecifiedFlux =
-                                modelOptions.inEnergySpecifiedFlux;
-            dlg.energyBalancePanel.outEnergySpecifiedFlux =
-                                modelOptions.outEnergySpecifiedFlux;
-            dlg.energyBalancePanel.inEnergyDispersion =
-                                modelOptions.inEnergyDispersion;
-            dlg.energyBalancePanel.outEnergyDispersion =
-                                modelOptions.outEnergyDispersion;
-            dlg.energyBalancePanel.inEnergyTotal =
-                                modelOptions.inEnergyTotal;
-            dlg.energyBalancePanel.outEnergyTotal =
-                                modelOptions.outEnergyTotal;
-            dlg.energyBalancePanel.outEnergyEvapoTranspiration =
-                                modelOptions.outEnergyEvapoTranspiration;
-            dlg.energyBalancePanel.changeInEnergyStorage =
-                                modelOptions.changeInEnergyStorage;
-            dlg.energyBalancePanel.energyBalance =
-                                modelOptions.energyBalance;
-        } else {
-            dlg.soluteBalancePanel.inSoluteSpecifiedHead =
-                                modelOptions.inSoluteSpecifiedHead;
-            dlg.soluteBalancePanel.outSoluteSpecifiedHead =
-                                modelOptions.outSoluteSpecifiedHead;
-            dlg.soluteBalancePanel.inSoluteSpecifiedFlux =
-                                modelOptions.inSoluteSpecifiedFlux;
-            dlg.soluteBalancePanel.outSoluteSpecifiedFlux =
-                                modelOptions.outSoluteSpecifiedFlux;
-            dlg.soluteBalancePanel.inSoluteDispersion =
-                                modelOptions.inSoluteDispersion;
-            dlg.soluteBalancePanel.outSoluteDispersion =
-                                modelOptions.outSoluteDispersion;
-            dlg.soluteBalancePanel.inSoluteTotal =
-                                modelOptions.inSoluteTotal;
-            dlg.soluteBalancePanel.outSoluteTotal =
-                                modelOptions.outSoluteTotal;
-            dlg.soluteBalancePanel.outSoluteDecay =
-                                modelOptions.outSoluteDecay;
-            dlg.soluteBalancePanel.outSoluteAdsorption =
-                                modelOptions.outSoluteAdsorption;
-            dlg.soluteBalancePanel.outSoluteEvapoTranspiration =
-                                modelOptions.outSoluteEvapoTranspiration;
-            dlg.soluteBalancePanel.changeInSoluteStorage =
-                                modelOptions.changeInSoluteStorage;
-            dlg.soluteBalancePanel.soluteBalance =
-                                modelOptions.soluteBalance;
-        }
+        
+        dlg.balancePanel.inEnergySpecifiedHead =
+                            modelOptions.inEnergySpecifiedHead;
+        dlg.balancePanel.outEnergySpecifiedHead =
+                            modelOptions.outEnergySpecifiedHead;
+        dlg.balancePanel.inEnergySpecifiedFlux =
+                            modelOptions.inEnergySpecifiedFlux;
+        dlg.balancePanel.outEnergySpecifiedFlux =
+                            modelOptions.outEnergySpecifiedFlux;
+        dlg.balancePanel.inEnergyDispersion =
+                            modelOptions.inEnergyDispersion;
+        dlg.balancePanel.outEnergyDispersion =
+                            modelOptions.outEnergyDispersion;
+        dlg.balancePanel.inEnergyTotal =
+                            modelOptions.inEnergyTotal;
+        dlg.balancePanel.outEnergyTotal =
+                            modelOptions.outEnergyTotal;
+        dlg.balancePanel.outEnergyEvapoTranspiration =
+                            modelOptions.outEnergyEvapoTranspiration;
+        dlg.balancePanel.changeInEnergyStorage =
+                            modelOptions.changeInEnergyStorage;
+        dlg.balancePanel.energyBalance =
+                            modelOptions.energyBalance;
 
 
         if (dlg.doModal() == true) {
@@ -697,15 +650,13 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             }
             modelOptions.lengthUnit = dlg.basicPanel.lengthUnit;
             modelOptions.timeUnit = dlg.basicPanel.timeUnit;
-            if (vs2App.doHeat()) {
-                modelOptions.energyUnit = dlg.basicPanel.energyUnit;
-            } else {
-                modelOptions.massUnit = dlg.basicPanel.massUnit;
-            }
+            modelOptions.energyUnit = dlg.basicPanel.energyUnit;
+            modelOptions.massUnit = dlg.basicPanel.massUnit;
             modelOptions.useRadialCoord = dlg.basicPanel.useRadialCoord;
             modelOptions.doEvaporation = dlg.basicPanel.doEvaporation;
             modelOptions.doTranspiration = dlg.basicPanel.doTranspiration;
-            modelOptions.doTransport = dlg.basicPanel.doTransport;
+            modelOptions.doEnergyTransport = dlg.basicPanel.doEnergyTransport;
+            modelOptions.doSoluteTransport = dlg.basicPanel.doSoluteTransport;
 
             modelOptions.weightingOption = dlg.flowPanel.weightingOption;
             modelOptions.soilModel = dlg.flowPanel.soilModel;
@@ -761,74 +712,46 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             modelOptions.changeInStorage = dlg.fluidBalancePanel.changeInStorage;
             modelOptions.fluidBalance = dlg.fluidBalancePanel.fluidBalance;
 
-            if (modelOptions.doTransport) {
-                modelOptions.doSpaceCentered =
-                            dlg.transportPanel.doSpaceCentered;
-                modelOptions.doTimeCentered =
-                            dlg.transportPanel.doTimeCentered;
-                if (vs2App.doHeat()) {
-                    modelOptions.closureCriterionForTemp =
-                                            dlg.solverPanel.eps1;
-                    modelOptions.closureCriterionForVelocity =
-                                            dlg.solverPanel.eps2;
-                } else {
-                    modelOptions.reactionOption =
-                               dlg.transportPanel.reactionOption;
-                    modelOptions.closureCriterionForConc =
-                                             dlg.solverPanel.eps1;
+            if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
+                modelOptions.doSpaceCentered             = dlg.transportPanel.doSpaceCentered;
+                modelOptions.doTimeCentered              = dlg.transportPanel.doTimeCentered;
+                if (modelOptions.doEnergyTransport) {
+                    modelOptions.closureCriterionForTemp     = dlg.solverPanel.eps1;
+                    modelOptions.closureCriterionForVelocity = dlg.solverPanel.eps2;
                 }
+                if (modelOptions.doSoluteTransport) {
+                    modelOptions.chemFile                    = dlg.transportPanel.chemFile;
+                    modelOptions.databaseFile                = dlg.transportPanel.databaseFile;
+                    modelOptions.prefix                      = dlg.transportPanel.prefix;
+                    modelOptions.iprntcheOption              = dlg.transportPanel.iprntcheOption;
+                    modelOptions.ipoutOption                 = dlg.transportPanel.ipoutOption;
+                    
+                    modelOptions.closureCriterionForConc     = dlg.solverPanel.eps3;
+                }
+                
 
-                if (vs2App.doHeat()) {
-                    modelOptions.inEnergySpecifiedHead =
-                                dlg.energyBalancePanel.inEnergySpecifiedHead;
-                    modelOptions.outEnergySpecifiedHead =
-                                dlg.energyBalancePanel.outEnergySpecifiedHead;
-                    modelOptions.inEnergySpecifiedFlux =
-                                dlg.energyBalancePanel.inEnergySpecifiedFlux;
-                    modelOptions.outEnergySpecifiedFlux =
-                                dlg.energyBalancePanel.outEnergySpecifiedFlux;
-                    modelOptions.inEnergyDispersion =
-                                dlg.energyBalancePanel.inEnergyDispersion;
-                    modelOptions.outEnergyDispersion =
-                                dlg.energyBalancePanel.outEnergyDispersion;
-                    modelOptions.inEnergyTotal =
-                                dlg.energyBalancePanel.inEnergyTotal;
-                    modelOptions.outEnergyTotal =
-                                dlg.energyBalancePanel.outEnergyTotal;
-                    modelOptions.outEnergyEvapoTranspiration =
-                                dlg.energyBalancePanel.outEnergyEvapoTranspiration;
-                    modelOptions.changeInEnergyStorage =
-                                dlg.energyBalancePanel.changeInEnergyStorage;
-                    modelOptions.energyBalance =
-                                dlg.energyBalancePanel.energyBalance;
-                } else {
-                    modelOptions.inSoluteSpecifiedHead =
-                                dlg.soluteBalancePanel.inSoluteSpecifiedHead;
-                    modelOptions.outSoluteSpecifiedHead =
-                                dlg.soluteBalancePanel.outSoluteSpecifiedHead;
-                    modelOptions.inSoluteSpecifiedFlux =
-                                dlg.soluteBalancePanel.inSoluteSpecifiedFlux;
-                    modelOptions.outSoluteSpecifiedFlux =
-                                dlg.soluteBalancePanel.outSoluteSpecifiedFlux;
-                    modelOptions.inSoluteDispersion =
-                                dlg.soluteBalancePanel.inSoluteDispersion;
-                    modelOptions.outSoluteDispersion =
-                                dlg.soluteBalancePanel.outSoluteDispersion;
-                    modelOptions.inSoluteTotal =
-                                dlg.soluteBalancePanel.inSoluteTotal;
-                    modelOptions.outSoluteTotal =
-                                dlg.soluteBalancePanel.outSoluteTotal;
-                    modelOptions.outSoluteDecay =
-                                dlg.soluteBalancePanel.outSoluteDecay;
-                    modelOptions.outSoluteAdsorption =
-                                dlg.soluteBalancePanel.outSoluteAdsorption;
-                    modelOptions.outSoluteEvapoTranspiration =
-                                dlg.soluteBalancePanel.outSoluteEvapoTranspiration;
-                    modelOptions.changeInSoluteStorage =
-                                dlg.soluteBalancePanel.changeInSoluteStorage;
-                    modelOptions.soluteBalance =
-                                dlg.soluteBalancePanel.soluteBalance;
-                }
+                modelOptions.inEnergySpecifiedHead =
+                            dlg.balancePanel.inEnergySpecifiedHead;
+                modelOptions.outEnergySpecifiedHead =
+                            dlg.balancePanel.outEnergySpecifiedHead;
+                modelOptions.inEnergySpecifiedFlux =
+                            dlg.balancePanel.inEnergySpecifiedFlux;
+                modelOptions.outEnergySpecifiedFlux =
+                            dlg.balancePanel.outEnergySpecifiedFlux;
+                modelOptions.inEnergyDispersion =
+                            dlg.balancePanel.inEnergyDispersion;
+                modelOptions.outEnergyDispersion =
+                            dlg.balancePanel.outEnergyDispersion;
+                modelOptions.inEnergyTotal =
+                            dlg.balancePanel.inEnergyTotal;
+                modelOptions.outEnergyTotal =
+                            dlg.balancePanel.outEnergyTotal;
+                modelOptions.outEnergyEvapoTranspiration =
+                            dlg.balancePanel.outEnergyEvapoTranspiration;
+                modelOptions.changeInEnergyStorage =
+                            dlg.balancePanel.changeInEnergyStorage;
+                modelOptions.energyBalance =
+                            dlg.balancePanel.energyBalance;
             }
 
             vs2FrameManager frameManager =
@@ -885,8 +808,8 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             return initialPressureHead;
         case INITIAL_MOISTURE_CONTENT:
             return initialMoistureContent;
-        case INITIAL_TRANSPORT:
-            return (vs2App.doHeat() ? initialTemperatureData : initialConcentrationData);
+        case INITIAL_TEMPERATURE:
+            return initialTemperatureData;
         case BOUNDARY_CONDITIONS:
             return boundaryConditionsData;
         case FLUID_SOURCE:
@@ -950,17 +873,10 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             break;
         }
 
-        if (modelOptions.doTransport) {
-            if (vs2App.doHeat()) {
-                if (initialTemperatureData.getNumberOfShapes() == 0) {
-                    missingData.addElement("Initial temperature");
-                    isReady = false;
-                }
-            } else {
-                if (initialConcentrationData.getNumberOfShapes() == 0) {
-                    missingData.addElement("Initial concentration");
-                    isReady = false;
-                }
+        if (modelOptions.doEnergyTransport) {
+            if (initialTemperatureData.getNumberOfShapes() == 0) {
+                missingData.addElement("Initial temperature");
+                isReady = false;
             }
         }
 
@@ -1030,5 +946,41 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
 
         // for all other cases, return false.
         return false;
+    }
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // unserialize default
+        in.defaultReadObject();
+        
+        // temporary hack TODO (also see convertToCurrentVersion
+        if (this.serializedVersion.startsWith("1.4")) {
+            this.usage = SOLUTE_AND_ENERGY_TRANSPORT;
+        }
+        
+        // temporary hack TODO (also see convertToCurrentVersion
+        Vector vec = this.texturalClassData.getData();
+        for (int r = 0; r < vec.size(); ++r) {
+            Object newrow[] = this.texturalClassData.createDefaultRow();
+            if (((Object[])vec.get(r)).length != newrow.length) {
+                for (int c = 0; c < ((Object[])vec.get(r)).length; ++c) {
+                    newrow[c] = ((Object[])vec.get(r))[c];                
+                }
+                vec.setElementAt(newrow, r);
+            }
+        }
+    }
+    
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        // Can't use assert here (the file will get corrupted)
+        if (this.usage != SOLUTE_AND_ENERGY_TRANSPORT) {
+            // display only if assert is enabled (-ea)
+            boolean assertsEnabled = false;
+            assert assertsEnabled = true; // Intentional side-effect
+            if (assertsEnabled) {
+                javax.swing.JOptionPane.showMessageDialog(null, 
+                        "this.usage != SOLUTE_AND_ENERGY_TRANSPORT");                
+            }
+        }
+        out.defaultWriteObject();
     }
 }

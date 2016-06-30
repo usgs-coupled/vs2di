@@ -31,22 +31,40 @@ public class vs2FluidSourceView extends mp2SourceView
         vs2SourceStrengthData tableData = new vs2SourceStrengthData();
         Object [] customArray = new Object[4];
         customArray[0] = tableData;
-        if (modelOptions.doTransport) {
-            int [] columnMask = new int [5];
-            columnMask[0] = 0;
-            columnMask[1] = 1;
-            columnMask[2] = 2;
-            if (vs2App.doHeat()) {
+//        if (modelOptions.doTransport) {
+        if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
+            if (modelOptions.doEnergyTransport && modelOptions.doSoluteTransport) {
+                // energy and solute transport
+                int [] columnMask = new int [7];
+                columnMask[0] = 0;
+                columnMask[1] = 1;
+                columnMask[2] = 2;
                 columnMask[3] = 5;
                 columnMask[4] = 6;
-                customArray[1] = "Temp.";
+                columnMask[5] = 3;
+                columnMask[6] = 4;
+                customArray[1] = "Both";
+                customArray[2] = columnMask;
             } else {
-                columnMask[3] = 3;
-                columnMask[4] = 4;
-                customArray[1] = "Conc.";
+                // energy or solute transport
+                assert(modelOptions.doEnergyTransport ^ modelOptions.doSoluteTransport);
+                int [] columnMask = new int [5];
+                columnMask[0] = 0;
+                columnMask[1] = 1;
+                columnMask[2] = 2;
+                if (modelOptions.doEnergyTransport) {
+                    columnMask[3] = 5;
+                    columnMask[4] = 6;
+                    customArray[1] = "Temp.";
+                } else {
+                    columnMask[3] = 3;
+                    columnMask[4] = 4;
+                    customArray[1] = "Conc.";
+                }
+                customArray[2] = columnMask;
             }
-            customArray[2] = columnMask;
         } else {
+            // no transport
             int [] columnMask = new int [3];
             columnMask[0] = 0;
             columnMask[1] = 1;

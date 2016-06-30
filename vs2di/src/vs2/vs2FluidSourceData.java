@@ -51,21 +51,25 @@ public class vs2FluidSourceData extends mp2SourceData
                 // boundary cells are counted).
                 flowValue += yCoord[0];
             }
-            pw.print((row+2) + " " + (col+2) + " " + flowType + " " + (float) flowValue);
-            if (modelOptions.doTransport) {
-                if (vs2App.doHeat()) {
+            if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
+                pw.println((row+2) + " " + (col+2) + " " + flowType + " " + (float) flowValue + "    /C11 -- JJ, NN, NTX, PFDUM");
+                if (modelOptions.doEnergyTransport) {
                     transportType = ((Integer) aRow[5]).intValue();
                     transportValue = ((Double) aRow[6]).doubleValue();
                     if (transportType == DIFFUSIVE_FLUX_BC) {
                         transportValue /= (xCoord[col+1] - xCoord[col]);
                     }
-                } else {
-                    transportType = ((Integer) aRow[3]).intValue();
-                    transportValue = ((Double) aRow[4]).doubleValue();
+                    pw.println(transportType + " " + (float) transportValue + "    /C12 -- NTT, TF");
                 }
-                pw.print(" " + transportType + " " + (float) transportValue); // NTC, CF
+                if (modelOptions.doSoluteTransport) {
+                    transportType = ((Integer) aRow[3]).intValue();
+                    int solnum = ((Integer) aRow[4]).intValue();
+                    pw.println(transportType + " " + solnum + " -1 1.    /C13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                }
+            } else {
+                pw.println((row+2) + " " + (col+2) + " " + flowType + " " + (float) flowValue + "    /C14 -- JJ, NN, NTX, PFDUM");
             }
-            pw.println();
+
         }
         
     }

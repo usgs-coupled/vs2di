@@ -952,22 +952,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // unserialize default
         in.defaultReadObject();
         
-        // temporary hack TODO (also see convertToCurrentVersion
-        if (this.serializedVersion.startsWith("1.4")) {
-            this.usage = SOLUTE_AND_ENERGY_TRANSPORT;
-        }
-        
-        // temporary hack TODO (also see convertToCurrentVersion
-        Vector vec = this.texturalClassData.getData();
-        for (int r = 0; r < vec.size(); ++r) {
-            Object newrow[] = this.texturalClassData.createDefaultRow();
-            if (((Object[])vec.get(r)).length != newrow.length) {
-                for (int c = 0; c < ((Object[])vec.get(r)).length; ++c) {
-                    newrow[c] = ((Object[])vec.get(r))[c];                
-                }
-                vec.setElementAt(newrow, r);
-            }
-        }
+        // see revision 11409 for overrides
     }
     
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {

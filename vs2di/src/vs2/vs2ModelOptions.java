@@ -20,7 +20,9 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     public String massUnit;
     public String energyUnit;
     public boolean useRadialCoord;
-    public boolean doTransport;
+    public boolean doTransport;        // converted to do[Solute/Energy]Transport since 1.4
+    public boolean doEnergyTransport;  // new in Version 1.4
+    public boolean doSoluteTransport;  // new in Version 1.4
     public boolean doEvaporation;
     public boolean doTranspiration;
 
@@ -32,7 +34,12 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     // transport options
     public boolean doSpaceCentered;
     public boolean doTimeCentered;
-    public int reactionOption;
+    public int reactionOption;         // not used in Version 1.4    
+    public String chemFile;            // new in Version 1.4
+    public String databaseFile;        // new in Version 1.4
+    public String prefix;              // new in Version 1.4
+    public int iprntcheOption;         // new in Version 1.4
+    public int ipoutOption;            // new in Version 1.4    
 
     // solver options
     public double relaxationParameter;
@@ -71,21 +78,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     public boolean changeInStorage;
     public boolean fluidBalance;
 
-    // solute balance options
-    public boolean inSoluteSpecifiedHead;
-    public boolean outSoluteSpecifiedHead;
-    public boolean inSoluteSpecifiedFlux;
-    public boolean outSoluteSpecifiedFlux;
-    public boolean inSoluteDispersion;
-    public boolean outSoluteDispersion;
-    public boolean inSoluteTotal;
-    public boolean outSoluteTotal;
-    public boolean outSoluteEvapoTranspiration;
-    public boolean outSoluteDecay;
-    public boolean outSoluteAdsorption;
-    public boolean changeInSoluteStorage;
-    public boolean soluteBalance;
-    
     // energy balance options
     public boolean inEnergySpecifiedHead;
     public boolean outEnergySpecifiedHead;
@@ -116,6 +108,9 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
 
         useRadialCoord = false;
         doTransport = true;
+        doSoluteTransport = true;  // new in Version 1.4
+        doEnergyTransport = true;  // new in Version 1.4
+        
         doEvaporation = false;
         doTranspiration = false;
 
@@ -126,8 +121,13 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
 
         // Default values for transport options
         doSpaceCentered = true;
-        doTimeCentered = true;
-        reactionOption = N0_ADSORPTION_NO_ION_EXCHANGE;
+        doTimeCentered  = true;
+        reactionOption  = N0_ADSORPTION_NO_ION_EXCHANGE; // no longer used in Version 1.4
+        chemFile        = "input.pqi";                   // new in Version 1.4
+        databaseFile    = "phreeqc.dat";                 // new in Version 1.4
+        prefix          = "pre";                         // new in Version 1.4
+        iprntcheOption  = IPRNTCHE_NO_PHREEQC_OUTPUT;    // new in Version 1.4
+        ipoutOption     = IPOUT_NO_PHREEQC_OUTPUT;       // new in Version 1.4
 
         // Default values for solver options
         relaxationParameter = 0.7;
@@ -167,21 +167,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         changeInStorage = false;
         fluidBalance = false;
 
-        // solute balance options
-        inSoluteSpecifiedHead = false;
-        outSoluteSpecifiedHead = false;
-        inSoluteSpecifiedFlux = false;
-        outSoluteSpecifiedFlux = false;
-        inSoluteDispersion = false;
-        outSoluteDispersion = false;
-        inSoluteTotal = false;
-        outSoluteTotal = false;
-        outSoluteEvapoTranspiration = false;
-        outSoluteDecay = false;
-        outSoluteAdsorption = false;
-        changeInSoluteStorage = false;
-        soluteBalance = false;
-
         // energy balance options -- new in Version 1.1
         inEnergySpecifiedHead = false;
         outEnergySpecifiedHead = false;
@@ -205,6 +190,15 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         }
         if (energyUnit == null) {
             energyUnit = "J   ";
+        }
+        if (chemFile == null) {
+            chemFile = "input.pqi";
+        }
+        if (databaseFile == null) {
+            databaseFile = "phreeqc.dat";
+        }
+        if (prefix == null) {
+            prefix = "pre";
         }
     }
 
@@ -252,39 +246,21 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         if (changeInStorage) {n++;}
         if (fluidBalance) {n++;}
 
-        if (!doTransport) {
+        if (!(doEnergyTransport || doSoluteTransport)) {
             return 3*n;
         }
 
-        if (vs2App.doHeat()) {
-            // energy balance options
-            if (inEnergySpecifiedHead) {n++;}
-            if (outEnergySpecifiedHead) {n++;}
-            if (inEnergySpecifiedFlux) {n++;}
-            if (outEnergySpecifiedFlux) {n++;}
-            if (inEnergyDispersion) {n++;}
-            if (outEnergyDispersion) {n++;}
-            if (inEnergyTotal) {n++;}
-            if (outEnergyTotal) {n++;}
-            if (outEnergyEvapoTranspiration) {n++;}
-            if (changeInEnergyStorage) {n++;}
-            if (energyBalance) {n++;}
-        } else {
-            // solute balance options
-            if (inSoluteSpecifiedHead) {n++;}
-            if (outSoluteSpecifiedHead) {n++;}
-            if (inSoluteSpecifiedFlux) {n++;}
-            if (outSoluteSpecifiedFlux) {n++;}
-            if (inSoluteDispersion) {n++;}
-            if (outSoluteDispersion) {n++;}
-            if (inSoluteTotal) {n++;}
-            if (outSoluteTotal) {n++;}
-            if (outSoluteEvapoTranspiration) {n++;}
-            if (outSoluteDecay) {n++;}
-            if (outSoluteAdsorption) {n++;}
-            if (changeInSoluteStorage) {n++;}
-            if (soluteBalance) {n++;}
-        }
+        if (inEnergySpecifiedHead) {n++;}
+        if (outEnergySpecifiedHead) {n++;}
+        if (inEnergySpecifiedFlux) {n++;}
+        if (outEnergySpecifiedFlux) {n++;}
+        if (inEnergyDispersion) {n++;}
+        if (outEnergyDispersion) {n++;}
+        if (inEnergyTotal) {n++;}
+        if (outEnergyTotal) {n++;}
+        if (outEnergyEvapoTranspiration) {n++;}
+        if (changeInEnergyStorage) {n++;}
+        if (energyBalance) {n++;}        
 
         return 3*n;
     }
@@ -305,37 +281,21 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         if (changeInStorage) {line.append("28 29 30 ");}
         if (fluidBalance) {line.append("31 32 33 ");}
 
-        if (!doTransport) {
+        if (!(doEnergyTransport || doSoluteTransport)) {
             return line.toString();
         }
 
-        if (vs2App.doHeat()) {
-            if (inEnergySpecifiedHead) {line.append("34 35 36 ");}
-            if (outEnergySpecifiedHead) {line.append("37 38 39 ");}
-            if (inEnergySpecifiedFlux) {line.append("40 41 42 ");}
-            if (outEnergySpecifiedFlux) {line.append("43 44 45 ");}
-            if (inEnergyDispersion) {line.append("46 47 48 ");}
-            if (outEnergyDispersion) {line.append("49 50 51 ");}
-            if (inEnergyTotal) {line.append("52 53 54 ");}
-            if (outEnergyTotal) {line.append("55 56 57 ");}
-            if (outEnergyEvapoTranspiration) {line.append("58 59 60 ");}
-            if (changeInEnergyStorage) {line.append("67 68 69 ");}
-            if (energyBalance) {line.append("70 71 72 ");}
-        } else {
-            if (inSoluteSpecifiedHead) {line.append("34 35 36 ");}
-            if (outSoluteSpecifiedHead) {line.append("37 38 39 ");}
-            if (inSoluteSpecifiedFlux) {line.append("40 41 42 ");}
-            if (outSoluteSpecifiedFlux) {line.append("43 44 45 ");}
-            if (inSoluteDispersion) {line.append("46 47 48 ");}
-            if (outSoluteDispersion) {line.append("49 50 51 ");}
-            if (inSoluteTotal) {line.append("52 53 54 ");}
-            if (outSoluteTotal) {line.append("55 56 57 ");}
-            if (outSoluteEvapoTranspiration) {line.append("58 59 60 ");}
-            if (outSoluteDecay) {line.append("61 62 63 ");}
-            if (outSoluteAdsorption) {line.append("64 65 66 ");}
-            if (changeInSoluteStorage) {line.append("67 68 69 ");}
-            if (soluteBalance) {line.append("70 71 72 ");}
-        }
+        if (inEnergySpecifiedHead) {line.append("34 35 36 ");}
+        if (outEnergySpecifiedHead) {line.append("37 38 39 ");}
+        if (inEnergySpecifiedFlux) {line.append("40 41 42 ");}
+        if (outEnergySpecifiedFlux) {line.append("43 44 45 ");}
+        if (inEnergyDispersion) {line.append("46 47 48 ");}
+        if (outEnergyDispersion) {line.append("49 50 51 ");}
+        if (inEnergyTotal) {line.append("52 53 54 ");}
+        if (outEnergyTotal) {line.append("55 56 57 ");}
+        if (outEnergyEvapoTranspiration) {line.append("58 59 60 ");}
+        if (changeInEnergyStorage) {line.append("67 68 69 ");}
+        if (energyBalance) {line.append("70 71 72 ");}
 
         return line.toString();
     }

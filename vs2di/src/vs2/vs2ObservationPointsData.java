@@ -21,14 +21,14 @@ public class vs2ObservationPointsData extends mp2ObservationPointsData
             return;
         }
 
-        // Card A-15
+        // Card A-24
         int nobs = observationCellIndices.size();
         if (!outputToAuxFilesEveryTimeStep) {
             pw.print("-");
         }
-        pw.println(nobs + "     /A15 -- NOBS. A16 begines next line: J, N");
+        pw.println(nobs + "     /A24 -- NOBS. A25 begins next line: J, N");
 
-        // Card A-16
+        // Card A-25
         int i, index, row, col;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numCol = rectGridData.getXCoords().length - 1;

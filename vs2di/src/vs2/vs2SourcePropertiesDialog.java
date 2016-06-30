@@ -13,9 +13,11 @@ import javax.swing.event.*;
 public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants {
 
     protected JComboBox sourceChooser;
-    protected JComboBox propertyChooser;
+    protected JComboBox energyPropertyChooser;
+    protected JComboBox solutePropertyChooser;
     protected JTextField strengthTextField;
-    protected JTextField valueTextField;
+    protected JTextField energyValueTextField;
+    protected JTextField soluteValueTextField;
     protected JButton updateButton;
     protected mp2TableData tableData;
     protected mp2TableModel tableModel;
@@ -29,13 +31,7 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
 	    mp2JavaHelp.hb.enableHelpOnButton(helpButton, "sourceStrength", null);
         tableData = (mp2TableData) customArray[0];
         transport = (String) customArray[1];
-        if (transport != null) {
-            if (transport.equalsIgnoreCase("Temp.")) {
-                diffusiveTransport = "Conductive heat flow (H)";
-            } else {
-                diffusiveTransport = "Diffusive mass flow (M)";
-            }
-        }
+        diffusiveTransport = "Conductive heat flow (H)";
         if (customArray.length > 3) {
             columnMask = (int []) customArray[2];
         }
@@ -59,7 +55,7 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
             tableModel.setColumnMask(columnMask);
         }
         mp2TablePanel tablePanel = new mp2TablePanel(tableModel, true);
-        tablePanel.setPreferredSize(new Dimension(100, 200));
+        tablePanel.setPreferredSize(new Dimension(400, 200));
         table = tablePanel.getTable();
         table.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
@@ -86,19 +82,23 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         });
 
         
-        propertyChooser = new JComboBox();
+        energyPropertyChooser = new JComboBox();
+        solutePropertyChooser = new JComboBox();
         if (usage != null) {
-            propertyChooser.addItem("Please select");
-            if (usage.equalsIgnoreCase("Temp.")) {
-                propertyChooser.addItem("Temperature of inflow (Ti)");
-                propertyChooser.addItem("Temperature at source (T)");
-            } else {
-                propertyChooser.addItem("Concentration of inflow (Ci)");
-                propertyChooser.addItem("Concentration at source (C)");
+            if (usage.compareToIgnoreCase("Both") == 0 || usage.compareToIgnoreCase("Temp.") == 0) {
+                energyPropertyChooser.addItem("Please select");
+                energyPropertyChooser.addItem("Temperature of inflow (Ti)");
+                energyPropertyChooser.addItem("Temperature at source (T)");
+            }
+            if (usage.compareToIgnoreCase("Both") == 0 || usage.compareToIgnoreCase("Conc.") == 0) {
+                solutePropertyChooser.addItem("Please select");
+                solutePropertyChooser.addItem("Solution no. of inflow (Si)");
+                solutePropertyChooser.addItem("Solution no. at source (S)");
             }
         }
         strengthTextField = new JTextField(6);
-        valueTextField = new JTextField(6);
+        energyValueTextField = new JTextField(6);
+        soluteValueTextField = new JTextField(6);
         updateButton = new JButton("Update");
         updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,17 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         gridbag.setConstraints(subPanel, c);
         subPanel.add(sourceChooser);
         if (usage != null) {
-            subPanel.add(propertyChooser);
+            if (usage.compareToIgnoreCase("Temp.") == 0) {
+                subPanel.add(energyPropertyChooser);                
+            }
+            else if (usage.compareToIgnoreCase("Conc.") == 0) {
+                subPanel.add(solutePropertyChooser);                                
+            }
+            else {
+                assert(usage.compareToIgnoreCase("Both") == 0);
+                subPanel.add(energyPropertyChooser);                
+                subPanel.add(solutePropertyChooser);                                
+            }
         }
         
         subPanel = new JPanel(new GridLayout(0, 1, 0, 10));
@@ -132,7 +142,17 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         gridbag.setConstraints(subPanel, c);
         subPanel.add(new JLabel("="));
         if (usage != null) {
-            subPanel.add(new JLabel("="));
+            if (usage.compareToIgnoreCase("Temp.") == 0) {
+                subPanel.add(new JLabel("="));
+            }
+            else if (usage.compareToIgnoreCase("Conc.") == 0) {
+                subPanel.add(new JLabel("="));
+            }
+            else {
+                assert(usage.compareToIgnoreCase("Both") == 0);
+                subPanel.add(new JLabel("="));
+                subPanel.add(new JLabel("="));
+            }
         }
         
         subPanel = new JPanel(new GridLayout(0, 1, 0, 10));
@@ -142,7 +162,17 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         gridbag.setConstraints(subPanel, c);
         subPanel.add(strengthTextField);
         if (usage != null) {
-            subPanel.add(valueTextField);
+            if (usage.compareToIgnoreCase("Temp.") == 0) {
+                subPanel.add(energyValueTextField);
+            }
+            else if (usage.compareToIgnoreCase("Conc.") == 0) {
+                subPanel.add(soluteValueTextField);
+            }
+            else {
+                assert(usage.compareToIgnoreCase("Both") == 0);
+                subPanel.add(energyValueTextField);
+                subPanel.add(soluteValueTextField);
+            }
         }
         
         controlPanel.add(updateButton);
@@ -153,7 +183,7 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
 
         pack();
     }
-    
+
     public boolean doModal() {
         if (tableData.getNumberOfRows() > 0) {
             table.setRowSelectionInterval(0, 0);
@@ -172,7 +202,8 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         int type = NORMAL_FLUID_FLUX_BC; 
         int prop = DEFAULT_CONC_BC;
         double strength = 0;
-        double value = 0;
+        double energyValue = 0;
+        int soluteValue = 0;
         switch (sourceChooser.getSelectedIndex()) {
         case 1:
             type = NORMAL_FLUID_FLUX_BC;
@@ -195,29 +226,52 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
             return;
         }
         if (transport != null) {
-            switch (propertyChooser.getSelectedIndex()) {
-            case 1:
-                prop = DEFAULT_CONC_BC;
-                break;
-            case 2:
-                prop = SPECIFIED_CONC_BC;
-                break;
-            case 3:
-                prop = DIFFUSIVE_FLUX_BC;
-                break;
-            default:
-                mp2MessageBox.showMessageDialog("Please select the transport variable.", "Input Error");
-                return;
+            // energy transport
+            if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {            
+                switch (energyPropertyChooser.getSelectedIndex()) {
+                case 1:
+                    prop = DEFAULT_CONC_BC;
+                    break;
+                case 2:
+                    prop = SPECIFIED_CONC_BC;
+                    break;
+                case 3:
+                    prop = DIFFUSIVE_FLUX_BC;
+                    break;
+                default:
+                    mp2MessageBox.showMessageDialog("Please select the transport variable.", "Input Error");
+                    return;
+                }
+                try {
+                    energyValue = Double.valueOf(energyValueTextField.getText()).doubleValue();
+                } catch (NumberFormatException e) {
+                    mp2MessageBox.showMessageDialog("Please check your input", "Input Error");
+                    return;
+                }
+                if (prop==DIFFUSIVE_FLUX_BC && strength!=0) {
+                    mp2MessageBox.showMessageDialog("Conductive heat flow is allowed only if fluid flow rate is zero.", "Error");
+                    return;
+                }
             }
-            try {
-                value = Double.valueOf(valueTextField.getText()).doubleValue();
-            } catch (NumberFormatException e) {
-                mp2MessageBox.showMessageDialog("Please check your input", "Input Error");
-                return;
-            }
-            if (prop==DIFFUSIVE_FLUX_BC && strength!=0) {
-                mp2MessageBox.showMessageDialog("Conductive heat flow is allowed only if fluid flow rate is zero.", "Error");
-                return;
+            // solute transport
+            if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {            
+                switch (solutePropertyChooser.getSelectedIndex()) {
+                case 1:
+                    prop = DEFAULT_CONC_BC;
+                    break;
+                case 2:
+                    prop = SPECIFIED_CONC_BC;
+                    break;
+                default:
+                    mp2MessageBox.showMessageDialog("Please select the transport variable.", "Input Error");
+                    return;
+                }
+                try {
+                    soluteValue = Integer.valueOf(soluteValueTextField.getText()).intValue();
+                } catch (NumberFormatException e) {
+                    mp2MessageBox.showMessageDialog("Please check your input", "Input Error");
+                    return;
+                }
             }
         }
                 
@@ -227,8 +281,16 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
             aRow[1] = new Integer(type);
             aRow[2] = new Double(strength);
             if (transport != null) {
-                aRow[columnMask[3]] = new Integer(prop);
-                aRow[columnMask[4]] = new Double(value);
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {
+                    // energy
+                    aRow[5] = new Integer(prop);
+                    aRow[6] = new Double(energyValue);
+                }
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {
+                    // solute
+                    aRow[3] = new Integer(prop);
+                    aRow[4] = new Integer(soluteValue);
+                }
             }
         }
         tableModel.notifyDataChanged();
@@ -275,39 +337,79 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
             }
         }
         strengthTextField.setText(s);
-        if (transport != null) {
-            int prop = ((Integer) firstSelectedRow[columnMask[3]]).intValue();
+        
+        if (transport == null) return;
+        
+        // energy transport
+        if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {
+            // temp type
+            int prop = ((Integer) firstSelectedRow[5]).intValue();
             for (int i=1; i<r.length; i++) {
                 Object [] aRow = tableData.getRow(r[i]);
-                if (((Integer) aRow[columnMask[3]]).intValue() != prop) {
+                if (((Integer) aRow[5]).intValue() != prop) {
                     prop = -1;
                     break;
                 }
             }
             switch (prop) {
             case DEFAULT_CONC_BC:
-                propertyChooser.setSelectedIndex(1);
+                energyPropertyChooser.setSelectedIndex(1);
                 break;
             case SPECIFIED_CONC_BC:
-                propertyChooser.setSelectedIndex(2);
+                energyPropertyChooser.setSelectedIndex(2);
                 break;
             case DIFFUSIVE_FLUX_BC:
-                propertyChooser.setSelectedIndex(3);
+                energyPropertyChooser.setSelectedIndex(3);
                 break;
             default:
-                propertyChooser.setSelectedIndex(0);
+                energyPropertyChooser.setSelectedIndex(0);
                 break;
-            }
-            double value = ((Double) firstSelectedRow[columnMask[4]]).doubleValue();
+            } 
+            // temp value
+            double value = ((Double) firstSelectedRow[6]).doubleValue();
             s = String.valueOf(value);
             for (int i=1; i<r.length; i++) {
                 Object [] aRow = tableData.getRow(r[i]);
-                if (((Double) aRow[columnMask[4]]).doubleValue() != value) {
+                if (((Double) aRow[6]).doubleValue() != value) {
                     s = "";
                     break;
                 }
             }
-            valueTextField.setText(s);
+            energyValueTextField.setText(s);
+        }
+
+        // solute transport
+        if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {
+            // solute type
+            int prop = ((Integer) firstSelectedRow[3]).intValue();
+            for (int i=1; i<r.length; i++) {
+                Object [] aRow = tableData.getRow(r[i]);
+                if (((Integer) aRow[3]).intValue() != prop) {
+                    prop = -1;
+                    break;
+                }
+            }
+            switch (prop) {
+            case DEFAULT_CONC_BC:
+                solutePropertyChooser.setSelectedIndex(1);
+                break;
+            case SPECIFIED_CONC_BC:
+                solutePropertyChooser.setSelectedIndex(2);
+                break;
+            default:
+                solutePropertyChooser.setSelectedIndex(0);
+                break;
+            }
+            int value = ((Integer) firstSelectedRow[4]).intValue();
+            s = String.valueOf(value);
+            for (int i=1; i<r.length; i++) {
+                Object [] aRow = tableData.getRow(r[i]);
+                if (((Integer) aRow[4]).intValue() != value) {
+                    s = "";
+                    break;
+                }
+            }
+            soluteValueTextField.setText(s);
         }
     }
     
@@ -318,21 +420,21 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
 
     protected void onSelectedFlowType() {
             String strFlowType = (String) sourceChooser.getSelectedItem();
-            int propChooserItemCount = propertyChooser.getItemCount();
-            int propIndex = propertyChooser.getSelectedIndex();
+            int energyPropChooserItemCount = energyPropertyChooser.getItemCount();
+            int energyPropIndex = energyPropertyChooser.getSelectedIndex();
             if (strFlowType.equalsIgnoreCase("Flow rate")) {
-                if (propChooserItemCount == 3) {
-                    propertyChooser.addItem(diffusiveTransport);
+                if (energyPropChooserItemCount == 3) {
+                    energyPropertyChooser.addItem(diffusiveTransport);
                 }
-                propertyChooser.setSelectedIndex(propIndex);
+                energyPropertyChooser.setSelectedIndex(energyPropIndex);
             } else {
-                if (propChooserItemCount == 4) {
-                    propertyChooser.removeItem(diffusiveTransport);
+                if (energyPropChooserItemCount == 4) {
+                    energyPropertyChooser.removeItem(diffusiveTransport);
                 }
-                if (propIndex == 3) {
-                    propertyChooser.setSelectedIndex(0);
+                if (energyPropIndex == 3) {
+                    energyPropertyChooser.setSelectedIndex(0);
                 } else {
-                    propertyChooser.setSelectedIndex(propIndex);
+                    energyPropertyChooser.setSelectedIndex(energyPropIndex);
                 }
             }
     }
@@ -345,9 +447,11 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         }
         boolean updated = true;
         int type = -1;
-        int prop = -1;
+        int energyProp = -1;
+        int soluteProp = -1;
         double strength = 0;
-        double value = 0;
+        double energyValue = 0;
+        int soluteValue = 0;
         switch(sourceChooser.getSelectedIndex()) {
         case 0:
             return true;    // if not selected, assume no need to update
@@ -363,24 +467,47 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
         
         }
         if (transport != null) {
-            switch (propertyChooser.getSelectedIndex()) {
-            case 0:
-                return true;    // if not selected, assume no need to update
-            case 1:
-                prop = DEFAULT_CONC_BC;
-                break;
-            case 2:
-                prop = SPECIFIED_CONC_BC;
-                break;
-            case 3:
-                prop = DIFFUSIVE_FLUX_BC;
-                break;
+            if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {
+                switch (energyPropertyChooser.getSelectedIndex()) {
+                case 0:
+                    return true;    // if not selected, assume no need to update
+                case 1:
+                    energyProp = DEFAULT_CONC_BC;
+                    break;
+                case 2:
+                    energyProp = SPECIFIED_CONC_BC;
+                    break;
+                case 3:
+                    energyProp = DIFFUSIVE_FLUX_BC;
+                    break;
+                }
+            }
+            if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {
+                switch (solutePropertyChooser.getSelectedIndex()) {
+                case 0:
+                    return true;    // if not selected, assume no need to update
+                case 1:
+                    energyProp = DEFAULT_CONC_BC;
+                    break;
+                case 2:
+                    energyProp = SPECIFIED_CONC_BC;
+                    break;
+                case 3:
+                    assert(false);
+                    energyProp = DIFFUSIVE_FLUX_BC;
+                    break;
+                }
             }
         }
         try {
             strength = Double.valueOf(strengthTextField.getText()).doubleValue();
             if (transport != null) {
-                value = Double.valueOf(valueTextField.getText()).doubleValue();
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {
+                    energyValue = Double.valueOf(energyValueTextField.getText()).doubleValue();
+                }
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {
+                    soluteValue = Integer.valueOf(soluteValueTextField.getText()).intValue();
+                }
             }
         } catch (NumberFormatException e) {
             // if text field does not contain number, assume no need to update
@@ -397,13 +524,25 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
                 break;
             }
             if (transport != null) {
-                if (((Integer) aRow[columnMask[3]]).intValue() != prop) {
-                    updated = false;
-                    break;
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Temp.") == 0) {
+                    if (((Integer) aRow[5]).intValue() != energyProp) {
+                        updated = false;
+                        break;
+                    }
+                    if (((Double) aRow[6]).doubleValue() != energyValue) { 
+                        updated = false;
+                        break;
+                    }
                 }
-                if (((Double) aRow[columnMask[4]]).doubleValue() != value) { 
-                    updated = false;
-                    break;
+                if (transport.compareToIgnoreCase("Both") == 0 || transport.compareToIgnoreCase("Conc.") == 0) {
+                    if (((Integer) aRow[3]).intValue() != soluteProp) {
+                        updated = false;
+                        break;
+                    }
+                    if (((Integer) aRow[4]).intValue() != soluteValue) { 
+                        updated = false;
+                        break;
+                    }
                 }
             }
         }

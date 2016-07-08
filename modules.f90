@@ -101,7 +101,7 @@
       double precision, allocatable, dimension(:) :: DPTH, RT, PEVAL, PTVAL
       double precision, dimension(:,:), allocatable :: RDC
       double precision ETCYC, PET,PEV,HROOT,HA,SRES,RTDPTH,RTBOT,RTTOP
-	  integer NPV
+	  integer :: NPV = 0
       end module PTET
 
       module TRXV

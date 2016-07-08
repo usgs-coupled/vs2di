@@ -213,6 +213,8 @@
       common/ITEMK/KNLY,KNXR,KNNODE
       !!@@include 'd_kdum.inc'
       integer, allocatable::KDUM(:,:)
+      character*256 :: myline
+      integer       :: myerr
 !     include 'c_kdum.inc'
 ! *** Set version, hydraulic function type, and sorption type
 !--------------------------------------------------------------------------------------------
@@ -268,9 +270,30 @@
 !  ---- READ AND WRITE PROBLEM TITLE AND SPACE AND TIME CONSTANTS
 !
       JSTOP=0
-      READ (05,4000) TITL
-      READ (5,*) TMAX,STIM,ANG
-      READ (05,4010) ZUNIT,TUNIT,CUNX,HUNX
+      READ(5,'(A)') myline
+      READ (myline,4000,IOSTAT=myerr) TITL
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  TITL'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  TITL'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) TMAX,STIM,ANG
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  TMAX,STIM,ANG'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  TMAX,STIM,ANG'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,4010,IOSTAT=myerr) ZUNIT,TUNIT,CUNX,HUNX
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  ZUNIT,TUNIT,CUNX,HUNX'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  ZUNIT,TUNIT,CUNX,HUNX'
+      endif
 !      READ (05,4011) TUNIT
 !      READ (05,4010) CUNX
 !      READ (05,4010) HUNX
@@ -287,7 +310,14 @@
       CNVTM=3.155815D7
       END IF
       CNVTMI= 1.D0/ CNVTM    
-      READ (05,*) NXR,NLY
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) NXR,NLY
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  NXR,NLY'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  NXR,NLY'
+      endif
       if(NXR .GT. 2) THEN 
       axes(1)= .true.
       ELSE IF (NXR .EQ. 2)then
@@ -298,7 +328,14 @@
       ELSE IF (NLY.EQ. 2)then
       axes(2)= .false.
       END IF
-      READ (05,*) NRECH,NUMT
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) NRECH,NUMT
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  NRECH,NUMT'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  NRECH,NUMT'
+      endif
 !
 !  o13p triggers high precisions output
 !  o12p triggers p,c unformatted output to file 12
@@ -325,11 +362,39 @@
       jstop=2
       return
       END IF
-      READ (05,*) RAD,ITSTOP,HEAT,SOLUTE
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) RAD,ITSTOP,HEAT,SOLUTE
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  RAD,ITSTOP,HEAT,SOLUTE'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  RAD,ITSTOP,HEAT,SOLUTE'
+      endif
       IF (SOLUTE) then
-      READ (05,4001) CHEMFILE
-      READ (05,4001) DATABASEFILE
-      READ (05,4001) PREFIX
+          READ (5,'(A)') myline
+          READ (myline,4001,IOSTAT=myerr) CHEMFILE
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  CHEMFILE'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  CHEMFILE'
+          endif
+          READ (5,'(A)') myline
+          READ (myline,4001,IOSTAT=myerr) DATABASEFILE
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  DATABASEFILE'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  DATABASEFILE'
+          endif
+          READ (5,'(A)') myline
+          READ (myline,4001,IOSTAT=myerr) PREFIX
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  PREFIX'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  PREFIX'
+          endif
       End if
       IF(HEAT.OR.SOLUTE) then 
         TRANS = .TRUE.
@@ -338,16 +403,46 @@
         TRANS = .FALSE.
         FLOW = .TRUE.
       END IF
-      IF(TRANS) READ(05,*)CIS,CIT
+      IF(TRANS) then
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr)CIS,CIT
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: CIS,CIT'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: CIS,CIT'
+          endif
+      endif
       IF(SOLUTE)THEN
-      READ (05,*)IPRNTCHE,INPRXZ,IPOUT
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr)IPRNTCHE,INPRXZ,IPOUT
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: IPRNTCHE,INPRXZ,IPOUT'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: IPRNTCHE,INPRXZ,IPOUT'
+          endif
   !    DO 5 I=1,NNODES
   !    NPRCHEM(I)= IPRNTCHE
   !    NPRCHXZ(I)= INPRXZ
   !5   CONTINUE
       END IF     
-      READ (05,*) F11P,F7P,F8P,F9P,F6P
-      READ (05,*) THPT,SPNT,PPNT,HPNT,VPNT
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) F11P,F7P,F8P,F9P,F6P
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  F11P,F7P,F8P,F9P,F6P'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  F11P,F7P,F8P,F9P,F6P'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) THPT,SPNT,PPNT,HPNT,VPNT
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  THPT,SPNT,PPNT,HPNT,VPNT'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  THPT,SPNT,PPNT,HPNT,VPNT'
+      endif
       WRITE (06,4100) F8P,ITSTOP,F7P,F11P,F9P,F6P
       WRITE (06,4110) THPT,SPNT,PPNT,HPNT,VPNT   
       NLYY=NLY-1
@@ -572,12 +667,24 @@
 !
 !   ESTABLISH HORIZONTAL OR RADIAL SPACING
 !
-      READ (05,*) IFAC,FACX
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) IFAC,FACX
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  IFAC,FACX'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  IFAC,FACX'
+      endif
       IF(IFAC.GT.0) GO TO 20
 !
 !   READ IN SPACING FOR EACH COLUMN
 !
-      READ (05,*) (DXR(K),K=1,NXR)
+      READ (5,*,IOSTAT=myerr) (DXR(K),K=1,NXR)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading: (DXR(K),K=1,NXR)'
+          flush(6)
+          stop 'Error reading: (DXR(K),K=1,NXR)'
+      endif
       DO 10 K=1,NXR
    10 DXR(K)=DXR(K)*FACX
       GO TO 60
@@ -590,7 +697,14 @@
 !    MULTIPLIER UNTIL A USER-SPECIFIED MAXIMUM IS REACHED, WHERE-
 !    UPON THE SPACING BECOMES CONSTANT
 !
-   40 READ (05,*) XMULT,XMAX
+40    READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) XMULT,XMAX
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  XMULT,XMAX'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  XMULT,XMAX'
+      endif
       DXR(1)=FACX
       DXR(2)=FACX
       DO 50 K=3,NXRR
@@ -601,12 +715,24 @@
 !
 !   ESTABLISH VERTICAL SPACING
 !
-   60 READ (05,*) JFAC,FACZ
+60    READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) JFAC,FACZ
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  JFAC,FACZ'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  JFAC,FACZ'
+      endif
       IF(JFAC.GT.0) GO TO 80
 !
 !   READ IN VERTICAL SPACINGS INDIVIDUALLY
 !
-      READ (05,*) (DELZ(K),K=1,NLY)
+      READ (5,*,IOSTAT=myerr) (DELZ(K),K=1,NLY)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (DELZ(K),K=1,NLY)'
+          flush(6)
+          stop 'Error reading:  (DELZ(K),K=1,NLY)'
+      endif
       DO 70 K=1,NLY
    70 DELZ(K)=DELZ(K)*FACZ
       GO TO 120
@@ -617,7 +743,14 @@
 !
 !   ESTABLISH VERTICAL SPACING BY PROGRESSION, AS ABOVE FOR HORIZ.
 !
-  100 READ (05,*) ZMULT,ZMAX
+100   READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) ZMULT,ZMAX
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  ZMULT,ZMAX'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  ZMULT,ZMAX'
+      endif
       DELZ(1)=FACZ
       DELZ(2)=FACZ
       DO 110 K=3,NLYY
@@ -671,19 +804,38 @@
       o9p = .false.
       o11p = o9p
       IF(F8P) THEN
-      READ (05,*) NPLT
-      !!@@include 'd_obst.inc'
-      allocate(PLTIM(NPLT+1))
-!      include 'c_obst.inc'
-      IF(NPLT.EQ.0)NPLT=1
-      READ (05,*) (PLTIM(K),K=1,NPLT)
-      WRITE (06,4140) (PLTIM(K),K=1,NPLT)
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) NPLT
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  NPLT'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  NPLT'
+          endif
+          !!@@include 'd_obst.inc'
+          allocate(PLTIM(NPLT+1))
+          !      include 'c_obst.inc'
+          IF(NPLT.EQ.0)NPLT=1
+          READ (5,*,IOSTAT=myerr) (PLTIM(K),K=1,NPLT)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: '
+              flush(6)
+              stop 'Error reading: '
+          endif
+          WRITE (06,4140) (PLTIM(K),K=1,NPLT)
       else
       !!@@include 'd_obst.inc'
       allocate(PLTIM(NPLT+1))      
       END IF
       IF(F11P) THEN
-      READ (05,*) NOBS
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) NOBS
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  NOBS'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  NOBS'
+          endif
       if (nobs.lt.0) then
        nobs = -nobs
        o11p = .true.
@@ -691,8 +843,13 @@
       !!@@include 'd_obsp.inc'
       allocate(IJOBS(NOBS))
       if (allocated(KDUM)) deallocate(KDUM)
-      allocate(KDUM(NOBS,2))      
-      READ (05,*) ((KDUM(K,J),J=1,2),K=1,NOBS)
+      allocate(KDUM(NOBS,2))  
+      READ (5,*,IOSTAT=myerr) ((KDUM(K,J),J=1,2),K=1,NOBS)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  ((KDUM(K,J),J=1,2),K=1,NOBS)'
+          flush(6)
+          stop 'Error reading:  ((KDUM(K,J),J=1,2),K=1,NOBS)'
+      endif
       WRITE (06,4150) ((KDUM(K,J),J=1,2),K=1,NOBS)
 !      include 'c_obsp.inc'
       DO 150 K=1,NOBS
@@ -701,13 +858,25 @@
   150 continue
       END IF
       IF (F9P) THEN
-      READ(05,*)NMB9
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr)NMB9
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: NMB9'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: NMB9'
+          endif
       if (nmb9.lt.0) then
        nmb9 = -nmb9
        o9p = .true.
       end if
       if (nmb9.gt.99) nmb9 = 99
-      READ(05,*) (MB9(K),K=1,NMB9)
+      READ(5,*,IOSTAT=myerr) (MB9(K),K=1,NMB9)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (MB9(K),K=1,NMB9)'
+          flush(6)
+          stop 'Error reading:  (MB9(K),K=1,NMB9)'
+      endif
       WRITE(06,4160) (MB9(K),K=1,NMB9)
       END IF
       PLTIM(NPLT+1)=TMAX+TMAX
@@ -1265,6 +1434,9 @@
       common/axis/axes
       common/ITEMK/KNLY,KNXR,KNNODE
       integer :: iu = 101
+      CHARACTER*256 :: myline
+      INTEGER       :: myerr
+      
       !!@@include 'd_idummAlloc.inc'
       allocate(IDUM(NXR))
       !!@@include 'd_itembloAlloc.inc'
@@ -1281,16 +1453,69 @@
 !
 !     modified for reactive transport
 !     
-      READ(5,*) EPS,HMAX,WUS
+      READ (5,'(A)') myline
+      READ(myline,*,IOSTAT=myerr) EPS,HMAX,WUS
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  EPS,HMAX,WUS'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  EPS,HMAX,WUS'
+      endif
       EPS1=0.0D0
       EPS2=0.0D0
       EPS3=0.0D0
-      IF(HEAT)READ(5,*)EPS1,EPS2
-      IF(SOLUTE)READ(5,*)EPS3
-      READ (5,*) MINIT,ITMAX
-      READ (05,*) PHRD
-      READ (05,*) NTEX,NPROP
-      READ (05,*) hydraulicFunctionType
+      IF(HEAT) then
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr)EPS1,EPS2
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: EPS1,EPS2'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: EPS1,EPS2'
+          endif
+      endif
+      IF(SOLUTE) then
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr)EPS3
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: EPS3'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: EPS3'
+          endif
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) MINIT,ITMAX
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  MINIT,ITMAX'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  MINIT,ITMAX'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) PHRD
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  PHRD'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  PHRD'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) NTEX,NPROP
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  NTEX,NPROP'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  NTEX,NPROP'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) hydraulicFunctionType
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  hydraulicFunctionType'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  hydraulicFunctionType'
+      endif
 !      READ (05,*) iuTemperature
       NHTPROP = 0
       NSTPROP = 0
@@ -1348,23 +1573,45 @@
    22 ITEXSOL(J22,J23) = -1  
 
       DO 30 J22=1,NTEX
-      READ (5,*) J
-      READ (5,*) ANIZ(J),(HK(J,I),I=1,NPROP)
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) J
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  J'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  J'
+          endif
+          READ (5,*,IOSTAT=myerr) ANIZ(J),(HK(J,I),I=1,NPROP)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  ANIZ(J),(HK(J,I),I=1,NPROP)'
+              flush(6)
+              stop 'Error reading:  ANIZ(J),(HK(J,I),I=1,NPROP)'
+          endif
       WRITE (6,4120) J,ANIZ(J),(HK(J,I),I=1,NPROP)
       IF(HEAT) THEN
 !
 !  modification to read for heat transport 
 !
-      read(5,*) (HT(j,I),I=1,6)
+      read(5,*,IOSTAT=myerr) (HT(j,I),I=1,6)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (HT(j,I),I=1,6)'
+          flush(6)
+          stop 'Error reading:  (HT(j,I),I=1,6)'
+      endif
       write(6,4130) (HT(j,I),I=1,6)
       HT(J,3)=HT(J,3)*(1.-HK(J,3))
       END IF
       IF(SOLUTE) THEN
-!
-!  modification to read for solute transport
-!
-      read(5,*) (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
-      write(6,4131)(HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
+          !
+          !  modification to read for solute transport
+          !
+          read(5,*,IOSTAT=myerr) (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)'
+              flush(6)
+              stop 'Error reading:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)'
+          endif
+          write(6,4131)(HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)
       END IF
 !
 !  revsion for Rossi-Nimmo
@@ -1406,7 +1653,14 @@
 !
 !    READ TEXTURAL CLASS INDEX MAP
 !
-      READ (05,*) IROW
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) IROW
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  IROW'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  IROW'
+      endif
       IF(IROW.EQ.0) THEN
 !      DO 54 K=1,NNODES
 !        JTEX(K)=1
@@ -1453,18 +1707,23 @@
 ! and remove or coment the lines between if you are not using inputfile generated by Argus ONE GUI
      WRITE(06,4090)
      DO 50 J=1,NLY
-     READ (05,*) (IDUM(N),N=1,NXR)
-      if (ntex.gt.9) then
-      write (06,4151) j,(idum(n),n=1,nxr)
-      else
-       WRITE (06,4150) J,(IDUM(N),N=1,NXR)
-      end if
-     DO 40 N=1,NXR
-     IN=NLY*(N-1)+J
-      J22=IDUM(N)
-      HX(IN)=HK(J22,1)
-  40 JTEX(IN)=J22
-  50 CONTINUE
+         READ (5,*,IOSTAT=myerr) (IDUM(N),N=1,NXR)
+         if (myerr .ne. 0) then
+             write(6,'(A)') 'Error reading:  (IDUM(N),N=1,NXR)'
+             flush(6)
+             stop 'Error reading:  (IDUM(N),N=1,NXR)'
+         endif
+         if (ntex.gt.9) then
+             write (06,4151) j,(idum(n),n=1,nxr)
+         else
+             WRITE (06,4150) J,(IDUM(N),N=1,NXR)
+         end if
+         DO 40 N=1,NXR
+             IN=NLY*(N-1)+J
+             J22=IDUM(N)
+             HX(IN)=HK(J22,1)
+40       JTEX(IN)=J22
+50   CONTINUE
       ELSE
           !
           !    READ TEXTURE CLASSES BY BLOCK--EITHER CONTINUOUS LAYERS OR
@@ -1472,7 +1731,14 @@
           !
           WRITE (06,4040)
           JTP=1
-60        READ (05,*) IL,IR,JBT,JRD
+60        READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) IL,IR,JBT,JRD
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  IL,IR,JBT,JRD'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  IL,IR,JBT,JRD'
+          endif
           DO 70 N=IL,IR
               IDUM(N)=JRD
 70        CONTINUE
@@ -1510,9 +1776,23 @@
 !
 !   READ INITIAL HEADS OR MOISTURE CONTENTS
 !
-      READ (05,*) IREAD,FACTOR
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) IREAD,FACTOR
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  IREAD,FACTOR'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  IREAD,FACTOR'
+      endif
       IF(IREAD.EQ.2) THEN
-      READ (05,*) DWTX,HMIN
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) DWTX,HMIN
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  DWTX,HMIN'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  DWTX,HMIN'
+          endif
       WRITE (06,4190) DWTX,ZUNIT,HMIN,ZUNIT,DWTX,ZUNIT
 !
 !  CALCULATE EQUILIBRIUM INITIAL HEAD PROFILE
@@ -1535,10 +1815,17 @@
       IF(IREAD.EQ.0) THEN
       WRITE (6,4170) FACTOR
       ELSE 
-      IF(IREAD.EQ.1)then 
-        READ(05,*)IU,IFMT
-        WRITE (06,4180) IU,FACTOR
-      end if
+          IF(IREAD.EQ.1) then
+              READ (5,'(A)') myline
+              READ(myline,*,IOSTAT=myerr)IU,IFMT
+              if (myerr .ne. 0) then
+                  write(6,'(A)') 'Error reading: IU,IFMT'
+                  write(6,'(A,A)') 'Last line: ', myline
+                  flush(6)
+                  stop 'Error reading: IU,IFMT'
+              endif
+              WRITE (06,4180) IU,FACTOR
+          endif
       END IF
 !      if(IFMT.eq.UNFORMATTED) then
       if(iread.eq.3) then
@@ -1637,7 +1924,14 @@
 !
 !   IF ET IS TO BE SIMULATED, ALL VARIABLES MUST BE ENTERED HERE.
 !
-      READ(05,*) BCIT,ETSIM
+      READ (5,'(A)') myline
+      READ(myline,*,IOSTAT=myerr) BCIT,ETSIM
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  BCIT,ETSIM'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  BCIT,ETSIM'
+      endif
       IF(BCIT .OR. ETSIM) THEN
 !
 !   COMPUTE DEPTHS FOR ET CALCULATIONS
@@ -1660,7 +1954,14 @@
 !
 !   READ EVAPORATION VARIABLES
 !
-      READ(05,*)NPV,ETCYC
+      READ (5,'(A)') myline
+      READ(myline,*,IOSTAT=myerr)NPV,ETCYC
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading: NPV,ETCYC'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading: NPV,ETCYC'
+      endif
       npv1 = npv
       if(npv.lt.0) npv = -npv
       !!@@include 'd_ptetAlloc.inc'
@@ -1676,9 +1977,24 @@
  713  CONTINUE
       WRITE(6,4030) NPV,ETCYC,TUNIT
       IF(BCIT) THEN
-      READ (05,*)(PEVAL(I),I=1,NPV)
-      READ(05,*)(RDC(1,I),I=1,NPV)
-      READ(05,*)(RDC(2,I),I=1,NPV)
+          READ (5,*,IOSTAT=myerr)(PEVAL(I),I=1,NPV)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: (PEVAL(I),I=1,NPV)'
+              flush(6)
+              stop 'Error reading: (PEVAL(I),I=1,NPV)'
+          endif
+          READ(5,*,IOSTAT=myerr)(RDC(1,I),I=1,NPV)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: (RDC(1,I),I=1,NPV)'
+              flush(6)
+              stop 'Error reading: (RDC(1,I),I=1,NPV)'
+          endif
+          READ(5,*,IOSTAT=myerr)(RDC(2,I),I=1,NPV)
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: (RDC(2,I),I=1,NPV)'
+              flush(6)
+              stop 'Error reading: (RDC(2,I),I=1,NPV)'
+          endif
       WRITE (06,4050)ZUNIT,TUNIT,ZUNIT,ZUNIT,(I,PEVAL(I),RDC(1,I),  &
       RDC(2,I),I=1,NPV)
       END IF
@@ -1686,11 +2002,36 @@
 !
 !   READ TRANSPIRATION VARIABLES
 !
-      READ(05,*)(PTVAL(I),I=1,NPV)
-      READ(05,*) (RDC(3,I),I=1,NPV)
-      READ(05,*) (RDC(4,I),I=1,NPV)
-      READ(05,*) (RDC(5,I),I=1,NPV)
-      READ(05,*) (RDC(6,I),I=1,NPV)
+      READ(5,*,IOSTAT=myerr)(PTVAL(I),I=1,NPV)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading: (PTVAL(I),I=1,NPV)'
+          flush(6)
+          stop 'Error reading: (PTVAL(I),I=1,NPV)'
+      endif
+      READ(5,*,IOSTAT=myerr) (RDC(3,I),I=1,NPV)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (RDC(3,I),I=1,NPV)'
+          flush(6)
+          stop 'Error reading:  (RDC(3,I),I=1,NPV)'
+      endif
+      READ(5,*,IOSTAT=myerr) (RDC(4,I),I=1,NPV)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (RDC(4,I),I=1,NPV)'
+          flush(6)
+          stop 'Error reading:  (RDC(4,I),I=1,NPV)'
+      endif
+      READ(5,*,IOSTAT=myerr) (RDC(5,I),I=1,NPV)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (RDC(5,I),I=1,NPV)'
+          flush(6)
+          stop 'Error reading:  (RDC(5,I),I=1,NPV)'
+      endif
+      READ(5,*,IOSTAT=myerr) (RDC(6,I),I=1,NPV)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  (RDC(6,I),I=1,NPV)'
+          flush(6)
+          stop 'Error reading:  (RDC(6,I),I=1,NPV)'
+      endif
       WRITE(06,4060)ZUNIT,TUNIT,ZUNIT,ZUNIT,ZUNIT,ZUNIT,(I,PTVAL(I),  &
       (RDC(J,I),J=3,6),I=1,NPV)
       NPV = npv1
@@ -1707,7 +2048,14 @@
 !    BE SOLVED
 !
       IF (HEAT) THEN
-      READ(05,*) IREAD,FACTOR
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr) IREAD,FACTOR
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  IREAD,FACTOR'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  IREAD,FACTOR'
+          endif
       IF(IREAD.EQ.0) THEN
       WRITE(6,4210) FACTOR
       DO 190 N=1,NNODES
@@ -1722,7 +2070,14 @@
       RHOOLD(N)=RHO(N)
   190 CONTINUE
       ELSE
-      READ(05,*)IU,IFMT
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr)IU,IFMT
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: IU,IFMT'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: IU,IFMT'
+          endif
       if (IFMT.NE.UNFORMATTED) then
       WRITE(06,4220) IU,FACTOR
       DO 202 J=1,NLY
@@ -1766,7 +2121,14 @@
        IN = NLY*(N-1) + J
        INDSOL1(K,IN) = ITEXSOL(JTEX(IN),K)
  277   CONTINUE
-!          READ(05,*) IREAD
+       !READ (5,'(A)') myline
+       !READ(myline,*,IOSTAT=myerr) IREAD
+       !if (myerr .ne. 0) then
+       !    write(6,'(A)') 'Error reading:  IREAD'
+       !    write(6,'(A,A)') 'Last line: ', myline
+       !    flush(6)
+       !    stop 'Error reading:  IREAD'
+       !endif
           insol2 = -1
           indsol2 = -1
           cmixfarc = 1.0d0
@@ -1916,7 +2278,14 @@
 !   cells on selected boundary faces here.
 !
       if (f7p) then
-       read(5,*) numBF, maxnumcells
+          READ (5,'(A)') myline
+          read(myline,*,IOSTAT=myerr) numBF, maxnumcells
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  numBF, maxnumcells'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  numBF, maxnumcells'
+          endif
        !!@@include 'd_BFAlloc.inc'
 !      if (allocated(idBF)) deallocate(idBF)
 !      if (allocated(numcellsBF)) deallocate(numcellsBF)
@@ -1929,9 +2298,23 @@
       allocate(totalBF(numBF,2))
       allocate(currentBF(numBF,4))       
        do 250 i = 1,numBF
-        read(5,*) idBF(i), numcellsBF(i)
+           READ (5,'(A)') myline
+           read(myline,*,IOSTAT=myerr) idBF(i), numcellsBF(i)
+           if (myerr .ne. 0) then
+               write(6,'(A)') 'Error reading:  idBF(i), numcellsBF(i)'
+               write(6,'(A,A)') 'Last line: ', myline
+               flush(6)
+               stop 'Error reading:  idBF(i), numcellsBF(i)'
+           endif
         do 250 j = 1,numcellsBF(i)
-         read (5,*) jj,nn
+            READ (5,'(A)') myline
+            read (myline,*,IOSTAT=myerr) jj,nn
+            if (myerr .ne. 0) then
+                write(6,'(A)') 'Error reading:  jj,nn'
+                write(6,'(A,A)') 'Last line: ', myline
+                flush(6)
+                stop 'Error reading:  jj,nn'
+            endif
          nodenum(i,j) = nly*(nn-1) + jj
  250   continue
       end if
@@ -2075,6 +2458,8 @@
       double precision, allocatable, dimension(:,:) :: bcsol1
       double precision, allocatable, dimension(:) :: f1
       integer, allocatable, dimension(:) :: ibsol1, ibsol2
+      CHARACTER*256 :: myline
+      INTEGER       :: myerr
       SAVE STERR
       !!@@include 'd_ihdummAlloc.inc'
       allocate(IHDUM(NXR))
@@ -2105,7 +2490,14 @@
 !    READ DATA FOR NEW RECHARGE PERIOD
 ! ................................................................
 !
-      READ (05,*) TPER,DELT
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) TPER,DELT
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  TPER,DELT'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  TPER,DELT'
+      endif
 !
 !   CHECK FOR END OF SIMULATION
 !
@@ -2116,7 +2508,14 @@
       jstop=5
       return
       END IF
-      READ (05,*) TMLT,DLTMX,DLTMIN,TRED
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) TMLT,DLTMX,DLTMIN,TRED
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  TMLT,DLTMX,DLTMIN,TRED'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  TMLT,DLTMX,DLTMIN,TRED'
+      endif
       KP=KP+1
       SSTATE=.FALSE.
       if(delt.lt.dltmin) then
@@ -2126,11 +2525,39 @@
       end if
       WRITE (06,4000) KP,TPER,TUNIT,DELT,TUNIT,TMLT,DLTMX,TUNIT,DLTMIN, &
       TUNIT,TRED
-      READ (05,*) DSMAX,STERR
-      READ (05,*) POND
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) DSMAX,STERR
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  DSMAX,STERR'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  DSMAX,STERR'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) POND
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  POND'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  POND'
+      endif
       WRITE (06,4020) DSMAX,STERR,POND
-      READ (05,*) PRNT
-      READ (05,*) BCIT,ETSIM,SEEP
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) PRNT
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  PRNT'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  PRNT'
+      endif
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) BCIT,ETSIM,SEEP
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  BCIT,ETSIM,SEEP'
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  BCIT,ETSIM,SEEP'
+      endif
       WRITE (06,4010) PRNT,BCIT,ETSIM,SEEP
       DSMAX=DABS(DSMAX)
       ETOUT=0.0D0
@@ -2139,7 +2566,14 @@
 !    READ SEEPAGE FACE DATA
 !
       IF(SEEP) THEN
-      READ (05,*) NFCS
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) NFCS
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  NFCS'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  NFCS'
+          endif
       !!@@include 'd_spfcAlloc.inc'
       if (allocated(JSPX)) deallocate(JSPX)
       if (allocated(NFC)) deallocate(NFC)
@@ -2148,9 +2582,21 @@
       allocate(NFC(NFCS))
       allocate(JLAST(NFCS))
       DO 50 K=1,NFCS 
-      READ (05,*) JJ,JLAST(K) 
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) JJ,JLAST(K) 
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  JJ,JLAST(K) '
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  JJ,JLAST(K) '
+          endif
       NFC(K)=JJ 
-      READ (05,*) ((JSPX(L,J,K),L=2,3),J=1,JJ)
+      READ (5,*,IOSTAT=myerr) ((JSPX(L,J,K),L=2,3),J=1,JJ)
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
+          flush(6)
+          stop 'Error reading:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
+      endif
 !      DO 40 M=1,Nsol
       DO 40 J=1,JJ 
       J1=JSPX(2,J,K) 
@@ -2191,19 +2637,47 @@
 !     TOP ROW, BOTTOM ROW, LEFT COLUMN, RIGHT COLUMN, CODE, AND FLUX OR
 !     PRESSURE HEAD FOR BOUNDARY CONDITION.
 !
-      READ (05,*) IBC 
+      READ (5,'(A)') myline
+      READ (myline,*,IOSTAT=myerr) IBC 
+      if (myerr .ne. 0) then
+          write(6,'(A)') 'Error reading:  IBC '
+          write(6,'(A,A)') 'Last line: ', myline
+          flush(6)
+          stop 'Error reading:  IBC '
+      endif
       IF(IBC.GT.0) GO TO 80 
    70 IF (TRANS)THEN
-      READ (05,*) JJ,NN,NTX,PFDUM
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  JJ,NN,NTX,PFDUM'
+          endif
       IF(JJ.LT.0) GO TO 130 
       IF(HEAT) THEN
-      READ (05,*)NTT,TF
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr)NTT,TF
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: NTT,TF'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: NTT,TF'
+          endif
       ELSE
       NTT=0
       TF=0
       END IF
       IF(solute)  then
-      READ (05,*)NTC,INSBC1,INSBC2,SBFRAC
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: NTC,INSBC1,INSBC2,SBFRAC'
+          endif
       
       !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
       allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
@@ -2220,7 +2694,14 @@
       NTC=0
       END IF
       ELSE
-      READ (05,*) JJ,NN,NTX,PFDUM
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  JJ,NN,NTX,PFDUM'
+          endif
       END IF
       IF(JJ.LT.0) GO TO 130 
       JJT=JJ 
@@ -2229,16 +2710,37 @@
       NNR=NN 
       GO TO 90 
   80  IF(TRANS)THEN
-      READ(05,*) JJT,JJB,NNL,NNR,NTX,PFDUM
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+          endif
       IF(JJT.LT.0) GO TO 130
       IF(HEAT) THEN
-      READ (05,*)NTT,TF
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr)NTT,TF
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: NTT,TF'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: NTT,TF'
+          endif
       ELSE
       NTT=0
       TF=0.0d0
       END IF
       IF (SOLUTE)THEN
-      READ (05,*)NTC,INSBC1,INSBC2,SBFRAC 
+          READ (5,'(A)') myline
+          READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC 
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC '
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading: NTC,INSBC1,INSBC2,SBFRAC '
+          endif
       
       !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
       allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
@@ -2255,7 +2757,14 @@
       NTC=0
       END IF
       ELSE
-      READ(05,*) JJT,JJB,NNL,NNR,NTX,PFDUM
+          READ (5,'(A)') myline
+          READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          if (myerr .ne. 0) then
+              write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+              write(6,'(A,A)') 'Last line: ', myline
+              flush(6)
+              stop 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+          endif
       IF(JJT.LT.0) GO TO 130
       END IF 
 !
@@ -7582,6 +8091,7 @@
       use trxv
       use temp
       use pit
+      use ptet
       use tempcc
       use react
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)

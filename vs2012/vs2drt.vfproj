@@ -25,7 +25,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="openmp_debug|x64" DeleteExtensionsOnClean="*.cod;*__genmod.*;*.mod;*.pdb;*.asm;*.lst;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" MultiProcessorCompilation="true" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" EnableRecursion="true" ReentrantCode="reentrancyThreaded" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" MultiProcessorCompilation="true" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" EnableRecursion="true" ReentrantCode="reentrancyThreaded" WarnInterfaces="true" Traceback="true" NullPointerCheck="true" BoundsCheck="true" UninitializedVariablesCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
 				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="../x64;x64/openmp_debug/IPhreeqcPhast;x64\openmp_debug;x64\openmp_debug\RM_interface" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="zlib.lib PhreeqcRM.lib libvs2drt.lib "/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>

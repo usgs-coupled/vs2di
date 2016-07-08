@@ -270,24 +270,36 @@
 !  ---- READ AND WRITE PROBLEM TITLE AND SPACE AND TIME CONSTANTS
 !
       JSTOP=0
-      READ(5,'(A)') myline
-      READ (myline,4000,IOSTAT=myerr) TITL
+      READ(5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,4000,IOSTAT=myerr) TITL
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  TITL'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  TITL'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) TMAX,STIM,ANG
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) TMAX,STIM,ANG
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  TMAX,STIM,ANG'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  TMAX,STIM,ANG'
       endif
-      READ (5,'(A)') myline
-      READ (myline,4010,IOSTAT=myerr) ZUNIT,TUNIT,CUNX,HUNX
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,4010,IOSTAT=myerr) ZUNIT,TUNIT,CUNX,HUNX
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  ZUNIT,TUNIT,CUNX,HUNX'
           write(6,'(A,A)') 'Last line: ', myline
@@ -310,8 +322,12 @@
       CNVTM=3.155815D7
       END IF
       CNVTMI= 1.D0/ CNVTM    
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) NXR,NLY
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) NXR,NLY
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  NXR,NLY'
           write(6,'(A,A)') 'Last line: ', myline
@@ -328,8 +344,12 @@
       ELSE IF (NLY.EQ. 2)then
       axes(2)= .false.
       END IF
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) NRECH,NUMT
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) NRECH,NUMT
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  NRECH,NUMT'
           write(6,'(A,A)') 'Last line: ', myline
@@ -362,8 +382,12 @@
       jstop=2
       return
       END IF
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) RAD,ITSTOP,HEAT,SOLUTE
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) RAD,ITSTOP,HEAT,SOLUTE
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  RAD,ITSTOP,HEAT,SOLUTE'
           write(6,'(A,A)') 'Last line: ', myline
@@ -371,24 +395,36 @@
           stop 'Error reading:  RAD,ITSTOP,HEAT,SOLUTE'
       endif
       IF (SOLUTE) then
-          READ (5,'(A)') myline
-          READ (myline,4001,IOSTAT=myerr) CHEMFILE
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,4001,IOSTAT=myerr) CHEMFILE
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  CHEMFILE'
               write(6,'(A,A)') 'Last line: ', myline
               flush(6)
               stop 'Error reading:  CHEMFILE'
           endif
-          READ (5,'(A)') myline
-          READ (myline,4001,IOSTAT=myerr) DATABASEFILE
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,4001,IOSTAT=myerr) DATABASEFILE
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  DATABASEFILE'
               write(6,'(A,A)') 'Last line: ', myline
               flush(6)
               stop 'Error reading:  DATABASEFILE'
           endif
-          READ (5,'(A)') myline
-          READ (myline,4001,IOSTAT=myerr) PREFIX
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,4001,IOSTAT=myerr) PREFIX
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  PREFIX'
               write(6,'(A,A)') 'Last line: ', myline
@@ -404,8 +440,12 @@
         FLOW = .TRUE.
       END IF
       IF(TRANS) then
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr)CIS,CIT
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr)CIS,CIT
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: CIS,CIT'
               write(6,'(A,A)') 'Last line: ', myline
@@ -414,8 +454,12 @@
           endif
       endif
       IF(SOLUTE)THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr)IPRNTCHE,INPRXZ,IPOUT
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr)IPRNTCHE,INPRXZ,IPOUT
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: IPRNTCHE,INPRXZ,IPOUT'
               write(6,'(A,A)') 'Last line: ', myline
@@ -427,16 +471,24 @@
   !    NPRCHXZ(I)= INPRXZ
   !5   CONTINUE
       END IF     
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) F11P,F7P,F8P,F9P,F6P
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) F11P,F7P,F8P,F9P,F6P
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  F11P,F7P,F8P,F9P,F6P'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  F11P,F7P,F8P,F9P,F6P'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) THPT,SPNT,PPNT,HPNT,VPNT
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) THPT,SPNT,PPNT,HPNT,VPNT
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  THPT,SPNT,PPNT,HPNT,VPNT'
           write(6,'(A,A)') 'Last line: ', myline
@@ -667,8 +719,12 @@
 !
 !   ESTABLISH HORIZONTAL OR RADIAL SPACING
 !
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) IFAC,FACX
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) IFAC,FACX
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  IFAC,FACX'
           write(6,'(A,A)') 'Last line: ', myline
@@ -697,8 +753,12 @@
 !    MULTIPLIER UNTIL A USER-SPECIFIED MAXIMUM IS REACHED, WHERE-
 !    UPON THE SPACING BECOMES CONSTANT
 !
-40    READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) XMULT,XMAX
+40    READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) XMULT,XMAX
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  XMULT,XMAX'
           write(6,'(A,A)') 'Last line: ', myline
@@ -715,8 +775,12 @@
 !
 !   ESTABLISH VERTICAL SPACING
 !
-60    READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) JFAC,FACZ
+60    READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) JFAC,FACZ
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  JFAC,FACZ'
           write(6,'(A,A)') 'Last line: ', myline
@@ -743,8 +807,12 @@
 !
 !   ESTABLISH VERTICAL SPACING BY PROGRESSION, AS ABOVE FOR HORIZ.
 !
-100   READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) ZMULT,ZMAX
+100   READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) ZMULT,ZMAX
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  ZMULT,ZMAX'
           write(6,'(A,A)') 'Last line: ', myline
@@ -804,8 +872,12 @@
       o9p = .false.
       o11p = o9p
       IF(F8P) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) NPLT
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) NPLT
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  NPLT'
               write(6,'(A,A)') 'Last line: ', myline
@@ -828,8 +900,12 @@
       allocate(PLTIM(NPLT+1))      
       END IF
       IF(F11P) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) NOBS
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) NOBS
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  NOBS'
               write(6,'(A,A)') 'Last line: ', myline
@@ -858,8 +934,12 @@
   150 continue
       END IF
       IF (F9P) THEN
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr)NMB9
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr)NMB9
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: NMB9'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1453,8 +1533,12 @@
 !
 !     modified for reactive transport
 !     
-      READ (5,'(A)') myline
-      READ(myline,*,IOSTAT=myerr) EPS,HMAX,WUS
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ(myline,*,IOSTAT=myerr) EPS,HMAX,WUS
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  EPS,HMAX,WUS'
           write(6,'(A,A)') 'Last line: ', myline
@@ -1465,8 +1549,12 @@
       EPS2=0.0D0
       EPS3=0.0D0
       IF(HEAT) then
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr)EPS1,EPS2
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr)EPS1,EPS2
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: EPS1,EPS2'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1475,8 +1563,12 @@
           endif
       endif
       IF(SOLUTE) then
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr)EPS3
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr)EPS3
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: EPS3'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1484,32 +1576,48 @@
               stop 'Error reading: EPS3'
           endif
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) MINIT,ITMAX
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) MINIT,ITMAX
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  MINIT,ITMAX'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  MINIT,ITMAX'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) PHRD
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) PHRD
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  PHRD'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  PHRD'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) NTEX,NPROP
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) NTEX,NPROP
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  NTEX,NPROP'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  NTEX,NPROP'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) hydraulicFunctionType
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) hydraulicFunctionType
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  hydraulicFunctionType'
           write(6,'(A,A)') 'Last line: ', myline
@@ -1573,8 +1681,12 @@
    22 ITEXSOL(J22,J23) = -1  
 
       DO 30 J22=1,NTEX
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) J
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) J
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  J'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1653,8 +1765,12 @@
 !
 !    READ TEXTURAL CLASS INDEX MAP
 !
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) IROW
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) IROW
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  IROW'
           write(6,'(A,A)') 'Last line: ', myline
@@ -1731,8 +1847,12 @@
           !
           WRITE (06,4040)
           JTP=1
-60        READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) IL,IR,JBT,JRD
+60        READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) IL,IR,JBT,JRD
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  IL,IR,JBT,JRD'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1776,8 +1896,12 @@
 !
 !   READ INITIAL HEADS OR MOISTURE CONTENTS
 !
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) IREAD,FACTOR
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) IREAD,FACTOR
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  IREAD,FACTOR'
           write(6,'(A,A)') 'Last line: ', myline
@@ -1785,8 +1909,12 @@
           stop 'Error reading:  IREAD,FACTOR'
       endif
       IF(IREAD.EQ.2) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) DWTX,HMIN
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) DWTX,HMIN
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  DWTX,HMIN'
               write(6,'(A,A)') 'Last line: ', myline
@@ -1816,8 +1944,12 @@
       WRITE (6,4170) FACTOR
       ELSE 
           IF(IREAD.EQ.1) then
-              READ (5,'(A)') myline
-              READ(myline,*,IOSTAT=myerr)IU,IFMT
+              READ (5,'(A)',IOSTAT=myerr) myline
+              if (myerr .eq. 0) then
+                 READ(myline,*,IOSTAT=myerr)IU,IFMT
+              else
+                 write(6,'(A)') 'Unexpected end of file.'
+              endif
               if (myerr .ne. 0) then
                   write(6,'(A)') 'Error reading: IU,IFMT'
                   write(6,'(A,A)') 'Last line: ', myline
@@ -1924,8 +2056,12 @@
 !
 !   IF ET IS TO BE SIMULATED, ALL VARIABLES MUST BE ENTERED HERE.
 !
-      READ (5,'(A)') myline
-      READ(myline,*,IOSTAT=myerr) BCIT,ETSIM
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ(myline,*,IOSTAT=myerr) BCIT,ETSIM
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  BCIT,ETSIM'
           write(6,'(A,A)') 'Last line: ', myline
@@ -1954,8 +2090,12 @@
 !
 !   READ EVAPORATION VARIABLES
 !
-      READ (5,'(A)') myline
-      READ(myline,*,IOSTAT=myerr)NPV,ETCYC
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ(myline,*,IOSTAT=myerr)NPV,ETCYC
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading: NPV,ETCYC'
           write(6,'(A,A)') 'Last line: ', myline
@@ -2048,8 +2188,12 @@
 !    BE SOLVED
 !
       IF (HEAT) THEN
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr) IREAD,FACTOR
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr) IREAD,FACTOR
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  IREAD,FACTOR'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2070,8 +2214,12 @@
       RHOOLD(N)=RHO(N)
   190 CONTINUE
       ELSE
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr)IU,IFMT
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr)IU,IFMT
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: IU,IFMT'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2121,8 +2269,8 @@
        IN = NLY*(N-1) + J
        INDSOL1(K,IN) = ITEXSOL(JTEX(IN),K)
  277   CONTINUE
-       !READ (5,'(A)') myline
-       !READ(myline,*,IOSTAT=myerr) IREAD
+       !READ (5,'(A)',IOSTAT=myerr) myline
+       !if (myerr .eq. 0) READ(myline,*,IOSTAT=myerr) IREAD
        !if (myerr .ne. 0) then
        !    write(6,'(A)') 'Error reading:  IREAD'
        !    write(6,'(A,A)') 'Last line: ', myline
@@ -2278,8 +2426,12 @@
 !   cells on selected boundary faces here.
 !
       if (f7p) then
-          READ (5,'(A)') myline
-          read(myline,*,IOSTAT=myerr) numBF, maxnumcells
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             read(myline,*,IOSTAT=myerr) numBF, maxnumcells
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  numBF, maxnumcells'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2298,8 +2450,12 @@
       allocate(totalBF(numBF,2))
       allocate(currentBF(numBF,4))       
        do 250 i = 1,numBF
-           READ (5,'(A)') myline
-           read(myline,*,IOSTAT=myerr) idBF(i), numcellsBF(i)
+           READ (5,'(A)',IOSTAT=myerr) myline
+           if (myerr .eq. 0) then
+              read(myline,*,IOSTAT=myerr) idBF(i), numcellsBF(i)
+           else
+              write(6,'(A)') 'Unexpected end of file.'
+           endif
            if (myerr .ne. 0) then
                write(6,'(A)') 'Error reading:  idBF(i), numcellsBF(i)'
                write(6,'(A,A)') 'Last line: ', myline
@@ -2307,8 +2463,12 @@
                stop 'Error reading:  idBF(i), numcellsBF(i)'
            endif
         do 250 j = 1,numcellsBF(i)
-            READ (5,'(A)') myline
-            read (myline,*,IOSTAT=myerr) jj,nn
+            READ (5,'(A)',IOSTAT=myerr) myline
+            if (myerr .eq. 0) then
+               read (myline,*,IOSTAT=myerr) jj,nn
+            else
+               write(6,'(A)') 'Unexpected end of file.'
+            endif
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading:  jj,nn'
                 write(6,'(A,A)') 'Last line: ', myline
@@ -2490,8 +2650,12 @@
 !    READ DATA FOR NEW RECHARGE PERIOD
 ! ................................................................
 !
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) TPER,DELT
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) TPER,DELT
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  TPER,DELT'
           write(6,'(A,A)') 'Last line: ', myline
@@ -2508,8 +2672,12 @@
       jstop=5
       return
       END IF
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) TMLT,DLTMX,DLTMIN,TRED
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) TMLT,DLTMX,DLTMIN,TRED
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  TMLT,DLTMX,DLTMIN,TRED'
           write(6,'(A,A)') 'Last line: ', myline
@@ -2525,16 +2693,24 @@
       end if
       WRITE (06,4000) KP,TPER,TUNIT,DELT,TUNIT,TMLT,DLTMX,TUNIT,DLTMIN, &
       TUNIT,TRED
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) DSMAX,STERR
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) DSMAX,STERR
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  DSMAX,STERR'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  DSMAX,STERR'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) POND
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) POND
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  POND'
           write(6,'(A,A)') 'Last line: ', myline
@@ -2542,16 +2718,24 @@
           stop 'Error reading:  POND'
       endif
       WRITE (06,4020) DSMAX,STERR,POND
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) PRNT
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) PRNT
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  PRNT'
           write(6,'(A,A)') 'Last line: ', myline
           flush(6)
           stop 'Error reading:  PRNT'
       endif
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) BCIT,ETSIM,SEEP
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) BCIT,ETSIM,SEEP
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  BCIT,ETSIM,SEEP'
           write(6,'(A,A)') 'Last line: ', myline
@@ -2566,8 +2750,12 @@
 !    READ SEEPAGE FACE DATA
 !
       IF(SEEP) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) NFCS
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) NFCS
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  NFCS'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2582,8 +2770,12 @@
       allocate(NFC(NFCS))
       allocate(JLAST(NFCS))
       DO 50 K=1,NFCS 
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) JJ,JLAST(K) 
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) JJ,JLAST(K) 
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  JJ,JLAST(K) '
               write(6,'(A,A)') 'Last line: ', myline
@@ -2637,8 +2829,12 @@
 !     TOP ROW, BOTTOM ROW, LEFT COLUMN, RIGHT COLUMN, CODE, AND FLUX OR
 !     PRESSURE HEAD FOR BOUNDARY CONDITION.
 !
-      READ (5,'(A)') myline
-      READ (myline,*,IOSTAT=myerr) IBC 
+      READ (5,'(A)',IOSTAT=myerr) myline
+      if (myerr .eq. 0) then
+         READ (myline,*,IOSTAT=myerr) IBC 
+      else
+         write(6,'(A)') 'Unexpected end of file.'
+      endif
       if (myerr .ne. 0) then
           write(6,'(A)') 'Error reading:  IBC '
           write(6,'(A,A)') 'Last line: ', myline
@@ -2647,8 +2843,12 @@
       endif
       IF(IBC.GT.0) GO TO 80 
    70 IF (TRANS)THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2657,8 +2857,12 @@
           endif
       IF(JJ.LT.0) GO TO 130 
       IF(HEAT) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr)NTT,TF
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr)NTT,TF
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: NTT,TF'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2670,8 +2874,12 @@
       TF=0
       END IF
       IF(solute)  then
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2694,8 +2902,12 @@
       NTC=0
       END IF
       ELSE
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2710,8 +2922,12 @@
       NNR=NN 
       GO TO 90 
   80  IF(TRANS)THEN
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2720,8 +2936,12 @@
           endif
       IF(JJT.LT.0) GO TO 130
       IF(HEAT) THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr)NTT,TF
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr)NTT,TF
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: NTT,TF'
               write(6,'(A,A)') 'Last line: ', myline
@@ -2733,8 +2953,12 @@
       TF=0.0d0
       END IF
       IF (SOLUTE)THEN
-          READ (5,'(A)') myline
-          READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC 
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ (myline,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC 
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC '
               write(6,'(A,A)') 'Last line: ', myline
@@ -2757,8 +2981,12 @@
       NTC=0
       END IF
       ELSE
-          READ (5,'(A)') myline
-          READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          READ (5,'(A)',IOSTAT=myerr) myline
+          if (myerr .eq. 0) then
+             READ(myline,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
+          else
+             write(6,'(A)') 'Unexpected end of file.'
+          endif
           if (myerr .ne. 0) then
               write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
               write(6,'(A,A)') 'Last line: ', myline

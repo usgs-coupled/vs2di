@@ -4725,7 +4725,9 @@
       BLSOL(M,29) = 0.0D0
       BLSOL(M,35) = 0.0D0
       BCMT(M) = 0.0D0
-   
+      BL62I(M) = 0.0D0
+      BL62O(M) = 0.0D0
+
  111  continue
       if (f7p) then
        do 12 i=1,numBF
@@ -9318,5 +9320,48 @@
       ELSE
         IFLAG=0
       ENDIF
+      RETURN
+      END
+      SUBROUTINE GETSOLTRANSMBERR(ERR,N)
+!C *** GET TOTAL AND RATE CHEMICAL MASS BALANCE ERRORS AND RETURN IN ERR
+      use scon
+      use solmass
+      IMPLICIT DOUBLE PRECISION (A-H,P-Z)
+!c      include 'c_scon.inc'
+      COMMON/MASSB/BL(99),bcmft,bcmht,bl29I,bl29IT,bl29O,bl29OT, &
+      bl95I,bl95IT,bl95o,bl95OT
+      common/massb1/bcmf,bcmh, &
+      bltemp69,bltemp72,bltemp75,bltemp78,bltemp91
+      COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
+      DIMENSION ERR(2)
+      IF(KTIM.EQ.0) THEN
+        ERR(1) = 0
+        ERR(2) = 0
+        RETURN
+      END IF
+      TMB1 = BLSOL(n,19)
+      TMB2 = BLSOL(n,22) + BLSOL(n,25) + BLSOL(n,34)
+      TMB3 = BL62IT(n)
+      TMB4 = BL62OT(n)
+      TMB5 = BLSOL(n,21)
+      TMB6 = BLSOL(n,24) + BLSOL(n,27) + BLSOL(n,36)
+      TMB7 = BL62I(n)/DELT
+      TMB8 = BL62O(n)/DELT
+      E1 = TMB1 - TMB4
+      E2 = -TMB2 + TMB3
+      D = (E1 + E2)/2
+      IF (D.NE.0) THEN
+        ERR(1) = 100 * (E1 - E2)/D
+      ELSE
+        ERR(1) = 0
+      END IF
+      E1 = TMB5 - TMB8
+      E2 = -TMB6 + TMB7
+      D = (E1 + E2)/2
+      IF (D.NE.0) THEN
+        ERR(2) = 100 * (E1 - E2)/D
+      ELSE
+        ERR(2) = 0
+      END IF
       RETURN
       END

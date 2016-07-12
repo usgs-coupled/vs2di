@@ -455,7 +455,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
                 // When launched by a windows exe program to run on jre, the
                 // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
                 // instead
-                mp2FileChooser.useJFileChooser(false);
+                ////mp2FileChooser.useJFileChooser(false);
             }
         } catch (Exception e) {
             System.out.println("Error loading L&F: " + e);

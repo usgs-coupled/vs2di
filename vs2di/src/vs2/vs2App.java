@@ -131,7 +131,7 @@ public class vs2App extends mp2App implements vs2Constants {
                 // When launched by a windows exe program to run on jre, the
                 // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
                 // instead
-                mp2FileChooser.useJFileChooser(false);
+                ////mp2FileChooser.useJFileChooser(false);
             }
         } catch (Exception e) {
             System.out.println("Error loading L&F: " + e);

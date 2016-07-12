@@ -162,12 +162,12 @@ END
 
 STRINGTABLE DISCARDABLE
 BEGIN
-    IDS_NOJRE               "Sorry, phasthdf could not locate a suitable Java Runtime Environment.\nPlease download and install one from http://java.sun.com/getjava/download.html."
+    IDS_NOJRE               "Sorry, vs2drti could not locate a suitable Java Runtime Environment.\nPlease download and install one from https://java.com/en/download."
     IDS_JRE_KEY             "SOFTWARE\\JavaSoft\\Java Runtime Environment"
     IDS_CUR_VER             "CurrentVersion"
     IDS_JAVAHOME            "JavaHome"
     IDS_APPEND              "\\bin\\javaw.exe"
-    IDS_JARFILE             "phast.jar"
+    IDS_JARFILE             "vs2drti.jar"
 END
 
 #endif    // English (U.S.) resources

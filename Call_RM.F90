@@ -7,6 +7,7 @@ Module vs2dt_rm
     integer :: status, mpi_myself, mpi_tasks
     integer, dimension(:), allocatable :: forward1
     logical :: solute_rm
+    logical :: RM_OK = .TRUE. 
     
     CONTAINS  
     
@@ -24,6 +25,7 @@ Module vs2dt_rm
     
     ! ... make a reaction module, makes instances of IPhreeqc and IPhreeqcPhast with same rm_id
     solute_rm = solute
+    nsol = 0
     !nthreads = 1
 #ifdef USE_MPI
     rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
@@ -34,25 +36,44 @@ Module vs2dt_rm
     status = RM_OpenFiles(rm_id)  
     IF (solute) THEN         
         IF (rm_id.LT.0) THEN
-            STOP
+            return
         END IF
         status = RM_SetComponentH2O(rm_id, 1)
+        if (status .NE. 0) goto 1000        
         nthreads = RM_GetThreadCount(rm_id)
-        status = RM_SetErrorHandlerMode(rm_id, 2)   ! exit
+        !!!status = RM_SetErrorHandlerMode(rm_id, 2)   ! exit
         status = RM_SetPrintChemistryOn(rm_id, 0, 1, 0) 
+        if (status .NE. 0) goto 1000        
         status = RM_UseSolutionDensityVolume(rm_id, 0)
+        if (status .NE. 0) goto 1000        
         status = RM_LoadDatabase(rm_id, DATABASEFILE)
+        if (status .NE. 0) goto 1000
         !... Call phreeqc, find number of components, f1name, chem.dat, f2name, database, f3name, prefix
         status = RM_LogMessage(rm_id, "Initial PHREEQC run.") 
+        if (status .NE. 0) goto 1000        
         status = RM_ScreenMessage(rm_id, "Initial PHREEQC run.")  
-        status = RM_RunFile(rm_id, 1, 1, 1, CHEMFILE) 
+        if (status .NE. 0) goto 1000        
+        status = RM_RunFile(rm_id, 1, 1, 1, CHEMFILE)
+        if (status .NE. 0) goto 1000
         string = 'DELETE; -all' 
         status = RM_RunString(rm_id, 1, 0, 1, trim(string))
-        if (status .ne. 0) stop "Failed DELETE in CreateRM"
+        if (status .NE. 0) goto 1000        
         status = RM_FindComponents(rm_id)   
         nSol = RM_GetComponentCount(rm_id)
         status = RM_LogMessage(rm_id, "Done with Initial PHREEQC run.")
+
         status = RM_ScreenMessage(rm_id, "Done with Initial PHREEQC run.")
+        return 
+1000    CONTINUE
+#ifdef USE_MPI
+      status = RM_MpiWorkerBreak(rm_id)
+#endif
+      status = RM_CloseFiles(rm_id)
+      status = RM_Destroy(rm_id)
+#ifdef USE_MPI
+      call MPI_FINALIZE(status)
+#endif
+        rm_id = -1
     ENDIF
 END SUBROUTINE CreateRM
     

@@ -29,7 +29,7 @@
 #ifdef USE_MPI
 #include "mpi.h"
 #endif
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(CMAKE_FC)
 #define FC_FUNC_(name,NAME) NAME
 #endif
 

@@ -16,12 +16,12 @@
 
 #if defined(FC_FUNC_)
 // Called from Fortran or C++
-#define FH_FinalizeFiles                FC_FUNC_ (fh_finalizefiles,                 FH_FINALIZEFILES)
-#define FH_ProcessRestartFiles          FC_FUNC_ (fh_processrestartfiles,           FH_PROCESSRESTARTFILES)
-#define FH_SetPointers                  FC_FUNC_ (fh_setpointers,                   FH_SETPOINTERS)
-#define FH_SetRestartName               FC_FUNC_ (fh_setrestartname,                FH_SETRESTARTNAME)
-#define FH_WriteFiles                   FC_FUNC_ (fh_writefiles,                    FH_WRITEFILES)
-#define FH_WriteBcRaw                   FC_FUNC_ (fh_writebcraw,                    FH_WRITEBCRAW)
+#define FH_FinalizeFiles                FC_FUNC_ (fh_finalizefiles,                 FH_FINALIZEFILES_)
+#define FH_ProcessRestartFiles          FC_FUNC_ (fh_processrestartfiles,           FH_PROCESSRESTARTFILES_)
+#define FH_SetPointers                  FC_FUNC_ (fh_setpointers,                   FH_SETPOINTERS_)
+#define FH_SetRestartName               FC_FUNC_ (fh_setrestartname,                FH_SETRESTARTNAME_)
+#define FH_WriteFiles                   FC_FUNC_ (fh_writefiles,                    FH_WRITEFILES_)
+#define FH_WriteBcRaw                   FC_FUNC_ (fh_writebcraw,                    FH_WRITEBCRAW_)
 #endif
 
 #if defined(CMAKE_FC)

@@ -252,7 +252,8 @@ BOOL GetJarPath(HINSTANCE hInstance, tstring& jar_path)
 		return FALSE;
 	}
 
-	jar_path = app_path + tstring(TEXT("..\\lib\\")) + sJARFILE;
+	///jar_path = app_path + tstring(TEXT("..\\lib\\")) + sJARFILE;
+	jar_path = app_path + sJARFILE;
 	return TRUE;
 }
 

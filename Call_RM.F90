@@ -3,7 +3,7 @@ Module vs2dt_rm
   INCLUDE 'mpif.h'
 #endif
     integer :: rm_id
-    integer :: nthreads, nxyz, ncomps
+    integer :: nthreads = -1, nxyz, ncomps
     integer :: status, mpi_myself, mpi_tasks
     integer, dimension(:), allocatable :: forward1
     logical :: solute_rm

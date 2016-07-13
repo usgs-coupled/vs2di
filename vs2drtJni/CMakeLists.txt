@@ -270,3 +270,36 @@ endif ()
 
 # Java
 find_package(Java)
+
+if (MSVC)
+  set(CompilerFlags
+    CMAKE_CXX_FLAGS
+    CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_MINSIZEREL
+    CMAKE_CXX_FLAGS_RELWITHDEBINFO
+    CMAKE_C_FLAGS
+    CMAKE_C_FLAGS_DEBUG
+    CMAKE_C_FLAGS_RELEASE
+    CMAKE_C_FLAGS_MINSIZEREL
+    CMAKE_C_FLAGS_RELWITHDEBINFO
+  )
+
+  # Set C/C++ Runtime Library to Multi-threaded (/MT) 
+  foreach(CompilerFlag ${CompilerFlags})
+    if(${CompilerFlag} MATCHES "/MD")
+      string(REGEX REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+    endif()
+  endforeach()
+  
+  set(FortranCompilerFlags
+    CMAKE_Fortran_FLAGS
+  )
+  
+  # Set Fortran Runtime Library to Multithreaded
+  foreach(FortranCompilerFlags ${FortranCompilerFlags})
+    if(${FortranCompilerFlags} MATCHES "/libs:dll")
+      string(REGEX REPLACE "/libs:dll" "/libs:static" ${FortranCompilerFlags} "${${FortranCompilerFlags}}")
+    endif()  
+  endforeach()  
+endif()

@@ -169,109 +169,109 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
     integer, dimension(:,:), allocatable, intent(in) :: initial_conditions
     logical, dimension(2), intent(in) :: axes
     integer, intent(in) :: nx, nz
-	integer :: i, n, ii, jj, ix, iz, ixz, count_chem, status
+    integer :: i, n, ii, jj, ix, iz, ixz, count_chem, status
     logical :: success
-	! calculate mapping from full set of cells to subset needed for chemistry
+    ! calculate mapping from full set of cells to subset needed for chemistry
 
-	count_chem = 1
-	ix = nx;
-	iz = nz;
-	ixz = ix*iz;
-	if ((.not. axes(1)) .and. (.not. axes(2))) then
-		status = RM_ErrorMessage(rm_id, "No active coordinate direction in DIMENSIONS keyword.")
-		STOP "No active coordinate direction in DIMENSIONS keyword."
-	endif
+    count_chem = 1
+    ix = nx;
+    iz = nz;
+    ixz = ix*iz;
+    if ((.not. axes(1)) .and. (.not. axes(2))) then
+        status = RM_ErrorMessage(rm_id, "No active coordinate direction in DIMENSIONS keyword.")
+        STOP "No active coordinate direction in DIMENSIONS keyword."
+    endif
 
-	count_chem = ixz
+    count_chem = ixz
     
-	!   allocate space
+    !   allocate space
     allocate(forward1(ixz))
 
-	n = 0;
-	! x and y
-	if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .true.)) then
-		n = 0;
+    n = 0;
+    ! x and y
+    if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .true.)) then
+        n = 0;
         do i = 1, ixz
-			if (initial_conditions(1,i) .ge. 0 .or. initial_conditions(1,i) .le. -100) then
-				forward1(i) = n
-				n = n + 1
-			else
-				forward1(i) = -1
+            if (initial_conditions(1,i) .ge. 0 .or. initial_conditions(1,i) .le. -100) then
+                forward1(i) = n
+                n = n + 1
+            else
+                forward1(i) = -1
             endif
             write(*,*) "XZforward [",i-1,"] =", forward1(i)
-		enddo
-		count_chem = n;
-	! x only
-	else if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .false.)) then
-		if (iz .ne. 2) then
-			status = RM_ErrorMessage(rm_id, "z direction should contain only three nodes for this 1D problem.")
-			STOP "z direction should contain only three nodes for this 1D problem."
-		endif
+        enddo
+        count_chem = n;
+    ! x only
+    else if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .false.)) then
+        if (iz .ne. 2) then
+            status = RM_ErrorMessage(rm_id, "z direction should contain only three nodes for this 1D problem.")
+            STOP "z direction should contain only three nodes for this 1D problem."
+        endif
 
-		n = 0
+        n = 0
         do i = 1, ixz
-			if (initial_conditions(i,1) .lt. 0 .and. initial_conditions(1,i) .gt. -100) then
-				status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
-				STOP "Can not have inactive cells in a 1D simulation."
+            if (initial_conditions(i,1) .lt. 0 .and. initial_conditions(1,i) .gt. -100) then
+                status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
+                STOP "Can not have inactive cells in a 1D simulation."
             endif
-			if (jj == 0) then
-				forward1(i) = n
-				n = n + 1
-			else
-				forward1(i) = -1
+            if (jj == 0) then
+                forward1(i) = n
+                n = n + 1
+            else
+                forward1(i) = -1
             endif
-			write(*,*) "Xforward [",i-1,"] =",forward1(i)
-		enddo
-		count_chem = n;
-	!  Copy z line
-	else if ((axes(1) .eqv. .false.) .and. (axes(2) .eqv. .true.)) then
-		n = 0
+            write(*,*) "Xforward [",i-1,"] =",forward1(i)
+        enddo
+        count_chem = n;
+    !  Copy z line
+    else if ((axes(1) .eqv. .false.) .and. (axes(2) .eqv. .true.)) then
+        n = 0
         do i = 1, ixz
-			if (initial_conditions(1,i) .lt. 0 .and. initial_conditions(1,i) > -100) then
-				status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
-				STOP "Can not have inactive cells in a 1D simulation."
-			endif
-			success = n_to_ij(i, ii, jj, nx, nz)
-			if (ii .eq. 0) then
-				forward1(i) = n
-				n = n + 1
-			else
-				forward1(i) = -1
-			endif
-			write(*,*) "Zforward [",i-1,"] =",forward1(i)
-		enddo
-		count_chem = n
-	endif
+            if (initial_conditions(1,i) .lt. 0 .and. initial_conditions(1,i) > -100) then
+                status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
+                STOP "Can not have inactive cells in a 1D simulation."
+            endif
+            success = n_to_ij(i, ii, jj, nx, nz)
+            if (ii .eq. 0) then
+                forward1(i) = n
+                n = n + 1
+            else
+                forward1(i) = -1
+            endif
+            write(*,*) "Zforward [",i-1,"] =",forward1(i)
+        enddo
+        count_chem = n
+    endif
     ! pass mapping to RM
     status = RM_CreateMapping(rm_id, forward1)
-	write(*,*) "count_chem =", count_chem
-	return
+    write(*,*) "count_chem =", count_chem
+    return
 end subroutine CreateMappingRM
 
 logical function n_to_ij(n, i, j, ix, iz)
     USE PhreeqcRM
     implicit none
-	integer, intent(in) :: n, ix, iz
-	integer, intent(inout) :: i, j
+    integer, intent(in) :: n, ix, iz
+    integer, intent(inout) :: i, j
     integer :: status
-	logical :: return_value
+    logical :: return_value
 
-	return_value = .true.
+    return_value = .true.
 
-	i = mod(n, ix)
-	j = n / ix
-	
-	if (i .lt. 1 .or. i .gt. ix) then
-		status = RM_ErrorMessage(rm_id, "X index out of range")
-		return_value = .false.
+    i = mod(n, ix)
+    j = n / ix
+    
+    if (i .lt. 1 .or. i .gt. ix) then
+        status = RM_ErrorMessage(rm_id, "X index out of range")
+        return_value = .false.
     endif
     
-	if (j .lt. 1 .or. j .gt. iz) then
-		status = RM_ErrorMessage(rm_id, "z index out of range")
-		return_value = .false.
+    if (j .lt. 1 .or. j .gt. iz) then
+        status = RM_ErrorMessage(rm_id, "z index out of range")
+        return_value = .false.
     endif
     n_to_ij = return_value
-	return 
+    return 
 end function n_to_ij
 
 subroutine GetConcentrationsRM(cc)

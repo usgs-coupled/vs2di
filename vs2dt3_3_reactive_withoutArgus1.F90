@@ -594,7 +594,7 @@
       allocate(XNODE(NNODES),ZNODE(NNODES))
       allocate(phreeC(Nodesol))
       allocate(CMIXFARC(7,NNODES),BCSOL(Nsol),INDSOL1(7,NNODES),INDSOL2(7,NNODES))
-	  allocate(ic1_reordered(nnodes,7))
+      allocate(ic1_reordered(nnodes,7))
       allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES))
       allocate(BLSOL(Nsol,36),bl62I(Nsol),bl62IT(Nsol),bl62O(Nsol),bl62OT(Nsol), &
              bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol),bltemp36(Nsol),bltemp39(Nsol), &
@@ -1276,10 +1276,10 @@
 !   SET UP AND SOLVE MATRIX EQUATIONS FOR FLOW
 !
       if(nit3.gt.100) then
-	  jstop = 11
-	  jstp = jstop
-	  return
-	  end if
+      jstop = 11
+      jstp = jstop
+      return
+      end if
       nit=0
       CALL VSMGEN
       IF (JSTOP.GT.1) THEN
@@ -2503,7 +2503,7 @@
       end if
        !!@@include 'd_itembloDealloc.inc'
       if(allocated(itembl)) deallocate(ITBDUM)
-	  if(allocated(itbdum)) deallocate(itbdum)
+      if(allocated(itbdum)) deallocate(itbdum)
        !!@@include 'd_itemtxbDealloc.inc'
        deallocate(ITEMTX,ITDUM)
       IF (ALLOCATED(ITEXSOL)) DEALLOCATE(ITEXSOL)
@@ -3994,7 +3994,7 @@
       HH=DS(N)-WS*GH
       ALFAS=BH
       BETAS=DH
-      GAMAS=EH-ALFAS*ETA(NA)-BETAS*DEL(NL)	
+      GAMAS=EH-ALFAS*ETA(NA)-BETAS*DEL(NL)
       DEL(N)=FH/GAMAS
       ETA(N)=HH/GAMAS
       RES=RHSS(N)
@@ -5395,11 +5395,11 @@
 !
       if(f7p) then
        if (ktim.eq.1) then
-	  if (o13p) then
+      if (o13p) then
          write (7,4014)
-	  else
+      else
          write (7,4011)
-	  end if
+      end if
        end if
        do 46 ib1 = 1,numBF
         iflag7 = 0
@@ -5409,9 +5409,9 @@
           iflag7 = 1
 !          qx = qt(in1)
           if(SOLUTE) then
-	       qx = qs(in1)
-	      else
-	       qx = qt(in1)
+           qx = qs(in1)
+          else
+           qx = qt(in1)
           end if
           currentBF(ib1,1) = currentBF(ib1,1) - qx
           if (HEAT) then
@@ -8460,7 +8460,7 @@
 
       CS(N)=DXS1(IP1)
       DS(N)=DZS1(JP1)
-!C#    TOP(	n,j-1)
+!C#    TOP(n,j-1)
       IF(HX(IM1).NE.0.0D0) THEN
 !C#    A(N)=0.5D0*(DX1(N)*(RHO(N)+RHO(IM1))+DZ2(N)-DZ2(JP1))
       IF(.NOT.CIS) THEN
@@ -8687,7 +8687,7 @@
 !   CALL MATRIX SOLVER
 !
       CALL SLVSIPSOL
-      DO 31	I=2,NXRR
+      DO 31 I=2,NXRR
        N1=NLY*(I-1)
       DO 31 J=2,NLYY
       N=N1+J

@@ -57,7 +57,7 @@
 
       module KCON
       double precision, allocatable::HX(:)
-	  integer, allocatable::NTYP(:)
+      integer, allocatable::NTYP(:)
       end module KCON
 
       module MPROP
@@ -101,7 +101,7 @@
       double precision, allocatable, dimension(:) :: DPTH, RT, PEVAL, PTVAL
       double precision, dimension(:,:), allocatable :: RDC
       double precision ETCYC, PET,PEV,HROOT,HA,SRES,RTDPTH,RTBOT,RTTOP
-	  integer :: NPV = 0
+      integer :: NPV = 0
       end module PTET
 
       module TRXV
@@ -111,14 +111,14 @@
       module TRXX
       double precision, allocatable::DXS1(:),DXS2(:),DZS1(:),DZS2(:),  &
           CC(:,:),CCOLD(:,:),CSS(:,:),QS(:)
-	  integer, allocatable::NCTYP(:)
+      integer, allocatable::NCTYP(:)
       character*10, allocatable::CONC(:)
       end module TRXX
 
       module TRXXH
       double precision, allocatable::DX1(:),DX2(:),DZ1(:),DZ2(:),  &
           TT(:),TTOLD(:),TS(:),QT(:)
-	  integer, allocatable::NHTYP(:)
+      integer, allocatable::NHTYP(:)
       end module TRXXH
 
       module TRXY1

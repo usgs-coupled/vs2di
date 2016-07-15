@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
 project(vs2drtJni C CXX Fortran)
 
+# set standard directory locations
+include(GNUInstallDirs)
+
 # fortran name mangling
 include(FortranCInterface)
 FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
@@ -65,7 +68,11 @@ include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhre
 include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
 include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
 
-add_library(libvs2drt SHARED ${libvs2drt_SOURCES})
+if (WIN32)
+  add_library(libvs2drt STATIC ${libvs2drt_SOURCES})
+else()
+  add_library(libvs2drt SHARED ${libvs2drt_SOURCES})
+endif()
 
 # iphreeqc defs
 ADD_DEFINITIONS(-DSWIG_SHARED_OBJ)
@@ -237,7 +244,11 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/RM_interface_F.h
 )
 
-add_library(PhreeqcRM SHARED ${PhreeqcRM_SOURCES})
+if (WIN32)
+  add_library(PhreeqcRM STATIC ${PhreeqcRM_SOURCES})
+else()
+  add_library(PhreeqcRM SHARED ${PhreeqcRM_SOURCES})
+endif()
 
 SET(vs2drtf_SOURCES
   src/Call_RM.F90
@@ -251,7 +262,11 @@ source_group("Source Files" FILES "src/Call_RM.F90")
 source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/RM_interface.F90")
 source_group("Source Files" FILES "src/vs2dt3_3_reactive_withoutArgus1.F90")
 
-add_library(vs2drtf SHARED ${vs2drtf_SOURCES})
+if (WIN32)
+  add_library(vs2drtf STATIC ${vs2drtf_SOURCES})
+else()
+  add_library(vs2drtf SHARED ${vs2drtf_SOURCES})
+endif()
 
 SET(vs2drtJni_SOURCES
   vs2_vs2drt.h
@@ -302,4 +317,13 @@ if (MSVC)
       string(REGEX REPLACE "/libs:dll" "/libs:static" ${FortranCompilerFlags} "${${FortranCompilerFlags}}")
     endif()  
   endforeach()  
+endif()
+
+if (WIN32)
+  install(TARGETS vs2drtJni DESTINATION ${CMAKE_INSTALL_BINDIR})
+else()
+  install(TARGETS vs2drtJni DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS libvs2drt DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS PhreeqcRM DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS vs2drtf   DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()

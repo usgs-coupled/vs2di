@@ -37,3 +37,5 @@ if (MSVC)
     endif()
   endforeach()
 endif()
+
+install(TARGETS trimesh DESTINATION ${CMAKE_INSTALL_BINDIR})

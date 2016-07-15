@@ -8851,14 +8851,18 @@
 !
       SUBROUTINE GETNX(NX)
 ! *** GET THE NUMBER OF CELLS IN THE X DIRECTION
+      use iso_c_binding
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+      integer(kind=C_LONG) :: NX
       NX = NXR
       RETURN
       END
 
       SUBROUTINE GETNZ(NZ)
 ! *** GET THE NUMBER OF CELLS IN THE Z DIRECTION
+      use iso_c_binding
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+      integer(kind=C_LONG) :: NZ
       NZ = NLY
       RETURN
       END
@@ -8917,8 +8921,10 @@
       END
       
       SUBROUTINE GETCOMPCOUNT(N)
+      use iso_c_binding
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+      integer(kind=C_LONG) :: n
       N = Nsol
       RETURN
       END
@@ -8926,7 +8932,6 @@
       SUBROUTINE GETCOMP(IDX, NAME)
       USE COMPNAM
       INTEGER IDX
-!      CHARACTER NAME(:)
       CHARACTER(*) NAME
       NAME = TRIM(COMPNAME(IDX+1))//char(0)
       RETURN

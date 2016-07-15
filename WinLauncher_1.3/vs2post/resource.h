@@ -1,17 +1,12 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by phastexport.rc
 //
-#define IDC_MYICON                      2
 #define IDD_PHASTEXPORT_DIALOG          102
-#define IDD_ABOUTBOX                    103
 #define IDS_APP_TITLE                   103
-#define IDM_ABOUT                       104
-#define IDM_EXIT                        105
 #define IDS_HELLO                       106
 #define IDI_PHASTEXPORT                 107
 #define IDI_SMALL                       108
-#define IDC_PHASTEXPORT                 109
 #define IDR_MAINFRAME                   128
 #define IDS_NOJRE                       130
 #define IDS_JRE_KEY                     131

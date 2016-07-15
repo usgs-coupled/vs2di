@@ -194,6 +194,10 @@ JNIEXPORT void JNICALL Java_mp2_mp2Math_changeDirectory(
         jstring directory)
 {
     char *str = (char *) (*env)->GetStringUTFChars(env, directory, 0);
+#ifdef _WINDOWS
     _chdir(str);
+#else
+    chdir(str);
+#endif
     (*env)->ReleaseStringUTFChars(env, directory, str);
 }

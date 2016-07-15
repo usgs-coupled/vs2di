@@ -274,6 +274,6 @@ public class vs2App extends mp2App implements vs2Constants {
                 "Unable to read from file " + inFile.getAbsolutePath(),
                 "IO Error");
         }
-        mp2Math.changeDirectory(doc.getDirectory() + ".");        
+        mp2Math.changeDirectory(doc.getDirectory());
     }
 }

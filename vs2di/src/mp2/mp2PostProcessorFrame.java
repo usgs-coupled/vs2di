@@ -488,7 +488,7 @@ public abstract class mp2PostProcessorFrame extends JFrame
      * loads the specified data file from the specified directory
      */
     public boolean loadData(String directory, String file) {
-        mp2Math.changeDirectory(directory + ".");
+        mp2Math.changeDirectory(directory);
         String inputFile;
         if (theApp != null) {
             model = computationalModel;

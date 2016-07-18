@@ -210,7 +210,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\flow\\example1\\example1.vs2";
+        inFile = "../vs2di1.3_examples/flow/example1/example1.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -221,10 +221,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\flow\\example1", masterFile);
+        doc.exportData("../vs2di1.3_examples/flow/example1", masterFile);
         
 //        String expResult = "fc6c18357d4d1ba1516a3fd3eea4d645";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\flow\\example1\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/flow/example1/vs2drt.dat");
 //        org.junit.Assert.assertEquals(expResult, result);        
     }
     /**
@@ -236,7 +236,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\flow\\example2\\example2.vs2";
+        inFile = "../vs2di1.3_examples/flow/example2/example2.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -247,10 +247,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\flow\\example2", masterFile);
+        doc.exportData("../vs2di1.3_examples/flow/example2", masterFile);
         
 //        String expResult = "56a44267b0c0289e002cdd761fdcab84";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\flow\\example2\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/flow/example2/vs2drt.dat");
 //        org.junit.Assert.assertEquals(expResult, result);        
     }
     /**
@@ -262,7 +262,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\flow\\example3\\example3.vs2";
+        inFile = "../vs2di1.3_examples/flow/example3/example3.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -273,10 +273,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\flow\\example3", masterFile);
+        doc.exportData("../vs2di1.3_examples/flow/example3", masterFile);
         
 //        String expResult = "f428b5c012cdd72a67343f32d24f1206";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\flow\\example3\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/flow/example3/vs2drt.dat");
 //        org.junit.Assert.assertEquals(expResult, result);        
     }
     
@@ -290,7 +290,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\solute\\example1\\example1.vs2";
+        inFile = "../vs2di1.3_examples/solute/example1/example1.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -301,10 +301,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\solute\\example1", masterFile);
+        doc.exportData("../vs2di1.3_examples/solute/example1", masterFile);
         
 //        String expResult = "39982436321edbaa8211bd9c0bee9ecb";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\solute\\example1\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/solute/example1/vs2drt.dat");
 //        org.junit.Assert.assertEquals(expResult, result);        
     }
     
@@ -317,7 +317,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\solute\\example2\\example2.vs2";
+        inFile = "../vs2di1.3_examples/solute/example2/example2.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -328,10 +328,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\solute\\example2", masterFile);
+        doc.exportData("../vs2di1.3_examples/solute/example2", masterFile);
         
 //        String expResult = "22def5dc17f61207fdb38e2716b31cfb";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\solute\\example2\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/solute/example2/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -345,7 +345,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\solute\\example3\\example3.vs2";
+        inFile = "../vs2di1.3_examples/solute/example3/example3.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         vs2App app = new vs2App();
@@ -355,10 +355,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\solute\\example3", masterFile);
+        doc.exportData("../vs2di1.3_examples/solute/example3", masterFile);
         
 //        String expResult = "9207727c81acb7fdb7c9d38b98b34d23";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\solute\\example3\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/solute/example3/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -371,7 +371,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\solute\\example4\\example4.vs2";
+        inFile = "../vs2di1.3_examples/solute/example4/example4.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -382,10 +382,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\solute\\example4", masterFile);
+        doc.exportData("../vs2di1.3_examples/solute/example4", masterFile);
         
 //        String expResult = "e184c5f09cd38c49afc822b0f28b0188";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\solute\\example4\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/solute/example4/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -398,7 +398,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\solute\\example5\\example5.vs2";
+        inFile = "../vs2di1.3_examples/solute/example5/example5.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         //if (true) return;
@@ -409,10 +409,10 @@ public class vs2DocTest {
         vs2Doc doc = (vs2Doc) objectIn.readObject();
         doc.init(app);        
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\solute\\example5", masterFile);
+        doc.exportData("../vs2di1.3_examples/solute/example5", masterFile);
         
 //        String expResult = "ff55725e02012b643c8d23e5fa9cbc44";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\solute\\example5\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/solute/example5/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -426,7 +426,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\energy\\example1\\example1.vs2";
+        inFile = "../vs2di1.3_examples/energy/example1/example1.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         
@@ -438,10 +438,10 @@ public class vs2DocTest {
         doc.init(app);        
         
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\energy\\example1", masterFile);
+        doc.exportData("../vs2di1.3_examples/energy/example1", masterFile);
         
 //        String expResult = "b52e9b83a6d7cd2ca48337a1459cab89";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\energy\\example1\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/energy/example1/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -456,7 +456,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\energy\\example2\\example2.vs2";
+        inFile = "../vs2di1.3_examples/energy/example2/example2.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         
@@ -468,10 +468,10 @@ public class vs2DocTest {
         doc.init(app);        
         
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\energy\\example2", masterFile);
+        doc.exportData("../vs2di1.3_examples/energy/example2", masterFile);
         
 //        String expResult = "46203beca71fa5e6acc64253ed1eb276";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\energy\\example2\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/energy/example2/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
     
@@ -485,7 +485,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\energy\\example3\\example3.vs2";
+        inFile = "../vs2di1.3_examples/energy/example3/example3.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         
@@ -497,10 +497,10 @@ public class vs2DocTest {
         doc.init(app);        
         
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\energy\\example3", masterFile);
+        doc.exportData("../vs2di1.3_examples/energy/example3", masterFile);
         
 //        String expResult = "69a3d5f98de978b6ef664d10ea9e4fb3";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\energy\\example3\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/energy/example3/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
 
@@ -514,7 +514,7 @@ public class vs2DocTest {
         
         // Create an input stream for object deserialization.
         String inFile;
-        inFile = "..\\vs2di1.3_examples\\energy\\tutorial1\\tutorial1.vs2";
+        inFile = "../vs2di1.3_examples/energy/tutorial1/tutorial1.vs2";
         java.io.FileInputStream input = new java.io.FileInputStream(inFile);
         java.io.ObjectInputStream objectIn = new java.io.ObjectInputStream(input);
         
@@ -526,10 +526,10 @@ public class vs2DocTest {
         doc.init(app);        
         
         assertTrue(doc.readyToExport());     
-        doc.exportData("..\\vs2di1.3_examples\\energy\\tutorial1", masterFile);
+        doc.exportData("../vs2di1.3_examples/energy/tutorial1", masterFile);
         
 //        String expResult = "d8c8a6e8361f5d2f30d5bd617d16551c";
-//        String result = util.MD5Checksum.getMD5Checksum("..\\vs2di1.3_examples\\energy\\tutorial1\\vs2drt.dat");
+//        String result = util.MD5Checksum.getMD5Checksum("../vs2di1.3_examples/energy/tutorial1/vs2drt.dat");
 //        assertEquals(expResult, result);        
     }
 }

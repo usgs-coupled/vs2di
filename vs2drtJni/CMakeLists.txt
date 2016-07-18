@@ -77,6 +77,7 @@ endif()
 # iphreeqc defs
 ADD_DEFINITIONS(-DSWIG_SHARED_OBJ)
 ADD_DEFINITIONS(-DUSE_PHRQ_ALLOC)
+ADD_DEFINITIONS(-DUSE_OPENMP)
 
 SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/CSelectedOutput.cpp

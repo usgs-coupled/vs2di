@@ -5,7 +5,10 @@
 
 #include <jni.h>
 #include <stdlib.h>
+#include <string.h>
+#if defined(WIN32)
 #include <windows.h>
+#endif
 /* See Java_vs2_vs2drt_getMoistureContent for notes on JNI programming */
 
 // fortran prototypes

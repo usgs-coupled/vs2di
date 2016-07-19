@@ -46,7 +46,6 @@ public class vs2AppTest {
     /**
      * Test of createDoc method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testCreateDoc() {
         System.out.println("createDoc");
@@ -57,7 +56,6 @@ public class vs2AppTest {
     /**
      * Test of createView method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testCreateView() {
         System.out.println("createView");
@@ -68,7 +66,6 @@ public class vs2AppTest {
     /**
      * Test of createFrameManager method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testCreateFrameManager() {
         System.out.println("createFrameManager");
@@ -79,7 +76,6 @@ public class vs2AppTest {
     /**
      * Test of createPostProcessorFrame method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testCreatePostProcessorFrame() {
         System.out.println("createPostProcessorFrame");
@@ -101,7 +97,6 @@ public class vs2AppTest {
     /**
      * Test of getDocFileFilter method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testGetDocFileFilter() {
         System.out.println("getDocFileFilter");
@@ -115,7 +110,6 @@ public class vs2AppTest {
     /**
      * Test of getFilePrefix method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testGetFilePrefix() {
         System.out.println("getFilePrefix");
@@ -127,7 +121,6 @@ public class vs2AppTest {
     /**
      * Test of getFrameTitle method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testGetFrameTitle() {
         System.out.println("getFrameTitle");
@@ -140,7 +133,6 @@ public class vs2AppTest {
     /**
      * Test of getPropertiesDirectory method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testGetPropertiesDirectory() {
         System.out.println("getPropertiesDirectory");
@@ -157,7 +149,6 @@ public class vs2AppTest {
     /**
      * Test of getPropertiesFileName method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testGetPropertiesFileName() {
         System.out.println("getPropertiesFileName");
@@ -170,7 +161,6 @@ public class vs2AppTest {
     /**
      * Test of main method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testMain() {
         System.out.println("main");
@@ -223,13 +213,16 @@ public class vs2AppTest {
             robot.keyPress(java.awt.event.KeyEvent.VK_R);    // This causes EXCEPTION_ACCESS_VIOLATION (-r 11503)
             robot.keyRelease(java.awt.event.KeyEvent.VK_R);  // in vs2.vs2drt.getSoluteTransportMassBalanceErrors
             
-            Thread.sleep(100);
-            
             Thread.sleep(1000);
         }
         catch (java.awt.AWTException e) {
+            System.out.println("AWTException");
         }
         catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        }
+        catch (Exception e) {
+            System.out.println("Exception");
         }
         
     }
@@ -237,7 +230,6 @@ public class vs2AppTest {
     /**
      * Test of typeCheck method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testTypeCheck() {
         System.out.println("typeCheck");
@@ -251,7 +243,6 @@ public class vs2AppTest {
     /**
      * Test of versionCheck method, of class vs2App.
      */
-    @Ignore
     @Test
     public void testVersionCheck() {
         System.out.println("versionCheck");

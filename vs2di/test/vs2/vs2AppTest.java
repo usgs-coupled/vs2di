@@ -46,6 +46,7 @@ public class vs2AppTest {
     /**
      * Test of createDoc method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testCreateDoc() {
         System.out.println("createDoc");
@@ -56,6 +57,7 @@ public class vs2AppTest {
     /**
      * Test of createView method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testCreateView() {
         System.out.println("createView");
@@ -66,6 +68,7 @@ public class vs2AppTest {
     /**
      * Test of createFrameManager method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testCreateFrameManager() {
         System.out.println("createFrameManager");
@@ -76,6 +79,7 @@ public class vs2AppTest {
     /**
      * Test of createPostProcessorFrame method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testCreatePostProcessorFrame() {
         System.out.println("createPostProcessorFrame");
@@ -97,6 +101,7 @@ public class vs2AppTest {
     /**
      * Test of getDocFileFilter method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testGetDocFileFilter() {
         System.out.println("getDocFileFilter");
@@ -110,6 +115,7 @@ public class vs2AppTest {
     /**
      * Test of getFilePrefix method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testGetFilePrefix() {
         System.out.println("getFilePrefix");
@@ -121,6 +127,7 @@ public class vs2AppTest {
     /**
      * Test of getFrameTitle method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testGetFrameTitle() {
         System.out.println("getFrameTitle");
@@ -133,6 +140,7 @@ public class vs2AppTest {
     /**
      * Test of getPropertiesDirectory method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testGetPropertiesDirectory() {
         System.out.println("getPropertiesDirectory");
@@ -149,6 +157,7 @@ public class vs2AppTest {
     /**
      * Test of getPropertiesFileName method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testGetPropertiesFileName() {
         System.out.println("getPropertiesFileName");
@@ -161,6 +170,7 @@ public class vs2AppTest {
     /**
      * Test of main method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testMain() {
         System.out.println("main");
@@ -169,8 +179,65 @@ public class vs2AppTest {
     }
 
     /**
+     * Test restart 
+     */
+    @Test
+    public void testRestart() {
+        System.out.println("testRestart");
+        
+        try {
+            vs2App.main(null);
+        
+            // open ex11.vs2
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(java.nio.file.Files.exists(path), true);
+            
+            java.io.File inFile = new java.io.File(path.toString());
+            vs2App.theApp.openFile(inFile);
+            
+            java.awt.Robot robot = new java.awt.Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+
+            // show postprocessor
+            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
+            
+            Thread.sleep(100);
+            
+            // click step twice
+            vs2PostProcessorFrame step = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
+            assertNotEquals(step, null);
+            step.getStepButton().doClick();
+            step.getStepButton().doClick();
+            
+            Thread.sleep(100);
+            
+            // Action->Restart computation
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_A);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_R);    // This causes EXCEPTION_ACCESS_VIOLATION (-r 11503)
+            robot.keyRelease(java.awt.event.KeyEvent.VK_R);  // in vs2.vs2drt.getSoluteTransportMassBalanceErrors
+            
+            Thread.sleep(100);
+            
+            Thread.sleep(1000);
+        }
+        catch (java.awt.AWTException e) {
+        }
+        catch (InterruptedException e) {
+        }
+        
+    }
+
+    /**
      * Test of typeCheck method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testTypeCheck() {
         System.out.println("typeCheck");
@@ -184,6 +251,7 @@ public class vs2AppTest {
     /**
      * Test of versionCheck method, of class vs2App.
      */
+    @Ignore
     @Test
     public void testVersionCheck() {
         System.out.println("versionCheck");
@@ -193,8 +261,4 @@ public class vs2AppTest {
         boolean result = instance.versionCheck(doc);
         assertEquals(expResult, result);
     }
-    
-  
-    
-    
 }

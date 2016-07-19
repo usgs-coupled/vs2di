@@ -733,6 +733,14 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Only used for unit testing
      * @return step JButton
      */
+    public JButton getRunButton() {
+        return this.runButton;        
+    }
+
+    /**
+     * Only used for unit testing
+     * @return step JButton
+     */
     public JButton getStepButton() {
         return this.stepButton;        
     }

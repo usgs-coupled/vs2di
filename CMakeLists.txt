@@ -4,3 +4,5 @@ project(vs2drt C CXX Fortran)
 
 add_subdirectory(vs2drtJni)
 add_subdirectory(src/mp2/src/trimesh)
+add_subdirectory(WinLauncher_1.3/vs2drti)
+add_subdirectory(WinLauncher_1.3/vs2post)

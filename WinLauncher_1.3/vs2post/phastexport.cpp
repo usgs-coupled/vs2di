@@ -100,7 +100,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 BOOL GetExtPath(tstring& app_path, tstring& extpath)
 {
 	BOOL bOk = TRUE;	
-	//extpath = app_path + tstring(TEXT("..\\lib\\Win32"));
 	extpath = app_path;
 	return bOk;
 }

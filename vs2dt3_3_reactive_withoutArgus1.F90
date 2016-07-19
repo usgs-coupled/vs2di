@@ -9120,6 +9120,10 @@
       use itemblo
       use itemtxb
       use react
+      IMPLICIT NONE
+      COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
+      DOUBLE PRECISION STIM, DSMAX
+      INTEGER KTIM, NIT, NIT1, KP, NIT3
       !!@@include 'd_cleanup.inc'
       if (allocated(idum)) deallocate(idum)
       if (allocated(delz)) deallocate(delz)
@@ -9260,8 +9264,11 @@
 #ifdef USE_MPI
       call MPI_FINALIZE(status)
 #endif
-      END IF      
-      
+      END IF
+
+      ! INIT
+      KTIM=0
+
       RETURN
       END
 

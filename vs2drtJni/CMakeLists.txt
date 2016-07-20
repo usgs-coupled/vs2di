@@ -77,7 +77,9 @@ endif()
 # iphreeqc defs
 ADD_DEFINITIONS(-DSWIG_SHARED_OBJ)
 ADD_DEFINITIONS(-DUSE_PHRQ_ALLOC)
-ADD_DEFINITIONS(-DUSE_OPENMP)
+
+# check for openmp
+find_package(OpenMP)
 
 SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/CSelectedOutput.cpp
@@ -249,6 +251,13 @@ if (WIN32)
   add_library(PhreeqcRM STATIC ${PhreeqcRM_SOURCES})
 else()
   add_library(PhreeqcRM SHARED ${PhreeqcRM_SOURCES})
+endif()
+
+if (OPENMP_FOUND)
+  ADD_DEFINITIONS(-DUSE_OPENMP)
+  SET_TARGET_PROPERTIES(PhreeqcRM PROPERTIES
+                        COMPILE_FLAGS "${OpenMP_CXX_FLAGS}"
+                        LINK_FLAGS "${OpenMP_CXX_FLAGS}")
 endif()
 
 SET(vs2drtf_SOURCES

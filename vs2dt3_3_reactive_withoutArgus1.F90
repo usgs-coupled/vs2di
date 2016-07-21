@@ -8933,7 +8933,9 @@
       USE COMPNAM
       INTEGER IDX
       CHARACTER(*) NAME
-      NAME = TRIM(COMPNAME(IDX+1))//char(0)
+      IF (ALLOCATED(COMPNAME) .AND. (IDX .LE. UBOUND(COMPNAME, 1))) THEN
+        NAME = TRIM(COMPNAME(IDX))//char(0)
+      END IF
       RETURN
       END
 !!}}      
@@ -9124,6 +9126,8 @@
       COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
       DOUBLE PRECISION STIM, DSMAX
       INTEGER KTIM, NIT, NIT1, KP, NIT3
+      COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+      INTEGER NLY, NLYY, NXR, NXRR, NNODES, Nsol, Nodesol
       !!@@include 'd_cleanup.inc'
       if (allocated(idum)) deallocate(idum)
       if (allocated(delz)) deallocate(delz)
@@ -9268,6 +9272,7 @@
 
       ! INIT
       KTIM=0
+      Nsol=0
 
       RETURN
       END

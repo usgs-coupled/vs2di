@@ -16,7 +16,7 @@ void CLOSEIO(void);
 void DOHEAT(long *iflag);
 void DOSOLUTE(long *iflag);
 void DOTRANS(long *iflag);
-void GETCOMP(int *i, char buffer[], size_t len);
+void GETCOMP(jint *i, char buffer[], size_t len);
 void GETCOMPCOUNT(long *count);
 void GETCONC(int *index, double *c, long *nn);
 void GETDX(double *dx, long *nx);
@@ -209,8 +209,9 @@ JNIEXPORT jint JNICALL Java_vs2_vs2drt_getComponentCount(JNIEnv *env, jclass obj
 
 JNIEXPORT jobjectArray JNICALL Java_vs2_vs2drt_getComponents(JNIEnv *env, jobject obj)
 {
-	int i;
-	long count;
+	jint i;
+	jint index;
+	jsize count;
 	jobjectArray arr;
 	char buffer[50];
 
@@ -219,7 +220,8 @@ JNIEXPORT jobjectArray JNICALL Java_vs2_vs2drt_getComponents(JNIEnv *env, jobjec
 	arr = (*env)->NewObjectArray(env, count, (*env)->FindClass(env, "java/lang/String"), (*env)->NewStringUTF(env, ""));
 	for (i = 0; i < count; ++i)
 	{
-		GETCOMP(&i, buffer, sizeof(buffer));
+		index = i + 1;  // convert from 0-based to 1-based
+		GETCOMP(&index, buffer, sizeof(buffer));
 		(*env)->SetObjectArrayElement(env, arr, i, (*env)->NewStringUTF(env, buffer));
 	}
 	return arr;

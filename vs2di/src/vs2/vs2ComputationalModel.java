@@ -38,10 +38,12 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
         componentCount = getComponentCount();
         if (componentCount > 0) {
             components = getComponents();
+            /*
             int i = 0;
             for (String item : components) {
                 System.out.println("Item " + i++ + " " + item);
             }
+            */
         }
         return true;
     }

@@ -558,14 +558,30 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         String selectedDisplay = (String) displayChooser.getSelectedItem();
         ((vs2ComputationalModel) computationalModel).releaseMemory();
         super.onRestartComputation();
+        if (displayChooserRequiresUpdate && restartComputationMenuItem.isEnabled()) {
+            // user pressed No to "Do you want to restart the computation?"
+            return;
+        }
         if (displayChooserRequiresUpdate) {
             displayChooser.removeAllItems();
             displayChooser.addItem("Total Head");
             displayChooser.addItem("Pressure Head");
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
-            displayChooser.addItem("Temperature");
-            displayChooser.addItem("Concentration");
+            if (((vs2ComputationalModel) computationalModel).getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (((vs2ComputationalModel) computationalModel).getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
+                } else {
+                    displayChooser.addItem("Concentration");
+                }
+            }
             displayChooser.addItem("Vector");
             displayChooser.addItem("None");
             displayChooser.revalidate();
@@ -731,10 +747,18 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     
     /**
      * Only used for unit testing
-     * @return step JButton
+     * @return run JButton
      */
     public JButton getRunButton() {
         return this.runButton;        
+    }
+
+    /**
+     * Only used for unit testing
+     * @return reset JButton
+     */
+    public JButton getResetButton() {
+        return this.resetButton;        
     }
 
     /**
@@ -743,5 +767,21 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      */
     public JButton getStepButton() {
         return this.stepButton;        
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return stop JButton
+     */
+    public JButton getStopButton() {
+        return this.stopButton;        
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return displayChooser JComboBox
+     */
+    public JComboBox getDisplayChooser() {
+        return this.displayChooser;        
     }
 }

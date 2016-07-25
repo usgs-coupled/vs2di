@@ -38,8 +38,6 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
    protected JTextField flow2TextField;
    protected JTextField flow3TextField;
    protected JTextField flow4TextField;
-   protected JTextField longDispTextField;
-   protected JTextField transDispTextField;
    protected JTextField energyLongDispTextField;
    protected JTextField energyTransDispTextField;
    protected JTextField soluteLongDispTextField;
@@ -255,9 +253,6 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
     // Put values in text fields for transport parameters
     //--------------------------------------------------------------------------
     protected void SetTextFieldsForTransport() {
-        assert(longDispTextField == null);
-        assert(transDispTextField == null);
-        
         if (modelOptions.doEnergyTransport) {
             energyLongDispTextField.setText(String.valueOf(((Double) aRow[21]).doubleValue()));
             energyTransDispTextField.setText(String.valueOf(((Double) aRow[22]).doubleValue()));            
@@ -312,8 +307,8 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         int so = -1, ep = -1, ex = -1, su = -1, gp = -1, ss = -1, ki = -1;
         try {
             if (modelOptions.doEnergyTransport) {
-                aL  = Double.valueOf(longDispTextField.getText()).doubleValue();
-                aT  = Double.valueOf(transDispTextField.getText()).doubleValue();
+                aL  = Double.valueOf(energyLongDispTextField.getText()).doubleValue();
+                aT  = Double.valueOf(energyTransDispTextField.getText()).doubleValue();
                 Cs  = Double.valueOf(CsTextField.getText()).doubleValue();
                 KTr = Double.valueOf(KTrTextField.getText()).doubleValue();
                 KTs = Double.valueOf(KTsTextField.getText()).doubleValue();

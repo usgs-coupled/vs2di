@@ -1,11 +1,11 @@
 // phastexport.cpp : Defines the entry point for the application.
 //
 // Spawns a java app using the -jar jarfile [args...] 
-// (ie javaw.exe -jar phast.jar)
+// (ie javaw.exe -jar vs2drti.jar)
 //
-// Before starting the app adds ..\lib\Win32 to the path
+// Before starting the app adds . (CWD) to the path
 //
-// Assumes that a Java Runtime Environment ( > 1.2) is properly installed
+// Assumes that a Java Runtime Environment ( >= 1.8) is properly installed
 //
 // Determines the location of javaw.exe by reading the registry
 //    HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment\CurrentVersion = N.N
@@ -15,24 +15,23 @@
 // Expects the following layout:
 //    .\bin
 //    .\bin\${EXE_NAME}
-//    .\lib
-//    .\lib\${IDS_JARFILE}
-//    .\lib\Win32
-//    .\lib\Win32/*.dll
+//    .\bin\${IDS_JARFILE}
+//    .\bin\*.dll
+//    .\bin\lib\*.jar
 //
 // ie
 //    .\bin
-//    .\bin\phasthdf.exe
-//    .\lib
-//    .\lib\jhdf.jar
-//    .\lib\jhdf5.jar
-//    .\lib\jhdfobj.jar
-//    .\lib\phast.jar
-//    .\lib\Win32
-//    .\lib\Win32\jhdf.dll
-//    .\lib\Win32\jhdf5.dll
-//    Note: phast.jar contains MANIFEST/Main-Class="gov.usgs.phast.JWizardFrame"
-//    and MANIFEST/Class-Path="jhdf.jar jhdf5.jar jhdfobj.jar"
+//    .\bin\vs2post.exe
+//    .\bin\vs2drti.jar
+//    .\bin\trimesh.dll
+//    .\bin\vs2drtJni.dll
+//    .\bin\lib
+//    .\bin\lib\jh.jar
+//    .\bin\lib\vs2dhiHelp.jar
+//    .\bin\lib\vs2dtiHelp.jar
+//    .\bin\lib\vs2PostHelp.jar
+//    Note: vs2drti.jar contains MANIFEST/Main-Class="vs2.vs2App"
+//    and MANIFEST/Class-Path="lib/jh.jar lib/vs2dhiHelp.jar lib/vs2dtiHelp.jar lib/vs2PostHelp.jar"
 
 
 #include "stdafx.h"
@@ -88,6 +87,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		return EXIT_FAILURE;
 	}
 
+	::OutputDebugString(TEXT("CommandLine: "));
+	::OutputDebugString(cmdline.c_str());
+	::OutputDebugString(TEXT("\n"));
+
 	if (!::RunCommandLine(cmdline))
 	{
 		::OutputDebugString(TEXT("RunCommandLine failed\n"));
@@ -133,7 +136,8 @@ BOOL AddPath(tstring& extpath)
 	BOOL bOk;
 	
 	// add extpath to Path and set
-	if (extpath.size() > 0) {
+	if (extpath.size() > 0)
+	{
 		// get Path
 		tstring path;
 		DWORD dwBuf = ::GetEnvironmentVariable(TEXT("Path"), NULL, 0);
@@ -229,11 +233,7 @@ BOOL CreateCommandLine(HINSTANCE hInstance, LPSTR lpCmdLine, tstring& cmdline)
 	}
 
 	cmdline = tstring(TEXT("\"")) + java_exe + tstring(TEXT("\""));
-	//cmdline += tstring(TEXT(" -jar "));
-	///cmdline += tstring(TEXT("\"")) + jar_path + tstring(TEXT("\""));
-	//{{
 	cmdline += jar_path;
-	//}}
 	cmdline += tstring(TEXT(" ")) + args;
 
 	return TRUE;
@@ -248,21 +248,23 @@ BOOL GetJarPath(HINSTANCE hInstance, tstring& jar_path)
 		return EXIT_FAILURE;
 	}
 
-	tstring sJARFILE;
-	if (!::LoadString(hInstance, IDS_JARFILE, sJARFILE))
-	{
-		::OutputDebugString(TEXT("LoadString failed for IDS_JARFILE\n"));
-		return FALSE;
-	}
+	//tstring sJARFILE;
+	//if (!::LoadString(hInstance, IDS_JARFILE, sJARFILE))
+	//{
+	//	::OutputDebugString(TEXT("LoadString failed for IDS_JARFILE\n"));
+	//	return FALSE;
+	//}
 
 	//jar_path = app_path + tstring(TEXT("..\\lib\\")) + sJARFILE;
 
 	jar_path = tstring(TEXT(" -cp "))
-		+ app_path + tstring(TEXT("jh.jar"))          + tstring(TEXT(";"))
-		+ app_path + tstring(TEXT("vs2dhiHelp.jar"))  + tstring(TEXT(";"))
-		+ app_path + tstring(TEXT("vs2drti.jar"))     + tstring(TEXT(";"))
-		+ app_path + tstring(TEXT("vs2dtiHelp.jar"))  + tstring(TEXT(";"))
-		+ app_path + tstring(TEXT("vs2PostHelp.jar"))
+		+ tstring(TEXT("\""))
+		+ app_path + tstring(TEXT("vs2drti.jar"))          + tstring(TEXT(";"))
+		+ app_path + tstring(TEXT("lib\\jh.jar"))          + tstring(TEXT(";"))
+		+ app_path + tstring(TEXT("lib\\vs2dhiHelp.jar"))  + tstring(TEXT(";"))
+		+ app_path + tstring(TEXT("lib\\vs2dtiHelp.jar"))  + tstring(TEXT(";"))
+		+ app_path + tstring(TEXT("lib\\vs2PostHelp.jar"))
+		+ tstring(TEXT("\""))
 		+ tstring(TEXT(" vs2.vs2PostProcessorFrame"));
 	return TRUE;
 }

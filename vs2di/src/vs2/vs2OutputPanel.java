@@ -23,7 +23,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     public boolean outputToAuxFilesEveryTimeStep;
     public boolean highPrecisionAuxiliaryOutput;
     public boolean phreeqcSelectedOutput;       // new in 1.4
-    public boolean phreeqcDebugChemistry;       // new in 1.4
     public int outputTimeOption;
     public double outputTimeInterval;
 
@@ -35,7 +34,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     protected JCheckBox totalHeadOutCheckBox;
     protected JCheckBox velocityOutCheckBox;    
     protected JCheckBox phreeqcSelectedOutputCheckBox;  // new in 1.4
-    protected JCheckBox phreeqcDebugChemistryCheckBox;  // new in 1.4
     
     protected JRadioButton massBalanceEveryTimeStepRadioButton;
     protected JRadioButton massBalanceOutputTimesRadioButton;
@@ -182,8 +180,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
         gridbag.setConstraints(subpanel, c);
         phreeqcSelectedOutputCheckBox = new JCheckBox("Selected output");
         subpanel.add(phreeqcSelectedOutputCheckBox);
-        phreeqcDebugChemistryCheckBox = new JCheckBox("Debug chemistry");
-        subpanel.add(phreeqcDebugChemistryCheckBox);
 
         // Right side
         add(rightPanel = new JPanel(gridbag, false));
@@ -464,7 +460,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
         }
 
         phreeqcSelectedOutputCheckBox.setSelected(phreeqcSelectedOutput);
-        phreeqcDebugChemistryCheckBox.setSelected(phreeqcDebugChemistry);
     }
 
     /**
@@ -514,7 +509,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
         highPrecisionAuxiliaryOutput = highPrecisionRadioButton.isSelected();
 
         phreeqcSelectedOutput = phreeqcSelectedOutputCheckBox.isSelected();
-        phreeqcDebugChemistry = phreeqcDebugChemistryCheckBox.isSelected();
 
         return true;
     }
@@ -541,7 +535,6 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     public void doSoluteTransport(boolean b) {
         phreeqcLabel.setEnabled(b);
         phreeqcSelectedOutputCheckBox.setEnabled(b);
-        phreeqcDebugChemistryCheckBox.setEnabled(b);
         revalidate();
     }
 }

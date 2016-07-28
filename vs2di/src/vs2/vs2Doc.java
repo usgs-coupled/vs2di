@@ -251,10 +251,8 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         if (modelOptions.doSoluteTransport) {
             // Card A-12
-            pw.print((modelOptions.phreeqcSelectedOutput ? "1" : "0") + " "
-                    + (modelOptions.phreeqcSelectedOutput ? "1" : "0") + " "
-                    + (modelOptions.phreeqcDebugChemistry ? "1" : "0"));
-            pw.println("          /A12 -- IPRNTCHE, INPRXZ, IPOUT");
+            pw.print((modelOptions.phreeqcSelectedOutput ? "1" : "0"));
+            pw.println("          /A12 -- INPRXZ");
         }
         
         // Card A-13.  The current implementation assumes if
@@ -592,8 +590,6 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                             modelOptions.outputTimeInterval;
         dlg.outputPanel.phreeqcSelectedOutput = 
                 modelOptions.phreeqcSelectedOutput;  // new for Version 1.4
-        dlg.outputPanel.phreeqcDebugChemistry =
-                modelOptions.phreeqcDebugChemistry;  // new for Version 1.4
         dlg.fluidBalancePanel.inFlowSpecifiedHead =
                             modelOptions.inFlowSpecifiedHead;
         dlg.fluidBalancePanel.outFlowSpecifiedHead =
@@ -728,7 +724,6 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                     modelOptions.prefix                      = dlg.transportPanel.prefix;
                     
                     modelOptions.phreeqcSelectedOutput       = dlg.outputPanel.phreeqcSelectedOutput;
-                    modelOptions.phreeqcDebugChemistry       = dlg.outputPanel.phreeqcDebugChemistry;
                     
                     modelOptions.closureCriterionForConc     = dlg.solverPanel.eps3;
                 }

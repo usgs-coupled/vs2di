@@ -63,7 +63,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     public boolean outputToAuxFilesEveryTimeStep;    // new in Version 1.2
     public boolean highPrecisionAuxiliaryOutput;     // new in Version 1.2
     public boolean phreeqcSelectedOutput;            // new in Version 1.4
-    public boolean phreeqcDebugChemistry;            // new in Version 1.4
 
     // fluid balance options
     public boolean inFlowSpecifiedHead;
@@ -148,7 +147,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         outputToAuxFilesEveryTimeStep = false;   // new in Version 1.2
         highPrecisionAuxiliaryOutput = false;    // new in Version 1.2
         phreeqcSelectedOutput = true;            // new in Version 1.4
-        phreeqcDebugChemistry = false;           // new in Version 1.4
 
         outputTimeOption = NO_OUTPUT_TIME;
         outputTimeInterval = 0;

@@ -38,8 +38,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     public String chemFile;            // new in Version 1.4
     public String databaseFile;        // new in Version 1.4
     public String prefix;              // new in Version 1.4
-    public int iprntcheOption;         // new in Version 1.4
-    public int ipoutOption;            // new in Version 1.4    
 
     // solver options
     public double relaxationParameter;
@@ -63,7 +61,9 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
     public Vector outputTimes;
     public double outputTimeInterval;
     public boolean outputToAuxFilesEveryTimeStep;    // new in Version 1.2
-    public boolean highPrecisionAuxiliaryOutput;    // new in Version 1.2
+    public boolean highPrecisionAuxiliaryOutput;     // new in Version 1.2
+    public boolean phreeqcSelectedOutput;            // new in Version 1.4
+    public boolean phreeqcDebugChemistry;            // new in Version 1.4
 
     // fluid balance options
     public boolean inFlowSpecifiedHead;
@@ -126,8 +126,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         chemFile        = "input.pqi";                   // new in Version 1.4
         databaseFile    = "phreeqc.dat";                 // new in Version 1.4
         prefix          = "pre";                         // new in Version 1.4
-        iprntcheOption  = IPRNTCHE_NO_PHREEQC_OUTPUT;    // new in Version 1.4
-        ipoutOption     = IPOUT_NO_PHREEQC_OUTPUT;       // new in Version 1.4
 
         // Default values for solver options
         relaxationParameter = 0.7;
@@ -147,8 +145,10 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         totalHeadOut = false;
         velocityOut = false;
         outputMassBalanceEveryTimeStep = false;
-        outputToAuxFilesEveryTimeStep = false;  // new in Version 1.2
+        outputToAuxFilesEveryTimeStep = false;   // new in Version 1.2
         highPrecisionAuxiliaryOutput = false;    // new in Version 1.2
+        phreeqcSelectedOutput = true;            // new in Version 1.4
+        phreeqcDebugChemistry = false;           // new in Version 1.4
 
         outputTimeOption = NO_OUTPUT_TIME;
         outputTimeInterval = 0;

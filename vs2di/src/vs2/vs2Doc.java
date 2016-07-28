@@ -251,7 +251,9 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         if (modelOptions.doSoluteTransport) {
             // Card A-12
-            pw.print(modelOptions.iprntcheOption + " " + modelOptions.iprntcheOption + " " + modelOptions.ipoutOption);
+            pw.print((modelOptions.phreeqcSelectedOutput ? "1" : "0") + " "
+                    + (modelOptions.phreeqcSelectedOutput ? "1" : "0") + " "
+                    + (modelOptions.phreeqcDebugChemistry ? "1" : "0"));
             pw.println("          /A12 -- IPRNTCHE, INPRXZ, IPOUT");
         }
         
@@ -547,14 +549,12 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // transport panel
         dlg.transportPanel.doSpaceCentered = modelOptions.doSpaceCentered;
         dlg.transportPanel.doTimeCentered  = modelOptions.doTimeCentered;
-        if (modelOptions.doSoluteTransport) {
-            // new for Version 1.4
-            dlg.transportPanel.chemFile       = modelOptions.chemFile;
-            dlg.transportPanel.databaseFile   = modelOptions.databaseFile;
-            dlg.transportPanel.prefix         = modelOptions.prefix;
-            dlg.transportPanel.iprntcheOption = modelOptions.iprntcheOption;
-            dlg.transportPanel.ipoutOption    = modelOptions.ipoutOption;
-        }
+        
+        // new for Version 1.4
+        dlg.transportPanel.chemFile       = modelOptions.chemFile;
+        dlg.transportPanel.databaseFile   = modelOptions.databaseFile;
+        dlg.transportPanel.prefix         = modelOptions.prefix;
+        
         // solver panel
         dlg.solverPanel.hmax = modelOptions.relaxationParameter;
         dlg.solverPanel.minit = modelOptions.minIterationsPerTimeStep;
@@ -590,7 +590,10 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                             modelOptions.outputTimeOption;
         dlg.outputPanel.outputTimeInterval =
                             modelOptions.outputTimeInterval;
-
+        dlg.outputPanel.phreeqcSelectedOutput = 
+                modelOptions.phreeqcSelectedOutput;  // new for Version 1.4
+        dlg.outputPanel.phreeqcDebugChemistry =
+                modelOptions.phreeqcDebugChemistry;  // new for Version 1.4
         dlg.fluidBalancePanel.inFlowSpecifiedHead =
                             modelOptions.inFlowSpecifiedHead;
         dlg.fluidBalancePanel.outFlowSpecifiedHead =
@@ -723,8 +726,9 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                     modelOptions.chemFile                    = dlg.transportPanel.chemFile;
                     modelOptions.databaseFile                = dlg.transportPanel.databaseFile;
                     modelOptions.prefix                      = dlg.transportPanel.prefix;
-                    modelOptions.iprntcheOption              = dlg.transportPanel.iprntcheOption;
-                    modelOptions.ipoutOption                 = dlg.transportPanel.ipoutOption;
+                    
+                    modelOptions.phreeqcSelectedOutput       = dlg.outputPanel.phreeqcSelectedOutput;
+                    modelOptions.phreeqcDebugChemistry       = dlg.outputPanel.phreeqcDebugChemistry;
                     
                     modelOptions.closureCriterionForConc     = dlg.solverPanel.eps3;
                 }

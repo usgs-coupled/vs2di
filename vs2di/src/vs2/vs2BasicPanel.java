@@ -310,6 +310,10 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
 
         parentDialog.transportPanel.doSoluteTransport(
                 doSoluteTransportCheckBox.isSelected());
+
+        parentDialog.outputPanel.doSoluteTransport(
+                doSoluteTransportCheckBox.isSelected());
+
     }
     
     /**

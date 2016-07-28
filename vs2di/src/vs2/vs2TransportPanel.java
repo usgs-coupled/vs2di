@@ -16,8 +16,6 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
     public String chemFile;          // new in 1.4
     public String databaseFile;      // new in 1.4
     public String prefix;            // new in 1.4
-    public int iprntcheOption;       // new in 1.4
-    public int ipoutOption;          // new in 1.4
     
     protected JRadioButton spaceCentered;
     protected JRadioButton spaceBackward;
@@ -116,56 +114,6 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
 
         transLeftPanel.add(prefixLabel = new JLabel("Prefix name", SwingConstants.RIGHT));
         transRightPanel.add(prefixTextField = new JTextField(20));
-
-        JPanel optionsPanel = new JPanel(false);
-        panel.add(optionsPanel);
-
-        // create radio panels side by side
-        JPanel radioPanel = new JPanel(false);
-        radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
-        panel.add(radioPanel);
-
-        // Phreeqc Output (0 -> None) (1 -> Selected output)
-        radioPanel.add(subPanel = new JPanel(gridbag, false));
-        subPanel.setBorder(new CompoundBorder(
-                BorderFactory.createTitledBorder("IPRNTCHE"),
-                new EmptyBorder(5, 2, 5, 2)));
-        c.fill = GridBagConstraints.NONE;
-        c.anchor = GridBagConstraints.WEST;
-        c.insets = new Insets(0, 0, 0, 0);
-
-        noPhreeqcOutputRadioButton = new JRadioButton("No phreeqc output");
-        gridbag.setConstraints(noPhreeqcOutputRadioButton, c);
-        subPanel.add(noPhreeqcOutputRadioButton);
-
-        selectedOutputRadioButton = new JRadioButton("Selected output");
-        gridbag.setConstraints(selectedOutputRadioButton, c);
-        subPanel.add(selectedOutputRadioButton);
-
-        bg = new ButtonGroup();
-        bg.add(noPhreeqcOutputRadioButton);
-        bg.add(selectedOutputRadioButton);
-
-        // Phreeqc Chemistry??? Output (0 -> None) (1 -> Extensive)
-        radioPanel.add(subPanel = new JPanel(gridbag, false));
-        subPanel.setBorder(new CompoundBorder(
-                BorderFactory.createTitledBorder("IPOUT"),
-                new EmptyBorder(5, 2, 5, 2)));
-        c.fill = GridBagConstraints.NONE;
-        c.anchor = GridBagConstraints.WEST;
-        c.insets = new Insets(0, 0, 0, 0);
-
-        ipoutNoPhreeqcOutputRadioButton = new JRadioButton("No phreeqc output");
-        gridbag.setConstraints(ipoutNoPhreeqcOutputRadioButton, c);
-        subPanel.add(ipoutNoPhreeqcOutputRadioButton);
-
-        ipoutExtensivePhreeqcOutputRadioButton = new JRadioButton("Extensive phreeqc output");
-        gridbag.setConstraints(ipoutExtensivePhreeqcOutputRadioButton, c);
-        subPanel.add(ipoutExtensivePhreeqcOutputRadioButton);
-
-        bg = new ButtonGroup();
-        bg.add(ipoutNoPhreeqcOutputRadioButton);
-        bg.add(ipoutExtensivePhreeqcOutputRadioButton);
     }
     
     public void doSoluteTransport(boolean b) {
@@ -177,11 +125,6 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
         databasefileTextField.setEnabled(b);
         prefixTextField.setEnabled(b);
         
-        noPhreeqcOutputRadioButton.setEnabled(b);
-        selectedOutputRadioButton.setEnabled(b);        
-        
-        ipoutNoPhreeqcOutputRadioButton.setEnabled(b);
-        ipoutExtensivePhreeqcOutputRadioButton.setEnabled(b);
         revalidate();
     }
     
@@ -203,18 +146,6 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
 
         // PREFIX
         prefixTextField.setText(prefix);                
-
-        // IPRNTCHE
-        noPhreeqcOutputRadioButton.setSelected(
-                iprntcheOption == IPRNTCHE_NO_PHREEQC_OUTPUT);
-        selectedOutputRadioButton.setSelected(
-                iprntcheOption == IPRNTCHE_SELECTED_OUTPUT);
-
-        // IPOUT
-        ipoutNoPhreeqcOutputRadioButton.setSelected(
-                ipoutOption == IPOUT_NO_PHREEQC_OUTPUT);
-        ipoutExtensivePhreeqcOutputRadioButton.setSelected(
-                ipoutOption == IPOUT_EXTENSIVE_PHREEQC_OUTPUT);
     }
 
     /**
@@ -234,22 +165,6 @@ public class vs2TransportPanel extends vs2ModelOptionsPanel
 
             // PREFIX
             prefix = prefixTextField.getText();
-            
-            // IPRNTCHE
-            if (noPhreeqcOutputRadioButton.isSelected()) {
-                iprntcheOption = IPRNTCHE_NO_PHREEQC_OUTPUT;
-            }
-            else {
-                iprntcheOption = IPRNTCHE_SELECTED_OUTPUT;
-            }
-            
-            // IPOUT
-            if (ipoutNoPhreeqcOutputRadioButton.isSelected()) {
-                ipoutOption = IPOUT_NO_PHREEQC_OUTPUT;
-            }
-            else {
-                ipoutOption = IPOUT_EXTENSIVE_PHREEQC_OUTPUT;
-            }
         }
         return true;
     }

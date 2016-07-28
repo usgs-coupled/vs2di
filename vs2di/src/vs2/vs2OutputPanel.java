@@ -22,6 +22,8 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     public boolean outputMassBalanceEveryTimeStep;
     public boolean outputToAuxFilesEveryTimeStep;
     public boolean highPrecisionAuxiliaryOutput;
+    public boolean phreeqcSelectedOutput;       // new in 1.4
+    public boolean phreeqcDebugChemistry;       // new in 1.4
     public int outputTimeOption;
     public double outputTimeInterval;
 
@@ -31,8 +33,10 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     protected JCheckBox saturationOutCheckBox;
     protected JCheckBox pressureHeadOutCheckBox;
     protected JCheckBox totalHeadOutCheckBox;
-    protected JCheckBox velocityOutCheckBox;
-
+    protected JCheckBox velocityOutCheckBox;    
+    protected JCheckBox phreeqcSelectedOutputCheckBox;  // new in 1.4
+    protected JCheckBox phreeqcDebugChemistryCheckBox;  // new in 1.4
+    
     protected JRadioButton massBalanceEveryTimeStepRadioButton;
     protected JRadioButton massBalanceOutputTimesRadioButton;
     protected JRadioButton auxFilesEveryTimeStepRadioButton;
@@ -50,6 +54,7 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
     protected JButton modifyButton;
     protected JButton deleteButton;
 
+    protected JLabel phreeqcLabel;
 
     /**
      * Creates the panel for output options
@@ -165,6 +170,20 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
         bg = new ButtonGroup();
         bg.add(normalPrecisionRadioButton);
         bg.add(highPrecisionRadioButton);
+
+        // Phreeqc options
+        panel.add(phreeqcLabel = new JLabel("Phreeqc Options:", SwingConstants.LEFT));
+        c.insets = new Insets(4, 0, 5, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        gridbag.setConstraints(phreeqcLabel, c);
+        panel.add(subpanel = new JPanel(new GridLayout(1, 2, 0, 0), false));
+        c.insets = new Insets(0, 0, 0, 0);
+        gridbag.setConstraints(subpanel, c);
+        phreeqcSelectedOutputCheckBox = new JCheckBox("Selected output");
+        subpanel.add(phreeqcSelectedOutputCheckBox);
+        phreeqcDebugChemistryCheckBox = new JCheckBox("Debug chemistry");
+        subpanel.add(phreeqcDebugChemistryCheckBox);
 
         // Right side
         add(rightPanel = new JPanel(gridbag, false));
@@ -443,6 +462,9 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
             modifyButton.setEnabled(false);
             deleteButton.setEnabled(false);
         }
+
+        phreeqcSelectedOutputCheckBox.setSelected(phreeqcSelectedOutput);
+        phreeqcDebugChemistryCheckBox.setSelected(phreeqcDebugChemistry);
     }
 
     /**
@@ -491,6 +513,9 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
                 auxFilesEveryTimeStepRadioButton.isSelected();
         highPrecisionAuxiliaryOutput = highPrecisionRadioButton.isSelected();
 
+        phreeqcSelectedOutput = phreeqcSelectedOutputCheckBox.isSelected();
+        phreeqcDebugChemistry = phreeqcDebugChemistryCheckBox.isSelected();
+
         return true;
     }
 
@@ -511,5 +536,12 @@ public class vs2OutputPanel extends vs2ModelOptionsPanel
             modifyButton.setEnabled(true);
             deleteButton.setEnabled(true);
         }
+    }
+
+    public void doSoluteTransport(boolean b) {
+        phreeqcLabel.setEnabled(b);
+        phreeqcSelectedOutputCheckBox.setEnabled(b);
+        phreeqcDebugChemistryCheckBox.setEnabled(b);
+        revalidate();
     }
 }

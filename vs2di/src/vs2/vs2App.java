@@ -141,6 +141,17 @@ public class vs2App extends mp2App implements vs2Constants {
                 ClassLoader.getSystemResource("images/splash.gif"),
                 ClassLoader.getSystemResource("images/appicon.gif"),
                 homeDir);
+
+        if (args != null && args.length > 0 && args[0].length() > 0) {
+            try {
+                File f = new File(args[0]);
+                f = f.getCanonicalFile();
+                theApp.openFile(f);
+            }
+            catch (java.io.IOException e) {
+                // do nothing
+            }
+        }
     }
     
     /**
@@ -212,6 +223,7 @@ public class vs2App extends mp2App implements vs2Constants {
      * Used for testing purposes. (Modified from mp2App.openDocument()
      */
     public void openFile(File inFile) {
+        frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try {
             // Create an input stream for object deserialization.
             FileInputStream input = new FileInputStream(inFile);
@@ -274,6 +286,7 @@ public class vs2App extends mp2App implements vs2Constants {
                 "Unable to read from file " + inFile.getAbsolutePath(),
                 "IO Error");
         }
+        frame.setCursor(Cursor.getDefaultCursor());
         mp2Math.changeDirectory(doc.getDirectory());
     }
 }

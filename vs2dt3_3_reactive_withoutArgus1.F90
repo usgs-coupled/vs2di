@@ -472,20 +472,16 @@
       IF(SOLUTE)THEN
           READ (5,'(A)',IOSTAT=myerr) myline
           if (myerr .eq. 0) then
-             READ (myline,*,IOSTAT=myerr)IPRNTCHE,INPRXZ,IPOUT
+             READ (myline,*,IOSTAT=myerr)INPRXZ
           else
              write(6,'(A)') 'Unexpected end of file.'
           endif
           if (myerr .ne. 0) then
-              write(6,'(A)') 'Error reading: IPRNTCHE,INPRXZ,IPOUT'
+              write(6,'(A)') 'Error reading: INPRXZ'
               write(6,'(A,A)') 'Last line: ', myline
               flush(6)
-              stop 'Error reading: IPRNTCHE,INPRXZ,IPOUT'
+              stop 'Error reading: INPRXZ'
           endif
-  !    DO 5 I=1,NNODES
-  !    NPRCHEM(I)= IPRNTCHE
-  !    NPRCHXZ(I)= INPRXZ
-  !5   CONTINUE
       END IF     
       READ (5,'(A)',IOSTAT=myerr) myline
       if (myerr .eq. 0) then
@@ -595,7 +591,7 @@
       allocate(phreeC(Nodesol))
       allocate(CMIXFARC(7,NNODES),BCSOL(Nsol),INDSOL1(7,NNODES),INDSOL2(7,NNODES))
       allocate(ic1_reordered(nnodes,7))
-      allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES))
+      allocate(NPRCHEM(NNODES),NPRCHXZ(NNODES),NPRCHOBS(NNODES))
       allocate(BLSOL(Nsol,36),bl62I(Nsol),bl62IT(Nsol),bl62O(Nsol),bl62OT(Nsol), &
              bcmtt(Nsol),bcmt(Nsol),bcmtr(Nsol),bltemp36(Nsol),bltemp39(Nsol), &
              bltemp42(Nsol),bltemp45(Nsol),bltemp60(Nsol))
@@ -623,8 +619,10 @@
       phreeC(I)=0.d0
   8   continue
       DO 711 I=1, NNODES
-      XNODE(I)= 0.0D0
-      ZNODE(I)= 0.0D0  
+      !XNODE(I)= 0.0D0
+      !ZNODE(I)= 0.0D0  
+      XNODE(I)= 0
+      ZNODE(I)= 0
       HX(I) = 0.0D0
       NTYP(I) = 0
       THETA(I) = 0.0D0
@@ -688,7 +686,8 @@
       RHO(I) = 0.0D0
       RHOOLD(I) = 0.0D0
       NPRCHEM(I) = 0
-      NPRCHXZ(I) = 0 
+      NPRCHXZ(I) = 0
+      NPRCHOBS(I) = 0
  711  CONTINUE
       DO 714 I=1, NNODES
       DO 713 M=1, Nsol
@@ -731,7 +730,7 @@
  717  CONTINUE
       
       DO 5 I=1,NNODES
-      NPRCHEM(I)= IPRNTCHE
+      NPRCHEM(I)= 1
       NPRCHXZ(I)= INPRXZ
 5     CONTINUE   
       
@@ -1239,6 +1238,7 @@
       COMMON/FLO/FLOW
       COMMON/SCON1/ITESTS
       character(100) msg
+      integer :: iPRNT
       
 !
 ! -------------------------------------------------------------
@@ -1403,7 +1403,9 @@
           status = RM_SetTimeStep(rm_id, delt)
           status = RM_SetTimeConversion(rm_id, cnvtmi)
           status = RM_SetPrintChemistryMask(rm_id, nprchem)
-          status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+          iPRNT = 0
+          if (PRNT) iPRNT = 1
+          status = RM_SetPrintChemistryOn(rm_id, iPRNT, 0, 0)
           DO J=1,NLY
               DO N=1,NXR
                   IN=NLY*(N-1)+J
@@ -1422,8 +1424,6 @@
           !endif
           status = RM_RunCells(rm_id)
           call GetConcentrationsRM(cc)
-          !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
-          call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz, iprrestartflag)
       END IF      
       if (solute) then
           if (heat) then
@@ -1538,7 +1538,7 @@
       common/ITEMK/KNLY,KNXR,KNNODE
       integer :: iu = 101
       CHARACTER*256 :: myline
-      INTEGER       :: myerr
+      INTEGER       :: myerr, iPRNT
       
       !!@@include 'd_idummAlloc.inc'
       allocate(IDUM(NXR))
@@ -2346,16 +2346,19 @@
                       INDSOL1(1,IN)=-1
                       NPRCHEM(IN)=0
                       NPRCHXZ(IN)=0
+                      NPRCHOBS(IN)=0
                    else 
                     if (J.eq.1.or.J.eq.NXR)then
                       INDSOL1(1,IN)=-1
                       NPRCHEM(IN)=0
                       NPRCHXZ(IN)=0
+                      NPRCHOBS(IN)=0
                      else 
                       if (HX(IN).LE.0.0D0) then
                        INDSOL1(1,IN)=-1
                        NPRCHEM(IN)=0
                        NPRCHXZ(IN)=0
+                       NPRCHOBS(IN)=0
                      end if
                     end if 
                    end if    
@@ -2424,18 +2427,18 @@
               IF (HEAT) THEN
                   status = RM_SetTemperature(rm_id, tt)
               endif
-              
+
               status = RM_SetTime(rm_id, 0.0d0)
               status = RM_SetTimeStep(rm_id, delt)
               status = RM_SetTimeConversion(rm_id, cnvtmi)
               status = RM_SetPrintChemistryMask(rm_id, nprchem)
-              status = RM_SetPrintChemistryOn(rm_id, ipout, ipout, ipout)
+              iPRNT = 0
+              if (PRNT) iPRNT = 1
+              status = RM_SetPrintChemistryOn(rm_id, iPRNT, 0, 0)
               status = RM_SetSaturation(rm_id, theta)
               status = RM_RunCells(rm_id)
               call GetConcentrationsRM(cc)
-              !call FH_WriteFiles(rm_id, ihdf, imedia, ixyz, nprchxz, iprrestartflag) 
-              call FH_SetPointers(xnode(1), xnode(1), znode(1), ic1_reordered(1,1), theta(1), forward1(1))
-              call FH_WriteFiles(rm_id, 0, 0, 1, nprchxz(1), iprrestartflag)
+              call FH_SetPointers(RX(1), DZZ(1), xnode(1), znode(1), ic1_reordered(1,1), theta(1), forward1(1))
           END IF
       END IF
 !
@@ -5733,6 +5736,8 @@
       use rpropsh
       use scon
       use disch
+      use PRICON
+      use vs2dt_rm
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
       
       COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -5754,7 +5759,7 @@
       LOGICAL HEAT,SOLUTE
       COMMON/TRANSTYPE/HEAT,SOLUTE
       COMMON/TCON1/NIS,NIS1,NIS3
-     
+      integer :: io11p
 !-------------------------------------------------------------------
 !
 !   OUTPUT RESULTS TO FILE 11 AT EACH TIME STEP
@@ -5766,6 +5771,7 @@
         
       DO 10 J=1,NOBS
       N=IJOBS(J)
+      NPRCHOBS(N)=1
       I=N/NLY+1
       J1=MOD(N,NLY)
       IF(HX(N).NE.0.0D0) THEN
@@ -5998,6 +6004,12 @@
       IF(SOLUTE) THEN
       WRITE(6,4121)
       CALL VSOUTS(1,CC)
+      if (o11p) then
+          io11p = 1
+      else
+          io11p = 0
+      endif
+      call FH_WriteFiles(rm_id, 1, io11p, NPRCHXZ(1), NPRCHOBS(1))
       END IF      
       CONTINUE
       RETURN
@@ -9232,7 +9244,8 @@
       if (allocated(INDSOL2))deallocate(INDSOL2)
       if (allocated(ic1_reordered))deallocate(ic1_reordered)
       if (allocated(NPRCHEM))deallocate(NPRCHEM)
-      if (allocated (NPRCHXZ))deallocate(NPRCHXZ) 
+      if (allocated(NPRCHXZ))deallocate(NPRCHXZ) 
+      if (allocated(NPRCHOBS))deallocate(NPRCHOBS)
       if (allocated(BLSOL))deallocate(BLSOL)
       if (allocated(bl62I))deallocate(bl62I)
       if (allocated(bl62IT))deallocate(bl62IT)

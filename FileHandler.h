@@ -14,16 +14,6 @@
 #define FC_FUNC_(name,NAME) NAME
 #endif
 
-#if defined(FC_FUNC_)
-// Called from Fortran or C++
-#define FH_FinalizeFiles                FC_FUNC_ (fh_finalizefiles,                 FH_FINALIZEFILES_)
-#define FH_ProcessRestartFiles          FC_FUNC_ (fh_processrestartfiles,           FH_PROCESSRESTARTFILES_)
-#define FH_SetPointers                  FC_FUNC_ (fh_setpointers,                   FH_SETPOINTERS_)
-#define FH_SetRestartName               FC_FUNC_ (fh_setrestartname,                FH_SETRESTARTNAME_)
-#define FH_WriteFiles                   FC_FUNC_ (fh_writefiles,                    FH_WRITEFILES_)
-#define FH_WriteBcRaw                   FC_FUNC_ (fh_writebcraw,                    FH_WRITEBCRAW_)
-#endif
-
 #if defined(CMAKE_FC)
 #include "FC.h"
 #endif
@@ -32,11 +22,9 @@
 extern "C" {
 #endif
 IPQ_DLL_EXPORT void FH_FinalizeFiles();
-//void FH_ProcessRestartFiles(int *id, int *initial_conditions1_in, int *initial_conditions2_in, 
-//	double *fraction1_in);
-IPQ_DLL_EXPORT void FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation = NULL, int *mapping = NULL);
+IPQ_DLL_EXPORT void FH_SetPointers(double *x_node,double *z_node, int * x_index, int * z_index, int *ic, double *saturation = NULL, int *mapping = NULL);
 IPQ_DLL_EXPORT void FH_SetRestartName(const char *name, long nchar);
-IPQ_DLL_EXPORT void FH_WriteFiles(int *id, int *print_hdf, int *print_media, int *print_xyz, int *xyz_mask, int *print_restart);
+IPQ_DLL_EXPORT void FH_WriteFiles(int *id, int *print_xz, int *print_obs, int *xz_mask, int *obs_mask);
 IPQ_DLL_EXPORT void FH_WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
 #if defined(__cplusplus)
 }

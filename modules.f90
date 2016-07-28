@@ -149,7 +149,7 @@
       end module TEMP
 
       module PRICON
-      integer, allocatable::NPRCHEM(:),NPRCHXZ(:)
+      integer, allocatable::NPRCHEM(:),NPRCHXZ(:),NPRCHOBS(:)
       integer NPRCONC,NPSCRN,IPOUT
       end module PRICON
 
@@ -158,7 +158,8 @@
       end module TEMPCC
 
       module COORDIN
-      double precision, allocatable:: XNODE(:),ZNODE(:)
+      !double precision, allocatable:: XNODE(:),ZNODE(:)
+      integer, allocatable:: XNODE(:),ZNODE(:)
       end module COORDIN
 
       module SOLINDEX

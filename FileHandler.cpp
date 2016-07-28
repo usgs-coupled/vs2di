@@ -67,15 +67,16 @@ public:
 	void SetXYZInitialized(bool tf) {this->XYZInitialized = tf;}
 	std::map< std::string, std::ostream * > &GetBcZoneOstreams(void) {return this->BcZoneOstreams;}
 	std::vector< std::ostream * > &GetXYZOstreams(void) {return this->XYZOstreams;}
+	std::vector< std::ostream * > &GetObsOstreams(void) {return this->ObsOstreams;}
 	std::vector< std::string > &GetHeadings(void) {return this->Headings;}
 	void SetHeadings(std::vector< std::string > &h) {this->Headings = h;}
-	void SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation = NULL, int *mapping = NULL);
+	void SetPointers(double *x_node, double *z_node, int * x_index, int * z_index, int *ic, double *saturation = NULL, int *mapping = NULL);
 	IRM_RESULT SetRestartName(const char *name, long nchar);
 	IRM_RESULT WriteRestartFile(int *id, int *print_restart = NULL, int *indices_ic = NULL);
-	IRM_RESULT WriteFiles(int id, int *print_hdf = NULL, int *print_media = NULL, int *print_xyz = NULL, int *xyz_mask = NULL, int *print_restart = NULL);
+	IRM_RESULT WriteFiles(int id, int *print_xz = NULL, int *print_obs = NULL, int *xz_mask = NULL, int *obs_mask = NULL);
 	//IRM_RESULT WriteHDF(int id, int *print_hdf, int *print_media);
-	IRM_RESULT WriteRestart(int id, int *print_restart);
-	IRM_RESULT WriteXYZ(int id, int *print_xyz, int *xyz_mask);
+	//IRM_RESULT WriteRestart(int id, int *print_restart);
+	IRM_RESULT WriteXYZ(int id, int *print_xyz, int *print_obs, int *xz_mask, int *obs_mask);
     //IRM_RESULT WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
 
 protected:
@@ -84,10 +85,12 @@ protected:
 	bool XYZInitialized;
 	std::vector< std::string > Headings;
 	std::vector < std::ostream * > XYZOstreams;	
+	std::vector < std::ostream * > ObsOstreams;	
 	std::map < std::string, int > RestartFileMap; 
 	double * x_node;
-	double * y_node;
 	double * z_node;
+	int * x_index;
+	int * z_index;
 	double * saturation;  // only root
 	int    * mapping;     // only root
 	int    * ic;
@@ -420,19 +423,21 @@ FileHandler::ProcessRestartFiles(
 #endif
 /* ---------------------------------------------------------------------- */
 void
-FileHandler::SetPointers(double *x_node_in, double *y_node_in, double *z_node_in, int *ic_in,
+FileHandler::SetPointers(double *x_node_in, double *z_node_in, int * x_index_in, int * z_index_in, int *ic_in,
 	double * saturation_in, int *mapping_in)
 /* ---------------------------------------------------------------------- */
 {
 	this->x_node = x_node_in;
-	this->y_node = y_node_in;
 	this->z_node = z_node_in;
+	x_index = x_index_in;
+	z_index = z_index_in;
 	this->saturation = saturation_in;
 	this->mapping = mapping_in;  // only root
 	this->ic = ic_in;
 	if (this->x_node == NULL ||
-		this->y_node == NULL ||
 		this->z_node == NULL ||
+		x_index == NULL ||
+		z_index == NULL ||
 		this->ic == NULL)
 	{
 		error_msg("NULL pointer in FileHandler.SetPointers ", 1);
@@ -455,44 +460,30 @@ FileHandler::SetRestartName(const char *name, long nchar)
 
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
-FileHandler::WriteFiles(int id, int *print_hdf_in, int *print_media_in, int *print_xyz_in, int *xyz_mask, int *print_restart_in)
+FileHandler::WriteFiles(int id, int *print_xz_in, int *print_obs_in, int *xz_mask, int *obs_mask)
 /* ---------------------------------------------------------------------- */
 {
 	PhreeqcRM * Reaction_module_ptr = PhreeqcRM::GetInstance(id);
 	if (Reaction_module_ptr)
 	{	
 		IRM_RESULT rtn = IRM_OK;
-		int print_hdf, print_media, print_xyz, print_restart;
+		int print_xz, print_obs;
 
-		if (print_hdf_in == 0 || 
-			print_media_in == 0 ||
-			print_xyz_in == 0 ||
-			xyz_mask == 0 ||
-			print_restart_in == 0)
+		if (print_xz_in == 0 ||
+			print_obs_in == 0 ||
+			obs_mask == 0)
 		{
 			Reaction_module_ptr->ErrorHandler(IRM_FAIL, "NULL pointer in FileHandler::WriteFiles");
 			//RM_Error(id, "Null pointer in WriteFiles");
 		}
-		print_media = *print_media_in;		
-		print_hdf = *print_hdf_in;
-		print_xyz = *print_xyz_in;
-		print_restart = *print_restart_in;
+		print_xz = *print_xz_in;
+		print_obs = *print_obs_in;
 
-		//if (print_hdf != 0)
-		//{
-		//	IRM_RESULT result = WriteHDF(id, &print_hdf, &print_media);
-		//	if (result) rtn = result;
-		//}
-		if (print_xyz != 0)
+		if (print_xz != 0)
 		{
-			IRM_RESULT result = WriteXYZ(id, &print_xyz, xyz_mask);
+			IRM_RESULT result = WriteXYZ(id, &print_xz, &print_obs, xz_mask, obs_mask);
 			if (result) rtn = result;
 		}		
-		if (print_restart != 0)
-		{
-			IRM_RESULT result = WriteRestart(id, &print_restart);
-			if (result) rtn = result;
-		}	
 
 		return rtn;
 	}
@@ -698,6 +689,7 @@ FileHandler::WriteHDF(int id, int *print_hdf, int *print_media)
 	return IRM_BADINSTANCE;
 }
 #endif
+#ifdef SKIP
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
 FileHandler::WriteRestart(int id, int *print_restart)
@@ -793,12 +785,14 @@ FileHandler::WriteRestart(int id, int *print_restart)
 	}
 	return IRM_BADINSTANCE;
 }
+#endif
 /* ---------------------------------------------------------------------- */
 IRM_RESULT
-FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
+FileHandler::WriteXYZ(int id, int *print_xz, int *print_obs, int *xz_mask, int *obs_mask)
 /* ---------------------------------------------------------------------- */
 {
 	PhreeqcRM * Reaction_module_ptr = PhreeqcRM::GetInstance(id);
+	if (*print_xz == 0 && *print_obs == 0) return IRM_OK;
 	if (Reaction_module_ptr)
 	{	
 		int nso = RM_GetSelectedOutputCount(id);
@@ -807,7 +801,7 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 		//
 		// Initialize XYZ
 		//
-		if (!this->GetXYZInitialized() && nso > 0 && *print_xyz != 0)
+		if (!this->GetXYZInitialized())
 		{
 			for (int iso = 0; iso < nso; iso++)
 			{
@@ -818,76 +812,112 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 					status = RM_SetCurrentSelectedOutputUserNumber(id, n_user);
 					if (status >= 0)
 					{
-						// open file							
+						// open files							
 						char prefix[256];
 						RM_GetFilePrefix(id, prefix, 256);
-						std::ostringstream filename;
-						filename << prefix << "_" << n_user << ".chem.xyz.tsv";
-						if (!this->Get_io()->punch_open(filename.str().c_str()))
+						if (*print_xz != 0)
 						{
-							Reaction_module_ptr->ErrorHandler(IRM_FAIL, "Could not open xyz file.");
-						}
-						this->GetXYZOstreams().push_back(this->Get_io()->Get_punch_ostream());
-						// write first headings
-						char line_buff[132];
-						//sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t%2s\t", "x", "y",
-						//	"z", "time", "in");
-						sprintf(line_buff, "%15s\t%15s\t%15s\t%2s\t", "x", 
-							"z", "time", "in");
-						this->Get_io()->punch_msg(line_buff);
+							// chem.xz.tsv
+							std::ostringstream filename;
+							filename << prefix << "_" << n_user << ".chem.xz.tsv";
+							if (!this->Get_io()->punch_open(filename.str().c_str()))
+							{
+								Reaction_module_ptr->ErrorHandler(IRM_FAIL, "Could not open xyz file.");
+							}
+							this->GetXYZOstreams().push_back(this->Get_io()->Get_punch_ostream());
+							// write first headings
+							char line_buff[132];
+							sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t", 
+								"TIME",
+								"NODE",
+								"XR", 
+								"Z");
+							this->Get_io()->punch_msg(line_buff);
 
-						// create chemistry headings
-						int ncol = RM_GetSelectedOutputColumnCount(id);
-						std::ostringstream h;
-						for (int icol = 0; icol < ncol; icol++)
-						{
-							char head[100];
-							status = RM_GetSelectedOutputHeading(id, icol, head, 100);
-							std::string s(head);
-							s.append("\t");
-							h.width(20);
-							h << s;
+							// create chemistry headings
+							int ncol = RM_GetSelectedOutputColumnCount(id);
+							std::ostringstream h;
+							for (int icol = 0; icol < ncol; icol++)
+							{
+								char head[100];
+								status = RM_GetSelectedOutputHeading(id, icol, head, 100);
+								std::string s(head);
+								s.append("\t");
+								h.width(20);
+								h << s;
+							}
+							h << "\n";
+							this->Get_io()->punch_msg(h.str().c_str());
 						}
-						h << "\n";
-						this->Get_io()->punch_msg(h.str().c_str());
+						if (*print_obs != 0)
+						{
+							// chemobs.xz.tsv
+							std::ostringstream filename;
+							filename << prefix << "_" << n_user << ".chemobs.xz.tsv";
+							if (!this->Get_io()->punch_open(filename.str().c_str()))
+							{
+								Reaction_module_ptr->ErrorHandler(IRM_FAIL, "Could not open xyz file.");
+							}
+							this->GetObsOstreams().push_back(this->Get_io()->Get_punch_ostream());
+							// write first headings
+							char line_buff[132];
+							sprintf(line_buff, "%15s\t%15s\t%15s\t%15s\t", 
+								"TIME",
+								"NODE",
+								"XR", 
+								"Z");
+							this->Get_io()->punch_msg(line_buff);
+
+							// create chemistry headings
+							int ncol = RM_GetSelectedOutputColumnCount(id);
+							std::ostringstream h;
+							for (int icol = 0; icol < ncol; icol++)
+							{
+								char head[100];
+								status = RM_GetSelectedOutputHeading(id, icol, head, 100);
+								std::string s(head);
+								s.append("\t");
+								h.width(20);
+								h << s;
+							}
+							h << "\n";
+							this->Get_io()->punch_msg(h.str().c_str());
+						}
 					}
 				}
 			}
 			this->SetXYZInitialized(true);
 		}
+
 		//	
 		// Write XYZ file
 		//
-		if (*print_xyz != 0)
+		std::vector<double> local_selected_out;
+		int status;
+		for (int iso = 0; iso < nso; iso++)
 		{
-			std::vector<double> local_selected_out;
-			int status;
-			for (int iso = 0; iso < nso; iso++)
+			int n_user = RM_GetNthSelectedOutputUserNumber(id, iso);
+			if (n_user >= 0)
 			{
-				int n_user = RM_GetNthSelectedOutputUserNumber(id, iso);
-				if (n_user >= 0)
+				status = RM_SetCurrentSelectedOutputUserNumber(id, n_user);
+				int ncol = RM_GetSelectedOutputColumnCount(id);
+				if (status >= 0)
 				{
-					status = RM_SetCurrentSelectedOutputUserNumber(id, n_user);
-					int ncol = RM_GetSelectedOutputColumnCount(id);
-					if (status >= 0)
+					local_selected_out.resize((size_t) (nxyz*ncol));
+					RM_GetSelectedOutput(id, &local_selected_out.front());
+
+					if (*print_xz != 0)
 					{
+
 						this->Get_io()->Set_punch_ostream(this->GetXYZOstreams()[iso]);
-						local_selected_out.resize((size_t) (nxyz*ncol));
-						RM_GetSelectedOutput(id, &local_selected_out.front());
 
 						// write xyz file
-#ifdef OLD_STYLE_XYZ
-						for (int ichem = 0; ichem < RM_GetChemistryCellCount(id); ichem++)
+
+						for (int icell = 0; icell < nxyz; icell++)
 						{
-							PhreeqcRM * Reaction_module_ptr = PhreeqcRM::GetInstance(id);
-							int irow = Reaction_module_ptr->GetBackwardMapping()[ichem][0];
-#else
-						for (int irow = 0; irow < nxyz; irow++)
-						{
-#endif
-							if (xyz_mask[irow] <= 0) continue;
+							if (xz_mask[icell] <= 0) continue;
 							int active = 1;
-							if (mapping[irow] < 0 || saturation[irow] <= 0)
+							if (mapping[icell] < 0 || saturation[icell] <= 0)
 							{
 								active = 0;
 							}
@@ -896,12 +926,12 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 							std::ostringstream ln;
 
 							char line_buff[132];
-							//sprintf(line_buff, "%15g\t%15g\t%15g\t%15g\t%2d\t",
-							//	x_node[irow], y_node[irow], z_node[irow], current_time,
-							//	active);
-							sprintf(line_buff, "%15g\t%15g\t%15g\t%2d\t",
-								x_node[irow], z_node[irow], current_time,
-								active);
+
+							sprintf(line_buff, "%15g\t%15d\t%15g\t%15g\t",
+								current_time,
+								icell + 1,
+								x_node[x_index[icell] - 1], 
+								z_node[z_index[icell] - 1]);
 							ln << line_buff;
 
 							if (active)
@@ -910,7 +940,50 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 								char token[21];
 								for (int jcol = 0; jcol < ncol; jcol++)
 								{		
-									sprintf(token,"%19.10e\t", local_selected_out[jcol * nxyz + irow]);
+									sprintf(token,"%19.10e\t", local_selected_out[jcol * nxyz + icell]);
+									ln.width(20);
+									ln << token;
+								}
+							}
+							ln << "\n";
+							this->Get_io()->punch_msg(ln.str().c_str());
+						}
+					}
+					if (*print_obs != 0)
+					{
+
+						this->Get_io()->Set_punch_ostream(this->GetObsOstreams()[iso]);
+
+						// write xyz file
+
+						for (int icell = 0; icell < nxyz; icell++)
+						{
+							if (obs_mask[icell] <= 0) continue;
+							int active = 1;
+							if (mapping[icell] < 0 || saturation[icell] <= 0)
+							{
+								active = 0;
+							}
+
+							// write x,y,z
+							std::ostringstream ln;
+
+							char line_buff[132];
+
+							sprintf(line_buff, "%15g\t%15d\t%15g\t%15g\t",
+								current_time,
+								icell + 1,
+								x_node[x_index[icell] - 1], 
+								z_node[z_index[icell] - 1]);
+							ln << line_buff;
+
+							if (active)
+							{
+								// write chemistry values
+								char token[21];
+								for (int jcol = 0; jcol < ncol; jcol++)
+								{		
+									sprintf(token,"%19.10e\t", local_selected_out[jcol * nxyz + icell]);
 									ln.width(20);
 									ln << token;
 								}
@@ -922,6 +995,7 @@ FileHandler::WriteXYZ(int id, int *print_xyz, int *xyz_mask)
 				}
 			}
 		}
+
 		return IRM_OK;
 	}
 	return IRM_BADINSTANCE;
@@ -969,10 +1043,10 @@ FH_ProcessRestartFiles(
 #endif
 /* ---------------------------------------------------------------------- */
 void
-FH_SetPointers(double *x_node, double *y_node, double *z_node, int *ic, double *saturation, int *mapping)
+FH_SetPointers(double *x_node, double *z_node, int *x_index, int *z_index, int *ic, double *saturation, int *mapping)
 /* ---------------------------------------------------------------------- */
 {
-	file_handler.SetPointers(x_node, y_node, z_node, ic, saturation, mapping);
+	file_handler.SetPointers(x_node, z_node, x_index, z_index, ic, saturation, mapping);
 }
 /* ---------------------------------------------------------------------- */
 void
@@ -986,11 +1060,11 @@ FH_SetRestartName(const char *name, long nchar)
 }
 /* ---------------------------------------------------------------------- */
 void
-FH_WriteFiles(int *id_in, int *print_hdf, int *print_media, int *print_xyz, int *xyz_mask, int *print_restart)
+FH_WriteFiles(int *id_in, int *print_xz, int *print_obs, int *xz_mask, int *obs_mask)
 /* ---------------------------------------------------------------------- */
 {
 	int id = *id_in;
-	file_handler.WriteFiles(id, print_hdf, print_media, print_xyz, xyz_mask, print_restart);
+	file_handler.WriteFiles(id, print_xz, print_obs, xz_mask, obs_mask);
 }
 #ifdef SKIP
 /* ---------------------------------------------------------------------- */

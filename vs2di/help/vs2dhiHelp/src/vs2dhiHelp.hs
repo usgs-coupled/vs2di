@@ -6,7 +6,7 @@
 <helpset version="2.0">
 
   <!-- title -->
-  <title>Help for VS2DHI - Version 1.3</title>
+  <title>Help for VS2DHI - Version 1.4</title>
 
   <!-- maps -->
   <maps>

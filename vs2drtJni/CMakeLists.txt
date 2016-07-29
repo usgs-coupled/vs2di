@@ -7,12 +7,6 @@ include(GNUInstallDirs)
 # fortran name mangling
 include(FortranCInterface)
 FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
-  FH_FinalizeFiles
-  FH_ProcessRestartFiles
-  FH_SetPointers
-  FH_SetRestartName
-  FH_WriteFiles
-  FH_WriteBcRaw
   CLOSEIO
   DOHEAT
   DOSOLUTE

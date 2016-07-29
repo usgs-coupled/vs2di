@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define DispVer   = "1.4" ?>
+<?define ExeSource = "C:\Users\charlton\Programs\vs2di-trunk\_vs2012\INSTALL\bin" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="VS2DRTI" Language="1033" Version="1.4.0.0" Manufacturer="USGS" UpgradeCode="4AFC290B-CE20-4B29-9F03-D8DDB2D55583">
+    <Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" />
+
+    <Condition Message='This installer requires the Java Runtime Environment x64 version 7 (1.7) or higher. Please install it and try again. http://www.java.com/' >
+      <![CDATA[Installed OR JAVA_VERSION >= "1.7"]]>
+    </Condition>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <!-- Icons -->
+    <Icon Id="vs2drti.exe" SourceFile="$(var.ExeSource)\vs2drti.exe" />
+    <Icon Id="vs2post.exe" SourceFile="$(var.ExeSource)\vs2post.exe" />
+
+    <Feature Id="ProductFeature" Title="vs2drti_msi" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <MergeRef Id="VC110_OpenMP_x64" />
+    </Feature>
+
+    <!-- Properties -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    <!-- Property Id="ALLUSERS" Value="2" / -->
+    <Property Id="ARPPRODUCTICON" Value="vs2drti.exe" />
+    <Property Id="JAVA_VERSION">
+      <RegistrySearch Id="JavaVersionSearch" Root="HKLM" Key="SOFTWARE\JavaSoft\Java Runtime Environment" Name="CurrentVersion" Type="raw" />
+    </Property>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id='USGS' Name='USGS'>        
+          <Directory Id="INSTALLLOCATION" Name="VS2DRTI $(var.DispVer)">
+            <Directory Id="BinDir" Name="bin">
+              <Directory Id="LibDir" Name="lib"/>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id='ProgramMenuFolder' Name='ProgMenu'>
+        <Directory Id='ShortCutFolder' Name='VS2DRTI $(var.DispVer)' />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id='VC110_OpenMP_x64' Language='0' SourceFile='$(env.DEV_MERGE_DIR)\Microsoft_VC110_OpenMP_x64.msm' DiskId='1' />
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="BinDir">
+      <Component Id="VS2DRTI" Guid="*">
+        <File Id="vs2drti.exe" Name="vs2drti.exe" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2drti.exe" KeyPath="yes">
+          <Shortcut Id='VS2DRTI' Directory='ShortCutFolder' Name='VS2DRTI' Icon="vs2drti.exe" IconIndex="0" Advertise='yes' WorkingDirectory="INSTALLLOCATION"/>
+        </File>
+        <ProgId Id="VS2.Document" Description="VS2DRTI Document" Icon='vs2drti.exe' IconIndex='0'>
+          <Extension Id="vs2">
+            <Verb Id="open" TargetFile='vs2drti.exe' Argument='"%1"'/>
+          </Extension>
+        </ProgId>
+        <RemoveFolder Id="RemoveShortCutFolder" Directory="ShortCutFolder" On="uninstall"/>
+      </Component>
+      <Component Id="VS2POST" Guid="*">
+        <File Id="vs2post.exe" Name="vs2post.exe" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2post.exe" KeyPath="yes">
+          <Shortcut Id='Postprocessor' Directory='ShortCutFolder' Name='Postprocessor' Icon="vs2post.exe" IconIndex="0" Advertise='yes' WorkingDirectory="INSTALLLOCATION"/>
+        </File>
+      </Component>
+      
+      <Component Id="VS2DRTI.JAR" Guid="*">
+        <File Id="vs2drti.jar" Name="vs2drti.jar" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2drti.jar" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="TRIMESH.DLL" Guid="*">
+        <File Id="trimesh.dll" Name="trimesh.dll" Vital="yes" DiskId='1' Source="$(var.ExeSource)\trimesh.dll" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="VS2DRTJNI.DLL" Guid="*">
+        <File Id="vs2drtJni.dll" Name="vs2drtJni.dll" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2drtJni.dll" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="LibDir">
+      <Component Id="JH.JAR" Guid="*">
+        <File Id="jh.jar" Name="jh.jar" Vital="yes" DiskId='1' Source="$(var.ExeSource)\lib\jh.jar" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="VS2DHIHELP.JAR" Guid="*">
+        <File Id="vs2dhiHelp.jar" Name="vs2dhiHelp.jar" Vital="yes" DiskId='1' Source="$(var.ExeSource)\lib\vs2dhiHelp.jar" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="VS2DTIHELP.JAR" Guid="*">
+        <File Id="vs2dtiHelp.jar" Name="vs2dtiHelp.jar" Vital="yes" DiskId='1' Source="$(var.ExeSource)\lib\vs2dtiHelp.jar" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="VS2POSTHELP.JAR" Guid="*">
+        <File Id="vs2PostHelp.jar" Name="vs2PostHelp.jar" Vital="yes" DiskId='1' Source="$(var.ExeSource)\lib\vs2PostHelp.jar" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLLOCATION">
+      <!-- bin -->
+      <ComponentRef Id="VS2DRTI" />
+      <ComponentRef Id="VS2POST" />
+      <ComponentRef Id="VS2DRTI.JAR" />
+      <ComponentRef Id="TRIMESH.DLL" />
+      <ComponentRef Id="VS2DRTJNI.DLL" />
+      <!-- bin/lib -->
+      <ComponentRef Id="JH.JAR" />
+      <ComponentRef Id="VS2DHIHELP.JAR" />
+      <ComponentRef Id="VS2DTIHELP.JAR" />
+      <ComponentRef Id="VS2POSTHELP.JAR" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

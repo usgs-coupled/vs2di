@@ -1232,15 +1232,15 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                 if (!getFromFile) {
                     try {
                         energyTransportBCValue = Double.valueOf(
-                                concTextField.getText()).intValue();
+                                tempTextField.getText());
                     } catch (NumberFormatException e) {
                         mp2MessageBox.showMessageDialog(
                                 "Please check your input.", "Input Error");
                         return false;
                     }
 
-                    if (!dataCheck(energyTransportBCValue, solutionQuantity,
-                            IS_NON_NEGATIVE, concTextField)) {
+                    if (!dataCheck(energyTransportBCValue, energyQuantity,
+                            IS_NON_NEGATIVE, tempTextField)) {
                         return false;
                     }
                 }

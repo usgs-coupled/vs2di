@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?define DispVer   = "1.4" ?>
-<?define ExeSource = "C:\Users\charlton\Programs\vs2di-trunk\_vs2012\INSTALL\bin" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" Name="VS2DRTI" Language="1033" Version="1.4.0.0" Manufacturer="USGS" UpgradeCode="4AFC290B-CE20-4B29-9F03-D8DDB2D55583">

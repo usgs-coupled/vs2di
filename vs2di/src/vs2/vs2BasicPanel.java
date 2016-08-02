@@ -279,6 +279,9 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         doTranspirationCheckBox.setSelected(doTranspiration);
 
         useRadialCoordCheckBox.setEnabled(radialCoordinatesEnabled);
+        
+        onEnergyTransportCheckBox();
+        onSoluteTransportCheckBox();
     }
 
     /**
@@ -305,6 +308,36 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         } else {
             parentDialog.transportPanel.setEnabled(true);
         }
+        
+        // allow only grams for mass and meters for length
+        if (doSoluteTransportCheckBox.isSelected()) {
+            gRadioButton.setSelected(true);
+            mgRadioButton.setEnabled(false);
+            kgRadioButton.setEnabled(false);
+            lbRadioButton.setEnabled(false);
+            otherMassRadioButton.setEnabled(false);
+            otherMassUnitTextField.setEnabled(false);
+            
+            mRadioButton.setSelected(true);
+            mmRadioButton.setEnabled(false);
+            cmRadioButton.setEnabled(false);
+            ftRadioButton.setEnabled(false);
+            otherLengthRadioButton.setEnabled(false);
+            otherLengthUnitTextField.setEnabled(false);
+        } else {
+            mgRadioButton.setEnabled(true);
+            kgRadioButton.setEnabled(true);
+            lbRadioButton.setEnabled(true);
+            otherMassRadioButton.setEnabled(true);
+            otherMassUnitTextField.setEnabled(true);
+            
+            mmRadioButton.setEnabled(true);
+            cmRadioButton.setEnabled(true);
+            ftRadioButton.setEnabled(true);
+            otherLengthRadioButton.setEnabled(true);            
+            otherLengthUnitTextField.setEnabled(true);
+        }
+        
         parentDialog.solverPanel.doSoluteTransport(
                 doSoluteTransportCheckBox.isSelected());
 

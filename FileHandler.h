@@ -23,9 +23,7 @@ extern "C" {
 #endif
 IPQ_DLL_EXPORT void FH_FinalizeFiles();
 IPQ_DLL_EXPORT void FH_SetPointers(double *x_node,double *z_node, int * x_index, int * z_index, int *ic, double *saturation = NULL, int *mapping = NULL);
-IPQ_DLL_EXPORT void FH_SetRestartName(const char *name, long nchar);
 IPQ_DLL_EXPORT void FH_WriteFiles(int *id, int *print_xz, int *print_obs, int *xz_mask, int *obs_mask);
-IPQ_DLL_EXPORT void FH_WriteBcRaw(int *id, double *c, int *solution_list, int * bc_solution_count, int * solution_number, char *prefix, int prefix_l);
 #if defined(__cplusplus)
 }
 #endif

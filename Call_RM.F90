@@ -23,7 +23,13 @@ Module vs2dt_rm
                 USE ISO_C_BINDING
                 IMPLICIT NONE
                 INTEGER(KIND=C_INT), INTENT(in) :: rm_id, xz_on, obs_on, xz_mask, obs_mask
-            END SUBROUTINE FH_WriteFiles
+                END SUBROUTINE FH_WriteFiles
+                
+            SUBROUTINE FH_FinalizeFiles() &
+                BIND(C, NAME='FH_FinalizeFiles')
+                USE ISO_C_BINDING
+                IMPLICIT NONE
+            END SUBROUTINE FH_FinalizeFiles 
         END INTERFACE  
         
     CONTAINS  

@@ -6,7 +6,7 @@
   <Product Id="*" Name="VS2DRTI" Language="1033" Version="1.4.0.0" Manufacturer="USGS" UpgradeCode="4AFC290B-CE20-4B29-9F03-D8DDB2D55583">
     <Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" />
 
-    <Condition Message='This installer requires the Java Runtime Environment x64 version 7 (1.7) or higher. Please install it and try again. http://www.java.com/' >
+    <Condition Message='This installer requires the Java Runtime Environment x64 version 7 or higher. Please install it and try again. http://www.java.com/' >
       <![CDATA[Installed OR JAVA_VERSION >= "1.7"]]>
     </Condition>
 

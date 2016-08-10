@@ -46,59 +46,59 @@ public class vs2BoundaryConditionsDialogTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of makeContents method, of class vs2BoundaryConditionsDialog.
-     */
-    @Ignore
-    @Test
-    public void testMakeContents() {
-        System.out.println("makeContents");
-        vs2BoundaryConditionsDialog instance = null;
-        instance.makeContents();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of doModal method, of class vs2BoundaryConditionsDialog.
-     */
-    @Ignore
-    @Test
-    public void testDoModal() {
-        System.out.println("doModal");
-        vs2BoundaryConditionsDialog instance = null;
-        boolean expResult = false;
-        boolean result = instance.doModal();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onBrowserHelp method, of class vs2BoundaryConditionsDialog.
-     */
-    @Ignore
-    @Test
-    public void testOnBrowserHelp() {
-        System.out.println("onBrowserHelp");
-        vs2BoundaryConditionsDialog instance = null;
-        instance.onBrowserHelp();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onSelectedFlowBC method, of class vs2BoundaryConditionsDialog.
-     */
-    @Ignore
-    @Test
-    public void testOnSelectedFlowBC() {
-        System.out.println("onSelectedFlowBC");
-        vs2BoundaryConditionsDialog instance = null;
-        instance.onSelectedFlowBC();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of makeContents method, of class vs2BoundaryConditionsDialog.
+//     */
+//    @Ignore
+//    @Test
+//    public void testMakeContents() {
+//        System.out.println("makeContents");
+//        vs2BoundaryConditionsDialog instance = null;
+//        instance.makeContents();
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of doModal method, of class vs2BoundaryConditionsDialog.
+//     */
+//    @Ignore
+//    @Test
+//    public void testDoModal() {
+//        System.out.println("doModal");
+//        vs2BoundaryConditionsDialog instance = null;
+//        boolean expResult = false;
+//        boolean result = instance.doModal();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of onBrowserHelp method, of class vs2BoundaryConditionsDialog.
+//     */
+//    @Ignore
+//    @Test
+//    public void testOnBrowserHelp() {
+//        System.out.println("onBrowserHelp");
+//        vs2BoundaryConditionsDialog instance = null;
+//        instance.onBrowserHelp();
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of onSelectedFlowBC method, of class vs2BoundaryConditionsDialog.
+//     */
+//    @Ignore
+//    @Test
+//    public void testOnSelectedFlowBC() {
+//        System.out.println("onSelectedFlowBC");
+//        vs2BoundaryConditionsDialog instance = null;
+//        instance.onSelectedFlowBC();
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of retrieveData method, of class vs2BoundaryConditionsDialog.

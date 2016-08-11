@@ -261,8 +261,7 @@ public class vs2AppTest {
             robot.setAutoWaitForIdle(true);
 
             // show postprocessor
-//            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
+            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
             // get frameManager
             vs2FrameManager frameManager =
                     (vs2FrameManager) vs2App.theApp.getFrame().getManager();
@@ -275,22 +274,8 @@ public class vs2AppTest {
             vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
             assertNotEquals(null, frame);
             
-//            // wait until vs2PostProcessorFrame is visible (postFrame.loadData is finished)               
-//            while (!frame.isVisible()) {
-//                Thread.sleep(100);
-//            }
-            
-//            // get frameManager
-//            vs2FrameManager frameManager =
-//                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
-//            assertNotEquals(null, frameManager);
-//
-//            while (!frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).isSelected()) {
-//                Thread.sleep(100);
-//            }
-//
             // verify items
-            Thread.sleep(3000);
+            Thread.sleep(100);
             assertNotEquals(null, frame.getDisplayChooser());
             assertEquals(15, frame.getDisplayChooser().getItemCount());            
             
@@ -360,7 +345,7 @@ public class vs2AppTest {
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
             
             // verify items
-            Thread.sleep(3000);
+            Thread.sleep(100);
             assertEquals(15, frame.getDisplayChooser().getItemCount());
         }
         catch (java.awt.AWTException e) {

@@ -270,8 +270,13 @@ public class vs2AppTest {
             vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
             assertNotEquals(null, frame);
             
+            // wait until vs2PostProcessorFrame is visible (postFrame.loadData is finished)               
+            while (!frame.isVisible()) {
+                Thread.sleep(100);
+            }            
+            
             // verify items
-            Thread.sleep(1000);
+            //Thread.sleep(100);
             assertNotEquals(null, frame.getDisplayChooser());
             assertEquals(15, frame.getDisplayChooser().getItemCount());            
             

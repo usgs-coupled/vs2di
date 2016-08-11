@@ -12,6 +12,7 @@ import mp2.mp2PostProcessorFrame;
 import mp2.mp2View;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -270,7 +271,7 @@ public class vs2AppTest {
             assertNotEquals(null, frame);
             
             // verify items
-            Thread.sleep(100);
+            Thread.sleep(1000);
             assertNotEquals(null, frame.getDisplayChooser());
             assertEquals(15, frame.getDisplayChooser().getItemCount());            
             
@@ -379,6 +380,6 @@ public class vs2AppTest {
         mp2Doc doc = (vs2Doc)instance.createDoc();
         boolean expResult = true;
         boolean result = instance.versionCheck(doc);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 }

@@ -275,19 +275,19 @@ public class vs2AppTest {
 //                Thread.sleep(100);
 //            }
             
-            // get frameManager
-            vs2FrameManager frameManager =
-                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
-            assertNotEquals(null, frameManager);
-
-            while (!frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).isSelected()) {
-                Thread.sleep(100);
-            }
-
-            // verify items
-            //Thread.sleep(100);
-            assertNotEquals(null, frame.getDisplayChooser());
-            assertEquals(15, frame.getDisplayChooser().getItemCount());            
+//            // get frameManager
+//            vs2FrameManager frameManager =
+//                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+//            assertNotEquals(null, frameManager);
+//
+//            while (!frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).isSelected()) {
+//                Thread.sleep(100);
+//            }
+//
+//            // verify items
+//            //Thread.sleep(100);
+//            assertNotEquals(null, frame.getDisplayChooser());
+//            assertEquals(15, frame.getDisplayChooser().getItemCount());            
             
             // start run
             assertNotEquals(null, frame.getRunButton());

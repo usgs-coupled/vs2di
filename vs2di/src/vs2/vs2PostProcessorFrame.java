@@ -189,12 +189,15 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Loads data
      */
     public boolean loadData(String directory, String file) {
+        System.out.println("loadData in");
         
         if (theApp == null && !findModelTypeAndUsage(directory, file)) {
+            System.out.println("loadData out 1");
             return false;
         }
 
         if (!super.loadData(directory,file)) {
+            System.out.println("loadData out 2");
             return false;
         }
         if (theApp != null) {
@@ -300,6 +303,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("None");
             displayChooser.revalidate();
         }
+        System.out.println("loadData out 3");
         return true;
     }
 

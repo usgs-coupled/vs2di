@@ -284,10 +284,10 @@ public class vs2AppTest {
 //                Thread.sleep(100);
 //            }
 //
-//            // verify items
-//            //Thread.sleep(100);
-//            assertNotEquals(null, frame.getDisplayChooser());
-//            assertEquals(15, frame.getDisplayChooser().getItemCount());            
+            // verify items
+            Thread.sleep(3000);
+            assertNotEquals(null, frame.getDisplayChooser());
+            assertEquals(15, frame.getDisplayChooser().getItemCount());            
             
             // start run
             assertNotEquals(null, frame.getRunButton());
@@ -355,7 +355,7 @@ public class vs2AppTest {
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
             
             // verify items
-            Thread.sleep(1000);            
+            Thread.sleep(3000);
             assertEquals(15, frame.getDisplayChooser().getItemCount());
         }
         catch (java.awt.AWTException e) {

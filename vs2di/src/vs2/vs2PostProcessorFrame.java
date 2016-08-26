@@ -168,6 +168,11 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Gets the directory containing the properties files
      */
     protected String getPropertiesDirectory() {
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            String drive = System.getenv("HOMEDRIVE");
+            String path = System.getenv("HOMEPATH");
+            return drive + path;
+        }
         return homeDirectory + System.getProperty("file.separator") + "bin";
     }
     
@@ -459,7 +464,9 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
                 // When launched by a windows exe program to run on jre, the
                 // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
                 // instead
-                ////mp2FileChooser.useJFileChooser(false);
+                //
+                // SRC 08/26/2016 seems to be working on 1.8 
+                // mp2FileChooser.useJFileChooser(false);
             }
         } catch (Exception e) {
             System.out.println("Error loading L&F: " + e);
@@ -749,6 +756,64 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         }
     }
     
+    /**
+     * Invoked when the load menu item is selected
+     * 
+     * 2016-08-26 SRC -- overloaded in order to call releaseMemory
+     */
+    protected boolean onLoad() {
+        if (doViewer && model != null && model.getType() == mp2Model.COMPUTATIONAL
+                     && runStatus == 0) {
+            int result = mp2MessageBox.showYesNoDialog(this, "The computation is not finished. " + 
+                "Do you want to load another file?", "Warning");
+            if (result == mp2MessageBox.NO_OPTION) {
+                return false;
+            }
+            ((vs2ComputationalModel) model).releaseMemory();
+        }
+        if (model != null) {
+            model.closeIO();
+        }
+        mp2FileChooser fc = new mp2FileChooser();
+        fc.setDialogTitle("Load");
+        if (workingDirectory != null) {
+            fc.setCurrentDirectory(new File(workingDirectory));
+        } else if (properties != null) {
+            String directory = properties.getProperty("directory");
+            if (directory != null && directory.length() > 0) {
+                fc.setCurrentDirectory(new File(directory));
+            }
+        }
+        if (fc.showOpenDialog(this) != mp2FileChooser.APPROVE_OPTION) {
+            return false;
+        }
+                
+        workingDirectory = new String(fc.getCurrentDirectory().getPath());
+        String file = new String(fc.getSelectedFile().getName());
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (!loadData(workingDirectory, file)) {
+            setCursor(Cursor.getDefaultCursor());
+            return false;
+        }
+        setCursor(Cursor.getDefaultCursor());
+        scrollPane.getHorizontalScrollBar().setValue(0);
+        scrollPane.getVerticalScrollBar().setValue(0);
+        magnification = startupMagnification;
+        view.setVectorMagnitudePerPixel(
+            (float) model.getVectorMagnitudePerInch() / PIXELS_PER_INCH);
+        view.resizeContents(magnification);
+        view.revalidate();
+        xRuler.updateScalesAndLabels();
+        yRuler.updateScalesAndLabels();
+        xRuler.revalidate();
+        yRuler.revalidate();
+        view.draw();
+        scrollPane.repaint();
+        loadSettingsMenuItem.setEnabled(true);
+        saveSettingsMenuItem.setEnabled(true);
+        return true;
+    }
+
     /**
      * Only used for unit testing
      * @return run JButton

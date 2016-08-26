@@ -5,6 +5,7 @@ package vs2;
 
 import mp2.*;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class vs2ComputationalModel extends mp2ComputationalModel 
@@ -298,11 +299,33 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
     public String[] getComponents() {
         return new String[0];
     }
-    
+
+    public mp2ColorScale [] getColorScales() {
+        if (postOptions != null) {
+            return postOptions.getColorScales();
+        } else {
+            if (colorScales == null) {
+                super.getColorScales();
+                if (colorScaleMap == null) {
+                    colorScaleMap = new HashMap<>();
+                }
+                colorScaleMap.put("Pressure Head",    colorScales[0]);
+                colorScaleMap.put("Moisture Content", colorScales[1]);
+                colorScaleMap.put("Saturation",       colorScales[2]);
+                colorScaleMap.put("Temperature",      colorScales[3]);
+                colorScaleMap.put("Concentration",    colorScales[3]);
+                colorScaleMap.put("Vector",           colorScales[4]);
+                colorScaleMap.put("Total Head",       colorScales[5]);        
+            }
+            return colorScales;
+        }
+    }
+
     public Map<String, mp2ColorScale> getColorScaleMap() {
         if (postOptions != null) {
             return ((vs2PostProcessorOptions)postOptions).getColorScaleMap();
         }
+        assert(colorScaleMap != null);
         return colorScaleMap;
     }
     

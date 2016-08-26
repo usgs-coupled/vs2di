@@ -139,9 +139,6 @@ public class vs2PostProcessorOptions implements mp2PostProcessorOptions, mp2Cons
     }
 
     public mp2ColorScale [] getColorScales() {
-        if (colorScaleMap != null) {
-            return null;
-        }
         mp2ColorScale [] colorScale = new mp2ColorScale[7];
         colorScale[0] = pressureHeadColor;
         colorScale[1] = moistureColor;

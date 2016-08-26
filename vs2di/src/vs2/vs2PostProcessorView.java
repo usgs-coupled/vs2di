@@ -5,6 +5,7 @@ package vs2;
 
 import mp2.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -379,6 +380,8 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
 
     /**
      * Sets the color scales.
+     * 
+     * 2016-08-26 SRC -- this needs to be cleaned up
      */
     public void setColorScales(mp2ColorScale [] colorScale) {
         if (colorScale == null) {
@@ -389,6 +392,21 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         if (colorScale.length == 6) {
             // VERSION_ID = 12
             colorScaleMap = ((vs2Model)model).getColorScaleMap();
+            if (colorScaleMap == null) {
+                colorScaleMap = new HashMap<>();
+            }
+            colorScaleMap.put("Pressure Head",    colorScale[0]);
+            colorScaleMap.put("Moisture Content", colorScale[1]);
+            colorScaleMap.put("Saturation",       colorScale[2]);
+            colorScaleMap.put("Temperature",      colorScale[3]);
+            colorScaleMap.put("Concentration",    colorScale[3]);
+            colorScaleMap.put("Vector",           colorScale[4]);
+            colorScaleMap.put("Total Head",       colorScale[5]);        
+            return;
+        } else if (colorScale.length > 6) {
+            if (colorScaleMap == null) {
+                colorScaleMap = new HashMap<>();
+            }
             colorScaleMap.put("Pressure Head",    colorScale[0]);
             colorScaleMap.put("Moisture Content", colorScale[1]);
             colorScaleMap.put("Saturation",       colorScale[2]);
@@ -398,7 +416,6 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
             colorScaleMap.put("Total Head",       colorScale[5]);        
             return;
         }
-        assert(false);
     }
     
     public void showZonation(boolean b) {

@@ -49,7 +49,7 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
 
         // Create a center panel to hold labels, text fields, and table
         JPanel centerPanel = new JPanel(gridbag, false);
-        centerPanel.setBorder(new EmptyBorder(0, 20, 10, 20));
+        centerPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
         getContentPane().add(centerPanel, BorderLayout.CENTER);
 
         // Create a sub panel to hold hydraulic and transport properties
@@ -61,6 +61,29 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
 
         // Create panels for hydraulic properties and for transport properties
         JPanel hydraulicPanel = new JPanel(false);
+        String type = "Flow properties";
+        switch (modelOptions.soilModel) {
+            case BROOKS_COREY:
+                type = "Flow properties (Brooks-Corey function)";
+                break;
+            case VAN_GENUCHTEN:
+                type = "Flow properties (van Genuchten function)";
+                break;
+            case HAVERKAMP:
+                type = "Flow properties (Haverkamp function)";
+                break;
+            case TABULAR_DATA:
+                type = "Flow properties (tabular data)";
+                break;
+            case ROSSI_NIMMO:
+                type = "Flow properties (Rossi-Nimmo function)";
+                break;
+            default:
+                assert(false);            
+        }
+        hydraulicPanel.setBorder(new CompoundBorder(
+            BorderFactory.createTitledBorder(type),
+            new EmptyBorder(4, 10, 10, 10)));
         hydraulicPanel.setLayout(new BoxLayout(hydraulicPanel, BoxLayout.X_AXIS));
         subPanel.add(hydraulicPanel);
 
@@ -104,17 +127,7 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
 
         hydraulicRows += 4;
 
-
-        if (!(modelOptions.doEnergyTransport && modelOptions.doSoluteTransport)) {
-            subPanel.add(new JLabel(" "));
-        } else {
-            if (modelOptions.doEnergyTransport) {
-                MakeContentsForHeatTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
-            }
-            if (modelOptions.doSoluteTransport) {
-                MakeContentsForSoluteTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
-            }
-        }
+        MakeContentsForTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);        
 
         // Create the table
         hkmData = new vs2HkmData();

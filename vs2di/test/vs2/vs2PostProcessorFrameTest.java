@@ -51,8 +51,8 @@ public class vs2PostProcessorFrameTest {
         try {
             vs2App.main(null);
             
-            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
-            assertEquals(java.nio.file.Files.exists(path), true);
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
@@ -165,8 +165,8 @@ public class vs2PostProcessorFrameTest {
             vs2App.main(null);
             
             // open ex11.vs2
-            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
-            assertEquals(java.nio.file.Files.exists(path), true);
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
@@ -218,8 +218,8 @@ public class vs2PostProcessorFrameTest {
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
             
             // open flow/ex1
-            java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/flow/example1", "example1.1_4.vs2");
-            assertEquals(java.nio.file.Files.exists(path2), true);
+            java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/flow/example1", "example1.1_4.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path2));
             
             java.io.File inFile2 = new java.io.File(path2.toString());
             vs2App.theApp.openFile(inFile2);

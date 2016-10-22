@@ -191,8 +191,8 @@ public class vs2AppTest {
             vs2App.main(null);
         
             // open ex11.vs2
-            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
-            assertEquals(java.nio.file.Files.exists(path), true);
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
@@ -250,7 +250,7 @@ public class vs2AppTest {
             vs2App.main(null);
         
             // open ex11.vs2
-            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.home"), "programs/vs2di-trunk/vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
             assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());

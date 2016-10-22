@@ -1,5 +1,5 @@
 /*
- * vs2TexturalClassWindow.java
+ * vs2ChemistryClassWindow.java
  */
 package vs2;
 
@@ -12,7 +12,7 @@ import javax.swing.event.*;
 /**
  * Displays textural class data in a table.
  */
-public class vs2TexturalClassWindow extends mp2TableWindow
+public class vs2ChemistryClassWindow extends mp2TableWindow
     implements vs2Constants, mp2ColorCodeWindow {
 
     protected mp2App               theApp;
@@ -27,63 +27,26 @@ public class vs2TexturalClassWindow extends mp2TableWindow
     protected int expandedWidth = 775;
     protected boolean isExpanded;
     protected mp2TablePanel colorAndNamePanel;
-    protected mp2TablePanel energyTransportPanel;
     protected mp2TablePanel soluteTransportPanel;
-    protected mp2TablePanel flowPanel;
     protected mp2TableModel colorAndNameModel;
-    protected mp2TableModel energyTransportModel;
     protected mp2TableModel soluteTransportModel;
-    protected mp2TableModel flowModel;
 
     protected static final int [] COLOR_AND_NAME_MASK = {1, 2};
 
-    protected static final int [] BROOKS_COREY_MASK =
-                                {1, 2, 3, 8, 4, 5, 6, 9, 10};
-
-    protected static final int [] VAN_GENUCHTEN_MASK =
-                                {1, 2, 3, 11, 4, 5, 6, 12, 13};
-
-    protected static final int [] HAVERKAMP_MASK =
-                                {1, 2, 3, 14, 4, 5, 6, 15, 16, 17, 18};
-
-    protected static final int [] ROSSI_NIMMO_MASK =
-                                {1, 2, 3, 38, 4, 5, 39, 40, 41};
-
-    protected static final int [] TABULAR_DATA_MASK =
-                                {1, 2, 3, 19, 4, 5};
-
-    protected static final int [] NO_ADSORPTION_NO_ION_EXCHANGE_MASK =
-                                {1, 2, 21, 22, 23, 24};
-
-    protected static final int [] LINEAR_ADSORPTION_MASK =
-                                {1, 2, 21, 22, 23, 24, 25, 26};
-
-    protected static final int [] LANGMUIR_MASK =
-                                {1, 2, 21, 22, 23, 24, 25, 27, 28};
-
-    protected static final int [] FREUNDLICH_MASK =
-                                {1, 2, 21, 22, 23, 24, 25, 29, 30};
-
-    protected static final int [] ION_EXCHANGE_MASK =
-                                {1, 2, 21, 22, 23, 24, 25, 31, 32, 33};
-
-    protected static final int [] ENERGY_TRANSPORT_MASK =
-                                {1, 2, 21, 22, 34, 35, 36, 37};
-    
     protected static final int [] SOLUTE_TRANSPORT_MASK =
-                                // {1, 2, 21, 22, 23, 42, 43, 44, 45, 46, 47, 48};
-                                {1, 2, 42, 43, 23};
+                                   {1, 2,  3,  4,  5,  6,  7,  8,  9};
+    
             
 
     /**
      * Constructor
      */
-    public vs2TexturalClassWindow(mp2Frame frame,
-                        vs2TexturalClassData tableData,
+    public vs2ChemistryClassWindow(mp2Frame frame,
+                        vs2ChemistryClassData tableData,
                         vs2ModelOptions modelOptions,
                         mp2App app) {
         // Call super class constructor
-        super(frame, "Textural Class", new Point(260, 80), tableData);
+        super(frame, "Chemistry Class", new Point(260, 80), tableData);
         mp2JavaHelp.hb.enableHelpOnButton(helpButton, "texturalClasses", null);
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
@@ -91,6 +54,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
 
         // For Opening and Saving Textural Class data to and from files.
         buttonPanelRight.add(customButton = new JButton("Custom"));
+        customButton.setEnabled(false);
         customButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCustomButton();
@@ -122,11 +86,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         colorAndNameModel = new mp2TableModel(tableData);
         colorAndNameModel.setColumnMask(COLOR_AND_NAME_MASK);
         colorAndNamePanel = new mp2TablePanel(colorAndNameModel);
-        flowModel = new mp2TableModel(tableData);
-        flowPanel = new mp2TablePanel(flowModel);
-        energyTransportModel = new mp2TableModel(tableData);
-        energyTransportModel.setColumnMask(ENERGY_TRANSPORT_MASK);
-        energyTransportPanel = new mp2TablePanel(energyTransportModel);
+
         soluteTransportModel = new mp2TableModel(tableData);
         soluteTransportModel.setColumnMask(SOLUTE_TRANSPORT_MASK);
         soluteTransportPanel = new mp2TablePanel(soluteTransportModel);
@@ -147,47 +107,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
                 int row = table.rowAtPoint(pt);
                 if (me.getClickCount() == 2) {
                     if (editButton.isEnabled()) {
-                        onEdit();
-                    }
-                }
-            }
-        });
-        table = flowPanel.getTable();
-        rowSM = table.getSelectionModel();
-        rowSM.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                onRowSelection();
-            }
-        });
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent me) {
-                JTable table = (JTable)me.getSource();
-                Point pt = me.getPoint();
-                int row = table.rowAtPoint(pt);
-                if (me.getClickCount() == 2) {
-                    if (editButton.isEnabled()) {
-                        onEdit();
-                    }
-                }
-            }
-        });
-        table = energyTransportPanel.getTable();
-        rowSM = table.getSelectionModel();
-        rowSM.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                onRowSelection();
-            }
-        });
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent me) {
-                JTable table = (JTable)me.getSource();
-                Point pt = me.getPoint();
-                int row = table.rowAtPoint(pt);
-                if (me.getClickCount() == 2) {
-                    if (editButton.isEnabled()) {
-                        onEdit();
+                        onEdit();                    
                     }
                 }
             }
@@ -207,7 +127,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
                 int row = table.rowAtPoint(pt);
                 if (me.getClickCount() == 2) {
                     if (editButton.isEnabled()) {
-                        onEdit();
+                        onEdit();                    
                     }
                 }
             }
@@ -222,8 +142,9 @@ public class vs2TexturalClassWindow extends mp2TableWindow
             }
         });
 
-        // Add the flow panel, which is always present
-        tabbedPane.add(flowPanel, 0);
+        // Add the soluteTransport panel, which is always present
+        tabbedPane.add(soluteTransportPanel, 0);
+        tabbedPane.setTitleAt(0, "Solute transport");                
 
         // Set the minimum row count--There is always a row for the default
         // textural class
@@ -232,13 +153,16 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         // Initially the active table is the flow table, and the default row
         // is selected.
         tabbedPane.setSelectedIndex(0);
-        activeTable = flowPanel.getTable();
+        activeTable = soluteTransportPanel.getTable();
         activeTable.addRowSelectionInterval(0, 0);
         editButton.setEnabled(false);
         deleteButton.setEnabled(false);
 
         // Update the tabs
         UpdateTabs(modelOptions);
+        
+        assert(tabbedPane.getTabCount() == 1);
+        tabbedPane.setSelectedIndex(0);
 
         // Pack the window.
         validate();
@@ -251,14 +175,8 @@ public class vs2TexturalClassWindow extends mp2TableWindow
      */
     protected int addRow(int r) {
         // Create a dialog box for user to add a new row of data
-        vs2TexturalClassDialog dlg;
-        if (modelOptions.soilModel == TABULAR_DATA) {
-            dlg = new vs2TabularDataDialog("Add Textural Class",
-                                            modelOptions, false);
-        } else {
-            dlg = new vs2SoilFunctionDialog("Add Textural Class",
-                                             modelOptions, false);
-        }
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Textural Class",
+                    modelOptions, false);
 
         // Create a new row of data and set it in the dialog box
         dlg.aRow = tableData.createDefaultRow();
@@ -281,20 +199,14 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         // Disallow editing the first row
         if (r[0] == 0) {
             mp2MessageBox.showMessageDialog(
-                            "Cannot edit default textural class.",
+                            "Cannot edit default chemistry class.",
                             "Warning");
             return;
         }
 
         // Create dialog box for user to edit data
-        vs2TexturalClassDialog dlg;
-        if (modelOptions.soilModel == TABULAR_DATA) {
-            dlg = new vs2TabularDataDialog("Edit Textural Class",
-                                            modelOptions, true);
-        } else {
-            dlg = new vs2SoilFunctionDialog("Edit Textural Class",
-                                             modelOptions, true);
-        }
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Textural Class",
+                    modelOptions, true);        
 
         // Put current dat in dialog box and show it
         dlg.aRow = tableData.getRow(r[0]);
@@ -302,6 +214,10 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         if (dlg.doModal()==true) {
             // Set the edited row of data to the table data.
             tableData.replaceRow(dlg.aRow, r[0]);
+
+            // changes to "As is" could require update
+            vs2ChemistryMapData chemistryMapData = (vs2ChemistryMapData)theApp.getDoc().getData(CHEMISTRY_MAP);
+            chemistryMapData.setDataHaveChanged();
 
             // Repaint the frame (main application window), which should repaint
             // the view within the frame also
@@ -356,6 +272,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
      * Invoked when the custom button is clicked to load user's textural class data
      */
     protected void onCustomButton() {
+        assert(false);
         vs2TexturalClassCustomDialog dlg;
         dlg = new vs2TexturalClassCustomDialog (theApp,
                     (vs2TexturalClassData) tableData, modelOptions.soilModel,
@@ -371,7 +288,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         boolean b = false;
         if (activeTable.getSelectedRow() == 0) {
             mp2MessageBox.showMessageDialog(
-                            "Cannot delete default textural class.",
+                            "Cannot delete default chemistry class.",
                             "Warning");
             return false;
         }
@@ -393,7 +310,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         tabbedPane.setSelectedIndex(0);
-        activeTable = flowPanel.getTable();
+        activeTable = soluteTransportPanel.getTable();
         activeTable.clearSelection();
         activeTable.addRowSelectionInterval(r, r);
         Dimension dim = getSize();
@@ -423,7 +340,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         // Hide the window by delelecting the Show|Textural Class Window
         // menu item on the menu bar. The event handling procedure of the
         // menu item takes care of hiding the window.
-        frame.getMenuItem(TEXTURAL_CLASS).setSelected(false);
+        frame.getMenuItem(CHEMISTRY_CLASS).setSelected(false);
     }
 
     /**
@@ -473,23 +390,6 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         // Get the selected row from the previously active table
         int r = activeTable.getSelectedRow();
         
-        // synchronize the scroll bars
-        if (activeTable == flowPanel.getTable()) {
-            int i = flowPanel.getScrollBar().getValue();
-            energyTransportPanel.getScrollBar().setValue(i);
-            soluteTransportPanel.getScrollBar().setValue(i);            
-        } else if (activeTable == energyTransportPanel.getTable()) {
-            int i = energyTransportPanel.getScrollBar().getValue();            
-            flowPanel.getScrollBar().setValue(i);            
-            energyTransportPanel.getScrollBar().setValue(i);
-        } else if (activeTable == soluteTransportPanel.getTable()) {
-            int i = soluteTransportPanel.getScrollBar().getValue();            
-            flowPanel.getScrollBar().setValue(i);
-            soluteTransportPanel.getScrollBar().setValue(i);            
-        } else {
-            assert(false);
-        }
-        
         // Set the new active table
         Component panel = tabbedPane.getSelectedComponent();
         activeTable = ((mp2TablePanel)panel).getTable();
@@ -503,7 +403,7 @@ public class vs2TexturalClassWindow extends mp2TableWindow
      * Update which tabs are shown
      */
     public void UpdateTabs(vs2ModelOptions modelOptions) {
-        assert(tabbedPane.getTabCount() >= 1);  // at least flow tab should exist
+        assert(tabbedPane.getTabCount() == 1);  // at least chemistry tab should exist
         // Save the new model options
         this.modelOptions = modelOptions;
 
@@ -515,78 +415,13 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         // the same row at the end of the update
         int r = activeTable.getSelectedRow();
 
-        // Put the appropriate title in the flow tab
-        switch (modelOptions.soilModel) {
-        case BROOKS_COREY:
-            tabbedPane.setTitleAt(0, "Flow (Brooks-Corey function)");
-            flowModel.setColumnMask(BROOKS_COREY_MASK);
-            break;
-        case VAN_GENUCHTEN:
-            tabbedPane.setTitleAt(0, "Flow (van Genuchten function)");
-            flowModel.setColumnMask(VAN_GENUCHTEN_MASK);
-            break;
-        case HAVERKAMP:
-            tabbedPane.setTitleAt(0, "Flow (Haverkamp function)");
-            flowModel.setColumnMask(HAVERKAMP_MASK);
-            break;
-        case ROSSI_NIMMO:
-            tabbedPane.setTitleAt(0, "Flow (Rossi-Nimmo function)");
-            flowModel.setColumnMask(ROSSI_NIMMO_MASK);
-            break;
-        case TABULAR_DATA:
-            tabbedPane.setTitleAt(0, "Flow (tabular data)");
-            flowModel.setColumnMask(TABULAR_DATA_MASK);
-            break;
-        }
-        
-        //
-        // Tabs -> Flow(0), Heat transport(1), Solute transport(2)
-        //
-        
-        // Heat transport
-        if (modelOptions.doEnergyTransport) {
-            if (tabbedPane.indexOfComponent(energyTransportPanel) == -1) {
-                tabbedPane.add(energyTransportPanel, 1);
-                tabbedPane.setTitleAt(1, "Heat transport");                
-            }
-        } else {
-            int idx = tabbedPane.indexOfComponent(energyTransportPanel);
-            if (idx != -1) {
-                tabbedPane.removeTabAt(idx);
-            }            
-        }
-        
-        // Solute transport
-        if (modelOptions.doSoluteTransport) {
-            if (tabbedPane.indexOfComponent(soluteTransportPanel) == -1) {
-                tabbedPane.add("Solute transport", soluteTransportPanel);
-            }
-        } else {
-            int idx = tabbedPane.indexOfComponent(soluteTransportPanel);
-            if (idx != -1) {
-                tabbedPane.removeTabAt(idx);
-            }            
-        }     
-
         // If the table is shrunk, then no need to set tabs and active table.
         if (!isExpanded) {
             return;
         }
 
-        // Select the tab and set the active table
-        if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
-            int idx = tabbedPane.indexOfComponent(c);
-            if (idx != -1) {
-                tabbedPane.setSelectedIndex(i);
-            } else {
-                tabbedPane.setSelectedIndex(0);
-                c = flowPanel;
-            }
-            activeTable = ((mp2TablePanel)c).getTable();            
-        } else {
-            tabbedPane.setSelectedIndex(0);
-            activeTable = flowPanel.getTable();
-        }
+        tabbedPane.setSelectedIndex(0);
+        activeTable = soluteTransportPanel.getTable();
 
         // select the same row as before the update
         activeTable.clearSelection();

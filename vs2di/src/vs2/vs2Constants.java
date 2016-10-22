@@ -18,6 +18,8 @@ public interface vs2Constants {
     public static final int INITIAL_FLOW = 4105;
     public static final int INITIAL_TEMPERATURE = 4109;
     public static final int FLUID_SOURCE = 4110;
+    public static final int CHEMISTRY_CLASS = 4111;
+    public static final int CHEMISTRY_MAP = 4112;
 
     // Don't change values below
     public static final int INITIAL_PRESSURE_HEAD = 206;

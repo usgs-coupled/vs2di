@@ -32,12 +32,14 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
 
     // Table data
     protected vs2TexturalClassData texturalClassData;
+    protected vs2ChemistryClassData chemistryClassData;
     protected vs2EvapotranspirationData evapotranspirationData;
     protected vs2RechargePeriodData rechargePeriodData;
 
     // Graphical data
     protected mp2DomainData domainData;
     protected vs2TexturalMapData texturalMapData;
+    protected vs2ChemistryMapData chemistryMapData;
     protected vs2InitialEquilibriumProfileData initialEquilibriumProfileData;
     protected vs2InitialData initialPressureHead;
     protected vs2InitialData initialMoistureContent;
@@ -67,12 +69,14 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
 
         // Create table data
         texturalClassData = new vs2TexturalClassData();
+        chemistryClassData = new vs2ChemistryClassData();
         evapotranspirationData = new vs2EvapotranspirationData();
         rechargePeriodData = new vs2RechargePeriodData();
 
         // Create graphical data
         domainData = new mp2DomainData();
         texturalMapData = new vs2TexturalMapData();
+        chemistryMapData = new vs2ChemistryMapData();
         initialEquilibriumProfileData = new vs2InitialEquilibriumProfileData();
         initialPressureHead = new vs2InitialData();
         initialMoistureContent = new vs2InitialData();
@@ -110,6 +114,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // version 1.1 textural class data has 34 entries to
         // each row and must be extended to 38 entries.
         texturalClassData.convertToCurrentVersion();
+        chemistryClassData.convertToCurrentVersion();
         // extra entries in model options need to be initialized.
         modelOptions.convertToCurrentVersion();
 
@@ -141,6 +146,10 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         if (fluidSourceData == null) {
             fluidSourceData = new vs2FluidSourceData();
+        }
+        // new in 1.4
+        if (chemistryClassData == null) {
+            chemistryClassData = new vs2ChemistryClassData();
         }
         // update to the current version
         serializedVersion = vs2Constants.VS2_VERSION;
@@ -475,10 +484,12 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         super.init(theApp);
 
         texturalClassData.init(this);
+        chemistryClassData.init(this);
         evapotranspirationData.init(this);
         rechargePeriodData.init(this);
         domainData.init(this);
         texturalMapData.init(this);
+        chemistryMapData.init(this);
         initialEquilibriumProfileData.init(this);
         initialPressureHead.init(this);
         initialMoistureContent.init(this);
@@ -495,6 +506,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
 
         domainData.setGridData(gridData);
         texturalMapData.setGridData(gridData);
+        chemistryMapData.setGridData(gridData);
         initialPressureHead.setGridData(gridData);
         initialMoistureContent.setGridData(gridData);
         initialConcentrationData.setGridData(gridData);
@@ -793,6 +805,8 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             return modelOptions;
         case TEXTURAL_CLASS:
             return texturalClassData;
+        case CHEMISTRY_CLASS:
+            return chemistryClassData;
         case EVAPOTRANSPIRATION:
             return evapotranspirationData;
         case RECHARGE_PERIOD:
@@ -801,6 +815,8 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             return domainData;
         case TEXTURAL_MAP:
             return texturalMapData;
+        case CHEMISTRY_MAP:
+            return chemistryMapData;
         case INITIAL_EQUILIBRIUM_PROFILE:
             return initialEquilibriumProfileData;
         case INITIAL_PRESSURE_HEAD:
@@ -952,6 +968,12 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         in.defaultReadObject();
         
         // see revision 11409 for overrides
+        if (chemistryClassData == null) {
+            chemistryClassData = new vs2ChemistryClassData();
+        }
+        if (chemistryMapData == null) {
+            chemistryMapData = new vs2ChemistryMapData();
+        }
     }
     
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {

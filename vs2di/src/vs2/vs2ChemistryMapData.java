@@ -101,10 +101,12 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
             for (j=0; j<numRow; j++) {
                 for (i=0; i<numCol; i++) {
                     index = j*numCol+i;
-                    if (shape.contains(xCenter[i], yCenter[j]) && active[index] > -2) {
-                        for (int n = 0; n < 7; n++) {
-                            if (!chemistryClassData.isAsIs(row, n+3)) {
-                                zoneArrays[n][index] = shape.getId();
+                    if (active[index] > -2) {
+                        if (shape.contains(xCenter[i], yCenter[j])) {
+                            for (int n = 0; n < 7; n++) {
+                                if (!chemistryClassData.isAsIs(row, n+3)) {
+                                    zoneArrays[n][index] = shape.getId();
+                                }
                             }
                         }
                     }

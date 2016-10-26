@@ -87,6 +87,14 @@
       <Component Id="VS2DRTJNI.DLL" Guid="*">
         <File Id="vs2drtJni.dll" Name="vs2drtJni.dll" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2drtJni.dll" KeyPath="yes"/>
       </Component>
+
+      <Component Id="VS2DHJNI.DLL" Guid="*">
+        <File Id="vs2dhJni.dll" Name="vs2dhJni.dll" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2dhJni.dll" KeyPath="yes"/>
+      </Component>
+
+      <Component Id="VS2DTJNI.DLL" Guid="*">
+        <File Id="vs2dtJni.dll" Name="vs2dtJni.dll" Vital="yes" DiskId='1' Source="$(var.ExeSource)\vs2dtJni.dll" KeyPath="yes"/>
+      </Component>
     </DirectoryRef>
   </Fragment>
 
@@ -119,6 +127,8 @@
       <ComponentRef Id="VS2DRTI.JAR" />
       <ComponentRef Id="TRIMESH.DLL" />
       <ComponentRef Id="VS2DRTJNI.DLL" />
+      <ComponentRef Id="VS2DHJNI.DLL" />
+      <ComponentRef Id="VS2DTJNI.DLL" />
       <!-- bin/lib -->
       <ComponentRef Id="JH.JAR" />
       <ComponentRef Id="VS2DHIHELP.JAR" />

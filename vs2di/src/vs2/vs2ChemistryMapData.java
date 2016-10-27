@@ -47,12 +47,15 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
         if (!(gridData instanceof mp2RectilinearGridData)) {
             return false;
         }
-
-        // Don't do this if neither the grid nor the data (zones) 
-        // have changed since the last discretization.
-        if ((!activeCellsHaveChanged) && (!dataHaveChanged)) {
-            zoneArray = zoneArrays[currentIndex];
-            return false;
+        
+        // exportData needs zoneArrays to allocated
+        if (zoneArrays != null) {
+            // Don't do this if neither the grid nor the data (zones) 
+            // have changed since the last discretization.
+            if ((!activeCellsHaveChanged) && (!dataHaveChanged)) {
+                zoneArray = zoneArrays[currentIndex];
+                return false;
+            }
         }
 
         // Get the active cell array and the grid line coordinates 

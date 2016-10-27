@@ -284,6 +284,7 @@ public class vs2DocTest {
     /**
      * Test of SoluteExample1 method, of class vs2Doc.
      */
+    @Ignore
     @Test
     public void testSoluteExample1()  throws Exception, IOException, ClassNotFoundException {
         System.out.println("solute_example1");        
@@ -311,6 +312,7 @@ public class vs2DocTest {
     /**
      * Test of SoluteExample2 method, of class vs2Doc.
      */
+    @Ignore
     @Test
     public void testSoluteExample2()  throws Exception, IOException, ClassNotFoundException {
         System.out.println("solute_example2");        
@@ -338,7 +340,7 @@ public class vs2DocTest {
     /**
      * Test of SoluteExample3 method, of class vs2Doc.
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testSoluteExample3()  throws Exception, IOException, ClassNotFoundException {
         System.out.println("solute_example3");        
@@ -365,6 +367,7 @@ public class vs2DocTest {
     /**
      * Test of SoluteExample4 method, of class vs2Doc.
      */
+    @Ignore
     @Test
     public void testSoluteExample4()  throws Exception, IOException, ClassNotFoundException {
         System.out.println("solute_example4");        
@@ -392,6 +395,7 @@ public class vs2DocTest {
     /**
      * Test of SoluteExample5 method, of class vs2Doc.
      */
+    @Ignore
     @Test
     public void testSoluteExample5()  throws Exception, IOException, ClassNotFoundException {
         System.out.println("solute_example5");        

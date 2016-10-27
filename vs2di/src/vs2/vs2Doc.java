@@ -863,6 +863,18 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             missingData.addElement("Textural Map");
             isReady = false;
         }
+        
+        if (modelOptions.doSoluteTransport) {
+            if (chemistryClassData.getNumberOfRows() == 1) {
+                missingData.addElement("Chemistry Class");
+                isReady = false;
+            }
+            
+            if (chemistryMapData.getNumberOfShapes() == 0) {
+                missingData.addElement("Chemistry Map");
+                isReady = false;
+            }
+        }
 
         switch (modelOptions.initialFlowType) {
         case INITIAL_EQUILIBRIUM_PROFILE:

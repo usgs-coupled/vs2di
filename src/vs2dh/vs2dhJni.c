@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <stdlib.h>
-////#include "vs2dh.h"
+#include <string.h>
+
 #if defined(CMAKE_FC)
 #include "FC.h"
 #endif

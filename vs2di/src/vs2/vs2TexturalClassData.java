@@ -322,16 +322,9 @@ public class vs2TexturalClassData extends mp2TableData implements
             }
             // Card B-9B (was B-7A - VS2DT)
             if (modelOptions.doSoluteTransport) {
-                pw.println(((Double) aRow[21]).doubleValue() + " " +
-                           ((Double) aRow[22]).doubleValue() + " " +
-                           ((Double) aRow[23]).doubleValue() + " " +
-                           ((Integer)aRow[44]).intValue()    + " " +
-                           ((Integer)aRow[45]).intValue()    + " " +
-                           ((Integer)aRow[46]).intValue()    + " " +
-                           ((Integer)aRow[47]).intValue()    + " " +
-                           ((Integer)aRow[48]).intValue()    + " " +
-                           ((Integer)aRow[49]).intValue()    + " " +
-                           ((Integer)aRow[50]).intValue()    + " " + "     /B9B -- HS INSOL");
+                pw.println(((Double) aRow[42]).doubleValue() + " " +
+                           ((Double) aRow[43]).doubleValue() + " " +
+                           ((Double) aRow[23]).doubleValue() + " " + "     /B9B -- HS");
             }
         }
     }

@@ -454,10 +454,10 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         if (modelOptions.doEnergyTransport) {
             initialTemperatureData.exportData(pw, "B26", "B27");
         }
-//        // Cards B-28, B-29 and B-30 (REPLACED BY TEXTURAL CLASS)
-//        if (modelOptions.doSoluteTransport) {
-//            initialConcentrationData.exportConcentrationData(pw);
-//        }
+        // Cards B-28, B-29 and B-30 (REPLACED BY TEXTURAL CLASS)
+        if (modelOptions.doSoluteTransport) {
+            chemistryMapData.exportData(pw, chemistryClassData);
+        }
         
         // Since F7P is always "F"
         // B-29?? through B-31?? are not used

@@ -591,7 +591,7 @@ public class vs2FrameManager extends mp2FrameManager
         }
         dataChooser.removeAllItems();
         for (int i=0; i<DATA_CHOOSER_ITEM.length; i++) {
-            if (!((i==3 && !modelOptions.doEnergyTransport) || (i==5 && modelOptions.useRadialCoord))) {
+            if (!((i==4 && !modelOptions.doEnergyTransport) || (i==6 && modelOptions.useRadialCoord) || (i==2 && !modelOptions.doSoluteTransport))) {
                 dataChooser.addItem(DATA_CHOOSER_ITEM[i]);
             }
         }
@@ -610,14 +610,18 @@ public class vs2FrameManager extends mp2FrameManager
         JMenu showMenu = frame.getMenu(SHOW_MENU);
         showMenu.removeAll();
         showMenu.add(texturalClassMenuItem);
-        showMenu.add(chemistryClassMenuItem);
+        if (modelOptions.doSoluteTransport) {
+            showMenu.add(chemistryClassMenuItem);
+        }
         if (modelOptions.doEvaporation || modelOptions.doTranspiration) {
             showMenu.add(evapotranspirationMenuItem);
         }
         showMenu.add(rechargePeriodMenuItem);
         showMenu.addSeparator();
         showMenu.add(texturalMapMenuItem);
-        showMenu.add(chemistryMapMenuItem);
+        if (modelOptions.doSoluteTransport) {
+            showMenu.add(chemistryMapMenuItem);
+        }
         showMenu.add(initialFlowMenuItem);
         if (modelOptions.doEnergyTransport) {
             showMenu.add(initialTemperatureMenuItem);

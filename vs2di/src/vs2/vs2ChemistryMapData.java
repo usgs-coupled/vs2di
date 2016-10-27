@@ -123,37 +123,37 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
      * Exports data to VS2DT model input file
      */
     public void exportData(PrintWriter pw, 
-                   vs2TexturalClassData texturalClassData) {
-        assert(false);
+                   vs2ChemistryClassData chemistryClassData) {
         discretize();
-        int c, r, i;
+        int c, r, index;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numColNoBorder = rectGridData.getXCoords().length - 1;
         int numRowNoBorder = rectGridData.getYCoords().length - 1;
-        // Card B-10 (Always read texture class for each row)
-        pw.println("0" + "     /B10 -- IROW. B11 begins next line: JTEX");
-        // Card B-11
-        // first, write the top border
-        for (c=0; c<numColNoBorder+2; c++) {
-            pw.print("1 ");
-        }
-        pw.println();
-        // next, write the interior cells plus left and right borders
-        i = 0;
-        for (r=0; r<numRowNoBorder; r++) {
-            pw.print("1 ");   // left border cell
-            for (c=0; c<numColNoBorder; c++, i++) {
-                int texturalClassIndex = 
-                    texturalClassData.getRowIndexOfId(zoneArray[i]);
-                pw.print((texturalClassIndex+1) + " ");
+        pw.println("1" + "     /B28 -- IREAD. B30 begins next line: INDSOL");
+        // Note that Card B-29 is not used.
+        for (int n = 0; n < 7; ++n) {
+            // Card B-30
+            // first, write the top border
+            for (c=0; c<numColNoBorder+2; c++) {
+                pw.print("-1 ");
             }
-            pw.println("1");   // right border cell
+            pw.println();
+            // next, write the interior cells plus left and right borders
+            for (r=0; r<numRowNoBorder; r++) {
+                pw.print("-1 ");   // left border cell
+                for (c=0; c<numColNoBorder; c++) {
+                    index = r*numColNoBorder+c;
+                    int row = chemistryClassData.getRowIndexOfId(zoneArrays[n][index]);
+                    Integer val = (Integer)chemistryClassData.getObjectAt(row, n+3);
+                    pw.print(val.intValue() + " ");
+                }
+                pw.println("-1");   // right border cell
+            }
+            // finally, write the bottom edge
+            for (c=0; c<numColNoBorder+2; c++) {
+                pw.print("-1 ");
+            }
+            pw.println();
         }
-        // finally, write the bottom edge
-        for (c=0; c<numColNoBorder+2; c++) {
-            pw.print("1 ");
-        }
-        pw.println();
-        // Note that Card B-12 is not used.
     }
 }

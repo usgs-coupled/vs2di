@@ -42,16 +42,22 @@ set(LIB_JARS
   "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2PostHelp.jar"
 )
 
-set(CP
-  "-Dlibs.CopyLibs.classpath=c:/jars/org-netbeans-modules-java-j2seproject-copylibstask.jar"
+set(NBCOPYLIB
+  "c:/jars/org-netbeans-modules-java-j2seproject-copylibstask.jar"
 )
+
+if (EXISTS ${NBCOPYLIB})
+  set(CP
+    "-Dlibs.CopyLibs.classpath=${NBCOPYLIB}"
+  )
+endif()
 
 add_custom_command(OUTPUT ${JAR} ${LIB_JARS}
                    COMMAND ant ${CP} jar
                    COMMENT "Build jars"
 )
 
-add_custom_target(ANT_JAR DEPENDS ${NB_FILES} ${HELP_FILES} ${LIB_FILES} ${SRC_FILES} ${JARS} ${LIB_JARS})
+add_custom_target(ANT_JAR ALL DEPENDS ${NB_FILES} ${HELP_FILES} ${LIB_FILES} ${SRC_FILES} ${JARS} ${LIB_JARS})
 
 install(FILES ${JAR}
         DESTINATION ${CMAKE_INSTALL_BINDIR}

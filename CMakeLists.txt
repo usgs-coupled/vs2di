@@ -1,9 +1,31 @@
 cmake_minimum_required (VERSION 2.8)
 
-project(vs2drt C CXX Fortran)
+project(vs2drti C CXX Fortran)
 
 add_subdirectory(vs2drtJni)
 add_subdirectory(src/mp2/src/trimesh)
 add_subdirectory(WinLauncher_1.3/vs2drti)
 add_subdirectory(WinLauncher_1.3/vs2post)
 add_subdirectory(src)
+add_subdirectory(vs2di)
+
+set(CPACK_GENERATOR WIX)
+set(CPACK_PACKAGE_NAME "vs2drti")
+set(CPACK_PACKAGE_VENDOR "U.S. Geological Survey")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "4")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+set(CPACK_WIX_UPGRADE_GUID "94135F18-3C4E-4096-B87B-7E10F4AF8599")
+###set(CPACK_WIX_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/msi/patch.xml")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "USGS/${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-x64")
+set(CPACK_WIX_LICENSE_RTF "${CMAKE_CURRENT_SOURCE_DIR}/msi/License.rtf")
+
+if (VS2DRT_OPENMP_FOUND)
+  if (MSVC11)
+    ###set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/msi/WIX.MSVC11.template.in")    
+  endif()
+endif()
+
+INCLUDE(CPack)

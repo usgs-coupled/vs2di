@@ -43,7 +43,7 @@ set(LIB_JARS
 )
 
 set(CP
-  "-Dlibs.CopyLibs.classpath=c:\jars\org-netbeans-modules-java-j2seproject-copylibstask.jar"
+  "-Dlibs.CopyLibs.classpath=c:/jars/org-netbeans-modules-java-j2seproject-copylibstask.jar"
 )
 
 add_custom_command(OUTPUT ${JAR} ${LIB_JARS}

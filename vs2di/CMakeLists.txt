@@ -42,8 +42,12 @@ set(LIB_JARS
   "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2PostHelp.jar"
 )
 
+set(CP
+  "-Dlibs.CopyLibs.classpath=c:\jars\org-netbeans-modules-java-j2seproject-copylibstask.jar"
+)
+
 add_custom_command(OUTPUT ${JAR} ${LIB_JARS}
-                   COMMAND ant jar
+                   COMMAND ant ${CP} jar
                    COMMENT "Build jars"
 )
 

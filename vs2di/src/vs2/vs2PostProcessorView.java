@@ -387,34 +387,40 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         if (colorScale == null) {
             // VERSION_ID >= 13
             colorScaleMap = ((vs2Model)model).getColorScaleMap();
+            assert(colorScaleMap != null);
+            assert(colorScaleMap.size() >= 6);
+            assert(colorScaleMap.containsKey("Pressure Head"));
+            assert(colorScaleMap.containsKey("Moisture Content"));
+            assert(colorScaleMap.containsKey("Saturation"));
+            assert(colorScaleMap.containsKey("Temperature"));
+            assert(colorScaleMap.containsKey("Concentration"));
+            assert(colorScaleMap.containsKey("Vector"));
+            assert(colorScaleMap.containsKey("Total Head"));
             return;
-        }
-        if (colorScale.length == 6) {
+        } else {
+            assert(colorScale.length >= 6);
             // VERSION_ID = 12
             colorScaleMap = ((vs2Model)model).getColorScaleMap();
             if (colorScaleMap == null) {
                 colorScaleMap = new HashMap<>();
+                colorScaleMap.put("Pressure Head",    colorScale[0]);
+                colorScaleMap.put("Moisture Content", colorScale[1]);
+                colorScaleMap.put("Saturation",       colorScale[2]);
+                colorScaleMap.put("Temperature",      colorScale[3]);
+                colorScaleMap.put("Concentration",    colorScale[3]);
+                colorScaleMap.put("Vector",           colorScale[4]);
+                colorScaleMap.put("Total Head",       colorScale[5]);
+                assert(false);  // is this needed ???
+            } else {
+                assert(colorScaleMap.size() >= 6);
+                assert(colorScaleMap.containsKey("Pressure Head"));
+                assert(colorScaleMap.containsKey("Moisture Content"));
+                assert(colorScaleMap.containsKey("Saturation"));
+                assert(colorScaleMap.containsKey("Temperature"));
+                assert(colorScaleMap.containsKey("Concentration"));
+                assert(colorScaleMap.containsKey("Vector"));
+                assert(colorScaleMap.containsKey("Total Head"));
             }
-            colorScaleMap.put("Pressure Head",    colorScale[0]);
-            colorScaleMap.put("Moisture Content", colorScale[1]);
-            colorScaleMap.put("Saturation",       colorScale[2]);
-            colorScaleMap.put("Temperature",      colorScale[3]);
-            colorScaleMap.put("Concentration",    colorScale[3]);
-            colorScaleMap.put("Vector",           colorScale[4]);
-            colorScaleMap.put("Total Head",       colorScale[5]);        
-            return;
-        } else if (colorScale.length > 6) {
-            if (colorScaleMap == null) {
-                colorScaleMap = new HashMap<>();
-            }
-            colorScaleMap.put("Pressure Head",    colorScale[0]);
-            colorScaleMap.put("Moisture Content", colorScale[1]);
-            colorScaleMap.put("Saturation",       colorScale[2]);
-            colorScaleMap.put("Temperature",      colorScale[3]);
-            colorScaleMap.put("Concentration",    colorScale[3]);
-            colorScaleMap.put("Vector",           colorScale[4]);
-            colorScaleMap.put("Total Head",       colorScale[5]);        
-            return;
         }
     }
     

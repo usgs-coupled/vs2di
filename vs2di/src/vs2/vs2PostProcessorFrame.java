@@ -725,9 +725,105 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
 
     protected void readSettingsFile(BufferedReader in) throws Exception {
         try {
-            super.readSettingsFile(in);
-            vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
             String line;
+            line = in.readLine();
+            double drawingWidth = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setDrawingWidthInInches(drawingWidth);
+	    
+            line = in.readLine();
+            double drawingHeight = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setDrawingHeightInInches(drawingHeight);
+	    
+            line = in.readLine();
+            double modelDistancePerInchX = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setModelDistancePerInchX(modelDistancePerInchX);
+	    
+            line = in.readLine();
+            double modelDistancePerInchY = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setModelDistancePerInchY(modelDistancePerInchY);
+	    
+            line = in.readLine();
+            double xOriginInInches = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setXOriginInInches(xOriginInInches);
+	    
+            line = in.readLine();
+            double yOriginInInches = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setYOriginInInches(yOriginInInches);
+	    
+            line = in.readLine();
+            int numDecimal = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+            computationalModel.setNumberOfDecimalPlacesToShow(numDecimal);
+	    
+            line = in.readLine();
+            float secPerStep = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setSecPerStep(secPerStep);
+	    
+            line = in.readLine();
+            float saveInterval = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setSaveInterval(saveInterval);
+	    
+            line = in.readLine();
+            int saveBinaryFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setSaveOutputAsBinary(saveBinaryFlag == 1 ? true : false);
+	    
+            line = in.readLine();
+            float vectorMagnitudePerInch = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setVectorMagnitudePerInch(vectorMagnitudePerInch);
+	    
+            line = in.readLine();
+            int vectorColInterval = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorColInterval(vectorColInterval);
+	    
+            line = in.readLine();
+            int vectorRowInterval = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorRowInterval(vectorRowInterval);
+	    
+            line = in.readLine();
+            int vectorMode = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorMode(vectorMode);
+            if (vectorMode == VECTOR_AS_VELOCITY) {
+                vectorButton.setIcon(velocityImageIcon);
+                vectorButton.setDisabledIcon(velocityImageIcon);
+                vectorButton.setDisabledSelectedIcon(velocityImageIcon);
+            } else {
+                vectorButton.setIcon(fluxImageIcon);
+                vectorButton.setDisabledIcon(fluxImageIcon);
+                vectorButton.setDisabledSelectedIcon(fluxImageIcon);
+            }
+	    
+            line = in.readLine();
+            int showStemsFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+            computationalModel.setShowStems(showStemsFlag == 1 ? true : false);
+            
+            line = in.readLine();
+            int colorScaleCount = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+
+            java.util.Map<String, mp2ColorScale> map = ((vs2ComputationalModel)computationalModel).getColorScaleMap();
+            double valueRed, valueBlue, colorInterval, labelInterval;
+            for (int i = 0; i < colorScaleCount; ++i) {
+                line = in.readLine();
+                String k = line.substring(line.indexOf(':')+1).trim();
+
+                mp2ColorScale v = new mp2ColorScale();
+                v.init();
+                
+                line = in.readLine();
+                valueRed = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                valueBlue = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                colorInterval = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                labelInterval = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                
+                v.SetLimits(valueBlue, valueRed);
+                v.SetColorInterval(colorInterval);
+                v.SetLabelInterval(labelInterval);
+                
+                map.put(k, v);
+            }
+            
+            vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
             line = in.readLine();
             int saveMoistureContentFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
             cm.setSaveMoistureContent((saveMoistureContentFlag != 0) ? true : false);
@@ -746,8 +842,40 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     
     protected void writeSettingsFile(PrintWriter pw) throws Exception {
         try {
-            super.writeSettingsFile(pw);
+            pw.println("drawing width in inches: " + computationalModel.getDrawingWidthInInches());
+            pw.println("drawing height in inches: " + computationalModel.getDrawingHeightInInches());
+            pw.println("model distance per inch x: " + computationalModel.getModelDistancePerInchX());
+            pw.println("model distance per inch y: " + computationalModel.getModelDistancePerInchY());
+            pw.println("x origin in inches: " + computationalModel.getXOriginInInches());
+            pw.println("y origin in inches: " + computationalModel.getYOriginInInches());
+            pw.println("number of decimal places: " + computationalModel.getNumberOfDecimalPlacesToShow());
+            pw.println("seconds per time step: " + (computationalModel.getSecPerStep()));
+            pw.println("save interval: " + computationalModel.getSaveInterval());
+            pw.println("save output: " + (computationalModel.getSaveOutputAsBinary() ? 1 : 0));
+            pw.println("vector magnitude per inch: " + computationalModel.getVectorMagnitudePerInch());
+            pw.println("vector vector column interval: " + computationalModel.getVectorColInterval());
+            pw.println("vector row interval: " + computationalModel.getVectorRowInterval());
+            pw.println("vector mode:" + computationalModel.getVectorMode());
+            pw.println("show vector base: " + (computationalModel.getShowStems() ? 1 : 0));
+            
             vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
+            java.util.Map<String, mp2ColorScale> map = cm.getColorScaleMap();
+            assert(map != null && map.size() > 5);
+            pw.println("color scale count: " + map.size());
+            
+            int i = 0;
+            for (java.util.Map.Entry<String, mp2ColorScale> entry : map.entrySet()) {
+                String key = entry.getKey();
+                pw.println("color scale " + i + " name: " + key);
+                
+                mp2ColorScale cs = entry.getValue();
+                pw.println("color scale " + i + " red limit: " + cs.GetValueRed());
+                pw.println("color scale " + i + " blue limit: " + cs.GetValueBlue());
+                pw.println("color scale " + i + " color interval: " + cs.GetColorInterval());
+                pw.println("color scale " + i + " label interval: " + cs.GetLabelInterval());
+                ++i;
+            }
+            
             pw.println("save moisture content: " + (cm.getSaveMoistureContent() ? "1" : "0"));
             pw.println("save saturation: " + (cm.getSaveSaturation() ? "1" : "0"));
             pw.println("save vectors: " + (cm.getSaveVectors() ? "1" : "0"));

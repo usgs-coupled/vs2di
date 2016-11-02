@@ -7,13 +7,13 @@ project(vs2drt C CXX Fortran)
 SET(vs2drt_F90_SOURCES
 Call_RM.F90
 PhreeqcRM/src/RM_interface.F90
+vs2dt3_3_reactive_withoutArgus1.F90
 )
 
 # source
 SET(vs2drt_SOURCES
 ${vs2drt_F90_SOURCES}
 modules.f90
-vs2dt3_3_reactive_withoutArgus1.F90
 )
 
 source_group("Source Files" FILES ${vs2drt_F90_SOURCES})
@@ -21,8 +21,8 @@ source_group("Source Files" FILES ${vs2drt_F90_SOURCES})
 # executable
 add_executable(vs2drt ${vs2drt_SOURCES})
 
-# Disable deprecation warnings for standard C and STL functions in VS2005
-# and later
+# Disable deprecation warnings for standard C and STL functions
+# in VS2005 and later
 IF(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
   ADD_DEFINITIONS(-D_CRT_SECURE_NO_DEPRECATE)
   ADD_DEFINITIONS(-D_SCL_SECURE_NO_WARNINGS)
@@ -61,7 +61,7 @@ if(NOT ZLIB_ROOT)
 endif()
 ##}}
 
-if (ZLIB_FOUND)
+if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
   add_definitions(-DUSE_GZ)
   include_directories(${ZLIB_INCLUDE_DIRS})
 endif()
@@ -69,12 +69,6 @@ endif()
 # fortran name mangling
 include(FortranCInterface)
 FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
-FH_FinalizeFiles
-FH_ProcessRestartFiles
-FH_SetPointers
-FH_SetRestartName
-FH_WriteFiles
-FH_WriteBcRaw
 )
 
 # define CMAKE_FC
@@ -147,14 +141,19 @@ if (OPENMP_FOUND)
   ADD_DEFINITIONS(-DUSE_OPENMP)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
   set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   ${OpenMP_C_FLAGS}")
+  set(VS2DRT_OPENMP_FOUND ON PARENT_SCOPE)
 endif()
 
 #
 # set PhreeqcRM defaults for vs2drt
 #
 
+# PHREEQCRM_STATIC_RUNTIME
+set(PHREEQCRM_STATIC_RUNTIME ON CACHE INTERNAL "doc" FORCE)
+mark_as_advanced(PHREEQCRM_STATIC_RUNTIME)
+
 # PHREEQCRM_USE_ZLIB (must be enabled)
-set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)
+set(PHREEQCRM_USE_ZLIB OFF CACHE INTERNAL "doc" FORCE)
 mark_as_advanced(PHREEQCRM_USE_ZLIB)
 
 # PHREEQCRM_BUILD_MPI (must be disabled)
@@ -163,6 +162,40 @@ mark_as_advanced(PHREEQCRM_BUILD_MPI)
 
 # PHREEQCRM_FORTRAN_TESTING (just hide)
 mark_as_advanced(PHREEQCRM_FORTRAN_TESTING)
+
+# 
+if (MSVC)
+  set(CompilerFlags
+    CMAKE_CXX_FLAGS
+    CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_MINSIZEREL
+    CMAKE_CXX_FLAGS_RELWITHDEBINFO
+    CMAKE_C_FLAGS
+    CMAKE_C_FLAGS_DEBUG
+    CMAKE_C_FLAGS_RELEASE
+    CMAKE_C_FLAGS_MINSIZEREL
+    CMAKE_C_FLAGS_RELWITHDEBINFO
+  )
+
+  # Set C/C++ Runtime Library to Multi-threaded (/MT) 
+  foreach(CompilerFlag ${CompilerFlags})
+    if(${CompilerFlag} MATCHES "/MD")
+      string(REGEX REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+    endif()
+  endforeach()
+  
+  set(FortranCompilerFlags
+    CMAKE_Fortran_FLAGS
+  )
+  
+  # Set Fortran Runtime Library to Multithreaded
+  foreach(FortranCompilerFlags ${FortranCompilerFlags})
+    if(${FortranCompilerFlags} MATCHES "/libs:dll")
+      string(REGEX REPLACE "/libs:dll" "/libs:static" ${FortranCompilerFlags} "${${FortranCompilerFlags}}")
+    endif()  
+  endforeach()  
+endif()
 
 # subdirs
 add_subdirectory(PhreeqcRM)

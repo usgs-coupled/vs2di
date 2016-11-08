@@ -1411,7 +1411,7 @@
                 DO N=1,NXR
                     IN=NLY*(N-1)+J
                     SATUR(IN) = 0.0d0
-                    IF(POROSITY(IN).GT.0.0D0.AND.HX(IN).GT.0.0D0) THEN
+                    IF(POROSITY(IN).GT.0.0D0.AND.HX(IN).GT.0.0D0.AND.NCTYP(IN).NE.1) THEN
                         SATUR(IN)=THETA(IN)/POROSITY(IN)
                     END IF
                 enddo
@@ -9071,6 +9071,9 @@
 
     SUBROUTINE CLOSEIO
     !C *** CLOSE ALL IO UNITS
+    USE PhreeqcRM
+    USE vs2dt_rm
+    IMPLICIT NONE
     CLOSE(2)
     CLOSE(5)
     CLOSE(6)
@@ -9087,6 +9090,15 @@
     !      CLOSE(17)
     !      CLOSE(18)
     !      CLOSE(19)
+#ifdef USE_MPI
+    status = RM_MpiWorkerBreak(rm_id)
+#endif
+    CALL FH_FinalizeFiles
+    status = RM_CloseFiles(rm_id)
+    status = RM_Destroy(rm_id)
+#ifdef USE_MPI
+    call MPI_FINALIZE(status)
+#endif
     RETURN
     END
 

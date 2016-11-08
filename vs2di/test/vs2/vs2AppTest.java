@@ -225,7 +225,29 @@ public class vs2AppTest {
             robot.keyPress(java.awt.event.KeyEvent.VK_R);    // This causes EXCEPTION_ACCESS_VIOLATION (-r 11503)
             robot.keyRelease(java.awt.event.KeyEvent.VK_R);  // in vs2.vs2drt.getSoluteTransportMassBalanceErrors
             
-            Thread.sleep(1000);
+            Thread.sleep(250);
+            System.out.println("Hit Yes");            
+            
+            // Do you want to restart the computation? Yes
+            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_A);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
+            
+            Thread.sleep(250);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_D);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+            
+            // Do you want to restart the computation? Yes
+            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
+            
+            Thread.sleep(250);
         }
         catch (java.awt.AWTException e) {
             System.out.println("AWTException");
@@ -344,6 +366,12 @@ public class vs2AppTest {
             robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
             
+            // must close postprocessor or remaining tests may fail
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyPress(java.awt.event.KeyEvent.VK_F4);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_F4);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);            
+            
             // verify items
             Thread.sleep(100);
             assertEquals(15, frame.getDisplayChooser().getItemCount());
@@ -358,6 +386,85 @@ public class vs2AppTest {
             System.out.println("Exception");
         }
     }
+    
+    /**
+     * Test PostCloseOpenPost 
+     */
+    //@Ignore
+    @Test
+    public void testPostCloseOpenPost() {
+        System.out.println("testPostCloseOpenPost");
+        System.out.println("Thread id = " + Thread.currentThread().getId());
+        
+        try {
+            vs2App.main(null);
+        
+            // open ex11.vs2
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../tests/Example11", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
+            
+            java.io.File inFile = new java.io.File(path.toString());
+            vs2App.theApp.openFile(inFile);
+            
+            java.awt.Robot robot = new java.awt.Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+
+            // show postprocessor
+            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
+            // get frameManager
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            assertNotEquals(null, frameManager);
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();            
+            
+            Thread.sleep(100);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_A);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_D);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+
+            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+            
+            // open ex11-test.vs2
+            java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.dir"), "../tests/Example11", "ex11-test.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path2));
+            
+            java.io.File inFile2 = new java.io.File(path2.toString());
+            vs2App.theApp.openFile(inFile2);
+
+            Thread.sleep(250);
+            
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();
+            
+            // must close postprocessor or remaining tests may fail
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyPress(java.awt.event.KeyEvent.VK_F4);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_F4);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            // The computation is not finished. Do you want to quit anyway? Yes
+            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);          
+
+            Thread.sleep(500);
+        }
+        catch (java.awt.AWTException e) {
+            System.out.println("AWTException");
+        }
+        catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        }
+        catch (Exception e) {
+            System.out.println("Exception");
+        }
+    }    
 
     /**
      * Test of typeCheck method, of class vs2App.

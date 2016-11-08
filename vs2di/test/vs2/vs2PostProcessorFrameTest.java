@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -158,6 +159,7 @@ public class vs2PostProcessorFrameTest {
     /**
      * Test of onExit method, of class vs2PostProcessorFrame.
      */
+    //@Ignore
     @Test
     public void testRunEx11ThenFlowEx1() {
         System.out.println("testRunEx11ThenFlowEx1");

@@ -34,15 +34,6 @@
 #define HDF_END_TIME_STEP           FC_FUNC_ (hdf_end_time_step,         HDF_END_TIME_STEP)
 #endif
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
-extern void HDF_WRITE_INVARIANT(int *iso, int * mpi_myself);
-extern void HDF_BEGIN_TIME_STEP(int *iso);
-extern void HDF_END_TIME_STEP(int *iso);
-#if defined(__cplusplus)
-}
-#endif
 class FileHandler: public PHRQ_base
 {
 public:
@@ -74,7 +65,7 @@ protected:
 	int    * mapping;     // only root
 	int    * ic;
 };
-FileHandler file_handler;
+FileHandler *ptr_file_handler;
 // Constructor
 FileHandler::FileHandler()
 {
@@ -370,18 +361,25 @@ FH_FinalizeFiles()
 {
 	//HDFFinalize();
 
-	file_handler.Get_io()->Set_punch_ostream(NULL);
-	for (int iso = 0; iso < (int) file_handler.GetXYZOstreams().size(); iso++)
+	if (ptr_file_handler != NULL)
 	{
-		delete file_handler.GetXYZOstreams()[iso];
-	}
-	file_handler.GetXYZOstreams().clear();
+		ptr_file_handler->Get_io()->Set_punch_ostream(NULL);
+		for (int iso = 0; iso < (int) ptr_file_handler->GetXYZOstreams().size(); iso++)
+		{
+			delete ptr_file_handler->GetXYZOstreams()[iso];
+		}
+		ptr_file_handler->GetXYZOstreams().clear();
 
-	for (int iso = 0; iso < (int) file_handler.GetObsOstreams().size(); iso++)
-	{
-		delete file_handler.GetObsOstreams()[iso];
+		for (int iso = 0; iso < (int) ptr_file_handler->GetObsOstreams().size(); iso++)
+		{
+			delete ptr_file_handler->GetObsOstreams()[iso];
+		}
+		ptr_file_handler->GetObsOstreams().clear();
+
+		assert(ptr_file_handler != NULL);
+		delete ptr_file_handler;
+		ptr_file_handler = NULL;
 	}
-	file_handler.GetObsOstreams().clear();
 
 }
 //
@@ -393,7 +391,9 @@ void
 FH_SetPointers(double *x_node, double *z_node, int *x_index, int *z_index, int *ic, double *saturation, int *mapping)
 /* ---------------------------------------------------------------------- */
 {
-	file_handler.SetPointers(x_node, z_node, x_index, z_index, ic, saturation, mapping);
+	assert(ptr_file_handler == NULL);
+	ptr_file_handler = new FileHandler;
+	ptr_file_handler->SetPointers(x_node, z_node, x_index, z_index, ic, saturation, mapping);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -402,5 +402,5 @@ FH_WriteFiles(int *id_in, int *print_xz, int *print_obs, int *xz_mask, int *obs_
 /* ---------------------------------------------------------------------- */
 {
 	int id = *id_in;
-	file_handler.WriteFiles(id, print_xz, print_obs, xz_mask, obs_mask);
+	ptr_file_handler->WriteFiles(id, print_xz, print_obs, xz_mask, obs_mask);
 }

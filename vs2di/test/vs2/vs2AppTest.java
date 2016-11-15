@@ -401,6 +401,7 @@ public class vs2AppTest {
         
             // open ex11.vs2
             java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../tests/Example11", "ex11.vs2");
+            System.out.println("path=" + path);
             assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());

@@ -263,7 +263,7 @@ public class vs2AppTest {
     /**
      * Test RunResetRestartYesThenNo 
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testRunResetRestartYesThenNo() {
         System.out.println("testRunResetRestartYesThenNo");

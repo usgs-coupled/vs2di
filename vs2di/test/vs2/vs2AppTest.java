@@ -390,7 +390,7 @@ public class vs2AppTest {
     /**
      * Test PostCloseOpenPost 
      */
-    @Ignore
+    //@Ignore
     @Test
     public void testPostCloseOpenPost() {
         System.out.println("testPostCloseOpenPost");

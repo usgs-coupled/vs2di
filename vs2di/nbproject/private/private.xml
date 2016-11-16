@@ -10,6 +10,14 @@
             </bookmark>
         </file>
         <file>
+            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
+            <bookmark id="26">
+                <name/>
+                <line>104</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>src/vs2/vs2Doc.java</url>
             <bookmark id="6">
                 <name/>
@@ -42,14 +50,6 @@
             <bookmark id="25">
                 <name/>
                 <line>53</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
-            <bookmark id="26">
-                <name/>
-                <line>104</line>
                 <key/>
             </bookmark>
         </file>
@@ -103,6 +103,7 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ColorCodeWindow.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2DiscretizableData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2PostProcessorView.java</file>
+            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2JavaHelp.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/test/vs2/vs2AppTest.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/test/vs2/vs2BoundaryConditionsDialogTest.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2dt.java</file>

@@ -153,6 +153,21 @@ public class vs2AppTest {
             String expResult = drive + path;
             assertEquals(expResult, result);
         }
+        System.out.println("System properties");
+        java.util.Properties p = System.getProperties();
+        java.util.Enumeration keys = p.keys();
+        while (keys.hasMoreElements()) {
+            String key = (String)keys.nextElement();
+            String value = (String)p.get(key);
+            System.out.println(key + ": " + value);
+        }
+        System.out.println("Environmental variables");
+        java.util.Map<String, String> env = System.getenv();
+        for (String envName : env.keySet()) {
+            System.out.format("%s=%s\n",
+                              envName,
+                              env.get(envName));
+        }        
     }
 
     /**
@@ -390,7 +405,7 @@ public class vs2AppTest {
     /**
      * Test PostCloseOpenPost 
      */
-    //@Ignore
+    @Ignore
     @Test
     public void testPostCloseOpenPost() {
         System.out.println("testPostCloseOpenPost");

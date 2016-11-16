@@ -394,15 +394,12 @@ public class vs2AppTest {
     @Test
     public void testPostCloseOpenPost() {
         System.out.println("testPostCloseOpenPost");
-        System.out.println("Thread id = " + Thread.currentThread().getId());
         
         try {
             vs2App.main(null);
         
             // open ex11.vs2
             java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../tests/Example11", "ex11.vs2");
-            System.out.println("path=" + path);
-            System.out.println("java.nio.file.Files.exists(path)=" + java.nio.file.Files.exists(path));
             assertEquals(true, java.nio.file.Files.exists(path));
             
             java.io.File inFile = new java.io.File(path.toString());
@@ -447,15 +444,17 @@ public class vs2AppTest {
             
             // must close postprocessor or remaining tests may fail
             robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyPress(java.awt.event.KeyEvent.VK_F4);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F4);
             robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
+            robot.keyPress(java.awt.event.KeyEvent.VK_A);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
+            robot.keyPress(java.awt.event.KeyEvent.VK_D);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+
             // The computation is not finished. Do you want to quit anyway? Yes
             robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
             robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);          
 
-            Thread.sleep(500);
+            Thread.sleep(250);
         }
         catch (java.awt.AWTException e) {
             System.out.println("AWTException");

@@ -410,7 +410,7 @@ public class vs2AppTest {
     public void testPostCloseOpenPost() {
         
         // seems to always fail in jenkins
-        if (System.getenv("USERDOMAIN") == "JENKINS-WIN7") return;
+        if (System.getenv("USERDOMAIN").compareTo("JENKINS-WIN7") == 0) return;
         
         System.out.println("testPostCloseOpenPost");
         

@@ -2673,18 +2673,18 @@
             END IF
             IF(solute)  then
     ! Line C-13
-                READ(5,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC
+                READ(5,*,IOSTAT=myerr)NTC,INSBC1 !,INSBC2,SBFRAC
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC'
+                    write(6,'(A)') 'Error reading: NTC,INSBC1'
                     flush(6)
-                    stop 'Error reading: NTC,INSBC1,INSBC2,SBFRAC'
+                    stop 'Error reading: NTC,INSBC1'
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
                 allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
                 ibsol1(1) = insbc1
-                ibsol2(1) = insbc2
-                f1(1) = sbfrac
+                ibsol2(1) = -1 ! insbc2
+                f1(1) = 1.0    ! sbfrac
                 status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
                 do i = 1, nsol
                     bcsol(i) = bcsol1(1,i)
@@ -2732,18 +2732,18 @@
             END IF
             IF (SOLUTE)THEN
     ! Line C-17
-                READ(5,*,IOSTAT=myerr)NTC,INSBC1,INSBC2,SBFRAC 
+                READ(5,*,IOSTAT=myerr)NTC,INSBC1 ! ,INSBC2,SBFRAC 
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTC,INSBC1,INSBC2,SBFRAC '
+                    write(6,'(A)') 'Error reading: NTC,INSBC1 '
                     flush(6)
-                    stop 'Error reading: NTC,INSBC1,INSBC2,SBFRAC '
+                    stop 'Error reading: NTC,INSBC1 '
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
                 allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
                 ibsol1(1) = insbc1
-                ibsol2(1) = insbc2
-                f1(1) = sbfrac
+                ibsol2(1) = -1 ! insbc2
+                f1(1) = 1.0d0  ! sbfrac
                 status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
                 do i = 1, nsol
                     bcsol(i) = bcsol1(1,i)

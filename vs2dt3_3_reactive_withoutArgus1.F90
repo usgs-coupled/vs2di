@@ -1658,9 +1658,9 @@
     ! Line B-12
     READ(5,*,IOSTAT=myerr) IROW
     if (myerr .ne. 0) then
-        write(6,'(A)') 'Error reading:  IROW'
+        write(6,'(A)') 'Error reading B-12:  IROW'
         flush(6)
-        stop 'Error reading:  IROW'
+        stop 'Error reading B-12:  IROW'
     endif
     IF(IROW.EQ.0) THEN
         !      DO 54 K=1,NNODES
@@ -1736,9 +1736,9 @@
     ! Line B-14
 60      READ(5,*,IOSTAT=myerr) IL,IR,JBT,JRD
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  IL,IR,JBT,JRD'
+            write(6,'(A)') 'Error reading B-14:  IL,IR,JBT,JRD'
             flush(6)
-            stop 'Error reading:  IL,IR,JBT,JRD'
+            stop 'Error reading B-14:  IL,IR,JBT,JRD'
         endif
         DO 70 N=IL,IR
             IDUM(N)=JRD
@@ -1780,17 +1780,17 @@
     ! Line B-15
     READ(5,*,IOSTAT=myerr) IREAD,FACTOR
     if (myerr .ne. 0) then
-        write(6,'(A)') 'Error reading:  IREAD,FACTOR'
+        write(6,'(A)') 'Error reading B-15:  IREAD,FACTOR'
         flush(6)
-        stop 'Error reading:  IREAD,FACTOR'
+        stop 'Error reading B-15:  IREAD,FACTOR'
     endif
     IF(IREAD.EQ.2) THEN
     ! Line B-16
         READ(5,*,IOSTAT=myerr) DWTX,HMIN
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  DWTX,HMIN'
+            write(6,'(A)') 'Error reading B-16:  DWTX,HMIN'
             flush(6)
-            stop 'Error reading:  DWTX,HMIN'
+            stop 'Error reading B-16:  DWTX,HMIN'
         endif
         WRITE (06,4190) DWTX,ZUNIT,HMIN,ZUNIT,DWTX,ZUNIT
         !
@@ -1818,9 +1818,9 @@
     ! Line B-17
                 READ(5,*,IOSTAT=myerr)IU,IFMT
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: IU,IFMT'
+                    write(6,'(A)') 'Error reading B-17: IU,IFMT'
                     flush(6)
-                    stop 'Error reading: IU,IFMT'
+                    stop 'Error reading B-17: IU,IFMT'
                 endif
                 WRITE (06,4180) IU,FACTOR
             endif
@@ -1925,9 +1925,9 @@
     ! Line B-18
     READ(5,*,IOSTAT=myerr) BCIT,ETSIM
     if (myerr .ne. 0) then
-        write(6,'(A)') 'Error reading:  BCIT,ETSIM'
+        write(6,'(A)') 'Error reading B-18:  BCIT,ETSIM'
         flush(6)
-        stop 'Error reading:  BCIT,ETSIM'
+        stop 'Error reading B-18:  BCIT,ETSIM'
     endif
     IF(BCIT .OR. ETSIM) THEN
         !
@@ -1954,9 +1954,9 @@
     ! Line B-19
         READ(5,*,IOSTAT=myerr)NPV,ETCYC
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading: NPV,ETCYC'
+            write(6,'(A)') 'Error reading B-19: NPV,ETCYC'
             flush(6)
-            stop 'Error reading: NPV,ETCYC'
+            stop 'Error reading B-19: NPV,ETCYC'
         endif
         npv1 = npv
         if(npv.lt.0) npv = -npv
@@ -1976,23 +1976,23 @@
     ! Line B-20
             READ(5,*,IOSTAT=myerr)(PEVAL(I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading: (PEVAL(I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-20: (PEVAL(I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading: (PEVAL(I),I=1,NPV)'
+                stop 'Error reading B-20: (PEVAL(I),I=1,NPV)'
             endif
     ! Line B-21
             READ(5,*,IOSTAT=myerr)(RDC(1,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading: (RDC(1,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-21: (RDC(1,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading: (RDC(1,I),I=1,NPV)'
+                stop 'Error reading B-21: (RDC(1,I),I=1,NPV)'
             endif
     ! Line B-22
             READ(5,*,IOSTAT=myerr)(RDC(2,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading: (RDC(2,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-22: (RDC(2,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading: (RDC(2,I),I=1,NPV)'
+                stop 'Error reading B-22: (RDC(2,I),I=1,NPV)'
             endif
             WRITE (06,4050)ZUNIT,TUNIT,ZUNIT,ZUNIT,(I,PEVAL(I),RDC(1,I),  &
             RDC(2,I),I=1,NPV)
@@ -2004,37 +2004,37 @@
     ! Line B-23
             READ(5,*,IOSTAT=myerr)(PTVAL(I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading: (PTVAL(I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-23: (PTVAL(I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading: (PTVAL(I),I=1,NPV)'
+                stop 'Error reading B-23: (PTVAL(I),I=1,NPV)'
             endif
     ! Line B-24
             READ(5,*,IOSTAT=myerr) (RDC(3,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  (RDC(3,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-24:  (RDC(3,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading:  (RDC(3,I),I=1,NPV)'
+                stop 'Error reading B-24:  (RDC(3,I),I=1,NPV)'
             endif
     ! Line B-25
             READ(5,*,IOSTAT=myerr) (RDC(4,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  (RDC(4,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-25:  (RDC(4,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading:  (RDC(4,I),I=1,NPV)'
+                stop 'Error reading B-25:  (RDC(4,I),I=1,NPV)'
             endif
     ! Line B-26
             READ(5,*,IOSTAT=myerr) (RDC(5,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  (RDC(5,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-26:  (RDC(5,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading:  (RDC(5,I),I=1,NPV)'
+                stop 'Error reading B-26:  (RDC(5,I),I=1,NPV)'
             endif
     ! Line B-27
             READ(5,*,IOSTAT=myerr) (RDC(6,I),I=1,NPV)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  (RDC(6,I),I=1,NPV)'
+                write(6,'(A)') 'Error reading B-27:  (RDC(6,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading:  (RDC(6,I),I=1,NPV)'
+                stop 'Error reading B-27:  (RDC(6,I),I=1,NPV)'
             endif
             WRITE(06,4060)ZUNIT,TUNIT,ZUNIT,ZUNIT,ZUNIT,ZUNIT,(I,PTVAL(I),  &
             (RDC(J,I),J=3,6),I=1,NPV)
@@ -2055,9 +2055,9 @@
     ! Line B-28
         READ(5,*,IOSTAT=myerr) IREAD,FACTOR
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  IREAD,FACTOR'
+            write(6,'(A)') 'Error reading B-28:  IREAD,FACTOR'
             flush(6)
-            stop 'Error reading:  IREAD,FACTOR'
+            stop 'Error reading B-28:  IREAD,FACTOR'
         endif
         IF(IREAD.EQ.0) THEN
             WRITE(6,4210) FACTOR
@@ -2076,9 +2076,9 @@
     ! Line B-29
             READ(5,*,IOSTAT=myerr)IU,IFMT
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading: IU,IFMT'
+                write(6,'(A)') 'Error reading B-29: IU,IFMT'
                 flush(6)
-                stop 'Error reading: IU,IFMT'
+                stop 'Error reading B-29: IU,IFMT'
             endif
             if (IFMT.NE.UNFORMATTED) then
                 WRITE(06,4220) IU,FACTOR
@@ -2126,9 +2126,9 @@
     ! Line B-30
         READ(5,*,IOSTAT=myerr) IREAD
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  IREAD'
+            write(6,'(A)') 'Error reading B-30:  IREAD'
             flush(6)
-            stop 'Error reading:  IREAD'
+            stop 'Error reading B-30:  IREAD'
         endif
         insol2 = -1
         indsol2 = -1
@@ -2145,9 +2145,9 @@
     ! Line B-31
             READ(5,*,IOSTAT=myerr)(INSOL1(I),I=1,7)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  INSOL1'
+                write(6,'(A)') 'Error reading B-31:  INSOL1'
                 flush(6)
-                stop 'Error reading:  INSOL1'
+                stop 'Error reading B-31:  INSOL1'
             endif            
             INSOL2(1)=2
             DO 212 I=2,7
@@ -2166,9 +2166,9 @@
     ! Line B-32
                     READ(5,*,IOSTAT=myerr)(DUM(N),N=1,NXR)
                     if (myerr .ne. 0) then
-                        write(6,'(A)') 'Error reading:  INDSOL'
+                        write(6,'(A)') 'Error reading B-32:  INDSOL'
                         flush(6)
-                        stop 'Error reading:  INDSOL'
+                        stop 'Error reading B-32:  INDSOL'
                     endif   
                     DO 401 N=1,NXR
                         IN=NLY*(N-1)+J
@@ -2297,9 +2297,9 @@
     ! Line B-33
         read(5,*,IOSTAT=myerr) numBF, maxnumcells
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  numBF, maxnumcells'
+            write(6,'(A)') 'Error reading B-33:  numBF, maxnumcells'
             flush(6)
-            stop 'Error reading:  numBF, maxnumcells'
+            stop 'Error reading B-33:  numBF, maxnumcells'
         endif
         !!@@include 'd_BFAlloc.inc'
         !      if (allocated(idBF)) deallocate(idBF)
@@ -2316,17 +2316,17 @@
     ! Line B-34
             read(5,*,IOSTAT=myerr) idBF(i), numcellsBF(i)
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  idBF(i), numcellsBF(i)'
+                write(6,'(A)') 'Error reading B-34:  idBF(i), numcellsBF(i)'
                 flush(6)
-                stop 'Error reading:  idBF(i), numcellsBF(i)'
+                stop 'Error reading B-34:  idBF(i), numcellsBF(i)'
             endif
             do 250 j = 1,numcellsBF(i)
     ! Line B-35
                 READ(5,*,IOSTAT=myerr) jj,nn
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading:  jj,nn'
+                    write(6,'(A)') 'Error reading B-35:  jj,nn'
                     flush(6)
-                    stop 'Error reading:  jj,nn'
+                    stop 'Error reading B-35:  jj,nn'
                 endif
                 nodenum(i,j) = nly*(nn-1) + jj
 250     continue
@@ -2505,9 +2505,9 @@
     ! Line C-1
         READ(5,*,IOSTAT=myerr) TPER,DELT
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  TPER,DELT'
+            write(6,'(A)') 'Error reading C-1:  TPER,DELT'
             flush(6)
-            stop 'Error reading:  TPER,DELT'
+            stop 'Error reading C-1:  TPER,DELT'
         endif
         !
         !   CHECK FOR END OF SIMULATION
@@ -2519,12 +2519,12 @@
             jstop=5
             return
         END IF
-    ! Line C-1
+    ! Line C-2
         READ(5,*,IOSTAT=myerr) TMLT,DLTMX,DLTMIN,TRED
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  TMLT,DLTMX,DLTMIN,TRED'
+            write(6,'(A)') 'Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED'
             flush(6)
-            stop 'Error reading:  TMLT,DLTMX,DLTMIN,TRED'
+            stop 'Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED'
         endif
         KP=KP+1
         SSTATE=.FALSE.
@@ -2538,31 +2538,31 @@
     ! Line C-3
         READ(5,*,IOSTAT=myerr) DSMAX,STERR
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  DSMAX,STERR'
+            write(6,'(A)') 'Error reading C-3:  DSMAX,STERR'
             flush(6)
-            stop 'Error reading:  DSMAX,STERR'
+            stop 'Error reading C-3:  DSMAX,STERR'
         endif
     ! Line C-4
         READ(5,*,IOSTAT=myerr) POND
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  POND'
+            write(6,'(A)') 'Error reading C-4:  POND'
             flush(6)
-            stop 'Error reading:  POND'
+            stop 'Error reading C-4:  POND'
         endif
         WRITE (06,4020) DSMAX,STERR,POND
     ! Line C-5
         READ(5,*,IOSTAT=myerr) PRNT
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  PRNT'
+            write(6,'(A)') 'Error reading C-5:  PRNT'
             flush(6)
-            stop 'Error reading:  PRNT'
+            stop 'Error reading C-5:  PRNT'
         endif
     ! Line C-6
         READ(5,*,IOSTAT=myerr) BCIT,ETSIM,SEEP
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  BCIT,ETSIM,SEEP'
+            write(6,'(A)') 'Error reading C-6:  BCIT,ETSIM,SEEP'
             flush(6)
-            stop 'Error reading:  BCIT,ETSIM,SEEP'
+            stop 'Error reading C-6:  BCIT,ETSIM,SEEP'
         endif
         WRITE (06,4010) PRNT,BCIT,ETSIM,SEEP
         DSMAX=DABS(DSMAX)
@@ -2575,9 +2575,9 @@
     ! Line C-7
             READ(5,*,IOSTAT=myerr) NFCS
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  NFCS'
+                write(6,'(A)') 'Error reading C-7:  NFCS'
                 flush(6)
-                stop 'Error reading:  NFCS'
+                stop 'Error reading C-7:  NFCS'
             endif
             !!@@include 'd_spfcAlloc.inc'
             if (allocated(JSPX)) deallocate(JSPX)
@@ -2590,17 +2590,17 @@
     ! Line C-8
                 READ(5,*,IOSTAT=myerr) JJ,JLAST(K) 
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading:  JJ,JLAST(K) '
+                    write(6,'(A)') 'Error reading C-8:  JJ,JLAST(K) '
                     flush(6)
-                    stop 'Error reading:  JJ,JLAST(K) '
+                    stop 'Error reading C-8:  JJ,JLAST(K) '
                 endif
                 NFC(K)=JJ 
     ! Line C-9
                 READ(5,*,IOSTAT=myerr) ((JSPX(L,J,K),L=2,3),J=1,JJ)
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
+                    write(6,'(A)') 'Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
                     flush(6)
-                    stop 'Error reading:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
+                    stop 'Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
                 endif
                 !      DO 40 M=1,Nsol
                 DO 40 J=1,JJ 
@@ -2645,27 +2645,27 @@
     ! Line C-10
         READ(5,*,IOSTAT=myerr) IBC 
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading:  IBC '
+            write(6,'(A)') 'Error reading C-10:  IBC '
             flush(6)
-            stop 'Error reading:  IBC '
+            stop 'Error reading C-10:  IBC '
         endif
         IF(IBC.GT.0) GO TO 80 
 70      IF (TRANS)THEN
     ! Line C-11
             READ(5,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
+                write(6,'(A)') 'Error reading C-11:  JJ,NN,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading:  JJ,NN,NTX,PFDUM'
+                stop 'Error reading C-11:  JJ,NN,NTX,PFDUM'
             endif
             IF(JJ.LT.0) GO TO 130 
             IF(HEAT) THEN
     ! Line C-12
                 READ(5,*,IOSTAT=myerr)NTT,TF
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTT,TF'
+                    write(6,'(A)') 'Error reading C-12: NTT,TF'
                     flush(6)
-                    stop 'Error reading: NTT,TF'
+                    stop 'Error reading C-12: NTT,TF'
                 endif
             ELSE
                 NTT=0
@@ -2675,9 +2675,9 @@
     ! Line C-13
                 READ(5,*,IOSTAT=myerr)NTC,INSBC1 !,INSBC2,SBFRAC
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTC,INSBC1'
+                    write(6,'(A)') 'Error reading C-13: NTC,INSBC1'
                     flush(6)
-                    stop 'Error reading: NTC,INSBC1'
+                    stop 'Error reading C-13: NTC,INSBC1'
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
@@ -2698,9 +2698,9 @@
     ! Line C-14
             READ(5,*,IOSTAT=myerr) JJ,NN,NTX,PFDUM
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  JJ,NN,NTX,PFDUM'
+                write(6,'(A)') 'Error reading C-14:  JJ,NN,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading:  JJ,NN,NTX,PFDUM'
+                stop 'Error reading C-14:  JJ,NN,NTX,PFDUM'
             endif
         END IF
         IF(JJ.LT.0) GO TO 130 
@@ -2713,18 +2713,18 @@
     ! Line C-15
             READ(5,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                write(6,'(A)') 'Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                stop 'Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM'
             endif
             IF(JJT.LT.0) GO TO 130
             IF(HEAT) THEN
     ! Line C-16
                 READ(5,*,IOSTAT=myerr)NTT,TF
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTT,TF'
+                    write(6,'(A)') 'Error reading C-16: NTT,TF'
                     flush(6)
-                    stop 'Error reading: NTT,TF'
+                    stop 'Error reading C-16: NTT,TF'
                 endif
             ELSE
                 NTT=0
@@ -2734,9 +2734,9 @@
     ! Line C-17
                 READ(5,*,IOSTAT=myerr)NTC,INSBC1 ! ,INSBC2,SBFRAC 
                 if (myerr .ne. 0) then
-                    write(6,'(A)') 'Error reading: NTC,INSBC1 '
+                    write(6,'(A)') 'Error reading C-17: NTC,INSBC1 '
                     flush(6)
-                    stop 'Error reading: NTC,INSBC1 '
+                    stop 'Error reading C-17: NTC,INSBC1 '
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
@@ -2757,9 +2757,9 @@
     ! Line C-18
             READ(5,*,IOSTAT=myerr) JJT,JJB,NNL,NNR,NTX,PFDUM
             if (myerr .ne. 0) then
-                write(6,'(A)') 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                write(6,'(A)') 'Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                stop 'Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM'
             endif
             IF(JJT.LT.0) GO TO 130
         END IF 

@@ -94,6 +94,14 @@ public class vs2App extends mp2App implements vs2Constants {
     }
     
     /**
+     * Returns spaces to mimic a typewriter tab setting at commentOffset
+     */
+    public static String tab(String s, int commentOffset) {
+        final int minSpace = 4;
+        return String.format("%" + Math.max(commentOffset - s.length(), minSpace) + "s", "");
+    }
+    
+    /**
      * Gets the title for the application frame window
      */
     public String getFrameTitle() {

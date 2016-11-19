@@ -242,57 +242,61 @@ public class vs2TexturalClassData extends mp2TableData implements
      * Export data
      */
     public void exportData(PrintWriter pw, vs2ModelOptions modelOptions) {
+        final int commentOffset = 23;
+        String s;
         Object [] aRow;
         int maxTabDataSize = getMaxTabularDataRows();
         for (int i=0; i<dataRows.size(); i++) {
             aRow = (Object []) dataRows.elementAt(i);
             // Card B-8
-            pw.println((i+1) + "     /B8 -- ITEX. B9 to begin next line: HK");
+            s = String.valueOf((i+1));
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/B-8 -- ITEX. B-9 to begin next line: HK");
             // Card B-9
             switch (modelOptions.soilModel) {
             case BROOKS_COREY:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[8]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[9]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[10]).doubleValue());
+                           ((Double) aRow[8]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[9]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[10]).doubleValue());
                 break;
             case VAN_GENUCHTEN:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[11]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[12]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[13]).doubleValue());
+                           ((Double) aRow[11]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[12]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[13]).doubleValue());
                 break;
             case HAVERKAMP:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[14]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[15]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[16]).doubleValue() + " " +
-                ((Double) aRow[17]).doubleValue() + " " +
-                ((Double) aRow[18]).doubleValue());
+                           ((Double) aRow[14]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[15]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[16]).doubleValue() + " " +
+                           ((Double) aRow[17]).doubleValue() + " " +
+                           ((Double) aRow[18]).doubleValue());
                 break;
             case ROSSI_NIMMO:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[38]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[39]).doubleValue() + " " +
-                ((Double) aRow[40]).doubleValue() + " " +
-                ((Double) aRow[41]).doubleValue());
+                           ((Double) aRow[38]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[39]).doubleValue() + " " +
+                           ((Double) aRow[40]).doubleValue() + " " +
+                           ((Double) aRow[41]).doubleValue());
                 break;
             case TABULAR_DATA:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[19]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue());
+                           ((Double) aRow[19]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue());
                 Vector hkmData = (Vector) aRow[20];
                 for (int j=0; j<3; j++) {
                     for (int k=0; k<hkmData.size(); k++) {
@@ -311,20 +315,24 @@ public class vs2TexturalClassData extends mp2TableData implements
                 break;
             }
             
-            // Card B-9A (was B-7A - VS2DH)
+            // Card B-10 (was B-7A - VS2DH)
             if (modelOptions.doEnergyTransport) {
-                pw.println(((Double) aRow[21]).doubleValue() + " " +
-                           ((Double) aRow[22]).doubleValue() + " " +
-                           ((Double) aRow[34]).doubleValue() + " " +
-                           ((Double) aRow[35]).doubleValue() + " " +
-                           ((Double) aRow[36]).doubleValue() + " " +
-                           ((Double) aRow[37]).doubleValue() + " " + "     /B9A -- HT");
+                s = String.valueOf(((Double) aRow[21]).doubleValue() + " " +
+                                   ((Double) aRow[22]).doubleValue() + " " +
+                                   ((Double) aRow[34]).doubleValue() + " " +
+                                   ((Double) aRow[35]).doubleValue() + " " +
+                                   ((Double) aRow[36]).doubleValue() + " " +
+                                   ((Double) aRow[37]).doubleValue() );
+                pw.println(s + vs2App.tab(s, commentOffset)
+                        + "/B-10 -- HT");
             }
-            // Card B-9B (was B-7A - VS2DT)
+            // Card B-11 (was B-7A - VS2DT)
             if (modelOptions.doSoluteTransport) {
-                pw.println(((Double) aRow[42]).doubleValue() + " " +
-                           ((Double) aRow[43]).doubleValue() + " " +
-                           ((Double) aRow[23]).doubleValue() + " " + "     /B9B -- HS");
+                s = String.valueOf(((Double) aRow[42]).doubleValue() + " " +
+                                   ((Double) aRow[43]).doubleValue() + " " +
+                                   ((Double) aRow[23]).doubleValue() );
+                pw.println(s + vs2App.tab(s, commentOffset)
+                        + "/B-11 -- HS");
             }
         }
     }

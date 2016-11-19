@@ -219,6 +219,7 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
         if (p >= periods.size()) {
             return;
         }
+        final int commentOffset = 23;
         discretize();
         int j, k ,m, row, col;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
@@ -256,12 +257,16 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
             }
         }
 
+        String s;
         // rest of card C-6 (BCIT and ETSIM printed in rechargePeriodData.exportPeriod)
-        pw.println((numberOfSeepageFaces > 0 ? "T" : "F")
-                + "     /C6 -- BCIT, ETSIM, SEEP");
+        s = (numberOfSeepageFaces > 0 ? "T" : "F");
+        pw.println(s + vs2App.tab(s, commentOffset - 4)
+                + "/C-6 -- BCIT, ETSIM, SEEP");
         if (numberOfSeepageFaces > 0) {
             // Card C-7
-            pw.println(numberOfSeepageFaces + "     /C7 -- NFCS");
+            s = String.valueOf(numberOfSeepageFaces);
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/C-7 -- NFCS");
             for (j=0; j<boundaries.size(); j++) {
                 Vector segments = (Vector) boundaries.elementAt(j);
                 Vector cellsOfSegment = (Vector) boundaryCellList.elementAt(j);
@@ -271,8 +276,9 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                     int [] cell = (int []) cellsOfSegment.elementAt(k);
                     if (bc.flowType == SEEPAGE_FACE_BC && cell.length > 0) {
                         // Card C-8  JLAST is hard wired to 0
-                        pw.println(cell.length + " 0" +
-                            "     /C8 -- JJ, JLAST. C-9 begins next line: J, N");
+                        s = String.valueOf(cell.length + " 0");
+                        pw.println(s + vs2App.tab(s, commentOffset)
+                                + "/C-8 -- JJ, JLAST. C-9 begins next line: J, N");
                         for (m=cell.length-1; m>=0; m--) {   // list from lowest to highest
                             row = cell[m]/numCol;
                             col = cell[m] - row*numCol;
@@ -285,7 +291,9 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
         }
 
         // Card C-10 (BC always read by individual node)
-        pw.println("0" + "     /C10 -- IBC");
+        s = "0";
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-10 -- IBC");
 
         // Card C-11
         boolean doExport;
@@ -419,18 +427,22 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                             for (m=0; m<cell.length; m++) {
                                 row = cell[m]/numCol;
                                 col = cell[m] - row*numCol;
-                                pw.println((row+2) + " " + (col+2) + " " +
-                                        +  bcFlowType + " " + (float) adjustedFlowValue +
-                                        "     /C11 -- JJ, NN, NTX, PFDUM");
+                                s = String.valueOf((row+2) + " " + (col+2) + " " +
+                                        +  bcFlowType + " " + (float) adjustedFlowValue);
+                                pw.println(s + vs2App.tab(s, commentOffset)
+                                        + "/C-11 -- JJ, NN, NTX, PFDUM");
                                 if (modelOptions.doEnergyTransport) {
-                                    pw.println(bc.getEnergyTransportType() + " " +
-                                            (float) adjustedEnergyTransportValue +
-                                            "     /C12 -- NTT, TF");
+                                    s = String.valueOf(bc.getEnergyTransportType() + " " +
+                                            (float) adjustedEnergyTransportValue);
+                                    pw.println(s + vs2App.tab(s, commentOffset)
+                                            + "/C-12 -- NTT, TF");
                                 }
                                 if (modelOptions.doSoluteTransport) {
-                                    pw.println(bc.getSoluteTransportType() + " " +
+                                    s = String.valueOf(bc.getSoluteTransportType() + " " +
                                             bc.getSoluteTransportValue() +
-                                            " -1 1.   /C13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                                            " -1 1.");
+                                    pw.println(s + vs2App.tab(s, commentOffset)
+                                            + "/C-13 -- NTC, INSBC1, INSBC2, SBFRAC");
                                 }                                
                             }
                         }
@@ -462,18 +474,22 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                 col = cell[m] - row*numCol;
                                 adjustedFlowValue = fluidFlux * Math.PI *
                                         (xCoord[col+1] * xCoord[col+1] - xCoord[col] * xCoord[col]);
-                                pw.println((row+2) + " " + (col+2) + " " +
-                                        +  bc.flowType + " " + (float) adjustedFlowValue +
-                                        "     /C11 -- JJ, NN, NTX, PFDUM");
+                                s = String.valueOf((row+2) + " " + (col+2) + " " +
+                                        +  bc.flowType + " " + (float) adjustedFlowValue);
+                                pw.println(s + vs2App.tab(s, commentOffset)
+                                        + "/C-11 -- JJ, NN, NTX, PFDUM");
                                 if (modelOptions.doEnergyTransport) {
-                                    pw.println(bc.getEnergyTransportType() + " " +
-                                            (float) adjustedEnergyTransportValue +
-                                            "     /C12 -- NTT, TF");                                    
+                                    s = String.valueOf(bc.getEnergyTransportType() + " " +
+                                            (float) adjustedEnergyTransportValue);
+                                    pw.println(s + vs2App.tab(s, commentOffset)
+                                            + "/C-12 -- NTT, TF");
                                 }
                                 if (modelOptions.doSoluteTransport) {
-                                    pw.println(bc.getSoluteTransportType() + " " +
+                                    s = String.valueOf(bc.getSoluteTransportType() + " " +
                                             bc.getSoluteTransportValue() +
-                                            " -1 1.   /C13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                                            " -1 1.");   
+                                    pw.println(s + vs2App.tab(s, commentOffset)
+                                            + "/C-13 -- NTC, INSBC1, INSBC2, SBFRAC");
                                 }
                             }
                         }

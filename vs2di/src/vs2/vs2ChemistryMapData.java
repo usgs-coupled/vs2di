@@ -127,15 +127,19 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
      */
     public void exportData(PrintWriter pw, 
                    vs2ChemistryClassData chemistryClassData) {
+        String s;
+        final int commentOffset = 23;
         discretize();
         int c, r, index;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numColNoBorder = rectGridData.getXCoords().length - 1;
         int numRowNoBorder = rectGridData.getYCoords().length - 1;
-        pw.println("1" + "     /B28 -- IREAD. B30 begins next line: INDSOL");
-        // Note that Card B-29 is not used.
+        s = String.valueOf("1");
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-30 -- IREAD. B-32 begins next line: INDSOL");
+        // Note that Card B-31 is not used.
         for (int n = 0; n < 7; ++n) {
-            // Card B-30
+            // Card B-32
             // first, write the top border
             for (c=0; c<numColNoBorder+2; c++) {
                 pw.print("-1 ");

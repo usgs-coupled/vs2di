@@ -206,7 +206,9 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
     }
 
     protected void writeData(PrintWriter pw) {
+        final int commentOffset = 23;
         int i, j;
+        String s;
         int numObservationCell =
                 observationPointsData.getNumberOfObservationCells();
         double [] xCoord = gridData.getXCoords();
@@ -220,51 +222,57 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // Card A-1
         pw.println(modelOptions.title);
         // Card A-2 (assume initial time = 0, and no grid rotation)
-        pw.println(maximumSimulationTime + " 0. 0." + "    /A2 -- TMAX, STIM, ANG");
+        s = String.valueOf(maximumSimulationTime + " 0. 0.");
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-2 -- TMAX, STIM, ANG");       
         // Card A-3
-        pw.print(modelOptions.lengthUnit
-                 + modelOptions.timeUnit);
-        pw.print(modelOptions.massUnit);
-        pw.print(modelOptions.energyUnit);
-        pw.println("    /A3 -- ZUNIT, TUNIT, CUNX, HUNX");
-        // Card A-5 (assumes grid data DO NOT include border cells
-        pw.println((xCoord.length + 1) + " " + (yCoord.length + 1) +
-                "    /A5 -- NXR, NLY");
+        s = String.valueOf(modelOptions.lengthUnit
+                + modelOptions.timeUnit
+                + modelOptions.massUnit
+                + modelOptions.energyUnit);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-3 -- ZUNIT, TUNIT, CUNX, HUNX");       
+        // Card A-4 (assumes grid data DO NOT include border cells
+        s = String.valueOf((xCoord.length + 1) + " " + (yCoord.length + 1));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-4 -- NXR, NLY");
+        // Card A-5
+        s = String.valueOf(rechargePeriodData.getNumberOfRows() + " "
+                + (modelOptions.highPrecisionAuxiliaryOutput ? "-" : "")
+                + modelOptions.maxNumberOfTimeSteps);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-5 -- NRECH, NUMT");
         // Card A-6
-        pw.print(rechargePeriodData.getNumberOfRows() + " ");
-        if (modelOptions.highPrecisionAuxiliaryOutput) {
-            pw.println(-modelOptions.maxNumberOfTimeSteps +  "    /A6 -- NRECH, NUMT");
-        } else {
-            pw.println(modelOptions.maxNumberOfTimeSteps +  "    /A6 -- NRECH, NUMT");
-        }
-        // Card A-7
-        pw.println((modelOptions.useRadialCoord ? "T " : "F ")
+        s = String.valueOf((modelOptions.useRadialCoord ? "T " : "F ")
                  + (modelOptions.itstop ? "T " : "F ")
                  + (modelOptions.doEnergyTransport ? "T " : "F ")
-                 + (modelOptions.doSoluteTransport ? "T " : "F ")
-                 + "       /A7 -- RAD, ITSTOP, HEAT, SOLUTE");
+                 + (modelOptions.doSoluteTransport ? "T " : "F "));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-6 -- RAD, ITSTOP, HEAT, SOLUTE");
         if (modelOptions.doSoluteTransport) {
-            // Card A-8 -- CHEMFILE
+            // Card A-7 -- CHEMFILE
             pw.println(modelOptions.chemFile);
-            // Card A-9 -- DATABASEFILE
+            // Card A-8 -- DATABASEFILE
             pw.println(modelOptions.databaseFile);
-            // Card A-10 -- PREFIX
+            // Card A-9 -- PREFIX
             pw.println(modelOptions.prefix);
         }
 
         if (modelOptions.doSoluteTransport || modelOptions.doEnergyTransport) {
-            // Card A-11
-            pw.print((modelOptions.doSpaceCentered ? "T " : "F ")
-                     + (modelOptions.doTimeCentered ? "T " : "F "));
-            pw.println("           /A11 -- CIS, CIT");
+            // Card A-10
+            s = String.valueOf((modelOptions.doSpaceCentered ? "T " : "F ")
+                    + (modelOptions.doTimeCentered ? "T " : "F "));
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-10 -- CIS, CIT");
         }
         if (modelOptions.doSoluteTransport) {
-            // Card A-12
-            pw.print((modelOptions.phreeqcSelectedOutput ? "1" : "0"));
-            pw.println("          /A12 -- INPRXZ");
+            // Card A-11
+            s = String.valueOf((modelOptions.phreeqcSelectedOutput ? "1" : "0"));
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-11 -- INPRXZ");
         }
         
-        // Card A-13.  The current implementation assumes if
+        // Card A-12.  The current implementation assumes if
         // a. F11P is "T" if user specified observation points in the
         //    observation points view
         // b. F7P is always "F", that is maximum head change in each
@@ -276,22 +284,26 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         //    tab of the model options dialog box
         // e. F6P is "T" if user checked "at every time step" option
         //    in the "Output" tab of the model options dialog box.
-        pw.println(((numObservationCell > 0) ? "T " : "F ")
+        s = String.valueOf(((numObservationCell > 0) ? "T " : "F ")
                 + "F "
                 + (f8p ? "T " : "F ")
                 + ((nmb9 > 0) ? "T " : "F ")
-                + (modelOptions.outputMassBalanceEveryTimeStep ? "T" : "F")
-                + "      /A13 -- F11P, F7P, F8P, F9P, F6P");
-        // Card A-14.
-        pw.println((modelOptions.moistureContentOut ? "T " : "F ")
-                 + (modelOptions.saturationOut ? "T " : "F ")
-                 + (modelOptions.pressureHeadOut ? "T " : "F ")
-                 + (modelOptions.totalHeadOut ? "T " : "F ")
-                 + (modelOptions.velocityOut ? "T " : "F ")
-                 + "     /A14 -- THPT, SPNT, PPNT, HPNT, VPNT");
-        // Card A-15 (Always set IFAC = 0, FACX = 1)
-        pw.println("0 1" + "            /A15 -- IFAC, FACX. A16 begins next line: DXR");
-        // Card A-16 (Grid spacing in x direction. Assumes grid
+                + (modelOptions.outputMassBalanceEveryTimeStep ? "T" : "F"));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-12 -- F11P, F7P, F8P, F9P, F6P");
+        // Card A-13.
+        s = String.valueOf((modelOptions.moistureContentOut ? "T " : "F ")
+                + (modelOptions.saturationOut ? "T " : "F ")
+                + (modelOptions.pressureHeadOut ? "T " : "F ")
+                + (modelOptions.totalHeadOut ? "T " : "F ")
+                + (modelOptions.velocityOut ? "T " : "F "));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-13 -- THPT, SPNT, PPNT, HPNT, VPNT");
+        // Card A-14 (Always set IFAC = 0, FACX = 1)
+        s = "0 1";
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-14 -- IFAC, FACX. A-15 begins next line: DXR");
+        // Card A-15 (Grid spacing in x direction. Assumes grid
         // DOES NOT include border. Border cells are added to
         // the export file at  both ends of rows and columns.)
         pw.print((float) (xCoord[1] - xCoord[0]) + " ");       // Border cell
@@ -307,11 +319,12 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
         pw.println((float) (xCoord[xCoord.length-1]
                           - xCoord[xCoord.length-2]));         // Border cell
-        // No Card A-17
-        // Card A-18 (Always set JFAC = 0, FACZ = 1)
-        pw.println("0 1" + "            /A18 -- JFAC, FACZ. A20 begins next line: DELZ");
-        // No Card A-19
-        // Card A-20 (Grid spacing in y direction)
+        // No Card A-16 -- XMULT, XMAX
+        // Card A-17 (Always set JFAC = 0, FACZ = 1)
+        s = "0 1";
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-17 -- JFAC, FACZ. A-18 begins next line: DELZ");
+        // Card A-18 (Grid spacing in y direction)
         pw.print((float) (yCoord[1] - yCoord[0]) + " ");       // Border cell
         for (i=0, j=1; i<yCoord.length-1; i++, j++) {
             if (j == 10) {
@@ -324,14 +337,16 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             pw.println();
         }
         pw.println((float) (yCoord[yCoord.length-1]
-                          - yCoord[yCoord.length-2]));         // Border cell
-        // No Card A-21
-        // Card A-22 and A-23
+                - yCoord[yCoord.length-2]) + " /End A-18"); // Border cell
+        // No Card A-19 -- ZMULT, ZMAX
+        // Card A-20 and A-21
         switch (modelOptions.outputTimeOption) {
         case vs2ModelOptions.INTERVAL_OUTPUT_TIME:
             int ts = Math.max (1, (int) (maximumSimulationTime / modelOptions.outputTimeInterval));
             //if (ts > MAX_OUTPUT_TIMES) ts = MAX_OUTPUT_TIMES;
-            pw.println(ts + "     /A22 -- NPLT. A23 begins next line: PLTIM");
+            s = String.valueOf(ts);
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-20 -- NPLT. A-21 begins next line: PLTIM");
             double outputTime;
             for (i=1, j=0; i<=ts; i++, j++) {
                 outputTime = i * modelOptions.outputTimeInterval;
@@ -347,8 +362,9 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             pw.println();
             break;
         case vs2ModelOptions.SPECIFIED_OUTPUT_TIMES:
-            pw.println(modelOptions.outputTimes.size()
-                    + "              /A22 -- NPLT. A23 begins next line: PLTIM");
+            s = String.valueOf(modelOptions.outputTimes.size());
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-20 -- NPLT. A-21 begins next line: PLTIM");
             for (i=0, j=0; i<modelOptions.outputTimes.size(); i++, j++) {
                 if (j == 10) {
                     pw.println();
@@ -360,58 +376,73 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
             pw.println();
         }
         if (numObservationCell > 0) {
+            // Cards A-22 and A-23
             observationPointsData.exportData(pw, modelOptions.outputToAuxFilesEveryTimeStep);
         }
-        // Cards A-26 and A-27
+        // Cards A-24 and A-25
         if (nmb9 > 0) {
             // To output mass balance to File 9 at specified times, set nmb9 to negative.
             if (!modelOptions.outputToAuxFilesEveryTimeStep) {
                 pw.print("-");
             }
-            pw.println(nmb9 + "     /A26 -- NMB9");
-            pw.println(modelOptions.getMassBalanceIndices() + "     /A27 -- MB9");  // fluid + solute or energy
+            s = String.valueOf(nmb9); // + "     /A-24 -- NMB9");
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-24 -- NMB9");
+            s = String.valueOf(modelOptions.getMassBalanceIndices()); // fluid + solute or energy
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/A-25 -- MB9");
         }
 
         // Card B-1
-        pw.println(modelOptions.closureCriterionForHead + " "
+        s = String.valueOf(modelOptions.closureCriterionForHead + " "
                 + modelOptions.relaxationParameter + " "
-                + modelOptions.getIntercellWeightingValue() + "     /B1 -- EPS, HMAX, WUS");
+                + modelOptions.getIntercellWeightingValue());
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-1 -- EPS, HMAX, WUS");
         if (modelOptions.doEnergyTransport) {
-            pw.println(modelOptions.closureCriterionForTemp + " "
-                    +  modelOptions.closureCriterionForVelocity
-                    + "     /B2 -- EPS1, EPS2");
+            s = String.valueOf(modelOptions.closureCriterionForTemp + " "
+                    +  modelOptions.closureCriterionForVelocity);
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/B-2 -- EPS1, EPS2");
         }
         if (modelOptions.doSoluteTransport) {
-            pw.println(modelOptions.closureCriterionForConc
-                    + "     /B3 -- EPS3");
+            s = String.valueOf(modelOptions.closureCriterionForConc);
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/B-3 -- EPS3");
         }
         // Card B-4
-        pw.println(modelOptions.minIterationsPerTimeStep + " "
-                 + modelOptions.maxIterationsPerTimeStep
-                 + "     /B4 -- MINIT, ITMAX");
+        s = String.valueOf(modelOptions.minIterationsPerTimeStep + " "
+                 + modelOptions.maxIterationsPerTimeStep);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-4 -- MINIT, ITMAX");
         // Card B-5  (initial flow conditions)
-        pw.println(((modelOptions.initialFlowType ==
-                    INITIAL_MOISTURE_CONTENT) ? "F" : "T")
-                    + "     /B5 -- PHRD");
+        s = String.valueOf(((modelOptions.initialFlowType ==
+                    INITIAL_MOISTURE_CONTENT) ? "F" : "T"));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-5 -- PHRD");
         // Card B-6
-        pw.print(texturalClassData.getNumberOfRows() + " ");
+        s = String.valueOf(texturalClassData.getNumberOfRows() + " ");
         switch (modelOptions.soilModel) {
         case BROOKS_COREY: // fall through
         case ROSSI_NIMMO: // fall through
         case VAN_GENUCHTEN:
-            pw.print("6 ");
+            s += "6 ";
             break;
         case HAVERKAMP:
+            s += "8 ";
             pw.print("8 ");
             break;
         case TABULAR_DATA:
-            pw.print((3*texturalClassData.getMaxTabularDataRows()+6) + " ");
+            s += String.valueOf((3*texturalClassData.getMaxTabularDataRows()+6) + " ");
             break;
         }
-        pw.println("     /B6 -- NTEX, NPROP");
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-6 -- NTEX, NPROP");
         
         // Card B-7
-        pw.println(modelOptions.soilModel + "     /B7 -- HFT hydraulicFunctionType");       
+        s = String.valueOf(modelOptions.soilModel);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-7 -- HFT hydraulicFunctionType");
 
         // Cards B-6, B-7, B-7A, B-8, B-9
         // Cards B-8, B-9, B-9A, B-9B, B-10, B-11
@@ -421,6 +452,7 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // B-8  -> B-10
         // B-9  -> B-11
         texturalClassData.exportData(pw, modelOptions);
+        // B-12 - B-14
         texturalMapData.exportData(pw, texturalClassData);
 
         // Cards B-8, B-9
@@ -428,48 +460,53 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         // Card B-11 through 13 (initial flow conditions)
         switch (modelOptions.initialFlowType) {
         case INITIAL_EQUILIBRIUM_PROFILE:
+            // B-15 - B-16
             initialEquilibriumProfileData.exportData(pw, yCoord);
             break;
         case INITIAL_PRESSURE_HEAD:
-            initialPressureHead.exportData(pw, "B13", "B15");
+            initialPressureHead.exportData(pw, "B-15", "B-17");
             break;
         case INITIAL_MOISTURE_CONTENT:
-            initialMoistureContent.exportData(pw, "B13", "B15");
+            initialMoistureContent.exportData(pw, "B-15", "B-17");
             break;
         }
-        // Card B-16
+        // Card B-18
         boolean doEvaporation = rechargePeriodData.isEvaporationSimulated()
                                 && modelOptions.doEvaporation;
         boolean doTranspiration = rechargePeriodData.isTranspirationSimulated()
                                 && modelOptions.doTranspiration;
-        pw.println((doEvaporation ? "T " : "F ")
-                 + (doTranspiration ? "T " : "F ")
-                 + "     /B16 -- BCIT, ETSIM");
-        // Card B-17 through B-25
+        s = String.valueOf((doEvaporation ? "T " : "F ")
+                 + (doTranspiration ? "T " : "F "));
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-18 -- BCIT, ETSIM");
+                 
+        // Card B-19 through B-27
         if (doEvaporation || doTranspiration) {
             evapotranspirationData.exportData(pw, doEvaporation,
                                                   doTranspiration);
         }
-        // Cards B-26 and B-27
+        // Cards B-28 and B-29
         if (modelOptions.doEnergyTransport) {
-            initialTemperatureData.exportData(pw, "B26", "B27");
+            initialTemperatureData.exportData(pw, "B-28", "B-29");
         }
-        // Cards B-28, B-29 and B-30 (REPLACED BY TEXTURAL CLASS)
+        // Cards B-30, B-31 and B-32 (REPLACED BY TEXTURAL CLASS)
         if (modelOptions.doSoluteTransport) {
             chemistryMapData.exportData(pw, chemistryClassData);
         }
         
         // Since F7P is always "F"
-        // B-29?? through B-31?? are not used
+        // B-33 through B-35 are not used
 
         // All Cards C
         for (i=0; i<rechargePeriodData.getNumberOfRows(); i++) {
             rechargePeriodData.exportPeriod(pw, i, modelOptions);      // no changes for C-1 through C-6 (VS2DRT)
             boundaryConditionsData.exportPeriod(pw, i, modelOptions);
             fluidSourceData.exportPeriod(pw, i, modelOptions);
-            pw.println("-999999 / C19 -- End of data for recharge period " + (i+1));
+            s = "-999999";
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/C-19 -- End of data for recharge period " + (i+1));
         }
-        pw.println("-999999 / End of input data file");
+        pw.println("-999999 /End of input data file");
     }
 
     /**

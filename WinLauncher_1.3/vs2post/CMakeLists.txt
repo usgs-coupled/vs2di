@@ -54,3 +54,9 @@ endif()
 
 # install
 install(TARGETS vs2post DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# shortcut
+set_property(INSTALL "${CMAKE_INSTALL_BINDIR}/$<TARGET_FILE_NAME:vs2post>"
+  PROPERTY CPACK_START_MENU_SHORTCUTS "Postprocessor"
+)
+

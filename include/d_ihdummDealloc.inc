@@ -1,3 +1,0 @@
-      deallocate(IHDUM)
-
-

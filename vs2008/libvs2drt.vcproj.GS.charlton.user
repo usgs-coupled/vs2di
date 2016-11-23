@@ -6,7 +6,7 @@
 	>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
+			Name="openmp_debug|Win32"
 			>
 			<DebugSettings
 				Command=""
@@ -15,7 +15,7 @@
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="IGSKAHHWWSNY5H1"
+				RemoteMachine="IGSKAHHWWSCHARL"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""
@@ -34,7 +34,7 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug|x64"
+			Name="openmp_debug|x64"
 			>
 			<DebugSettings
 				Command=""
@@ -43,7 +43,7 @@
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="IGSKAHHWWSNY5H1"
+				RemoteMachine="IGSKAHHWWSCHARL"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""
@@ -62,7 +62,7 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
+			Name="openmp|Win32"
 			>
 			<DebugSettings
 				Command=""
@@ -71,7 +71,7 @@
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="IGSKAHHWWSNY5H1"
+				RemoteMachine="IGSKAHHWWSCHARL"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""
@@ -90,7 +90,7 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|x64"
+			Name="openmp|x64"
 			>
 			<DebugSettings
 				Command=""
@@ -99,7 +99,7 @@
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
-				RemoteMachine="IGSKAHHWWSNY5H1"
+				RemoteMachine="IGSKAHHWWSCHARL"
 				RemoteCommand=""
 				HttpUrl=""
 				PDBPath=""

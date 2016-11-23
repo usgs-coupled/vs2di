@@ -1,2 +1,0 @@
-      COMMON/PIT/PITT(36000)
-

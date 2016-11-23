@@ -29,6 +29,9 @@ set(CPACK_WIX_PROGRAM_MENU_FOLDER "VS2DRTI ${CPACK_PACKAGE_VERSION_MAJOR}.${CPAC
 ##set(POST_ICON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/WinLauncher_1.3/vs2post/vs2post.ico")
 ##configure_file(${CMAKE_CURRENT_SOURCE_DIR}/msi/patch.xml.in patch.xml)
 
+##set(CPACK_WIX_EXTRA_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/msi/vs2_assoc.wxs")
+set(CPACK_WIX_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/msi/patch.xml")
+
 if (WIN32)
   set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/msi/WIX.MSVC11.template.in")    
 endif()

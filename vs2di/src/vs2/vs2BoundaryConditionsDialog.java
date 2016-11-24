@@ -234,8 +234,11 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
 
             // Make a panel for default
             JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            p3.add(new JRadioButton("Default outflow (sole option)", true));
-
+            JRadioButton soleOption = new JRadioButton("Default outflow (sole option)", true);
+            p3.add(soleOption);
+            bg = new ButtonGroup();
+            bg.add(soleOption);
+            
             // For energy transport, make a panel for seepage face that
             // allows user to specify temperature at seepage face
             JPanel p4 = new JPanel(gridbag);
@@ -468,145 +471,14 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
 
             // Make a panel for default
             JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            p3.add(new JRadioButton("Default outflow (sole option)", true));
-
-            // For energy transport, make a panel for seepage face that
-            // allows user to specify temperature at seepage face
-            JPanel p4 = new JPanel(gridbag);
-
-            leftPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.RELATIVE;
-            c.insets = new Insets(0, 5, 5, 0);
-            c.fill = GridBagConstraints.VERTICAL;
-            gridbag.setConstraints(leftPanel, c);
-            p4.add(leftPanel);
-            rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(0, 10, 5, 5);
-            gridbag.setConstraints(rightPanel, c);
-            p4.add(rightPanel);
-
-            leftPanel.add(seepOutflowRadioButton = new JRadioButton("Default outflow", true));
-            rightPanel.add(blankSeepLabel = new JLabel("      "));
-            seepOutflowRadioButton.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        blankSeepLabel.setVisible(true);
-                        if (getFromFileRadioButton.isSelected()) {
-                            getFromFileRadioButton.setSelected(false);
-                            thisPeriodOnlyRadioButton.setSelected(true);
-                        }
-                        getFromFileRadioButton.setEnabled(false);
-                    }
-                }
-            });
+            JRadioButton soleOption = new JRadioButton("Default outflow (sole option)", true);
+            p3.add(soleOption);
             bg = new ButtonGroup();
-            bg.add(seepOutflowRadioButton);
-
-
-            // For energy transport, make a panel for gravity drain that
-            // allows user to specify temperature at gravity drain
-            JPanel p4a = new JPanel(gridbag);
-
-            leftPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.RELATIVE;
-            c.insets = new Insets(0, 5, 5, 0);
-            c.fill = GridBagConstraints.VERTICAL;
-            gridbag.setConstraints(leftPanel, c);
-            p4a.add(leftPanel);
-            rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(0, 10, 5, 5);
-            gridbag.setConstraints(rightPanel, c);
-            p4a.add(rightPanel);
-
-            leftPanel.add(gdrnOutflowRadioButton = new JRadioButton("Default outflow", true));
-            leftPanel.add(gdrnTemperatureRadioButton = new JRadioButton("Temperature", false));
-            rightPanel.add(blankGdrnLabel = new JLabel("      "));
-            rightPanel.add(gdrnTemperatureTextField = new JTextField(5));
-            gdrnTemperatureTextField.setVisible(false);
-
-            gdrnOutflowRadioButton.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        blankGdrnLabel.setVisible(true);
-                        gdrnTemperatureTextField.setVisible(false);
-                        if (getFromFileRadioButton.isSelected()) {
-                            getFromFileRadioButton.setSelected(false);
-                            thisPeriodOnlyRadioButton.setSelected(true);
-                        }
-                        getFromFileRadioButton.setEnabled(false);
-                    }
-                }
-            });
-            gdrnTemperatureRadioButton.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        blankGdrnLabel.setVisible(false);
-                        gdrnTemperatureTextField.setVisible(true);
-                        getFromFileRadioButton.setEnabled(true);
-                    }
-                }
-            });
-            bg = new ButtonGroup();
-            bg.add(gdrnOutflowRadioButton);
-            bg.add(gdrnTemperatureRadioButton);
-
-            // For energy transport, make a panel for evapotranspiration boundary that
-            // allows user to specify temperature at evapotranspiration boundary
-            JPanel p5 = new JPanel(gridbag);
-
-            leftPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.RELATIVE;
-            c.insets = new Insets(0, 5, 5, 0);
-            c.fill = GridBagConstraints.VERTICAL;
-            gridbag.setConstraints(leftPanel, c);
-            p5.add(leftPanel);
-            rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(0, 10, 5, 5);
-            gridbag.setConstraints(rightPanel, c);
-            p5.add(rightPanel);
-
-            leftPanel.add(evapOutflowRadioButton = new JRadioButton("Default outflow", true));
-            leftPanel.add(evapTemperatureRadioButton = new JRadioButton("Temperature", false));
-            rightPanel.add(blankEvapLabel = new JLabel("      "));
-            rightPanel.add(evapTemperatureTextField = new JTextField(5));
-            evapTemperatureTextField.setVisible(false);
-
-            evapOutflowRadioButton.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        blankEvapLabel.setVisible(true);
-                        evapTemperatureTextField.setVisible(false);
-                        if (getFromFileRadioButton.isSelected()) {
-                            getFromFileRadioButton.setSelected(false);
-                            thisPeriodOnlyRadioButton.setSelected(true);
-                        }
-                        getFromFileRadioButton.setEnabled(false);
-                    }
-                }
-            });
-            evapTemperatureRadioButton.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        blankEvapLabel.setVisible(false);
-                        evapTemperatureTextField.setVisible(true);
-                        getFromFileRadioButton.setEnabled(true);
-                    }
-                }
-            });
-            bg = new ButtonGroup();
-            bg.add(evapOutflowRadioButton);
-            bg.add(evapTemperatureRadioButton);
-
-
+            bg.add(soleOption);
+            
             soluteCards.add("Card 1", p1);
             soluteCards.add("Card 2", p2);
             soluteCards.add("Card 3", p3);
-            soluteCards.add("Card 4", p4);
-            soluteCards.add("Card 4a", p4a);
-            soluteCards.add("Card 5", p5);
 
             CardLayout cl = (CardLayout)(soluteCards.getLayout());
             cl.show(soluteCards, "Card 1");
@@ -850,10 +722,10 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     concTextField.setText(String.valueOf(soluteTransportBCValue));
                 }
                 if (soluteTransportBCType == DEFAULT_CONC_BC) {
-                    concChooser.setSelectedIndex(0);
+                    concChooser.setSelectedIndex(0);   // of inflow
                 }
                 else if (soluteTransportBCType == SPECIFIED_CONC_BC) {
-                    concChooser.setSelectedIndex(1);
+                    concChooser.setSelectedIndex(1);   // at boundary
                 }
             }
         }

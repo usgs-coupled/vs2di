@@ -142,7 +142,7 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                     mp2MessageBox.showMessageDialog("Unable to open file: " + fileName, "Error");
                     return;
                 }
-               	double [] bcValue = new double[2];
+               	double [] bcValue = new double[3];
                 String line;
                 Vector oldBC = boundaryConditionsData.getClonedBC();
                 Vector newBC = boundaryConditionsData.getClonedBC();
@@ -161,31 +161,26 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                                     vs2BoundaryCondition bc =
                                             (vs2BoundaryCondition) segments.elementAt(j);
                                     bc.flowType = dlg.flowBCType;
-                                    if (dlg.flowBCType == NO_FLOW_BC || dlg.flowBCType == SEEPAGE_FACE_BC
-                                            || dlg.flowBCType == GRAVITY_DRAIN_BC || dlg.flowBCType == EVAPORATION_BC) {
-                                        bc.flowValue = 0;
-                                    } else {
-                                        bc.flowValue = bcValue[0];
+
+                                    int nextIndex = 0;
+                                    bc.flowValue = 0;
+                                    if (requiresFlowData(dlg.flowBCType)) {
+                                        bc.flowValue = bcValue[nextIndex];
+                                        ++nextIndex;
                                     }
                                     if (dlg.flowBCValue == -1) bc.flowValue = -bc.flowValue;
                                     if (modelOptions.doEnergyTransport) {
                                         bc.setEnergyTransportType(dlg.energyTransportBCType);
-                                        if (dlg.flowBCType == NO_FLOW_BC || dlg.flowBCType == SEEPAGE_FACE_BC
-                                            || dlg.flowBCType == GRAVITY_DRAIN_BC || dlg.flowBCType == EVAPORATION_BC) {
-                                            bc.setEnergyTransportValue(bcValue[0]);
-                                        } else {
-                                            bc.setEnergyTransportValue(bcValue[1]);
+                                        if (requiresEnergyData(dlg.flowBCType, dlg.flowBCValue, dlg.energyTransportBCType)) {
+                                            bc.setEnergyTransportValue(bcValue[nextIndex]);                                            
+                                            ++nextIndex;
                                         }
                                     }
                                     if (modelOptions.doSoluteTransport) {
                                         bc.setSoluteTransportType(dlg.soluteTransportBCType);
-                                        if (dlg.flowBCType == NO_FLOW_BC || dlg.flowBCType == SEEPAGE_FACE_BC
-                                            || dlg.flowBCType == GRAVITY_DRAIN_BC || dlg.flowBCType == EVAPORATION_BC) {
-                                            assert(false); // TODO need to read integers for setSoluteTransportValue
-                                            //bc.setSoluteTransportValue(bcValue[0]);
-                                        } else {
-                                            assert(false); // TODO need to read integers for setSoluteTransportValue
-                                            //bc.setSoluteTransportValue(bcValue[1]);
+                                        if (requiresSoluteData(dlg.flowBCType, dlg.flowBCValue, dlg.soluteTransportBCType)) {
+                                            bc.setSoluteTransportValue((int)Math.round(bcValue[nextIndex]));                                            
+                                            ++nextIndex;
                                         }
                                     }
                                 }
@@ -246,27 +241,16 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
     }
 
     private boolean parseLine(String line, double [] bcValue) {
-        bcValue[0] = 0;
-        bcValue[1] = 0;
-        String a = line.trim();
-        if (a.length() == 0) return true;
-        int p = a.indexOf(' ');
-        try {
-            if (p == -1) {
-                bcValue[0] = Double.valueOf(a).doubleValue();
-                return true;
-            } else {
-                bcValue[0] = Double.valueOf(a.substring(0, p)).doubleValue();
-            }
-        } catch (NumberFormatException e) {
-            return false;
+        for (int i = 0; i < bcValue.length; ++i) {
+            bcValue[i] = 0;
         }
-        String b = a.substring(p).trim();
-        if (b.length() == 0) return true;
-        try {
-            bcValue[1] = Double.valueOf(b).doubleValue();
-        } catch (NumberFormatException e) {
-            return false;
+        String[] items = line.split(" ");
+        for (int i = 0; i < items.length; ++i) {
+            try {
+                bcValue[i] = Double.valueOf(items[i]).doubleValue();
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
         return true;
     }
@@ -382,6 +366,50 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
             toolBar.add(flowBCColorsLabel);
         }
         view.setCursor(Cursor.getDefaultCursor());
+    }
+    
+    static public boolean requiresFlowData(int flowBCType) {
+        // test flowtype
+        if (flowBCType == NO_FLOW_BC || flowBCType == SEEPAGE_FACE_BC
+                || flowBCType == GRAVITY_DRAIN_BC || flowBCType == EVAPORATION_BC) {
+            return false;
+        }
+        return true;
+    }
+    
+    static public boolean requiresEnergyData(int flowBCType, double flowBCValue, int energyTransportBCType) {
+        if (flowBCType == NO_FLOW_BC) {
+            return (energyTransportBCType == SPECIFIED_CONC_BC || energyTransportBCType == DIFFUSIVE_FLUX_BC);
+        }
+        if (flowBCType == PRESSURE_HEAD_BC || flowBCType == TOTAL_HEAD_BC) {
+            return true;
+        }
+        if (flowBCType == NORMAL_FLUID_FLUX_BC || flowBCType == VOLUMETRIC_FLOW_BC) {
+            return (flowBCValue > 0);
+        }
+        if (flowBCType == EVAPORATION_BC || flowBCType == SEEPAGE_FACE_BC || flowBCType == GRAVITY_DRAIN_BC) {
+            return (energyTransportBCType == SPECIFIED_CONC_BC);
+        }
+        return false;
+    }
+    
+    
+    static public boolean requiresSoluteData(int flowBCType, double flowBCValue, int soluteTransportBCType) {
+        if (flowBCType == NO_FLOW_BC) {
+            // DIFFUSIVE_FLUX_BC for soluteTransport not supported
+            assert(soluteTransportBCType != DIFFUSIVE_FLUX_BC);
+            return (soluteTransportBCType == SPECIFIED_CONC_BC);
+        }
+        if (flowBCType == PRESSURE_HEAD_BC || flowBCType == TOTAL_HEAD_BC || flowBCType == VERTICAL_FLUID_FLUX_BC) {
+            return true;
+        }
+        if (flowBCType == NORMAL_FLUID_FLUX_BC || flowBCType == VOLUMETRIC_FLOW_BC) {
+            return (flowBCValue > 0);
+        }
+        if (flowBCType == EVAPORATION_BC || flowBCType == SEEPAGE_FACE_BC || flowBCType == GRAVITY_DRAIN_BC) {
+            return false;
+        }
+        return false;
     }
 
     /**

@@ -291,21 +291,24 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-1:  TITL'
         flush(6)
-        stop 'Error reading A-1:  TITL'
+        JSTOP = 201
+        return
     endif
     ! Line A-2
     READ(5,*,IOSTAT=myerr) TMAX,STIM,ANG
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-2:  TMAX,STIM,ANG'
         flush(6)
-        stop 'Error reading A-2:  TMAX,STIM,ANG'
+        JSTOP = 202
+        return
     endif
     ! Line A-3
     READ(5,4010,IOSTAT=myerr) ZUNIT,TUNIT,CUNX,HUNX
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-3:  ZUNIT,TUNIT,CUNX,HUNX'
         flush(6)
-        stop 'Error reading A-3:  ZUNIT,TUNIT,CUNX,HUNX'
+        JSTOP = 203
+        return
     endif
     !      READ(5,4011) TUNIT
     !      READ(5,4010) CUNX
@@ -328,7 +331,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-4:  NXR,NLY'
         flush(6)
-        stop 'Error reading A-4:  NXR,NLY'
+        JSTOP = 204
+        return
     endif
     if(NXR .GT. 2) THEN 
         axes(1)= .true.
@@ -345,7 +349,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-5:  NRECH,NUMT'
         flush(6)
-        stop 'Error reading A-5:  NRECH,NUMT'
+        JSTOP = 205
+        return
     endif
     !
     !  o13p triggers high precisions output
@@ -378,7 +383,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-6:  RAD,ITSTOP,HEAT,SOLUTE'
         flush(6)
-        stop 'Error reading A-6:  RAD,ITSTOP,HEAT,SOLUTE'
+        JSTOP = 206
+        return
     endif
     IF (SOLUTE) then
     ! Line A-7
@@ -386,21 +392,24 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-7:  CHEMFILE'
             flush(6)
-            stop 'Error reading A-7:  CHEMFILE'
+            JSTOP = 207
+            return
         endif
     ! Line A-8
         READ(5,4001,IOSTAT=myerr) DATABASEFILE
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-8:  DATABASEFILE'
             flush(6)
-            stop 'Error reading A-8:  DATABASEFILE'
+            JSTOP = 208
+            return
         endif
     ! Line A-9
         READ(5,4001,IOSTAT=myerr) PREFIX
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-9:  PREFIX'
             flush(6)
-            stop 'Error reading A-9:  PREFIX'
+            JSTOP = 209
+            return
         endif
     End if
     IF(HEAT.OR.SOLUTE) then 
@@ -416,7 +425,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-10: CIS,CIT'
             flush(6)
-            stop 'Error reading A-10: CIS,CIT'
+            JSTOP = 210
+            return
         endif
     endif
     IF(SOLUTE)THEN
@@ -425,7 +435,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-11: INPRXZ'
             flush(6)
-            stop 'Error reading A-11: INPRXZ'
+            JSTOP = 211
+            return
         endif
     END IF    
     ! Line A-12 
@@ -433,14 +444,16 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-12:  F11P,F7P,F8P,F9P,F6P'
         flush(6)
-        stop 'Error reading A-12:  F11P,F7P,F8P,F9P,F6P'
+        JSTOP = 212
+        return
     endif
     ! Line A-13
     READ(5,*,IOSTAT=myerr) THPT,SPNT,PPNT,HPNT,VPNT
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-13:  THPT,SPNT,PPNT,HPNT,VPNT'
         flush(6)
-        stop 'Error reading A-13:  THPT,SPNT,PPNT,HPNT,VPNT'
+        JSTOP = 213
+        return
     endif
     WRITE (06,4100) F8P,ITSTOP,F7P,F11P,F9P,F6P
     WRITE (06,4110) THPT,SPNT,PPNT,HPNT,VPNT   
@@ -677,7 +690,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-14:  IFAC,FACX'
         flush(6)
-        stop 'Error reading A-14:  IFAC,FACX'
+        JSTOP = 214
+        return
     endif
     IF(IFAC.GT.0) GO TO 20
     !
@@ -688,7 +702,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-15: (DXR(K),K=1,NXR)'
         flush(6)
-        stop 'Error reading A-15: (DXR(K),K=1,NXR)'
+        JSTOP = 215
+        return
     endif
     DO 10 K=1,NXR
 10  DXR(K)=DXR(K)*FACX
@@ -707,7 +722,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-16:  XMULT,XMAX'
         flush(6)
-        stop 'Error reading A-16:  XMULT,XMAX'
+        JSTOP = 216
+        return
     endif
     DXR(1)=FACX
     DXR(2)=FACX
@@ -724,7 +740,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-17:  JFAC,FACZ'
         flush(6)
-        stop 'Error reading A-17:  JFAC,FACZ'
+        JSTOP = 217
+        return
     endif
     IF(JFAC.GT.0) GO TO 80
     !
@@ -735,7 +752,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-18:  (DELZ(K),K=1,NLY)'
         flush(6)
-        stop 'Error reading A-18:  (DELZ(K),K=1,NLY)'
+        JSTOP = 218
+        return
     endif
     DO 70 K=1,NLY
 70  DELZ(K)=DELZ(K)*FACZ
@@ -752,7 +770,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading A-19:  ZMULT,ZMAX'
         flush(6)
-        stop 'Error reading A-19:  ZMULT,ZMAX'
+        JSTOP = 219
+        return
     endif
     DELZ(1)=FACZ
     DELZ(2)=FACZ
@@ -812,7 +831,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-20:  NPLT'
             flush(6)
-            stop 'Error reading A-20:  NPLT'
+            JSTOP = 220
+            return
         endif
         !!@@include 'd_obst.inc'
         allocate(PLTIM(NPLT+1))
@@ -823,7 +843,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-21: '
             flush(6)
-            stop 'Error reading A-21: '
+            JSTOP = 221
+            return
         endif
         WRITE (06,4140) (PLTIM(K),K=1,NPLT)
     else
@@ -836,7 +857,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-22:  NOBS'
             flush(6)
-            stop 'Error reading A-22:  NOBS'
+            JSTOP = 222
+            return
         endif
         if (nobs.lt.0) then
             nobs = -nobs
@@ -851,7 +873,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-23:  ((KDUM(K,J),J=1,2),K=1,NOBS)'
             flush(6)
-            stop 'Error reading A-23:  ((KDUM(K,J),J=1,2),K=1,NOBS)'
+            JSTOP = 223
+            return
         endif
         WRITE (06,4150) ((KDUM(K,J),J=1,2),K=1,NOBS)
         !      include 'c_obsp.inc'
@@ -866,7 +889,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-24: NMB9'
             flush(6)
-            stop 'Error reading A-24: NMB9'
+            JSTOP = 224
+            return
         endif
         if (nmb9.lt.0) then
             nmb9 = -nmb9
@@ -878,7 +902,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading A-25:  (MB9(K),K=1,NMB9)'
             flush(6)
-            stop 'Error reading A-25:  (MB9(K),K=1,NMB9)'
+            JSTOP = 225
+            return
         endif
         WRITE(06,4160) (MB9(K),K=1,NMB9)
     END IF
@@ -1465,7 +1490,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-1:  EPS,HMAX,WUS'
         flush(6)
-        stop 'Error reading B-1:  EPS,HMAX,WUS'
+        JSTOP = 226
+        return
     endif
     EPS1=0.0D0
     EPS2=0.0D0
@@ -1476,7 +1502,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-2: EPS1,EPS2'
             flush(6)
-            stop 'Error reading B-2: EPS1,EPS2'
+            JSTOP = 227
+            return
         endif
     endif
     IF(SOLUTE) then
@@ -1485,7 +1512,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-3: EPS3'
             flush(6)
-            stop 'Error reading B-3: EPS3'
+            JSTOP = 228
+            return
         endif
     endif
     ! Line B-4
@@ -1493,28 +1521,32 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-4:  MINIT,ITMAX'
         flush(6)
-        stop 'Error reading B-4:  MINIT,ITMAX'
+        JSTOP = 229
+        return
     endif
     ! Line B-5
     READ(5,*,IOSTAT=myerr) PHRD
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-5:  PHRD'
         flush(6)
-        stop 'Error reading B-5:  PHRD'
+        JSTOP = 230
+        return
     endif
     ! Line B-6
     READ(5,*,IOSTAT=myerr) NTEX,NPROP
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-6:  NTEX,NPROP'
         flush(6)
-        stop 'Error reading B-6:  NTEX,NPROP'
+        JSTOP = 231
+        return
     endif
     ! Line B-7
     READ(5,*,IOSTAT=myerr) hydraulicFunctionType
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-7:  hydraulicFunctionType'
         flush(6)
-        stop 'Error reading B-7:  hydraulicFunctionType'
+        JSTOP = 232
+        return
     endif
     !      READ(5,*) iuTemperature
     NHTPROP = 0
@@ -1578,14 +1610,16 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-8:  ITEX'
             flush(6)
-            stop 'Error reading B-8:  ITEX'
+            JSTOP = 233
+            return
         endif
     ! Line B-9
         READ(5,*,IOSTAT=myerr) ANIZ(J),(HK(J,I),I=1,NPROP)
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-9:  ANIZ(J),(HK(J,I),I=1,NPROP)'
             flush(6)
-            stop 'Error reading B-9:  ANIZ(J),(HK(J,I),I=1,NPROP)'
+            JSTOP = 234
+            return
         endif
         WRITE (6,4120) J,ANIZ(J),(HK(J,I),I=1,NPROP)
         IF(HEAT) THEN
@@ -1597,7 +1631,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-10:  (HT(j,I),I=1,6)'
                 flush(6)
-                stop 'Error reading B-10:  (HT(j,I),I=1,6)'
+                JSTOP = 235
+                return
             endif
             write(6,4130) (HT(j,I),I=1,6)
             HT(J,3)=HT(J,3)*(1.-HK(J,3))
@@ -1611,7 +1646,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-11:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)'
                 flush(6)
-                stop 'Error reading B-11:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7)'
+                JSTOP = 236
+                return
             endif
             write(6,4131)(HS(j,I),I=1,3)
         END IF
@@ -1660,7 +1696,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-12:  IROW'
         flush(6)
-        stop 'Error reading B-12:  IROW'
+        JSTOP = 237
+        return
     endif
     IF(IROW.EQ.0) THEN
         !      DO 54 K=1,NNODES
@@ -1713,7 +1750,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-13:  (JTEX(N),N=1,NXR)'
                 flush(6)
-                stop 'Error reading B-13:  (JTEX(N),N=1,NXR)'
+                JSTOP = 238
+                return
             endif
             if (ntex.gt.9) then
                 write (06,4151) j,(idum(n),n=1,nxr)
@@ -1738,7 +1776,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-14:  IL,IR,JBT,JRD'
             flush(6)
-            stop 'Error reading B-14:  IL,IR,JBT,JRD'
+            JSTOP = 239
+            return
         endif
         DO 70 N=IL,IR
             IDUM(N)=JRD
@@ -1782,7 +1821,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-15:  IREAD,FACTOR'
         flush(6)
-        stop 'Error reading B-15:  IREAD,FACTOR'
+        JSTOP = 240
+        return
     endif
     IF(IREAD.EQ.2) THEN
     ! Line B-16
@@ -1790,7 +1830,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-16:  DWTX,HMIN'
             flush(6)
-            stop 'Error reading B-16:  DWTX,HMIN'
+            JSTOP = 241
+            return
         endif
         WRITE (06,4190) DWTX,ZUNIT,HMIN,ZUNIT,DWTX,ZUNIT
         !
@@ -1820,7 +1861,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading B-17: IU,IFMT'
                     flush(6)
-                    stop 'Error reading B-17: IU,IFMT'
+                    JSTOP = 242
+                    return
                 endif
                 WRITE (06,4180) IU,FACTOR
             endif
@@ -1927,7 +1969,8 @@
     if (myerr .ne. 0) then
         write(6,'(A)') 'Error reading B-18:  BCIT,ETSIM'
         flush(6)
-        stop 'Error reading B-18:  BCIT,ETSIM'
+        JSTOP = 243
+        return
     endif
     IF(BCIT .OR. ETSIM) THEN
         !
@@ -1956,7 +1999,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-19: NPV,ETCYC'
             flush(6)
-            stop 'Error reading B-19: NPV,ETCYC'
+            JSTOP = 244
+            return
         endif
         npv1 = npv
         if(npv.lt.0) npv = -npv
@@ -1978,21 +2022,24 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-20: (PEVAL(I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-20: (PEVAL(I),I=1,NPV)'
+                JSTOP = 245
+                return
             endif
     ! Line B-21
             READ(5,*,IOSTAT=myerr)(RDC(1,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-21: (RDC(1,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-21: (RDC(1,I),I=1,NPV)'
+                JSTOP = 246
+                return
             endif
     ! Line B-22
             READ(5,*,IOSTAT=myerr)(RDC(2,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-22: (RDC(2,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-22: (RDC(2,I),I=1,NPV)'
+                JSTOP = 247
+                return
             endif
             WRITE (06,4050)ZUNIT,TUNIT,ZUNIT,ZUNIT,(I,PEVAL(I),RDC(1,I),  &
             RDC(2,I),I=1,NPV)
@@ -2006,35 +2053,40 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-23: (PTVAL(I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-23: (PTVAL(I),I=1,NPV)'
+                JSTOP = 248
+                return
             endif
     ! Line B-24
             READ(5,*,IOSTAT=myerr) (RDC(3,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-24:  (RDC(3,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-24:  (RDC(3,I),I=1,NPV)'
+                JSTOP = 249
+                return
             endif
     ! Line B-25
             READ(5,*,IOSTAT=myerr) (RDC(4,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-25:  (RDC(4,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-25:  (RDC(4,I),I=1,NPV)'
+                JSTOP = 250
+                return
             endif
     ! Line B-26
             READ(5,*,IOSTAT=myerr) (RDC(5,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-26:  (RDC(5,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-26:  (RDC(5,I),I=1,NPV)'
+                JSTOP = 251
+                return
             endif
     ! Line B-27
             READ(5,*,IOSTAT=myerr) (RDC(6,I),I=1,NPV)
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-27:  (RDC(6,I),I=1,NPV)'
                 flush(6)
-                stop 'Error reading B-27:  (RDC(6,I),I=1,NPV)'
+                JSTOP = 252
+                return
             endif
             WRITE(06,4060)ZUNIT,TUNIT,ZUNIT,ZUNIT,ZUNIT,ZUNIT,(I,PTVAL(I),  &
             (RDC(J,I),J=3,6),I=1,NPV)
@@ -2057,7 +2109,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-28:  IREAD,FACTOR'
             flush(6)
-            stop 'Error reading B-28:  IREAD,FACTOR'
+            JSTOP = 253
+            return
         endif
         IF(IREAD.EQ.0) THEN
             WRITE(6,4210) FACTOR
@@ -2078,7 +2131,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-29: IU,IFMT'
                 flush(6)
-                stop 'Error reading B-29: IU,IFMT'
+                JSTOP = 254
+                return
             endif
             if (IFMT.NE.UNFORMATTED) then
                 WRITE(06,4220) IU,FACTOR
@@ -2128,7 +2182,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-30:  IREAD'
             flush(6)
-            stop 'Error reading B-30:  IREAD'
+            JSTOP = 255
+            return
         endif
         insol2 = -1
         indsol2 = -1
@@ -2147,7 +2202,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-31:  INSOL1'
                 flush(6)
-                stop 'Error reading B-31:  INSOL1'
+                JSTOP = 256
+                return
             endif            
             INSOL2(1)=2
             DO 212 I=2,7
@@ -2168,7 +2224,8 @@
                     if (myerr .ne. 0) then
                         write(6,'(A)') 'Error reading B-32:  INDSOL'
                         flush(6)
-                        stop 'Error reading B-32:  INDSOL'
+                        JSTOP = 257
+                        return
                     endif   
                     DO 401 N=1,NXR
                         IN=NLY*(N-1)+J
@@ -2299,7 +2356,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading B-33:  numBF, maxnumcells'
             flush(6)
-            stop 'Error reading B-33:  numBF, maxnumcells'
+            JSTOP = 258
+            return
         endif
         !!@@include 'd_BFAlloc.inc'
         !      if (allocated(idBF)) deallocate(idBF)
@@ -2318,7 +2376,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading B-34:  idBF(i), numcellsBF(i)'
                 flush(6)
-                stop 'Error reading B-34:  idBF(i), numcellsBF(i)'
+                JSTOP = 259
+                return
             endif
             do 250 j = 1,numcellsBF(i)
     ! Line B-35
@@ -2326,7 +2385,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading B-35:  jj,nn'
                     flush(6)
-                    stop 'Error reading B-35:  jj,nn'
+                    JSTOP = 260
+                    return
                 endif
                 nodenum(i,j) = nly*(nn-1) + jj
 250     continue
@@ -2507,7 +2567,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-1:  TPER,DELT'
             flush(6)
-            stop 'Error reading C-1:  TPER,DELT'
+            JSTOP = 261
+            return
         endif
         !
         !   CHECK FOR END OF SIMULATION
@@ -2524,7 +2585,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED'
             flush(6)
-            stop 'Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED'
+            JSTOP = 262
+            return
         endif
         KP=KP+1
         SSTATE=.FALSE.
@@ -2540,14 +2602,16 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-3:  DSMAX,STERR'
             flush(6)
-            stop 'Error reading C-3:  DSMAX,STERR'
+            JSTOP = 263
+            return
         endif
     ! Line C-4
         READ(5,*,IOSTAT=myerr) POND
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-4:  POND'
             flush(6)
-            stop 'Error reading C-4:  POND'
+            JSTOP = 264
+            return
         endif
         WRITE (06,4020) DSMAX,STERR,POND
     ! Line C-5
@@ -2555,14 +2619,16 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-5:  PRNT'
             flush(6)
-            stop 'Error reading C-5:  PRNT'
+            JSTOP = 265
+            return
         endif
     ! Line C-6
         READ(5,*,IOSTAT=myerr) BCIT,ETSIM,SEEP
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-6:  BCIT,ETSIM,SEEP'
             flush(6)
-            stop 'Error reading C-6:  BCIT,ETSIM,SEEP'
+            JSTOP = 266
+            return
         endif
         WRITE (06,4010) PRNT,BCIT,ETSIM,SEEP
         DSMAX=DABS(DSMAX)
@@ -2577,7 +2643,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading C-7:  NFCS'
                 flush(6)
-                stop 'Error reading C-7:  NFCS'
+                JSTOP = 267
+                return
             endif
             !!@@include 'd_spfcAlloc.inc'
             if (allocated(JSPX)) deallocate(JSPX)
@@ -2592,7 +2659,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-8:  JJ,JLAST(K) '
                     flush(6)
-                    stop 'Error reading C-8:  JJ,JLAST(K) '
+                    JSTOP = 268
+                    return
                 endif
                 NFC(K)=JJ 
     ! Line C-9
@@ -2600,7 +2668,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
                     flush(6)
-                    stop 'Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ)'
+                    JSTOP = 269
+                    return
                 endif
                 !      DO 40 M=1,Nsol
                 DO 40 J=1,JJ 
@@ -2647,7 +2716,8 @@
         if (myerr .ne. 0) then
             write(6,'(A)') 'Error reading C-10:  IBC '
             flush(6)
-            stop 'Error reading C-10:  IBC '
+            JSTOP = 270
+            return
         endif
         IF(IBC.GT.0) GO TO 80 
 70      IF (TRANS)THEN
@@ -2656,7 +2726,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading C-11:  JJ,NN,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading C-11:  JJ,NN,NTX,PFDUM'
+                JSTOP = 271
+                return
             endif
             IF(JJ.LT.0) GO TO 130 
             IF(HEAT) THEN
@@ -2665,7 +2736,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-12: NTT,TF'
                     flush(6)
-                    stop 'Error reading C-12: NTT,TF'
+                    JSTOP = 272
+                    return
                 endif
             ELSE
                 NTT=0
@@ -2677,7 +2749,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-13: NTC,INSBC1'
                     flush(6)
-                    stop 'Error reading C-13: NTC,INSBC1'
+                    JSTOP = 273
+                    return
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
@@ -2700,7 +2773,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading C-14:  JJ,NN,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading C-14:  JJ,NN,NTX,PFDUM'
+                JSTOP = 274
+                return
             endif
         END IF
         IF(JJ.LT.0) GO TO 130 
@@ -2715,7 +2789,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                JSTOP = 275
+                return
             endif
             IF(JJT.LT.0) GO TO 130
             IF(HEAT) THEN
@@ -2724,7 +2799,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-16: NTT,TF'
                     flush(6)
-                    stop 'Error reading C-16: NTT,TF'
+                    JSTOP = 276
+                    return
                 endif
             ELSE
                 NTT=0
@@ -2736,7 +2812,8 @@
                 if (myerr .ne. 0) then
                     write(6,'(A)') 'Error reading C-17: NTC,INSBC1 '
                     flush(6)
-                    stop 'Error reading C-17: NTC,INSBC1 '
+                    JSTOP = 277
+                    return
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
@@ -2759,7 +2836,8 @@
             if (myerr .ne. 0) then
                 write(6,'(A)') 'Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM'
                 flush(6)
-                stop 'Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM'
+                JSTOP = 278
+                return
             endif
             IF(JJT.LT.0) GO TO 130
         END IF 

@@ -2747,15 +2747,13 @@
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
+                allocate(bcsol1(1,nSol), ibsol1(1))
                 ibsol1(1) = insbc1
-                ibsol2(1) = -1 ! insbc2
-                f1(1) = 1.0    ! sbfrac
-                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
+                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
                 do i = 1, nsol
                     bcsol(i) = bcsol1(1,i)
                 enddo
-                deallocate(bcsol1, ibsol1, ibsol2, f1)
+                deallocate(bcsol1, ibsol1)
 
             ELSE
                 NTC=0
@@ -2810,15 +2808,13 @@
                 endif
 
                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                allocate(bcsol1(1,nSol), ibsol1(1), ibsol2(1), f1(1))
+                allocate(bcsol1(1,nSol), ibsol1(1))
                 ibsol1(1) = insbc1
-                ibsol2(1) = -1 ! insbc2
-                f1(1) = 1.0d0  ! sbfrac
-                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1, ibsol2, f1)
+                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
                 do i = 1, nsol
                     bcsol(i) = bcsol1(1,i)
                 enddo
-                deallocate(bcsol1, ibsol1, ibsol2, f1)
+                deallocate(bcsol1, ibsol1)
 
             ELSE
                 NTC=0

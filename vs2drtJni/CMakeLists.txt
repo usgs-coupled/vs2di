@@ -274,7 +274,7 @@ endif()
 
 SET(vs2drtJni_SOURCES
   vs2_vs2drt.h
-  vs2dhJni.c
+  vs2drtJni.c
   ${PROJECT_BINARY_DIR}/FC.h
 )
 

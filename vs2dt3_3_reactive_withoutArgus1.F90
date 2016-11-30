@@ -1,7 +1,7 @@
     Program Main
     USE vs2dt_rm
     USE PhreeqcRM
-    Integer JSTOP
+    COMMON/JCON/JSTOP,JFLAG,jflag1
     character*80 filen
     integer :: clock0, clock1, clockmax, clockrate, ticks
     real    :: secs
@@ -46,7 +46,7 @@
     call system_clock(clock0)
     !      call SETUP(filen)
     call SETUP(0, 0, 0, filen)
-10  CALL STEP(JSTOP)
+10  CALL STEP()
     IF (JSTOP.EQ.0) GOTO 10  
     ! call system_clock(clock1)
 
@@ -1099,7 +1099,7 @@
 4240 FORMAT(4X,' TRANSPORT TO BE SIMULATED')
 4250 FORMAT(4X,' NONLINEAR SORPTION TO BE SIMULATED')
     END
-    SUBROUTINE STEP(JSTP)
+    SUBROUTINE STEP()
     !*** THIS IS THE SECOND HALF OF THE ORIGINAL MAIN CODE. THIS
     !*** PERFORMS A SINGLE TIME STEP. THE LOOPING IS DONE IN THE CALLING
     ! *** PROGRAM. THE SUBROUTINE RETURNS THE SIMULATION TIME, TIME STEP,
@@ -1177,11 +1177,10 @@
     !
 160 IF(JFLAG.EQ.1)IFET1=1
     IF (JSTOP.GT.1) THEN
-        JSTP=JSTOP
         RETURN
     ENDIF
     IF(.NOT.RM_OK) THEN
-        JSTP=12
+        JSTOP=12
         RETURN
     ENDIF
     CALL VSTMER
@@ -1190,7 +1189,6 @@
     ! *** WE JUST RETURN AND LET THE CALLING PROGRAM TERMINATE THE
     !*** THE EXECUTION
     IF (JSTOP.GT.1) THEN
-        JSTP=JSTOP
         RETURN
     ENDIF
     !
@@ -1207,13 +1205,11 @@
     !
     if(nit3.gt.100) then
         jstop = 11
-        jstp = jstop
         return
     end if
     nit=0
     CALL VSMGEN
     IF (JSTOP.GT.1) THEN
-        JSTP=JSTOP
         RETURN
     ENDIF
     !
@@ -1378,9 +1374,6 @@
     !-------------------------------------------------------------------
     !     END OF TIME LOOP
     !-------------------------------------------------------------------
-    !
-    ! *** ASSIGN VALUES TO SUBROUTINE ARGUMENTS TO RETURN
-    JSTP = JSTOP
     RETURN
 4260 FORMAT(5X,'-- WARNING --  INFILTRATION/PONDING BOUNDARY WAS NOT',  &
     ' SOLVED ACCURATELY FOR THIS TIME STEP')

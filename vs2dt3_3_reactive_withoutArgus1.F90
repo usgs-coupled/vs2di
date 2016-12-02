@@ -8910,49 +8910,50 @@
     END
 
     SUBROUTINE RELEASEMEMORY
-    USE PhreeqcRM
-    USE vs2dt_rm
-    use rspac
-    use kcon
-    use mprop
-    use press
+    use bf
+    use compnam
+    use coordin
     use disch
-    use hcon
-    use equat
-    use equats
-    use temp
-    use jtxx
     use dumm
     use dumm1
     use dumm2
     use dumm3
-    use ptet
-    use trxx
-    use trxxh
-    use trxv
-    use trxy1
-    use trxy2
-    use pit
-    use sip
+    use equat
+    use equats
+    use hcon
     use idumm
-    use plott
-    use rpropsh
-    use spfc
-    use scon
-    use ptet
-    use tempcc
-    use coordin
-    use solindex
-    use phreecc
-    use pricon
-    use solmass
-    use compnam
-    use BF
-    use isdumm
     use ihdumm
+    use isdumm
     use itemblo
     use itemtxb
+    use itexs    
+    use jtxx
+    use kcon
+    use mprop
+    use phreecc
+    use phreeqcrm
+    use pit
+    use plott
+    use press
+    use pricon
+    use ptet
+    use ptet
     use react
+    use rpropsh
+    use rspac
+    use scon
+    use sip
+    use solindex
+    use solmass
+    use spfc
+    use temp
+    use tempcc
+    use trxv
+    use trxx
+    use trxxh
+    use trxy1
+    use trxy2
+    use vs2dt_rm
     IMPLICIT NONE
     COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
     DOUBLE PRECISION STIM, DSMAX

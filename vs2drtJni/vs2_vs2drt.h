@@ -29,10 +29,34 @@ JNIEXPORT jboolean JNICALL Java_vs2_vs2drt_getDoTransport
 
 /*
  * Class:     vs2_vs2drt
+ * Method:    getDoEnergyTransport
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_vs2_vs2drt_getDoEnergyTransport
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getDoSoluteTransport
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_vs2_vs2drt_getDoSoluteTransport
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     vs2_vs2drt
  * Method:    advanceOneStep
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_vs2_vs2drt_advanceOneStep
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getJStop
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_vs2_vs2drt_getJStop
   (JNIEnv *, jobject);
 
 /*
@@ -74,6 +98,38 @@ JNIEXPORT void JNICALL Java_vs2_vs2drt_getCellSizesAlongZ
  */
 JNIEXPORT void JNICALL Java_vs2_vs2drt_getTransport
   (JNIEnv *, jobject, jfloatArray);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getTemperature
+ * Signature: ([F)V
+ */
+JNIEXPORT void JNICALL Java_vs2_vs2drt_getTemperature
+  (JNIEnv *, jobject, jfloatArray);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getConcentration
+ * Signature: (I[F)V
+ */
+JNIEXPORT void JNICALL Java_vs2_vs2drt_getConcentration
+  (JNIEnv *, jobject, jint, jfloatArray);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getComponentCount
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_vs2_vs2drt_getComponentCount
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getComponents
+ * Signature: ()[Ljava/lang/String;
+ */
+JNIEXPORT jobjectArray JNICALL Java_vs2_vs2drt_getComponents
+  (JNIEnv *, jobject);
 
 /*
  * Class:     vs2_vs2drt
@@ -162,6 +218,22 @@ JNIEXPORT void JNICALL Java_vs2_vs2drt_getFlowMassBalanceErrors
  */
 JNIEXPORT void JNICALL Java_vs2_vs2drt_getTransportMassBalanceErrors
   (JNIEnv *, jobject, jdoubleArray);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getHeatTransportMassBalanceErrors
+ * Signature: ([D)V
+ */
+JNIEXPORT void JNICALL Java_vs2_vs2drt_getHeatTransportMassBalanceErrors
+  (JNIEnv *, jobject, jdoubleArray);
+
+/*
+ * Class:     vs2_vs2drt
+ * Method:    getSoluteTransportMassBalanceErrors
+ * Signature: (I[D)V
+ */
+JNIEXPORT void JNICALL Java_vs2_vs2drt_getSoluteTransportMassBalanceErrors
+  (JNIEnv *, jobject, jint, jdoubleArray);
 
 /*
  * Class:     vs2_vs2drt

@@ -23,6 +23,7 @@ void GETDX(double *dx, long *nx);
 void GETDZ(double *dz, long *nz);
 void GETFLOWMBERR(double *err);
 void GETHEATTRANSMBERR(double *err);
+void GETJSTEP(long *jstop);
 void GETKSAT(double *ksat, long *nn);
 void GETMOIST(double *moist, long *nn);
 void GETNX(long *nx);
@@ -38,7 +39,7 @@ void GETVX(double *vx, long *nn);
 void GETVZ(double *vz, long *nn);
 void RELEASEMEMORY(void);
 void SETUP(int *iold, int *ihydr, int *isorp, char *filen, size_t filen_len);
-void STEP(long *jstop);
+void STEP(void);
 
 JNIEXPORT void JNICALL Java_vs2_vs2drt_start(JNIEnv *env, jclass obj, jint jold, jint jhydr, jint jsorp, jstring jfilen)
 {
@@ -79,7 +80,15 @@ JNIEXPORT jboolean JNICALL Java_vs2_vs2drt_getDoSoluteTransport(JNIEnv *env, jcl
 JNIEXPORT jint JNICALL Java_vs2_vs2drt_advanceOneStep(JNIEnv *env, jclass obj)
 {
    long jstop;
-   STEP(&jstop);
+   STEP();
+   GETJSTEP(&jstop);
+   return (jint) jstop;
+}
+
+JNIEXPORT jint JNICALL Java_vs2_vs2drt_getJStop(JNIEnv *env, jclass obj)
+{
+   long jstop;
+   GETJSTEP(&jstop);
    return (jint) jstop;
 }
 
@@ -354,6 +363,7 @@ JNIEXPORT jfloat JNICALL Java_vs2_vs2drt_getModelTime(JNIEnv *env, jclass obj)
 JNIEXPORT void JNICALL Java_vs2_vs2drt_cleanup(JNIEnv *env, jclass obj)
 {
    CLOSEIO();
+   RELEASEMEMORY();
 }
 
 JNIEXPORT void JNICALL Java_vs2_vs2drt_releaseMemory(JNIEnv *env, jclass obj)

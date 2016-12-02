@@ -567,9 +567,8 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     protected void onRestartComputation() {
         boolean displayChooserRequiresUpdate = (model.getType() == mp2Model.PLAYBACK_BINARY);
         String selectedDisplay = (String) displayChooser.getSelectedItem();
-        ((vs2ComputationalModel) computationalModel).releaseMemory();
         super.onRestartComputation();
-        if (displayChooserRequiresUpdate && restartComputationMenuItem.isEnabled()) {
+        if (restartComputationMenuItem.isEnabled()) {
             // user pressed No to "Do you want to restart the computation?"
             return;
         }
@@ -677,6 +676,396 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         case 99:
             mp2MessageBox.showMessageDialog(this,
                     "Read error encountered.  Playback halted.",
+                    "Warning");
+            break;
+        case 201:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-1:  TITL.  Simulation halted.",
+                    "Warning");
+            break;
+        case 202:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-2:  TMAX,STIM,ANG.  Simulation halted.",
+                    "Warning");
+            break;
+        case 203:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-3:  ZUNIT,TUNIT,CUNX,HUNX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 204:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-4:  NXR,NLY.  Simulation halted.",
+                    "Warning");
+            break;
+        case 205:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-5:  NRECH,NUMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 206:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-6:  RAD,ITSTOP,HEAT,SOLUTE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 207:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-7:  CHEMFILE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 208:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-8:  DATABASEFILE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 209:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-9:  PREFIX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 210:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-10: CIS,CIT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 211:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-11: INPRXZ.  Simulation halted.",
+                    "Warning");
+            break;
+        case 212:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-12:  F11P,F7P,F8P,F9P,F6P.  Simulation halted.",
+                    "Warning");
+            break;
+        case 213:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-13:  THPT,SPNT,PPNT,HPNT,VPNT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 214:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-14:  IFAC,FACX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 215:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-15: (DXR(K),K=1,NXR).  Simulation halted.",
+                    "Warning");
+            break;
+        case 216:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-16:  XMULT,XMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 217:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-17:  JFAC,FACZ.  Simulation halted.",
+                    "Warning");
+            break;
+        case 218:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-18:  (DELZ(K),K=1,NLY).  Simulation halted.",
+                    "Warning");
+            break;
+        case 219:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-19:  ZMULT,ZMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 220:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-20:  NPLT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 221:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-21:  (PLTIM(K),K=1,NPLT).  Simulation halted.",
+                    "Warning");
+            break;
+        case 222:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-22:  NOBS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 223:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-23:  ((KDUM(K,J),J=1,2),K=1,NOBS).  Simulation halted.",
+                    "Warning");
+            break;
+        case 224:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-24: NMB9.  Simulation halted.",
+                    "Warning");
+            break;
+        case 225:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-25:  (MB9(K),K=1,NMB9).  Simulation halted.",
+                    "Warning");
+            break;
+        case 226:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-1:  EPS,HMAX,WUS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 227:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-2: EPS1,EPS2.  Simulation halted.",
+                    "Warning");
+            break;
+        case 228:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-3: EPS3.  Simulation halted.",
+                    "Warning");
+            break;
+        case 229:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-4:  MINIT,ITMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 230:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-5:  PHRD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 231:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-6:  NTEX,NPROP.  Simulation halted.",
+                    "Warning");
+            break;
+        case 232:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-7:  hydraulicFunctionType.  Simulation halted.",
+                    "Warning");
+            break;
+        case 233:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-8:  ITEX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 234:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-9:  ANIZ(J),(HK(J,I),I=1,NPROP).  Simulation halted.",
+                    "Warning");
+            break;
+        case 235:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-10:  (HT(j,I),I=1,6).  Simulation halted.",
+                    "Warning");
+            break;
+        case 236:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-11:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7).  Simulation halted.",
+                    "Warning");
+            break;
+        case 237:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-12:  IROW.  Simulation halted.",
+                    "Warning");
+            break;
+        case 238:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-13:  (JTEX(N),N=1,NXR).  Simulation halted.",
+                    "Warning");
+            break;
+        case 239:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-14:  IL,IR,JBT,JRD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 240:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-15:  IREAD,FACTOR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 241:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-16:  DWTX,HMIN.  Simulation halted.",
+                    "Warning");
+            break;
+        case 242:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-17: IU,IFMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 243:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-18:  BCIT,ETSIM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 244:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-19: NPV,ETCYC.  Simulation halted.",
+                    "Warning");
+            break;
+        case 245:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-20: (PEVAL(I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 246:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-21: (RDC(1,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 247:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-22: (RDC(2,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 248:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-23: (PTVAL(I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 249:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-24:  (RDC(3,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 250:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-25:  (RDC(4,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 251:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-26:  (RDC(5,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 252:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-27:  (RDC(6,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 253:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-28:  IREAD,FACTOR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 254:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-29: IU,IFMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 255:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-30:  IREAD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 256:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-31:  INSOL1.  Simulation halted.",
+                    "Warning");
+            break;
+        case 257:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-32:  INDSOL.  Simulation halted.",
+                    "Warning");
+            break;
+        case 258:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-33:  numBF, maxnumcells.  Simulation halted.",
+                    "Warning");
+            break;
+        case 259:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-34:  idBF(i), numcellsBF(i).  Simulation halted.",
+                    "Warning");
+            break;
+        case 260:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-35:  jj,nn.  Simulation halted.",
+                    "Warning");
+            break;
+        case 261:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-1:  TPER,DELT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 262:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED.  Simulation halted.",
+                    "Warning");
+            break;
+        case 263:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-3:  DSMAX,STERR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 264:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-4:  POND.  Simulation halted.",
+                    "Warning");
+            break;
+        case 265:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-5:  PRNT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 266:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-6:  BCIT,ETSIM,SEEP.  Simulation halted.",
+                    "Warning");
+            break;
+        case 267:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-7:  NFCS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 268:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-8:  JJ,JLAST(K) .  Simulation halted.",
+                    "Warning");
+            break;
+        case 269:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ).  Simulation halted.",
+                    "Warning");
+            break;
+        case 270:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-10:  IBC .  Simulation halted.",
+                    "Warning");
+            break;
+        case 271:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-11:  JJ,NN,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 272:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-12: NTT,TF.  Simulation halted.",
+                    "Warning");
+            break;
+        case 273:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-13: NTC,INSBC1.  Simulation halted.",
+                    "Warning");
+            break;
+        case 274:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-14:  JJ,NN,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 275:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 276:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-16: NTT,TF.  Simulation halted.",
+                    "Warning");
+            break;
+        case 277:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-17: NTC,INSBC1 .  Simulation halted.",
+                    "Warning");
+            break;
+        case 278:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM.  Simulation halted.",
                     "Warning");
             break;
         default:
@@ -940,6 +1329,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         loadSettingsMenuItem.setEnabled(true);
         saveSettingsMenuItem.setEnabled(true);
         return true;
+    }
+    
+    /**
+     * Performs model start up calculations.
+     */
+    protected int doModelStartUpCalculations() {
+        if (model.getType() == mp2Model.COMPUTATIONAL) {
+            return ((vs2ComputationalModel)model).getJStop();
+        }
+        return 0;
     }
 
     /**

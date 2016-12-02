@@ -296,6 +296,10 @@ public abstract class vs2ComputationalModel extends mp2ComputationalModel
         return 0;
     }
     
+    public int getJStop() {
+        return 0;
+    }
+
     public String[] getComponents() {
         return new String[0];
     }

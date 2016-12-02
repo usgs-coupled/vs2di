@@ -57,6 +57,9 @@ public class vs2drt extends vs2ComputationalModel {
     public native int advanceOneStep();
     
     @Override
+    public native int getJStop();
+
+    @Override
     public native int getNumCellAlongX();
 
     @Override

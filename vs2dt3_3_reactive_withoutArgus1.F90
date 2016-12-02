@@ -2522,8 +2522,7 @@
     common/thick/dely
     COMMON/JCONF/JFLAG2
     double precision, allocatable, dimension(:,:) :: bcsol1
-    double precision, allocatable, dimension(:) :: f1
-    integer, allocatable, dimension(:) :: ibsol1, ibsol2
+    integer, allocatable, dimension(:) :: ibsol1
     INTEGER       :: myerr
     SAVE STERR
     !!@@include 'd_ihdummAlloc.inc'

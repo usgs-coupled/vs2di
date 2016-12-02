@@ -1322,6 +1322,9 @@
         !#END IF
         IF (SOLUTE) THEN
             call SetConcentrationsRM(cc)
+            IF (JSTOP.GT.1) THEN
+                RETURN
+            ENDIF 
             IF (HEAT) THEN
                 status = RM_SetTemperature(rm_id, tt)
             endif
@@ -1350,6 +1353,9 @@
             !endif
             status = RM_RunCells(rm_id)
             call GetConcentrationsRM(cc)
+            IF (JSTOP.GT.1) THEN
+                RETURN
+            ENDIF 
         END IF      
         if (solute) then
             if (heat) then
@@ -2266,14 +2272,22 @@
 205     continue
 
         CALL CreateMappingRM(INDSOL1, axes, NXR, NLY) 
+        if (JSTOP .gt. 1) then
+            return
+        endif  
         ! Set porosity
         do i = 1, nnodes            
             porosity(i) = HK(jtex(i),3)
         enddo
         status = RM_SetPorosity(rm_id, porosity) 
         CALL InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
+        if (JSTOP .gt. 1) then
+            return
+        endif        
         CALL GetConcentrationsRM(cc)
-
+        IF (JSTOP.GT.1) THEN
+            RETURN
+        ENDIF 
         ! Set SolComp
         !status = RM_InitialPhreeqc2Concentrations(rm_id, Solcomp(1), 1, INSOL1(1))  
         do i = 1, Nsol
@@ -2316,6 +2330,9 @@
         !ENDIF
         IF (SOLUTE .and. RM_OK) THEN
             call SetConcentrationsRM(cc)
+            IF (JSTOP.GT.1) THEN
+                RETURN
+            ENDIF 
             IF (HEAT) THEN
                 status = RM_SetTemperature(rm_id, tt)
             endif
@@ -2330,6 +2347,9 @@
             status = RM_SetSaturation(rm_id, theta)
             status = RM_RunCells(rm_id)
             call GetConcentrationsRM(cc)
+            IF (JSTOP.GT.1) THEN
+                RETURN
+            ENDIF 
             call FH_SetPointers(RX(1), DZZ(1), xnode(1), znode(1), ic1_reordered(1,1), theta(1), forward1(1))
         END IF
     END IF

@@ -62,25 +62,33 @@ Module vs2dt_rm
             return
         END IF
         status = RM_SetComponentH2O(rm_id, 1)
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000  
+
         nthreads = RM_GetThreadCount(rm_id)
         !!!status = RM_SetErrorHandlerMode(rm_id, 2)   ! exit
         status = RM_SetPrintChemistryOn(rm_id, 0, 1, 0) 
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000 
+
         status = RM_UseSolutionDensityVolume(rm_id, 0)
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000 
+
         status = RM_LoadDatabase(rm_id, DATABASEFILE)
         if (status .NE. 0) goto 1000
+
         !... Call phreeqc, find number of components, f1name, chem.dat, f2name, database, f3name, prefix
         status = RM_LogMessage(rm_id, "Initial PHREEQC run.") 
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000  
+
         status = RM_ScreenMessage(rm_id, "Initial PHREEQC run.")  
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000   
+
         status = RM_RunFile(rm_id, 1, 1, 1, CHEMFILE)
         if (status .NE. 0) goto 1000
+
         string = 'DELETE; -all' 
         status = RM_RunString(rm_id, 1, 0, 1, trim(string))
-        if (status .NE. 0) goto 1000        
+        if (status .NE. 0) goto 1000  
+
         status = RM_FindComponents(rm_id)   
         nSol = RM_GetComponentCount(rm_id)
         status = RM_LogMessage(rm_id, "Done with Initial PHREEQC run.")
@@ -103,6 +111,8 @@ END SUBROUTINE CreateRM
 SUBROUTINE InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
     USE PhreeqcRM
     IMPLICIT NONE
+    INTEGER JSTOP,JFLAG,jflag1
+    COMMON/JCON/JSTOP,JFLAG,jflag1
     DOUBLE PRECISION, DIMENSION(:,:), ALLOCATABLE, intent(in) :: cmixfarc
     INTEGER, DIMENSION(:,:), ALLOCATABLE, intent(in) :: indsol1, indsol2
     INTEGER, DIMENSION(:,:), ALLOCATABLE, intent(out) :: ic1_reordered
@@ -151,16 +161,20 @@ SUBROUTINE InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
         status = RM_SetRebalanceByCell(rm_id, 1)
 
         ! ... Define mapping from 3D domain to chemistry
-        status = RM_CreateMapping(rm_id, forward1)      
+        status = RM_CreateMapping(rm_id, forward1)  
+        if (status .ne. 0) goto 1000
 
         ! ... Make arrays in the correct order
+        if (allocated(ic1_reordered)) deallocate(ic1_reordered)
+        if (allocated(ic2_reordered)) deallocate(ic2_reordered)
+        if (allocated(f1_reordered)) deallocate(f1_reordered)
         ALLOCATE(ic1_reordered(nxyz,7), ic2_reordered(nxyz,7), f1_reordered(nxyz,7),   &
         STAT = a_err)
         IF (a_err /= 0) THEN
-            PRINT *, "Array allocation failed: InitializeRM"  
-            STOP
+            write(6,*) "Array allocation failed: InitializeRM"  
+            goto 1000
         ENDIF
-        
+
         ! indsol1, indsol2, cmixfarc are (7,nxyz)
         DO i = 1, nxyz
             do j = 1, 7
@@ -169,26 +183,35 @@ SUBROUTINE InitializeRM(cmixfarc, indsol1, indsol2, ic1_reordered)
                 f1_reordered(i,j) = cmixfarc(j,i)
             enddo
         enddo
-          
+
         ! ... Distribute chemistry initial conditions
         status = RM_InitialPhreeqc2Module(rm_id, &
-            ic1_reordered,           & ! Fortran nxyz x 7 end-member 1 
-            ic2_reordered,           & ! Fortran nxyz x 7 end-member 2
-            f1_reordered)              ! Fortran nxyz x 7 fraction of end-member 1 
-                        
+        ic1_reordered,           & ! Fortran nxyz x 7 end-member 1 
+        ic2_reordered,           & ! Fortran nxyz x 7 end-member 2
+        f1_reordered)              ! Fortran nxyz x 7 fraction of end-member 1 
+        if (status .ne. 0) goto 1000
+
         DEALLOCATE (ic2_reordered, f1_reordered, &
-            STAT = a_err)
+        STAT = a_err)
         IF (a_err /= 0) THEN
-            PRINT *, "Array deallocation failed: InitializeRM"  
-            STOP
+            write(6,*) "Array deallocation failed: InitializeRM"  
+            goto 1000
         ENDIF
     ENDIF        ! ... solute
+    return
+
+1000 continue
+    JSTOP = 13
+    write(6,*) "InitializeRM failed"
+    return
 END SUBROUTINE InitializeRM
    
 
 subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
     USE PhreeqcRM
     implicit none
+    INTEGER JSTOP,JFLAG,jflag1
+    COMMON/JCON/JSTOP,JFLAG,jflag1
     integer, dimension(:,:), allocatable, intent(in) :: initial_conditions
     logical, dimension(2), intent(in) :: axes
     integer, intent(in) :: nx, nz
@@ -201,8 +224,11 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
     iz = nz;
     ixz = ix*iz;
     if ((.not. axes(1)) .and. (.not. axes(2))) then
-        status = RM_ErrorMessage(rm_id, "No active coordinate direction in DIMENSIONS keyword.")
-        STOP "No active coordinate direction in DIMENSIONS keyword."
+        status = RM_ErrorMessage(rm_id, "No active coordinate direction.")
+        write(6,*)  "No active coordinate direction."
+        write(6,*) "Error in CreateMappingRM"
+        JSTOP = 14
+        return
     endif
 
     count_chem = ixz
@@ -221,21 +247,27 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
             else
                 forward1(i) = -1
             endif
-            write(*,*) "XZforward [",i-1,"] =", forward1(i)
+            !write(*,*) "XZforward [",i-1,"] =", forward1(i)
         enddo
         count_chem = n;
     ! x only
     else if ((axes(1) .eqv. .true.) .and. (axes(2) .eqv. .false.)) then
         if (iz .ne. 2) then
             status = RM_ErrorMessage(rm_id, "z direction should contain only three nodes for this 1D problem.")
-            STOP "z direction should contain only three nodes for this 1D problem."
+            write(6,*) "z direction should contain only three nodes for this 1D problem."
+            write(6,*) "Error in CreateMappingRM"
+            JSTOP = 14
+            return
         endif
 
         n = 0
         do i = 1, ixz
             if (initial_conditions(i,1) .lt. 0 .and. initial_conditions(1,i) .gt. -100) then
                 status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
-                STOP "Can not have inactive cells in a 1D simulation."
+                write(6,*) "Can not have inactive cells in a 1D simulation."
+                write(6,*) "Error in CreateMappingRM"
+                JSTOP = 14
+                return
             endif
             if (jj == 0) then
                 forward1(i) = n
@@ -243,7 +275,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
             else
                 forward1(i) = -1
             endif
-            write(*,*) "Xforward [",i-1,"] =",forward1(i)
+            !write(*,*) "Xforward [",i-1,"] =",forward1(i)
         enddo
         count_chem = n;
     !  Copy z line
@@ -252,22 +284,36 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
         do i = 1, ixz
             if (initial_conditions(1,i) .lt. 0 .and. initial_conditions(1,i) > -100) then
                 status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
-                STOP "Can not have inactive cells in a 1D simulation."
+                write(6,*) "Can not have inactive cells in a 1D simulation."
+                write(6,*) "Error in CreateMappingRM"
+                JSTOP = 14
+                return
             endif
             success = n_to_ij(i, ii, jj, nx, nz)
+            if (.not. success) then
+                write(6,*) "Error in CreateMappingRM"
+                JSTOP = 14
+                return                
+            endif
+
             if (ii .eq. 0) then
                 forward1(i) = n
                 n = n + 1
             else
                 forward1(i) = -1
             endif
-            write(*,*) "Zforward [",i-1,"] =",forward1(i)
+            !write(*,*) "Zforward [",i-1,"] =",forward1(i)
         enddo
         count_chem = n
     endif
     ! pass mapping to RM
     status = RM_CreateMapping(rm_id, forward1)
-    write(*,*) "count_chem =", count_chem
+    if (status .ne. 0) then
+        write(6,*) "Error in CreateMappingRM: RM_CreateMapping failed."
+        JSTOP = 14
+        return
+    endif
+    !write(*,*) "count_chem =", count_chem
     return
 end subroutine CreateMappingRM
 
@@ -286,11 +332,13 @@ logical function n_to_ij(n, i, j, ix, iz)
     
     if (i .lt. 1 .or. i .gt. ix) then
         status = RM_ErrorMessage(rm_id, "X index out of range")
+        write(6,*) "X index out of range"
         return_value = .false.
     endif
     
     if (j .lt. 1 .or. j .gt. iz) then
-        status = RM_ErrorMessage(rm_id, "z index out of range")
+        status = RM_ErrorMessage(rm_id, "Z index out of range")
+        write(6,*) "Z index out of range"
         return_value = .false.
     endif
     n_to_ij = return_value
@@ -300,6 +348,8 @@ end function n_to_ij
 subroutine GetConcentrationsRM(cc)
     use PhreeqcRM
     implicit none
+    INTEGER JSTOP,JFLAG,jflag1
+    COMMON/JCON/JSTOP,JFLAG,jflag1
     double precision, dimension(:,:), intent(out) :: cc
     double precision, dimension(:,:), allocatable :: c
     integer :: i, j, nxyz, ncomps, status
@@ -307,7 +357,13 @@ subroutine GetConcentrationsRM(cc)
     nxyz = RM_GetGridCellCount(rm_id)
     ncomps = RM_GetComponentCount(rm_id)
     allocate(c(nxyz,ncomps))
-    status = RM_GetConcentrations(rm_id, c)     
+    status = RM_GetConcentrations(rm_id, c)                
+    if (status .ne. 0) then
+        write(6,*) "Error in GetConcentrationsRM"
+        JSTOP = 15
+        if (allocated(c)) deallocate(c)
+        return                
+    endif
     DO i = 1, nxyz
         do j = 1, ncomps
             cc(j,i) = c(i,j)
@@ -319,6 +375,8 @@ end subroutine GetConcentrationsRM
 subroutine SetConcentrationsRM(cc)
     use PhreeqcRM
     implicit none
+    INTEGER JSTOP,JFLAG,jflag1
+    COMMON/JCON/JSTOP,JFLAG,jflag1
     double precision, dimension(:,:), intent(in) :: cc
     double precision, dimension(:,:), allocatable :: c
     integer :: i, j, nxyz, ncomps, status
@@ -331,8 +389,13 @@ subroutine SetConcentrationsRM(cc)
             c(i,j) = cc(j,i)
         enddo
     enddo  
-    status = RM_SetConcentrations(rm_id, c)  
-    deallocate(c)
+    status = RM_SetConcentrations(rm_id, c)      
+    if (status .ne. 0) then
+        write(6,*) "Error in SetConcentrationsRM"
+        JSTOP = 16                      
+    endif
+    if (allocated(c)) deallocate(c)
+    return 
 end subroutine SetConcentrationsRM
 
 end module

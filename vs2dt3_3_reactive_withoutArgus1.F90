@@ -841,7 +841,7 @@
     ! Line A-21
         READ(5,*,IOSTAT=myerr) (PLTIM(K),K=1,NPLT)
         if (myerr .ne. 0) then
-            write(6,'(A)') 'Error reading A-21: '
+            write(6,'(A)') 'Error reading A-21:  (PLTIM(K),K=1,NPLT)'
             flush(6)
             JSTOP = 221
             return
@@ -9174,6 +9174,11 @@
     END IF
     RETURN
     END
+    
+    SUBROUTINE GETJSTEP(JSTP)
+    COMMON/JCON/JSTOP,JFLAG,jflag1
+    JSTP=JSTOP
+    END    
 
     SUBROUTINE GETHEATTRANSMBERR(ERR)
     !C *** GET TOTAL AND RATE CHEMICAL MASS BALANCE ERRORS AND RETURN IN ERR

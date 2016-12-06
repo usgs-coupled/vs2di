@@ -673,6 +673,54 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
                     + "Simulation halted.",
                     "Warning");
             break;
+        case 13:
+            mp2MessageBox.showMessageDialog(this,
+                    "InitializeRM failed. "
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 14:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. No active coordinate direction."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 15:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. z direction should contain only three nodes for this 1D problem."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 16:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. Can not have inactive cells in a 1D simulation."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 17:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM: n_to_ij failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 18:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM: RM_CreateMapping failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 19:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in GetConcentrationsRM: RM_GetConcentrations failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 20:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in SetConcentrationsRM: RM_SetConcentrations failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
         case 99:
             mp2MessageBox.showMessageDialog(this,
                     "Read error encountered.  Playback halted.",

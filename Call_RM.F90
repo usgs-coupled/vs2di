@@ -256,7 +256,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
             status = RM_ErrorMessage(rm_id, "z direction should contain only three nodes for this 1D problem.")
             write(6,*) "z direction should contain only three nodes for this 1D problem."
             write(6,*) "Error in CreateMappingRM"
-            JSTOP = 14
+            JSTOP = 15
             return
         endif
 
@@ -266,7 +266,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
                 status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
                 write(6,*) "Can not have inactive cells in a 1D simulation."
                 write(6,*) "Error in CreateMappingRM"
-                JSTOP = 14
+                JSTOP = 16
                 return
             endif
             if (jj == 0) then
@@ -286,13 +286,13 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
                 status = RM_ErrorMessage(rm_id, "Can not have inactive cells in a 1D simulation.")
                 write(6,*) "Can not have inactive cells in a 1D simulation."
                 write(6,*) "Error in CreateMappingRM"
-                JSTOP = 14
+                JSTOP = 16
                 return
             endif
             success = n_to_ij(i, ii, jj, nx, nz)
             if (.not. success) then
-                write(6,*) "Error in CreateMappingRM"
-                JSTOP = 14
+                write(6,*) "Error in CreateMappingRM: n_to_ij failed."
+                JSTOP = 17
                 return                
             endif
 
@@ -310,7 +310,7 @@ subroutine CreateMappingRM(initial_conditions, axes, nx, nz)
     status = RM_CreateMapping(rm_id, forward1)
     if (status .ne. 0) then
         write(6,*) "Error in CreateMappingRM: RM_CreateMapping failed."
-        JSTOP = 14
+        JSTOP = 18
         return
     endif
     !write(*,*) "count_chem =", count_chem
@@ -359,8 +359,8 @@ subroutine GetConcentrationsRM(cc)
     allocate(c(nxyz,ncomps))
     status = RM_GetConcentrations(rm_id, c)                
     if (status .ne. 0) then
-        write(6,*) "Error in GetConcentrationsRM"
-        JSTOP = 15
+        write(6,*) "Error in GetConcentrationsRM: RM_GetConcentrations failed."
+        JSTOP = 19
         if (allocated(c)) deallocate(c)
         return                
     endif
@@ -391,8 +391,8 @@ subroutine SetConcentrationsRM(cc)
     enddo  
     status = RM_SetConcentrations(rm_id, c)      
     if (status .ne. 0) then
-        write(6,*) "Error in SetConcentrationsRM"
-        JSTOP = 16                      
+        write(6,*) "Error in SetConcentrationsRM: RM_SetConcentrations failed."
+        JSTOP = 20                      
     endif
     if (allocated(c)) deallocate(c)
     return 

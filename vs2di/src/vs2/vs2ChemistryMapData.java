@@ -127,6 +127,8 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
      */
     public void exportData(PrintWriter pw, 
                    vs2ChemistryClassData chemistryClassData) {
+        String types[] = {"SOLUTION", "EQUILIBRIUM_PHASES", "EXCHANGE",
+        "SURFACE", "GAS_PHASE", "SOLID_SOLUTIONS", "KINETICS"};
         String s;
         final int commentOffset = 23;
         discretize();
@@ -160,7 +162,7 @@ public class vs2ChemistryMapData extends mp2ColorCodedMapData implements Seriali
             for (c=0; c<numColNoBorder+2; c++) {
                 pw.print("-1 ");
             }
-            pw.println();
+            pw.println("/End " + types[n]);
         }
     }
 }

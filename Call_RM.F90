@@ -69,7 +69,7 @@ Module vs2dt_rm
         status = RM_SetPrintChemistryOn(rm_id, 0, 1, 0) 
         if (status .NE. 0) goto 1000 
 
-        status = RM_UseSolutionDensityVolume(rm_id, 0)
+        status = RM_UseSolutionDensityVolume(rm_id, 1)
         if (status .NE. 0) goto 1000 
 
         status = RM_LoadDatabase(rm_id, DATABASEFILE)

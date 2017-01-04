@@ -347,10 +347,11 @@ end function n_to_ij
 
 subroutine GetConcentrationsRM(cc)
     use PhreeqcRM
+    use trxx, only: nctyp
     implicit none
     INTEGER JSTOP,JFLAG,jflag1
     COMMON/JCON/JSTOP,JFLAG,jflag1
-    double precision, dimension(:,:), intent(out) :: cc
+    double precision, dimension(:,:), intent(inout) :: cc
     double precision, dimension(:,:), allocatable :: c
     integer :: i, j, nxyz, ncomps, status
 
@@ -366,7 +367,9 @@ subroutine GetConcentrationsRM(cc)
     endif
     DO i = 1, nxyz
         do j = 1, ncomps
-            cc(j,i) = c(i,j)
+            if (nctyp(i) .ne. 1) then
+                cc(j,i) = c(i,j)
+            endif
         enddo
     enddo  
     deallocate(c)

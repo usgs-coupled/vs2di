@@ -1321,7 +1321,7 @@
         !#theta,iprrestartflag)  
         !#END IF
         IF (SOLUTE) THEN
-            call SetConcentrationsRM(cc)
+            !call SetConcentrationsRM(cc)
             IF (JSTOP.GT.1) THEN
                 RETURN
             ENDIF 
@@ -1345,6 +1345,7 @@
                 enddo
             enddo
             status = RM_SetSaturation(rm_id, satur)
+            call SetConcentrationsRM(cc)
             !if (npscrn .ne. 0) then
             write(msg,"(A,F12.2)") "Chemistry at time: ", stim
             status = RM_SetScreenOn(rm_id, 1)

@@ -217,6 +217,20 @@ public class vs2TexturalClassData extends mp2TableData implements
             dataRows.setElementAt(newRow, i);
         }
     }
+    
+    public void copySoluteDispersivities() {
+        // version 1.3 and previous versions stored dispersivities for both
+        // heat and solute in column 21 and 22
+        Object [] aRow;
+        for (int i=0; i<dataRows.size(); i++) {
+            aRow = (Object []) dataRows.elementAt(i);
+            
+            // longitudinal dispersivity
+            aRow[42] = aRow[21];
+            // transverse dispersivity
+            aRow[43] = aRow[22];
+        }        
+    }
 
     /**
      * Get the maximum number of tabular data rows among textural classes

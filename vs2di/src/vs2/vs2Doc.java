@@ -123,6 +123,8 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
                 // 1.3 or previous version
                 modelOptions.doSoluteTransport = modelOptions.doTransport;
                 modelOptions.doEnergyTransport = false;
+                // copy solute dispersivities
+                texturalClassData.copySoluteDispersivities();
                 break;
             case ENERGY_TRANSPORT:
                 // 1.3 or previous version

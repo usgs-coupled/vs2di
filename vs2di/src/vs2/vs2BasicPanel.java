@@ -204,6 +204,14 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         bg.add(lbRadioButton);
         bg.add(otherMassRadioButton);
         
+        // only allow g
+        gRadioButton.setSelected(true);
+        mgRadioButton.setEnabled(false);
+        kgRadioButton.setEnabled(false);
+        lbRadioButton.setEnabled(false);
+        otherMassRadioButton.setEnabled(false);
+        otherMassUnitTextField.setEnabled(false);        
+        
         // Energy units
         panel.add(subPanel = new JPanel(gridbag, false));
         bg = new ButtonGroup();
@@ -232,6 +240,12 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         bg.add(jouleRadioButton);
         bg.add(calRadioButton);
         bg.add(otherEnergyRadioButton);
+        
+        // only allow Joule
+        jouleRadioButton.setSelected(true);
+        calRadioButton.setEnabled(false);
+        otherEnergyRadioButton.setEnabled(false);
+        otherEnergyUnitTextField.setEnabled(false);        
 
         // Create a panel to hold misc options
         add(panel = new JPanel(new GridLayout(2, 2, 10, 1), false));
@@ -294,6 +308,39 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
         } else {
             parentDialog.transportPanel.setEnabled(true);
         }
+        
+        // allow only meters for length if ANY transport
+        if (doEnergyTransportCheckBox.isSelected() || doSoluteTransportCheckBox.isSelected()) {            
+            mRadioButton.setSelected(true);
+            mmRadioButton.setEnabled(false);
+            cmRadioButton.setEnabled(false);
+            ftRadioButton.setEnabled(false);
+            otherLengthRadioButton.setEnabled(false);
+            otherLengthUnitTextField.setEnabled(false);
+        } else {
+            mmRadioButton.setEnabled(true);
+            cmRadioButton.setEnabled(true);
+            ftRadioButton.setEnabled(true);
+            otherLengthRadioButton.setEnabled(true);            
+            otherLengthUnitTextField.setEnabled(true);
+        }
+        
+        // only allow sec for time if heat transport
+        if (doEnergyTransportCheckBox.isSelected()) {
+            secRadioButton.setSelected(true);
+            hourRadioButton.setEnabled(false);
+            dayRadioButton.setEnabled(false);
+            yearRadioButton.setEnabled(false);
+            otherTimeRadioButton.setEnabled(false);
+            otherTimeUnitTextField.setEnabled(false);
+        } else {
+            hourRadioButton.setEnabled(true);
+            dayRadioButton.setEnabled(true);
+            yearRadioButton.setEnabled(true);
+            otherTimeRadioButton.setEnabled(true);            
+            otherTimeUnitTextField.setEnabled(true);
+        }
+        
         parentDialog.solverPanel.doEnergyTransport(
                 doEnergyTransportCheckBox.isSelected());
     }
@@ -309,15 +356,8 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
             parentDialog.transportPanel.setEnabled(true);
         }
         
-        // allow only grams for mass and meters for length
-        if (doSoluteTransportCheckBox.isSelected()) {
-            gRadioButton.setSelected(true);
-            mgRadioButton.setEnabled(false);
-            kgRadioButton.setEnabled(false);
-            lbRadioButton.setEnabled(false);
-            otherMassRadioButton.setEnabled(false);
-            otherMassUnitTextField.setEnabled(false);
-            
+        // allow only meters for length if ANY transport
+        if (doEnergyTransportCheckBox.isSelected() || doSoluteTransportCheckBox.isSelected()) {            
             mRadioButton.setSelected(true);
             mmRadioButton.setEnabled(false);
             cmRadioButton.setEnabled(false);
@@ -325,12 +365,6 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
             otherLengthRadioButton.setEnabled(false);
             otherLengthUnitTextField.setEnabled(false);
         } else {
-            mgRadioButton.setEnabled(true);
-            kgRadioButton.setEnabled(true);
-            lbRadioButton.setEnabled(true);
-            otherMassRadioButton.setEnabled(true);
-            otherMassUnitTextField.setEnabled(true);
-            
             mmRadioButton.setEnabled(true);
             cmRadioButton.setEnabled(true);
             ftRadioButton.setEnabled(true);

@@ -29,6 +29,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
     protected JPanel energyCards;
     protected JPanel soluteCards;
     protected JTextField flowBCValueTextField;
+    protected JLabel flowBCUnitsLabel;
     protected JRadioButton noEnergyFluxRadioButton;           // new for Version 1.4
     protected JRadioButton noSoluteFluxRadioButton;
     protected JRadioButton boundaryTempRadioButton;
@@ -57,6 +58,12 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
     protected JRadioButton thisPeriodOnlyRadioButton;
     protected JRadioButton thisPeriodAndFutureRadioButton;
     protected JRadioButton getFromFileRadioButton;
+    
+    protected JLabel boundaryTempLabel;
+    protected JLabel diffEnergyFluxLabel;    
+    protected JLabel seepTemperatureLabel;
+    protected JLabel gdrnTemperatureLabel;
+    protected JLabel evapTemperatureLabel;
 
     protected final static String noFlow = "No flow across boundary (q = 0)";
     protected final static String pressureHead = "Specified pressure head (p)";
@@ -90,15 +97,20 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
 
         vs2ModelOptions modOpt = (vs2ModelOptions) customObject;
 
+        // units
+        String T = modOpt.T();
+        String L = modOpt.L();
+        String QoverT = modOpt.QoverT();
+
         // Make a center panel to hold all the components.
         JPanel centerPanel = new JPanel(false);
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(10, 0, 0, 0);
+        c.insets = new Insets(10, 10, 10, 10);
         centerPanel.setLayout(gridbag);
-        centerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        centerPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         getContentPane().add(centerPanel, BorderLayout.CENTER);
 
         // Make panel for flow BC
@@ -143,6 +155,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
         flowBCValuePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         flowBCValuePanel.add(new JLabel("Value: "));
         flowBCValuePanel.add(flowBCValueTextField = new JTextField(8));
+        flowBCValuePanel.add(flowBCUnitsLabel = new JLabel(" "));
         flowBCPanel.add(flowBCValuePanel);
         flowBCValuePanel.setVisible(false);
 
@@ -155,34 +168,49 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     "Heat Transport BC"));
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(10, 0, 0, 0);            
+            c.insets = new Insets(0, 10, 10, 10);            
             gridbag.setConstraints(energyCards, c);
             centerPanel.add(energyCards);
 
             // Make the panel for no flow bc (card 1)
-            JPanel p1 = new JPanel(gridbag);
+            JPanel p1 = new JPanel(new GridBagLayout());
 
             JPanel leftPanel = new JPanel(new GridLayout(3, 1));
-            c.gridwidth = GridBagConstraints.RELATIVE;
+            c.gridwidth = 4;
             c.insets = new Insets(0, 5, 5, 0);
-            c.fill = GridBagConstraints.VERTICAL;
-            gridbag.setConstraints(leftPanel, c);
-            p1.add(leftPanel);
+            c.fill = GridBagConstraints.HORIZONTAL;
+            p1.add(leftPanel, c);
             JPanel rightPanel = new JPanel(new GridLayout(3, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = 4;
             c.insets = new Insets(0, 10, 5, 5);
-            gridbag.setConstraints(rightPanel, c);
-            p1.add(rightPanel);
+            p1.add(rightPanel, c);
+            JPanel unitsPanel = new JPanel(new GridLayout(3, 1));
+            c.gridwidth = 4;
+            c.insets = new Insets(0, 0, 5, 0);
+            c.fill = GridBagConstraints.VERTICAL;
+            p1.add(unitsPanel, c);
 
             leftPanel.add(noEnergyFluxRadioButton = new JRadioButton(noEnergyFlux, true));
             leftPanel.add(boundaryTempRadioButton = new JRadioButton(boundaryTemp, false));
             leftPanel.add(diffEnergyFluxRadioButton = new JRadioButton(conductiveFlux, false));
-            rightPanel.add(blankEnergyLabel = new JLabel("      "));
+            rightPanel.add(blankEnergyLabel = new JLabel(" "));
             rightPanel.add(boundaryTempTextField = new JTextField(5));
             rightPanel.add(diffEnergyFluxTextField = new JTextField(5));
             boundaryTempTextField.setVisible(false);
             diffEnergyFluxTextField.setVisible(false);
 
+            unitsPanel.add(new JLabel(" "));
+            unitsPanel.add(boundaryTempLabel = new JLabel("°C"));
+            diffEnergyFluxLabel = new JLabel(QoverT + "/" + L, SwingConstants.CENTER);
+            diffEnergyFluxLabel = new JLabel(QoverT + "/" + L);
+            unitsPanel.add(diffEnergyFluxLabel);
+            
+            boundaryTempLabel.setVisible(false);
+            diffEnergyFluxLabel.setVisible(false);
+
+            c.weightx = 1.0;
+            p1.add(new JPanel(), c);
+            c.weightx = 0.0;
 
             noEnergyFluxRadioButton.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
@@ -190,6 +218,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                         blankEnergyLabel.setVisible(true);
                         boundaryTempTextField.setVisible(false);
                         diffEnergyFluxTextField.setVisible(false);
+                        boundaryTempLabel.setVisible(false);
+                        diffEnergyFluxLabel.setVisible(false);                        
                         if (getFromFileRadioButton.isSelected()) {
                             getFromFileRadioButton.setSelected(false);
                             thisPeriodOnlyRadioButton.setSelected(true);
@@ -204,6 +234,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                         blankEnergyLabel.setVisible(false);
                         boundaryTempTextField.setVisible(true);
                         diffEnergyFluxTextField.setVisible(false);
+                        boundaryTempLabel.setVisible(true);
+                        diffEnergyFluxLabel.setVisible(false);                        
                         getFromFileRadioButton.setEnabled(true);
                     }
                 }
@@ -214,6 +246,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                         blankEnergyLabel.setVisible(false);
                         boundaryTempTextField.setVisible(false);
                         diffEnergyFluxTextField.setVisible(true);
+                        boundaryTempLabel.setVisible(false);
+                        diffEnergyFluxLabel.setVisible(true);                        
                         getFromFileRadioButton.setEnabled(true);
                     }
                 }
@@ -231,6 +265,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
             tempChooser.addItem("at boundary");
             p2.add(new JLabel(" = "));
             p2.add(tempTextField = new JTextField(5));
+            p2.add(new JLabel("°C"));
 
             // Make a panel for default
             JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -250,22 +285,31 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
             gridbag.setConstraints(leftPanel, c);
             p4.add(leftPanel);
             rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = GridBagConstraints.RELATIVE;
             c.insets = new Insets(0, 10, 5, 5);
             gridbag.setConstraints(rightPanel, c);
             p4.add(rightPanel);
+            unitsPanel = new JPanel(new GridLayout(2, 1));
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 5, 5);
+            gridbag.setConstraints(unitsPanel, c);
+            p4.add(unitsPanel);
 
             leftPanel.add(seepOutflowRadioButton = new JRadioButton("Default outflow", true));
             leftPanel.add(seepTemperatureRadioButton = new JRadioButton("Temperature", false));
             rightPanel.add(blankSeepLabel = new JLabel("      "));
             rightPanel.add(seepTemperatureTextField = new JTextField(5));
             seepTemperatureTextField.setVisible(false);
+            unitsPanel.add(new JLabel("      "));
+            unitsPanel.add(seepTemperatureLabel = new JLabel("°C"));
+            seepTemperatureLabel.setVisible(false);
 
             seepOutflowRadioButton.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankSeepLabel.setVisible(true);
                         seepTemperatureTextField.setVisible(false);
+                        seepTemperatureLabel.setVisible(false);
                         if (getFromFileRadioButton.isSelected()) {
                             getFromFileRadioButton.setSelected(false);
                             thisPeriodOnlyRadioButton.setSelected(true);
@@ -279,6 +323,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankSeepLabel.setVisible(false);
                         seepTemperatureTextField.setVisible(true);
+                        seepTemperatureLabel.setVisible(true);
                         getFromFileRadioButton.setEnabled(true);
                     }
                 }
@@ -299,22 +344,31 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
             gridbag.setConstraints(leftPanel, c);
             p4a.add(leftPanel);
             rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = GridBagConstraints.RELATIVE;
             c.insets = new Insets(0, 10, 5, 5);
             gridbag.setConstraints(rightPanel, c);
             p4a.add(rightPanel);
+            unitsPanel = new JPanel(new GridLayout(2, 1));
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 5, 5);
+            gridbag.setConstraints(unitsPanel, c);
+            p4a.add(unitsPanel);
 
             leftPanel.add(gdrnOutflowRadioButton = new JRadioButton("Default outflow", true));
             leftPanel.add(gdrnTemperatureRadioButton = new JRadioButton("Temperature", false));
             rightPanel.add(blankGdrnLabel = new JLabel("      "));
             rightPanel.add(gdrnTemperatureTextField = new JTextField(5));
             gdrnTemperatureTextField.setVisible(false);
+            unitsPanel.add(new JLabel("      "));
+            unitsPanel.add(gdrnTemperatureLabel = new JLabel("°C"));
+            gdrnTemperatureLabel.setVisible(false);
 
             gdrnOutflowRadioButton.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankGdrnLabel.setVisible(true);
                         gdrnTemperatureTextField.setVisible(false);
+                        gdrnTemperatureLabel.setVisible(false);
                         if (getFromFileRadioButton.isSelected()) {
                             getFromFileRadioButton.setSelected(false);
                             thisPeriodOnlyRadioButton.setSelected(true);
@@ -328,6 +382,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankGdrnLabel.setVisible(false);
                         gdrnTemperatureTextField.setVisible(true);
+                        gdrnTemperatureLabel.setVisible(true);
                         getFromFileRadioButton.setEnabled(true);
                     }
                 }
@@ -347,22 +402,31 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
             gridbag.setConstraints(leftPanel, c);
             p5.add(leftPanel);
             rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = GridBagConstraints.RELATIVE;
             c.insets = new Insets(0, 10, 5, 5);
             gridbag.setConstraints(rightPanel, c);
             p5.add(rightPanel);
+            unitsPanel = new JPanel(new GridLayout(2, 1));
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 5, 5);
+            gridbag.setConstraints(unitsPanel, c);
+            p5.add(unitsPanel);
 
             leftPanel.add(evapOutflowRadioButton = new JRadioButton("Default outflow", true));
             leftPanel.add(evapTemperatureRadioButton = new JRadioButton("Temperature", false));
             rightPanel.add(blankEvapLabel = new JLabel("      "));
             rightPanel.add(evapTemperatureTextField = new JTextField(5));
             evapTemperatureTextField.setVisible(false);
+            unitsPanel.add(new JLabel("      "));
+            unitsPanel.add(evapTemperatureLabel = new JLabel("°C"));
+            evapTemperatureLabel.setVisible(false);
 
             evapOutflowRadioButton.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankEvapLabel.setVisible(true);
                         evapTemperatureTextField.setVisible(false);
+                        evapTemperatureLabel.setVisible(false);
                         if (getFromFileRadioButton.isSelected()) {
                             getFromFileRadioButton.setSelected(false);
                             thisPeriodOnlyRadioButton.setSelected(true);
@@ -376,6 +440,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         blankEvapLabel.setVisible(false);
                         evapTemperatureTextField.setVisible(true);
+                        evapTemperatureLabel.setVisible(true);
                         getFromFileRadioButton.setEnabled(true);
                     }
                 }
@@ -406,26 +471,27 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                     "Solute Transport BC"));
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(10, 0, 0, 0);
+            c.insets = new Insets(0, 10, 10, 10);            
             gridbag.setConstraints(soluteCards, c);
             centerPanel.add(soluteCards);
 
             // Make the panel for no flow bc (card 1)
-            JPanel p1 = new JPanel(gridbag);
+            JPanel p1 = new JPanel(new GridBagLayout());
 
-            ///JPanel leftPanel = new JPanel(new GridLayout(3, 1));
             JPanel leftPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.RELATIVE;
+            c.gridwidth = 3;
             c.insets = new Insets(0, 5, 5, 0);
-            c.fill = GridBagConstraints.VERTICAL;
-            gridbag.setConstraints(leftPanel, c);
-            p1.add(leftPanel);
-            ///JPanel rightPanel = new JPanel(new GridLayout(3, 1));
+            c.fill = GridBagConstraints.HORIZONTAL;
+            p1.add(leftPanel, c);
             JPanel rightPanel = new JPanel(new GridLayout(2, 1));
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = 3;
             c.insets = new Insets(0, 10, 5, 5);
-            gridbag.setConstraints(rightPanel, c);
-            p1.add(rightPanel);
+            c.weightx = 0.0;
+            p1.add(rightPanel, c);
+
+            c.weightx = 1.0;
+            p1.add(new JPanel(), c);
+            c.weightx = 0.0;
 
             leftPanel.add(noSoluteFluxRadioButton = new JRadioButton(noSoluteFlux, true));
             leftPanel.add(boundaryConcRadioButton = new JRadioButton(boundaryConc, false));
@@ -492,9 +558,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
                 "Assignment Option"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(10, 0, 0, 0);
-        gridbag.setConstraints(applyToPanel, c);
-        centerPanel.add(applyToPanel);
+        c.insets = new Insets(0, 10, 10, 10);            
+        centerPanel.add(applyToPanel, c);
 
         panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panel.add(thisPeriodOnlyRadioButton = new JRadioButton(
@@ -576,7 +641,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
             }
         });
     }
-
+    
     public boolean doModal() {
         if (flowBCType == NO_FLOW_BC) {
             flowBCChooser.setSelectedItem(noFlow);
@@ -645,9 +710,9 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
         if (modelOptions.doEnergyTransport) {
             if (flowBCType == NO_FLOW_BC) {
                 if (energyTransportBCType == SPECIFIED_CONC_BC) {
-                    boundaryConcRadioButton.setSelected(true);
+                    boundaryTempRadioButton.setSelected(true);
                     if (energyTransportBCValue != Double.MIN_VALUE) {
-                        boundaryConcTextField.setText(String.valueOf(energyTransportBCValue));
+                        boundaryTempTextField.setText(String.valueOf(energyTransportBCValue));
                     }
                 }
                 else if (energyTransportBCType == DIFFUSIVE_FLUX_BC) {
@@ -748,6 +813,26 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
 
     protected void onSelectedFlowBC() {
         String flowBC = (String) flowBCChooser.getSelectedItem();
+        
+        switch (flowBC) {
+            case pressureHead:
+            case totalHead:
+                flowBCUnitsLabel.setText(modelOptions.L());
+                break;
+            case normalFluidFluxIn:
+            case verticalFluidFluxIn:
+            case normalFluidFluxOut:
+            case verticalFluidFluxOut:
+                if (modelOptions.useRadialCoord) {
+                    flowBCUnitsLabel.setText(modelOptions.L() + "³/" + modelOptions.T());
+                } else {
+                    flowBCUnitsLabel.setText(modelOptions.L() + "/" + modelOptions.T());
+                }
+                break;
+            default:
+                flowBCUnitsLabel.setText("-");
+                break;
+        }
 
         if (flowBC.equalsIgnoreCase(noFlow)) {
             flowBCValuePanel.setVisible(false);

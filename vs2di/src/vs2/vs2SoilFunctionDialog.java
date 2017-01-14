@@ -40,6 +40,12 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
     protected void makeContents() {
         // get the model options back from the custom object
         modelOptions = (vs2ModelOptions) customObject;
+        
+        String T = modelOptions.T();
+        String L = modelOptions.L();
+        String Q = modelOptions.Q();
+        String QoverT = modelOptions.QoverT();
+        String super_minus = modelOptions.SuperMinus();
 
         // Call the superclass method to make the color button
         MakeColorButton();
@@ -101,6 +107,14 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
         JPanel hydrRightPanel = new JPanel(false);
         hydrRightPanel.setLayout(new GridLayout(0, 1, 0, 10));
         hydraulicPanel.add(hydrRightPanel);
+        
+        // Put space between the right and unit panels
+        hydraulicPanel.add(Box.createHorizontalStrut(10));        
+
+        // units panel
+        JPanel hydrUnitsPanel = new JPanel(false);
+        hydrUnitsPanel.setLayout(new GridLayout(0, 1, 5, 10));
+        hydraulicPanel.add(hydrUnitsPanel);
 
         // Initialize the hydraulic row count
         int hydraulicRows = 0;
@@ -121,7 +135,7 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
         // Create a name panel that holds the name text field
         hydrLeftPanel.add(new JLabel("name", SwingConstants.RIGHT));
         hydrRightPanel.add(namePanel = new JPanel(new GridLayout(1, 1, 0, 0), false));
-        namePanel.add(nameTextField = new JTextField(5));
+        namePanel.add(nameTextField = new JTextField(12));
         hydraulicRows ++;
 
         // Create the generic soil chooser that will replace the name text field if
@@ -138,19 +152,39 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
         });
         genericSoilIndex = 0;
         useGenericSoil = false;
+        
+        switch (modelOptions.soilModel) {
+            case BROOKS_COREY:
+                hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
+                break;
+            case VAN_GENUCHTEN:
+                hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
+                hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
+                break;
+            case HAVERKAMP:
+                hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
+                break;
+            case ROSSI_NIMMO:
+                hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
+                break;
+        }
 
         // create labels and text field for hydraulic properties
         hydrLeftPanel.add(new JLabel("Kzz/Khh", SwingConstants.RIGHT));
         hydrRightPanel.add(anisotropyTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
         hydrLeftPanel.add(new JLabel("saturated Khh", SwingConstants.RIGHT));
         hydrRightPanel.add(satHydrCondTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel(L + "/" + T, SwingConstants.CENTER));
 
         hydrLeftPanel.add(new JLabel("specific storage", SwingConstants.RIGHT));
         hydrRightPanel.add(specificStorageTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel(L + super_minus + "¹", SwingConstants.CENTER));
 
         hydrLeftPanel.add(new JLabel("porosity", SwingConstants.RIGHT));
         hydrRightPanel.add(porosityTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
         hydraulicRows += 4;
 
@@ -158,54 +192,68 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
         case BROOKS_COREY:
             hydrLeftPanel.add(new JLabel("RMC", SwingConstants.RIGHT));
             hydrRightPanel.add(residualMoistureContentTextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("hb", SwingConstants.RIGHT));
             hydrRightPanel.add(flow1TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("lambda", SwingConstants.RIGHT));
             hydrRightPanel.add(flow2TextField = new JTextField(5));
-
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
+            
             hydraulicRows += 3;
             break;
         case VAN_GENUCHTEN:
             hydrLeftPanel.add(new JLabel("RMC", SwingConstants.RIGHT));
             hydrRightPanel.add(residualMoistureContentTextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("alpha", SwingConstants.RIGHT));
             hydrRightPanel.add(flow1TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L + super_minus + "¹", SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("beta", SwingConstants.RIGHT));
             hydrRightPanel.add(flow2TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydraulicRows += 3;
             break;
         case HAVERKAMP:
             hydrLeftPanel.add(new JLabel("RMC", SwingConstants.RIGHT));
             hydrRightPanel.add(residualMoistureContentTextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("A'", SwingConstants.RIGHT));
             hydrRightPanel.add(flow1TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("B'", SwingConstants.RIGHT));
             hydrRightPanel.add(flow2TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("alpha", SwingConstants.RIGHT));
             hydrRightPanel.add(flow3TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("beta", SwingConstants.RIGHT));
             hydrRightPanel.add(flow4TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydraulicRows += 5;
             break;
         case ROSSI_NIMMO:
             hydrLeftPanel.add(new JLabel("psi0", SwingConstants.RIGHT));
             hydrRightPanel.add(flow1TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("psiD", SwingConstants.RIGHT));
             hydrRightPanel.add(flow2TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
             hydrLeftPanel.add(new JLabel("lambda", SwingConstants.RIGHT));
             hydrRightPanel.add(flow3TextField = new JTextField(5));
+            hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
             hydraulicRows += 3;
             break;

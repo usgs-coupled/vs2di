@@ -297,5 +297,24 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
 
         return line.toString();
     }
+    
+    String T() {
+        return timeUnit.trim();
+    }
+    
+    String L() {
+        return lengthUnit.trim();
+    }
+    
+    String Q() {
+        return energyUnit.trim();
+    }
 
+    String QoverT() {
+        return "W";
+    }
+
+    String SuperMinus() {
+        return "⁻";
+    }    
 }

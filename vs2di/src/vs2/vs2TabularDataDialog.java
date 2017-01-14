@@ -41,6 +41,10 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
         // get the model options back from the custom object
         modelOptions = (vs2ModelOptions) customObject;
 
+        String T = modelOptions.T();
+        String L = modelOptions.L();
+        String super_minus = modelOptions.SuperMinus();       
+
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
 
@@ -61,28 +65,8 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
 
         // Create panels for hydraulic properties and for transport properties
         JPanel hydraulicPanel = new JPanel(false);
-        String type = "Flow properties";
-        switch (modelOptions.soilModel) {
-            case BROOKS_COREY:
-                type = "Flow properties (Brooks-Corey function)";
-                break;
-            case VAN_GENUCHTEN:
-                type = "Flow properties (van Genuchten function)";
-                break;
-            case HAVERKAMP:
-                type = "Flow properties (Haverkamp function)";
-                break;
-            case TABULAR_DATA:
-                type = "Flow properties (tabular data)";
-                break;
-            case ROSSI_NIMMO:
-                type = "Flow properties (Rossi-Nimmo function)";
-                break;
-            default:
-                assert(false);            
-        }
         hydraulicPanel.setBorder(new CompoundBorder(
-            BorderFactory.createTitledBorder(type),
+            BorderFactory.createTitledBorder("Flow properties (tabular data)"),
             new EmptyBorder(4, 10, 10, 10)));
         hydraulicPanel.setLayout(new BoxLayout(hydraulicPanel, BoxLayout.X_AXIS));
         subPanel.add(hydraulicPanel);
@@ -99,34 +83,41 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
         JPanel hydrRightPanel = new JPanel(false);
         hydrRightPanel.setLayout(new GridLayout(0, 1, 0, 10));
         hydraulicPanel.add(hydrRightPanel);
-
-        // Initialize the hydraulic row count 
-        int hydraulicRows = 0;
-
-        // Use horizontal strut for spacing
-        hydrLeftPanel.add(Box.createHorizontalStrut(80));
-        hydrRightPanel.add(Box.createHorizontalStrut(80));
-        hydraulicRows ++;
+        
+        // Put space between the right and units panels
+        hydraulicPanel.add(Box.createHorizontalStrut(10));        
+        
+        // Make a units panel to hold the unit labels
+        JPanel hydrUnitsPanel = new JPanel(false);
+        hydrUnitsPanel.setLayout(new GridLayout(0, 1, 0, 10));
+        hydraulicPanel.add(hydrUnitsPanel);
 
         // create labels and text field for hydraulic properties
         hydrLeftPanel.add(new JLabel("name", SwingConstants.RIGHT));
         hydrRightPanel.add(nameTextField = new JTextField(5));
-        hydraulicRows ++;
+        hydrUnitsPanel.add(new JLabel(" ", SwingConstants.CENTER));
 
-        hydrLeftPanel.add(new JLabel("Kzz/Kxx", SwingConstants.RIGHT));
+        hydrLeftPanel.add(new JLabel("Kzz/Khh", SwingConstants.RIGHT));
         hydrRightPanel.add(anisotropyTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
-        hydrLeftPanel.add(new JLabel("saturated K", SwingConstants.RIGHT));
+        hydrLeftPanel.add(new JLabel("saturated Khh", SwingConstants.RIGHT));
         hydrRightPanel.add(satHydrCondTextField = new JTextField(5));
-
+        hydrUnitsPanel.add(new JLabel(L + "/" + T, SwingConstants.CENTER));
+        
         hydrLeftPanel.add(new JLabel("specific storage", SwingConstants.RIGHT));
         hydrRightPanel.add(specificStorageTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel(L + super_minus + "¹", SwingConstants.CENTER));
 
         hydrLeftPanel.add(new JLabel("porosity", SwingConstants.RIGHT));
         hydrRightPanel.add(porosityTextField = new JTextField(5));
+        hydrUnitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
-        hydraulicRows += 4;
-
+        hydrLeftPanel.add(new JLabel(" ", SwingConstants.RIGHT));
+        hydrRightPanel.add(new JLabel(" ", SwingConstants.RIGHT));
+        hydrUnitsPanel.add(new JLabel(" "));
+        
+        int hydraulicRows = 6;
         MakeContentsForTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);        
 
         // Create the table
@@ -157,10 +148,13 @@ public class vs2TabularDataDialog extends vs2TexturalClassDialog
         editPanel.add(leftPanel);
         leftPanel.add(new JLabel("Pressure Head", SwingConstants.RIGHT));
         leftPanel.add(hTextField = new JTextField(5));
+        leftPanel.add(new JLabel(L, SwingConstants.LEFT));
         leftPanel.add(new JLabel("Relative K", SwingConstants.RIGHT));
         leftPanel.add(kTextField = new JTextField(5));
+        leftPanel.add(new JLabel("-", SwingConstants.LEFT));
         leftPanel.add(new JLabel("Moisture Cont.", SwingConstants.RIGHT));
         leftPanel.add(mTextField = new JTextField(5));
+        leftPanel.add(new JLabel("-", SwingConstants.LEFT));
 
         JPanel rightPanel = new JPanel(new GridLayout(3, 1, 5, 5));
         rightPanel.setBorder(new EmptyBorder(0, 100, 0, 0));

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="26">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="36">
         <file>
             <url>src/vs2/vs2TransportPanel.java</url>
             <bookmark id="24">
@@ -10,10 +10,41 @@
             </bookmark>
         </file>
         <file>
-            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
-            <bookmark id="26">
+            <url>src/vs2/vs2ChemistryClassData.java</url>
+            <bookmark id="31">
                 <name/>
-                <line>104</line>
+                <line>363</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/vs2/vs2TexturalClassData.java</url>
+            <bookmark id="29">
+                <name/>
+                <line>46</line>
+                <key/>
+            </bookmark>
+            <bookmark id="33">
+                <name/>
+                <line>400</line>
+                <key/>
+            </bookmark>
+            <bookmark id="34">
+                <name/>
+                <line>961</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/vs2/vs2TexturalClassDialog.java</url>
+            <bookmark id="35">
+                <name/>
+                <line>245</line>
+                <key/>
+            </bookmark>
+            <bookmark id="36">
+                <name/>
+                <line>344</line>
                 <key/>
             </bookmark>
         </file>
@@ -21,27 +52,27 @@
             <url>src/vs2/vs2Doc.java</url>
             <bookmark id="6">
                 <name/>
-                <line>435</line>
+                <line>437</line>
                 <key/>
             </bookmark>
             <bookmark id="17">
                 <name/>
-                <line>485</line>
+                <line>487</line>
                 <key/>
             </bookmark>
             <bookmark id="12">
                 <name/>
-                <line>493</line>
+                <line>495</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>494</line>
+                <line>496</line>
                 <key/>
             </bookmark>
             <bookmark id="14">
                 <name/>
-                <line>495</line>
+                <line>497</line>
                 <key/>
             </bookmark>
         </file>
@@ -50,6 +81,14 @@
             <bookmark id="25">
                 <name/>
                 <line>55</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
+            <bookmark id="26">
+                <name/>
+                <line>104</line>
                 <key/>
             </bookmark>
         </file>
@@ -96,6 +135,7 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TexturalClassWindow.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2Polygon.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ObservationPointsView.java</file>
+            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ModelOptionsDialog.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2TableData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2BufferedShapesView.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ColorRectIcon.java</file>
@@ -107,6 +147,7 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2JavaHelp.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2FluidSourceData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/test/vs2/vs2AppTest.java</file>
+            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ModelOptions.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/test/vs2/vs2BoundaryConditionsDialogTest.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2dt.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/test/vs2/vs2PostProcessorFrameTest.java</file>
@@ -117,6 +158,7 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TexturalMapData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ColorScale.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2PostProcessorFrame.java</file>
+            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ChemistryClassData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ColorCodedMapData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2Drawing.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2InitialEquilibriumProfileData.java</file>
@@ -132,6 +174,7 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2Constants.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2FrameManager.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2DrawingOptionsDialog.java</file>
+            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TransportPanel.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ChemistryMapData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2Shape.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2InitialData.java</file>
@@ -143,7 +186,6 @@
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2Dialog.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TexturalClassData.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2ComputationalModel.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2Doc.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2Doc.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2dh.java</file>
             <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2RectilinearGridView.java</file>

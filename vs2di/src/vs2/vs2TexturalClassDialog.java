@@ -52,7 +52,7 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
    protected JTextField KTrTextField;
    protected JTextField KTsTextField;
    protected JTextField CwTextField;
-
+   
    //---------------------------------------------------------------------------
    // Constructor
    //---------------------------------------------------------------------------
@@ -97,10 +97,9 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
    //---------------------------------------------------------------------------
     protected void MakeContentsForTransport(JPanel subPanel, JPanel hydrLeftPanel, JPanel hydrRightPanel, int hydraulicRows)
     {
-        final int MIN_SOLUTION_ROWS = 10;
         if (modelOptions.doEnergyTransport) {
             if (modelOptions.doSoluteTransport) {
-                MakeContentsForHeatTransport(subPanel, hydrLeftPanel, hydrRightPanel, Math.max(hydraulicRows, MIN_SOLUTION_ROWS));
+                MakeContentsForHeatTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
             } else {
                 MakeContentsForHeatTransport(subPanel, hydrLeftPanel, hydrRightPanel, hydraulicRows);
             }
@@ -114,11 +113,17 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
     protected void MakeContentsForHeatTransport(JPanel subPanel, JPanel hydrLeftPanel,
             JPanel hydrRightPanel, int hydraulicRows)
     {
+        String T = modelOptions.T();
+        String L = modelOptions.L();
+        String Q = modelOptions.Q();
+        String QoverT = modelOptions.QoverT();
+        String super_minus = modelOptions.SuperMinus();        
+        
         // Create a penal for transport properties
         JPanel transportPanel = new JPanel(false);
         transportPanel.setBorder(new CompoundBorder(
             BorderFactory.createTitledBorder("Heat transport properties"),
-            new EmptyBorder(4, 10, 10, 10)));
+            new EmptyBorder(4, 10, 0, 0)));
         transportPanel.setLayout(new BoxLayout(transportPanel, BoxLayout.X_AXIS));
         subPanel.add(transportPanel);
 
@@ -134,6 +139,11 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         JPanel transRightPanel = new JPanel(false);
         transRightPanel.setLayout(new GridLayout(0, 1, 0, 10));
         transportPanel.add(transRightPanel);
+        
+        // units panel
+        JPanel transUnitsPanel = new JPanel(false);
+        transUnitsPanel.setLayout(new GridLayout(0, 1, 5, 10));
+        transportPanel.add(transUnitsPanel);
 
         // Initialize the transport row count
         int transportRows = 0;
@@ -141,21 +151,27 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         // add labels and text fields for heat transport parameters
         transLeftPanel.add(new JLabel("Long. disp.", SwingConstants.RIGHT));
         transRightPanel.add(energyLongDispTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("Trans. disp.", SwingConstants.RIGHT));
         transRightPanel.add(energyTransDispTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("Cs", SwingConstants.RIGHT));
         transRightPanel.add(CsTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(Q + "/(" + L + "³" + "°C)", SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("KTr", SwingConstants.RIGHT));
         transRightPanel.add(KTrTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(QoverT + "/(" + L + "°C)", SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("KTs", SwingConstants.RIGHT));
         transRightPanel.add(KTsTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(QoverT + "/(" + L + "°C)", SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("Cw", SwingConstants.RIGHT));
         transRightPanel.add(CwTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(Q + "/(" + L + "³" + "°C)", SwingConstants.CENTER));
 
         transportRows += 6;
 
@@ -163,6 +179,7 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
             for (int i = 0; i < hydraulicRows - transportRows; i++) {
                 transLeftPanel.add(new JLabel(" "));
                 transRightPanel.add(new JLabel(" "));
+                transUnitsPanel.add(new JLabel(" "));
             }
         } else {
             for (int i = 0; i < transportRows - hydraulicRows; i++) {
@@ -175,6 +192,12 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
     protected void MakeContentsForSoluteTransport(JPanel subPanel, JPanel hydrLeftPanel,
             JPanel hydrRightPanel, int hydraulicRows)
     {
+        String T = modelOptions.T();
+        String L = modelOptions.L();
+        String Q = modelOptions.Q();
+        String QoverT = modelOptions.QoverT();
+        String super_minus = modelOptions.SuperMinus();
+        
         // Create a penal for transport properties
         JPanel transportPanel = new JPanel(false);
         transportPanel.setBorder(new CompoundBorder(
@@ -195,6 +218,11 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         JPanel transRightPanel = new JPanel(false);
         transRightPanel.setLayout(new GridLayout(0, 1, 0, 10));
         transportPanel.add(transRightPanel);
+        
+        // units panel
+        JPanel transUnitsPanel = new JPanel(false);
+        transUnitsPanel.setLayout(new GridLayout(0, 1, 5, 10));
+        transportPanel.add(transUnitsPanel);
 
         // Initialize the transport row count
         int transportRows = 0;
@@ -202,20 +230,24 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         // add labels and text fields for transport parameters
         transLeftPanel.add(new JLabel("Long. disp.", SwingConstants.RIGHT));
         transRightPanel.add(soluteLongDispTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
         ++transportRows;
 
         transLeftPanel.add(new JLabel("Trans. disp.", SwingConstants.RIGHT));
         transRightPanel.add(soluteTransDispTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(L, SwingConstants.CENTER));
         ++transportRows;
 
         transLeftPanel.add(new JLabel("Coef. mol. diff.", SwingConstants.RIGHT));
         transRightPanel.add(molDiffusionTextField = new JTextField(5));
+        transUnitsPanel.add(new JLabel(L + "²/" + T, SwingConstants.CENTER));
         ++transportRows;
         
         if (hydraulicRows > transportRows) {
             for (int i = 0; i < hydraulicRows - transportRows; i++) {
                 transLeftPanel.add(new JLabel(" "));
                 transRightPanel.add(new JLabel(" "));
+                transUnitsPanel.add(new JLabel(" "));
             }
         } else {
             for (int i = 0; i < transportRows - hydraulicRows; i++) {

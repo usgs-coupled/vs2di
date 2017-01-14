@@ -343,7 +343,7 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
          * Creates a dialog box.
          */
         public EquilibriumProfileDialog() {
-            super("Initial Equilibrium Profile", false);
+            super("Initial Equilibrium Profile", false, view.getDoc().getData(MODEL_OPTIONS));
         }
 
         /**
@@ -351,6 +351,8 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
          */
         protected void makeContents() {
 
+            vs2ModelOptions modelOptions = (vs2ModelOptions)customObject;
+            
             GridBagLayout gridbag = new GridBagLayout();
             GridBagConstraints c = new GridBagConstraints();
 
@@ -358,7 +360,7 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
             centerPanel.setLayout(gridbag);
             centerPanel.setBorder(new EmptyBorder(25, 25, 25, 25));
             getContentPane().add(centerPanel, BorderLayout.CENTER);
-
+            
             JPanel leftPanel = new JPanel(new GridLayout(2, 1, 0, 10));
             centerPanel.add(leftPanel);
             c.fill = GridBagConstraints.VERTICAL;
@@ -368,18 +370,27 @@ public class vs2InitialEquilibriumProfileView extends mp2GraphicalDataView
             
             JPanel rightPanel = new JPanel(new GridLayout(2, 1, 0, 10));
             centerPanel.add(rightPanel);
-            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.gridwidth = GridBagConstraints.RELATIVE;
             c.insets = new Insets(0, 0, 0, 0);
             gridbag.setConstraints(rightPanel, c);
+            
+            JPanel unitsPanel = new JPanel(new GridLayout(2, 1, 0, 10));
+            centerPanel.add(unitsPanel);
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 5, 0, 5);
+            gridbag.setConstraints(unitsPanel, c);
+            
+            String L = modelOptions.L();
 
             leftPanel.add(new JLabel("Z coordinate of water table", 
                                         SwingConstants.RIGHT));
             rightPanel.add(wtTextField = new JTextField(6));
+            unitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
-            leftPanel.add(new JLabel("minimum pressure head", 
+            leftPanel.add(new JLabel("minimum pressure head",
                                         SwingConstants.RIGHT));
             rightPanel.add(minhTextField = new JTextField(6));
-
+            unitsPanel.add(new JLabel(L, SwingConstants.CENTER));
         }
 
         /**

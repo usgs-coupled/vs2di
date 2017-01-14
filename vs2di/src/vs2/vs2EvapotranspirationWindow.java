@@ -38,6 +38,9 @@ public class vs2EvapotranspirationWindow extends mp2TableWindow
         // Call super class constructor
         super(frame, "Evapotranspiration", new Point(180, 40), tableData);
 	    mp2JavaHelp.hb.enableHelpOnButton(helpButton, "evapotranspirationCycle", null);
+            
+        // units
+        String T = modelOptions.T();
 
         theApp = app;
         width = 500;
@@ -85,6 +88,9 @@ public class vs2EvapotranspirationWindow extends mp2TableWindow
         periodLengthTextField.setEditable (false);
         periodLengthTextField.setBackground(Color.lightGray);
         panel.add(periodLengthTextField);
+        
+        // time units
+        panel.add(new JLabel(T));
 
         panel.add(Box.createHorizontalStrut(10));
         modifyButton = new JButton("Modify");
@@ -289,6 +295,10 @@ public class vs2EvapotranspirationWindow extends mp2TableWindow
             getContentPane().add(centerPanel, BorderLayout.CENTER);
             centerPanel.add(new JLabel("Period Length"));
             centerPanel.add(lengthTextField = new JTextField(5));
+
+            // units
+            String T = modelOptions.T();            
+            centerPanel.add(new JLabel(T));
         }
 
         /**

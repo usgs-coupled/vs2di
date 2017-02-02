@@ -1469,6 +1469,7 @@
     common/ITEMK/KNLY,KNXR,KNNODE
     integer :: iu = 101
     INTEGER       :: myerr, iPRNT
+    INTEGER :: IIDUM(3)
 
     !!@@include 'd_idummAlloc.inc'
     allocate(IDUM(NXR))
@@ -2221,7 +2222,7 @@
             DO 403 K=1,7
                 DO 402 J=1,NLY
     ! Line B-32
-                    READ(5,*,IOSTAT=myerr)(DUM(N),N=1,NXR)
+                    READ(5,*,IOSTAT=myerr)(IIDUM(N),N=1,NXR)
                     if (myerr .ne. 0) then
                         write(6,'(A)') 'Error reading B-32:  INDSOL'
                         flush(6)
@@ -2230,7 +2231,7 @@
                     endif   
                     DO 401 N=1,NXR
                         IN=NLY*(N-1)+J
-                        INDSOL1(K,IN)=DUM(N)
+                        INDSOL1(K,IN)=IIDUM(N)
                         !      write(*,*)"INDSOL1(",K,",",NI,")=ITEMTX(",IN,")=",INDSOL1(K,NI),ITEMTX(IN)
 401                 continue
 402             continue

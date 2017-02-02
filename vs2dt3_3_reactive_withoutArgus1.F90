@@ -9,20 +9,21 @@
     character(len=32) :: arg
 
     !     Argument is number of threads for OpenMP
-    nthreads = 1
 #ifdef USE_OPENMP      
     count_args = command_argument_count()  
     if (count_args .ge. 1) then
         call get_command_argument(1, arg)
         if (len_trim(arg) > 0) then
-            READ(arg,"(I5)") i
+            READ(arg,"(I5)",err=5) i
             if (i > 1) then
                 nthreads = i
             endif
+5           continue            
         endif
     endif
 #endif  
 #ifdef USE_MPI
+    nthreads = 1
     ! MPI
     call MPI_INIT(status)
     if (status .ne. MPI_SUCCESS) then

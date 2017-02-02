@@ -27,13 +27,6 @@
 #define FC_FUNC_(name,NAME) NAME
 #endif
 
-#if defined(FC_FUNC_)
-// Calls to Fortran
-#define HDF_WRITE_INVARIANT         FC_FUNC_ (hdf_write_invariant,       HDF_WRITE_INVARIANT)
-#define HDF_BEGIN_TIME_STEP         FC_FUNC_ (hdf_begin_time_step,       HDF_BEGIN_TIME_STEP)
-#define HDF_END_TIME_STEP           FC_FUNC_ (hdf_end_time_step,         HDF_END_TIME_STEP)
-#endif
-
 class FileHandler: public PHRQ_base
 {
 public:
@@ -403,4 +396,22 @@ FH_WriteFiles(int *id_in, int *print_xz, int *print_obs, int *xz_mask, int *obs_
 {
 	int id = *id_in;
 	ptr_file_handler->WriteFiles(id, print_xz, print_obs, xz_mask, obs_mask);
+}
+
+/* ---------------------------------------------------------------------- */
+int
+FH_GetProcessorCount(void)
+/* ---------------------------------------------------------------------- */
+{
+	int n;
+#if defined(_WIN32)
+	SYSTEM_INFO sysinfo;
+	GetSystemInfo( &sysinfo );
+
+	n = (int) sysinfo.dwNumberOfProcessors;
+#else
+	// Linux, Solaris, Aix, Mac 10.4+
+	n = sysconf( _SC_NPROCESSORS_ONLN );
+#endif
+	return n;
 }

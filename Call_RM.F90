@@ -30,6 +30,13 @@ Module vs2dt_rm
                 USE ISO_C_BINDING
                 IMPLICIT NONE
             END SUBROUTINE FH_FinalizeFiles 
+
+            INTEGER FUNCTION FH_GetProcessorCount() &
+                BIND(C, NAME='FH_GetProcessorCount')
+                USE ISO_C_BINDING
+                IMPLICIT NONE
+            END FUNCTION FH_GetProcessorCount 
+                
         END INTERFACE  
         
     CONTAINS  
@@ -37,13 +44,15 @@ Module vs2dt_rm
     SUBROUTINE CreateRM(solute, nnodes,  prefix, databasefile, chemfile, nsol)
     USE PhreeqcRM
     IMPLICIT NONE
+    COMMON/ISPAC/NLY,NLYY,NXR,NXRR,XXXNNODES
+    integer NLY,NLYY,NXR,NXRR,XXXNNODES
     logical, intent(in) :: solute
     integer, intent(in) :: nnodes
     character(*), intent(in) :: prefix, databasefile, chemfile
     integer, intent(out) :: nsol
 
     SAVE 
-    INTEGER i, status
+    INTEGER i, status, nproc, ncells
     CHARACTER*32 string
     
     ! ... make a reaction module, makes instances of IPhreeqc and IPhreeqcPhast with same rm_id
@@ -53,6 +62,13 @@ Module vs2dt_rm
 #ifdef USE_MPI
     rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
 #else
+    ncells = (NLY-2)*(NXR-2)
+    nproc = FH_GetProcessorCount()
+    IF (nthreads < 1) THEN
+        nthreads = MIN(ncells, nproc)
+    ELSE
+        nthreads = MIN(ncells, nthreads)
+    END IF
     rm_id = RM_Create(NNODES, nthreads)
 #endif    
     status = RM_SetFilePrefix(rm_id, PREFIX)

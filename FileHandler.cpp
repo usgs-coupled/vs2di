@@ -10,15 +10,6 @@
 #include "FileHandler.h"
 #include "RM_interface_C.h"
 #include "IPhreeqcPhast.h"
-#ifdef USE_GZ
-#include "gzstream.h"
-#else
-#define gzFile FILE*
-#define gzclose fclose
-#define gzopen fopen
-#define gzprintf fprintf
-#define igzstream ifstream
-#endif
 #include "Phreeqc.h"
 #include "Solution.h"
 #include "IPhreeqc.h"

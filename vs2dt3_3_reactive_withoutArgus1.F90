@@ -15,7 +15,7 @@
         call get_command_argument(1, arg)
         if (len_trim(arg) > 0) then
             READ(arg,"(I5)",err=5) i
-            if (i > 1) then
+            if (i > 0) then
                 nthreads = i
             endif
 5           continue            

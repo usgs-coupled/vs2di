@@ -175,7 +175,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
      */
     protected int addRow(int r) {
         // Create a dialog box for user to add a new row of data
-        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Textural Class",
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemical Class",
                     modelOptions, false);
 
         // Create a new row of data and set it in the dialog box
@@ -205,7 +205,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
         }
 
         // Create dialog box for user to edit data
-        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Textural Class",
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemical Class",
                     modelOptions, true);        
 
         // Put current dat in dialog box and show it

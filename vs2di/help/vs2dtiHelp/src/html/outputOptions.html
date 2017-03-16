@@ -6,14 +6,14 @@
 
 <H2>Output Options</H2>
 
-<P>Output options are used to control writing of 
-<A href="modelOutputFiles.html">VS2DT 3.3 model output files</A>. 
-See also: <A href="howToOutput.html">How to Control VS2DT 3.3 output</A>.</P>
+<P>Output options are used to control writing of
+<A href="modelOutputFiles.html">VS2DRT model output files</A>.
+See also: <A href="howToOutput.html">How to Control VS2DRT output</A>.</P>
 
 <P><B>"Main Output File" Group</B>: This group of options specifies what is written
-to the main output file (vs2dt.out). You may select the variables (head, moisture content, etc.)
-to be written to the main output file. The output policy is determined by the 
-"Print Result" option of the 
+to the main output file (vs2drt.out). You may select the variables (head, moisture content, etc.)
+to be written to the main output file. The output policy is determined by the
+"Print Result" option of the
 <A href="rechargePeriodParameters.html">recharge period parameters.</A>
 If the "Print Result" option is selected, output variables are written
 after every time step in the recharge period. Otherwise, output variables
@@ -25,14 +25,16 @@ at "output times" (see below) or at every time step.
 </P>
 
 <P><B>"Auxiliary Output Files" Group</B>: This group of options specifies what is
-written to the two auxiliary output files: obsPoints.out (containing simulated variables 
+written to the two auxiliary output files: obsPoints.out (containing simulated variables
 observation points) and balance.out (mass balance components).  Output may be written to file at
 "output times" (see below) or at every time step. In addition, you may specify
-"normal" or "high" precision output.</P>
+"normal" or "high" precision output. Users may also request additional selected Phreeqc
+output; the specific additional output information is specified in the Phreeqc input file
+and described in the Phreeqc documentation.</P>
 
-<P><B>Output Times</B>: Specify times 
+<P><B>Output Times</B>: Specify times
 at which selected output variables and mass balance components are written to the main
-output file. In addition, pressure heads and concentrations (if transport is simulated) 
+output file. In addition, pressure heads and concentrations (if transport is simulated)
 are written to the auxiliary file variables.out at the same output times.
 Default output times are the ending times for all recharge periods.
 To use "at specified time" option, enter an  output time in the space below

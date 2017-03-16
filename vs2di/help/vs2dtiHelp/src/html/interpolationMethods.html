@@ -6,13 +6,13 @@
 
 <H2>Interpolation Methods</H2>
 
-<P>VS2DTI provides two interpolation methods to estimate values at
+<P>VS2DRTI provides two interpolation methods to estimate values at
 cell nodes from contours that specify the initial distribution
 of pressure head, moisture content, and concentration.</P>
 
 <P>To select an interpolation method for an initial condition, first
 make sure that the initial condition is selected in the
-"Active Data" Selector (see  
+"Active Data" Selector (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_prewindow.html">
 <param name="text" value="figure">
@@ -33,7 +33,7 @@ make sure that the initial condition is selected in the
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">2. </td>
-  <td width="99%" valign="top" align="left">Select the desired interpolation method - "Continuous" or 
+  <td width="99%" valign="top" align="left">Select the desired interpolation method - "Continuous" or
     "Step (using closed contours only)".</td>
 </tr>
 <tr>
@@ -43,9 +43,9 @@ make sure that the initial condition is selected in the
 </table>
 
 <P>The <B>"Continuous" Interpolation Method</B> is suitable for initial
-condition distributions that vary continuously (without breaks) in the 
-domain. This method performs a triangulation of the contour lines to 
-generate a triangular mesh (see 
+condition distributions that vary continuously (without breaks) in the
+domain. This method performs a triangulation of the contour lines to
+generate a triangular mesh (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_triangulation.html">
 <param name="text" value="figure">
@@ -57,7 +57,7 @@ generate a triangular mesh (see
 <param name="viewerLocation" value="400,100">
 <param name="viewerSize" value="390,550">
 </object>).
-The value at a point is computed by finding the triangle that contains 
+The value at a point is computed by finding the triangle that contains
 the point, and then performing a linear interpolation over the triangle.
 If the point lies outside the triangular mesh, it is assigned the value of
 the nearest contour. This might or might not yield the desired result. To
@@ -69,7 +69,7 @@ outside the domain so that the triangular mesh completely covers the domain.</P>
 distributions that vary in a step like manner. <I>The step interpolation method
 works only with closed contours. Open contour lines are ignored.</I> The value at
 a point is assinged the value of the closest contour that encloses the point.
-In the example 
+In the example
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_stepinterpolation.html">
 <param name="text" value="figure">

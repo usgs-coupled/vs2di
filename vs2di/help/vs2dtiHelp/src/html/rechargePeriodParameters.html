@@ -10,9 +10,9 @@
 
 <P><B>Initial time Step (DELT)</B>: [T]. Length of the first time step in the recharge period</P>
 
-<P><B>Time step multiplier (TMLT)</B>: The length of the time step is 
+<P><B>Time step multiplier (TMLT)</B>: The length of the time step is
 multiplied by this value after every step. The value for TMLT must be
-greater than or equal to 1.  If it is equal to 1. then time step size 
+greater than or equal to 1.  If it is equal to 1. then time step size
 will not be increased.</P>
 
 <P><B>Maximum time step (DLTMX)</B>: [T]. If time step multiplier is greater than
@@ -24,8 +24,8 @@ reduced below this value.</P>
 
 <P><B>Time step reduction factor (TRED)</B>: Factor by which time step length
 is reduced if convergence is not obtained after <A HREF="solverOptions.html">
-maximum iterations per time step</A> is reached. The value of TRED must be 
-between 0 and 1. Values between 0.1 and 0.5 are usually used.  If TRED 
+maximum iterations per time step</A> is reached. The value of TRED must be
+between 0 and 1. Values between 0.1 and 0.5 are usually used.  If TRED
 equals 0 or 1 then no reduction in time step size occurs.</P>
 
 <P><B>Maximum head change (DSMAX)</B>: [L]. Maximum allowed change in head
@@ -36,7 +36,7 @@ between successive time steps is less than this value, the program assumes
 that steady state has been reached for this period.</P>
 
 <P><B>Maximum height of ponding (POND)</B>: [L]. The meaning of this
-parameter depends on its sign (see 
+parameter depends on its sign (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_ponding.html">
 <param name="text" value="figure">
@@ -47,40 +47,40 @@ parameter depends on its sign (see
 <param name="viewerName" value="secondary_window">
 <param name="viewerLocation" value="400,100">
 <param name="viewerSize" value="320,520">
-</object>). If POND is positive, then the surface of maximum 
+</object>). If POND is positive, then the surface of maximum
 ponded water height has the same shape as the land surface and is
 situated a distance of POND above the land surface. This setting is
 reasonable if the land surface is flat or uniformly sloping (cases A and
 B in figure) but is unrealistic if the land surface includes a furrow
 or depression (case C in figure). In case C, water would drain by
 overland runoff into the depression, where it might accumulate to
-some significant depth (case D of figure). This situation is simulated 
+some significant depth (case D of figure). This situation is simulated
 by specifying a negative value for POND. The negative value refers to
 the distance from the highest point of land surface to the surface of
 maximum ponded water height, which is always flat when POND is negative.</P>
 
 <P><B>Print results (PRINT)</B>: Select this option to write output variables
-to main output file (vs2dt.out) for each time step in this period. 
-Deselect this option to write output variables at output times and at 
-end of the period. See: <A HREF="outputOptions.html">Output Options</A> 
-and <A HREF="howToOutput.html">How to Control VS2DT 3.3 output</A>.  
+to main output file (vs2dt.out) for each time step in this period.
+Deselect this option to write output variables at output times and at
+end of the period. See: <A HREF="outputOptions.html">Output Options</A>
+and <A HREF="howToOutput.html">How to Control VS2DRT output</A>.
 If this option is selected the user should be warned that an excessive
 amount of output may be produced.</P>
 
 <P><B>Simulate evaporation (EVAP)</B>: Select this option to simulate evaporation
 (over bare soil) in this period. (Not shown if evaporation is not simulated.)</P>
 
-<P><B>Simulate transpiration (PLANT)</B>: Select this option to simulate transpiration 
+<P><B>Simulate transpiration (PLANT)</B>: Select this option to simulate transpiration
 (plant root extraction) in this period. (Not shown if transpiration is not simulated.)</P>
 
 <P><B>Repetitions</b>: Enter the number of periods to add. The added periods will have
 the same parameters. (Not shown if a recharge period is being edited.)
 
 <P><b>The "as is" Entry</b>: When multiple recharge periods have been selected for
-editing, and if a parameter is not constant during the selected periods, 
-the words "as is" is displayed in the text box for that parameter. 
+editing, and if a parameter is not constant during the selected periods,
+the words "as is" is displayed in the text box for that parameter.
 If you replace the "as is" by a number, then the number will be assigned
-to the parameter for the selected periods. If you keep the words "as is" in the text box, 
+to the parameter for the selected periods. If you keep the words "as is" in the text box,
 then the parameter will not be changed for selected periods.
 
 

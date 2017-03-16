@@ -6,30 +6,30 @@
 
 <H2>Specifying Boundary Conditions</H2>
 
-<P>Boundary conditions are specified by 
-<A HREF="rechargePeriods.html">recharge periods</A>. 
+<P>Boundary conditions are specified by
+<A HREF="rechargePeriods.html">recharge periods</A>.
 For each recharge period, boundary conditions must be assigned to
-each segment of the exterior boundary plus any interior boundaries. 
-(A segment is the straight line connecting two adjacent vertices 
+each segment of the exterior boundary plus any interior boundaries.
+(A segment is the straight line connecting two adjacent vertices
 on a boundary.)</P>
 
-<P>In VS2DTI, a boundary condition applies to the entire segment.
+<P>In VS2DRTI, a boundary condition applies to the entire segment.
 To vary the boundary condition along a segment, it is necessary
 to <A HREF="insertVertexOnBoundary.html">insert vertices</A> on
-the segment to subdivide it into smaller pieces. Different boundary 
+the segment to subdivide it into smaller pieces. Different boundary
 conditions can then be specified on the subdivided pieces.</P>
 
-<P>In a flow simulation, each boundary segment must be assigned a 
+<P>In a flow simulation, each boundary segment must be assigned a
 <A HREF="flowBoundaryConditions.html">flow boundary condition</a>
 for all recharge periods.</p>
 
-<P>In a flow and transport simulation, each boundary segment must be assigned a 
-<A HREF="flowBoundaryConditions.html">flow boundary condition</a> and a 
+<P>In a flow and transport simulation, each boundary segment must be assigned a
+<A HREF="flowBoundaryConditions.html">flow boundary condition</a> and a
 <A HREF="transportBoundaryConditions.html">transport boundary condition</a>
 for all recharge periods.</P>
 
 <p>To specify boundary conditions, select "Boundary Conditions" from the
-"Active Data" Selector (see  
+"Active Data" Selector (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_prewindow.html">
 <param name="text" value="figure">
@@ -54,10 +54,10 @@ shown on the lower right corner of the main window.</P>
 <br>&nbsp;•&nbsp;&nbsp;<A HREF="showHideBoundaryConditions.html">Display or hide boundary condition labels.</A>
 <br>&nbsp;•&nbsp;&nbsp;<A HREF="setCornerPolicy.html">Set "corner policy"</A> for cells occurring at a domain corner where two different boundary conditions meet.
 </p>
- 
+
 <P><I>Note</I>: For any recharge period, if you do not assign a boundary
 condition to a boundary segment, that segment will be assigned a
-flow boundary condition of "no flow across boundary" and a 
+flow boundary condition of "no flow across boundary" and a
 transport boundary condition of "no solute mass flux across boundary."</P>
 
 

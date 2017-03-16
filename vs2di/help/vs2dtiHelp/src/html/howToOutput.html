@@ -4,11 +4,11 @@
 </HEAD>
 <BODY>
 
-<H2>How To Control VS2DT 3.3 Output</H2>
+<H2>How To Control VS2DRT Output</H2>
 
 
 <P><B>To write, at every time step, output variables (heads, saturation, concentrations, etc.)
-to the main output file (vs2dt.out):</B></P>
+to the main output file (vs2drt.out):</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -36,12 +36,12 @@ The "Model Options" dialog box appears.</td>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">6. </td>
-  <td width="99%" valign="top" align="left">On the Recharge Period Window, check the box in the "print" column. 
+  <td width="99%" valign="top" align="left">On the Recharge Period Window, check the box in the "print" column.
       (Two clicks are needed to switch from uncheck to check).</td>
 </tr>
 </table>
 
-<P><B>To write, at selected times, output variables to the main output file (vs2dt.out):</B></P>
+<P><B>To write, at selected times, output variables to the main output file (vs2drt.out):</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -77,7 +77,7 @@ The "Model Options" dialog box appears.</td>
 </tr>
 </table>
 
-<P><B>To write, at every time step, all mass balance components to the main output file (vs2dt.out):</B></P>
+<P><B>To write, at every time step, all balance components to the main output file (vs2drt.out):</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -99,7 +99,7 @@ The "Model Options" dialog box appears.</td>
 </tr>
 </table>
 
-<P><B>To write, at selected times, all mass balance components to the main output file (vs2dt.out):</B></P>
+<P><B>To write, at selected times, all balance components to the main output file (vs2drt.out):</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -124,10 +124,10 @@ The "Model Options" dialog box appears.</td>
   <td width="99%" valign="top" align="left">Click "OK".</td>
 </tr>
 </table>
-    
 
-<P><B>To write, at every time step, selected mass balance components to file balance.out,
-and heads and concentrations at observation points to file obsPoints.out:</B></P>
+
+<P><B>To write, at every time step, selected balance components to file balance.out,
+and heads, temperatures, and concentrations at observation points to file obsPoints.out:</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -141,7 +141,7 @@ and heads and concentrations at observation points to file obsPoints.out:</B></P
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">3. </td>
-  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files" 
+  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files"
   control group, select "at every time step".</td>
 </tr>
 <tr>
@@ -154,21 +154,21 @@ and heads and concentrations at observation points to file obsPoints.out:</B></P
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">6. </td>
-  <td width="99%" valign="top" align="left">If simulating transport, click the "Solute Balance" tab,
-  and Select the desired solute balance components.</td>
+  <td width="99%" valign="top" align="left">If simulating transport, click the "Energy/Solute Balance" tab,
+  and Select the desired balance components.</td>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">7. </td>
   <td width="99%" valign="top" align="left">Click "OK".</td>
 </tr>
 </table>
-    
-<P><I>Note</I>: For each selected component, 3 entries are written: 
+
+<P><I>Note</I>: For each selected component, 3 entries are written:
 total for simulation, total for time step, and rate for time step.</P>
 
 
-<P><B>To write, at selected times, selected mass balance components to file massBal.out,
-and heads and concentrations at observation points to file obsPoints.out</B></P>
+<P><B>To write, at selected times, selected balance components to file balance.out,
+and heads, temperatures, and concentrations at observation points to file obsPoints.out</B></P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 <tr>
@@ -182,7 +182,7 @@ and heads and concentrations at observation points to file obsPoints.out</B></P>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">3. </td>
-  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files" 
+  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files"
   control group, select "at output times".</td>
 </tr>
 <tr>
@@ -199,8 +199,8 @@ and heads and concentrations at observation points to file obsPoints.out</B></P>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">7. </td>
-  <td width="99%" valign="top" align="left">If simulating transport, click the "Solute Balance" tab.
-  and Select the desired solute balance components.</td>
+  <td width="99%" valign="top" align="left">If simulating transport, click the "Energy/Solute Balance" tab.
+  and Select the desired balance components.</td>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">8. </td>

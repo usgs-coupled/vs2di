@@ -107,7 +107,7 @@ public class vs2BoundaryConditionsDialogTest {
     public void testRetrieveData() {
         System.out.println("retrieveData");
         
-        mp2JavaHelp.initialize("vs2dtiHelp");        
+        mp2JavaHelp.initialize("vs2drtiHelp");        
         vs2ModelOptions options = new vs2ModelOptions();
         options.doSoluteTransport = false;
         

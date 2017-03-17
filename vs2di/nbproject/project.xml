@@ -21,15 +21,7 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>vs2dhiHelp</foreign-project>
-                <artifact-type>jar</artifact-type>
-                <script>build.xml</script>
-                <target>jar</target>
-                <clean-target>clean</clean-target>
-                <id>jar</id>
-            </reference>
-            <reference>
-                <foreign-project>vs2dtiHelp</foreign-project>
+                <foreign-project>vs2drtiHelp</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>

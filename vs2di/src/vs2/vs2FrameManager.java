@@ -264,7 +264,7 @@ public class vs2FrameManager extends mp2FrameManager
             }
         });
         if (mp2App.useJavaHelp()) {
-            mp2JavaHelp.initialize("vs2dtiHelp");
+            mp2JavaHelp.initialize("vs2drtiHelp");
             helpMenuItem.addActionListener(new CSH.DisplayHelpFromSource(mp2JavaHelp.hb));
         } else {
             helpMenuItem.addActionListener(new ActionListener() {

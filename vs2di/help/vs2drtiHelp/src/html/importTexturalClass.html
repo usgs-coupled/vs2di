@@ -1,0 +1,152 @@
+<HTML>
+<HEAD>
+<TITLE>Importing &amp; Exporting Textural Class Data</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Importing &amp; Exporting Textural Class Data</H2>
+
+<p>When using the Van Genuchten hydraulic characteristic function, VS2DRTI has a
+number of predefined textural classes.  A user may also have or
+prefer their own set of predefined textural classes.  A user can save or load these
+classes using the "Custom" button on the Textural Class window.</p>
+
+<P>When you press the "Custom" button, a dialog box will appear.  You have
+two options:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><b>Load Data From File</b>: Pressing this button, you will be asked for a file name.
+    The textural classes in the file will be inserted into the Textural Classes
+    table below the selected class.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left"><b>Save Data To File</b>: Pressing this button, you will be asked for a file name.
+    All the current textural classes will be saved to the file.</td>
+</tr>
+</table>
+
+
+<p>The textural classes are stored in an ASCII text file and can be created or edited by the user.</P>
+
+<p>If you want to examine a example data set, the simplest option is to run VS2DRTI,
+select the appropriate hydraulic characteristic function
+(see <A href="flowOptions.html">Flow Options</A>),
+<A href="texturalClasses.html">create several textural classes</A>, and save the data to file.
+
+
+<p><I>Notes:</I></p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Textural Class files may only contain data for one type of hydraulic
+    characteristic function, e.g. the file contains Van Genuchten, or Brooks-Corey, or Haverkamp,
+    or Tabular Data.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Data for different hydraulic characteristic functions cannot be mixed in
+    the same file.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">All solute-transport and energy-transport parameters can be stored in the
+    same file, regardless of the type of simulation.  Solute- and energy-transport parameters
+    can be stored in the file even if neither transport method is currently being used.</td>
+</tr>
+
+</table>
+
+<P><HR WIDTH="50%" ALIGN="left"></p>
+
+<p><B>File Format:</B></p>
+<P><I>Notes:</I></p>
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">A '#' in the first column comments the entire line. </td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">All character codes are uppercase only. </td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Line 1 appears only once at the beginning of the file.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Loop through lines 2-9 for each textural class. </td>
+</tr>
+</table>
+<PRE>
+
+Line 1: CC+HC
+
+'CC' is a two character code indicating the hydraulic characteristic function.
+
+     Valid options are:
+
+          BC = Brooks-Corey
+          HK = Haverkamp
+          TD = Tabular Data
+          VG = van Genuchten
+          RN = Rossi-Nimmo
+
+     '+HC' is optional and can take one of three form:
+
+          +C  = solute transport parameters included
+          +H  = energy transport parameters included
+          +HC = enargy and solute transport parameters included
+
+     NOTE:
+          +CH is NOT valid.
+          If energy or solute transport parameters are not included,
+	      do NOT use the '+'.
+
+
+Line 2: hydraulic characteristic function parameters.
+
+     This line varies by function type.
+
+     Brooks Corey:  Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, hb, lambda
+     Haverkamp:     Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, A', B', alpha, beta
+     Tabular Data:  Name, Kzz/Khh, Sat Khh, Ss, Porosity
+     van Genuchten: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, alpha, beta
+     Rossi-Nimmo:   Name, Kzz/Khh, Sat Khh, Ss, Porosity, PSI0, PSID, lambda
+
+     Name     = Material Name
+     Kzz/Khh  = Anisotropy
+     Sat Khh  = Saturated Hydraulic Conductivity
+     Ss       = Specific Storage
+     Porosity = Porosity
+     RMC      = Residual Moisture Content
+     other parameters are defined in <A HREF="flowProperties.html">Flow Properties</A>.
+
+If hydraulic characteristic function = TD (Tabular Data), read Line 2A
+
+  Line 2A: # of point sets
+
+  For each point set
+    Line 2B: Pressure Head, Relative K, Moisture Content
+
+If the +H, +C, or +HC option is used, read following Lines,
+Else go to Line 2.
+
+If +H or +HC, read Line 3 for heat transport
+
+  Line 3: Alpha-L, Alpha-T, Cs, KTr, KTs, Cw
+
+If +C or +HC read the following line for solute transport
+
+  Line 4: Alpha-L, Alpha-T, mole. diff.
+Go to Line 2 until all textural classes are defined.
+</PRE>
+
+
+
+</BODY>
+</HTML>

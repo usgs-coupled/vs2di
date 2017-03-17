@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>Solver Options</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Solver Options</H2>
+
+<P><I>Note</I>: Variable names enclosed in parentheses refer to
+variables listed in the VS2DRT input instructions.</P>
+
+<P><B>Relaxation parameter (HMAX)</B>: Generally in the range of
+0.4 to 1.2. A value of 0.7 often works well. Try a smaller value if
+the simulation fails to converge.</P>
+
+<P><B>Minimum iterations per time step (MINIT)</B>: Normally set to 2.
+The simulation will always perform the specified minumum number
+of iterations in each time step.
+</P>
+
+<P><B>Maximum iterations per time step (MAXIT)</B>:
+If the number of iterations in a time step reaches this value,
+the iteration will restart from the beginning of the time step
+using a reduced time step size. If convergence is not achieved
+after 3 successive time step reductions, the simulation is
+considered to have reached convergence failure.
+Best computational efficiency is usually
+obtained with a value of about 100.</P>
+
+<P><B>Stop simulation at convergence failure (ITSTOP)</B>:
+Select this option (recommended) to stop the simulation at convergence failure.
+Deselect this option to advance to next time step despite
+convergence failure. <I>Note</I> Deselecting this option could
+yield erroneous simulation results.</P>
+
+<P><B>Maximum number of time steps (NUMT)</B>: The simulation will stop
+when number of time steps reaches this value.</P>
+
+<P><B>Closure criterion for head (EPS)</B>: [L]. The iterative scheme
+for solving the flow equation is considered to have converged if,
+for all cells, the change in head from one iteration to the next
+is less than this value. In general as the value of EPS is decreased,
+the accuracy of results is improved and computational effort is
+increased.  If the simulation fails to reach convergence then
+the user may wish to increase EPS.</P>
+
+<P><B>Closure criterion for temperature (EPS1)</B>: [<sup>o</sup>C]. The iterative scheme
+for solving the transport equation is considered to have converged if,
+for all cells, the change in temperature from one iteration to the next
+is less than this value.</P>
+
+<P><B>Closure criterion for velocity (EPS2)</B>: [L]/[T]. The outer iteration
+loop for the flow and transport equations is satisfied if,
+for all cells, the change in velocity from one outer iteration to the next
+is less than this value.  When the outer loop is satisfied, the simulation
+proceeds to the next time step.</P>
+
+<P><B>Closure criterion for concentration (EPS3)</B>: [M]/[L]<sup>3</sup>. The iterative scheme
+for solving the transport equation is considered to have converged if,
+for all cells, the change in concentration from one iteration to the next
+is less than this value.</P>
+
+
+</BODY>
+</HTML>

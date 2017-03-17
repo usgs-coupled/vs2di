@@ -46,6 +46,7 @@
     <mapID target="editRechargePeriod" url="html/editRechargePeriod.html" />                                                                                                                           
     <mapID target="editSourceSink" url="html/editSourceSink.html" />                                                                                                                                   
     <mapID target="editTexturalClass" url="html/editTexturalClass.html" />                                                                                                                             
+    <mapID target="energyBalanceOptions" url="html/energyBalanceOptions.html" />
     <mapID target="evaporationParameters" url="html/evaporationParameters.html" />                                                                                                                     
     <mapID target="evapotranspirationCycle" url="html/evapotranspirationCycle.html" />                                                                                                                 
     <mapID target="fig_boundary" url="html/fig_boundary.html" />                                                                                                                                       
@@ -87,6 +88,7 @@
     <mapID target="initialHydraulicCondition" url="html/initialHydraulicCondition.html" />                                                                                                             
     <mapID target="initialMoistureContent" url="html/initialMoistureContent.html" />                                                                                                                   
     <mapID target="initialPressureHead" url="html/initialPressureHead.html" />                                                                                                                         
+    <mapID target="initialTemperature" url="html/initialTemperature.html" />    
     <mapID target="insertVertexOnBoundary" url="html/insertVertexOnBoundary.html" />                                                                                                                   
     <mapID target="insertVertexOnContour" url="html/insertVertexOnContour.html" />                                                                                                                     
     <mapID target="insertVertexOnTexturalZone" url="html/insertVertexOnTexturalZone.html" />                                                                                                           
@@ -148,10 +150,12 @@
     <mapID target="tutorial_BoundaryConditions" url="html/tutorial_BoundaryConditions.html" />                                                                                                       
     <mapID target="tutorial_Domain" url="html/tutorial_Domain.html" />                                                                                                                               
     <mapID target="tutorial_DrawingArea" url="html/tutorial_DrawingArea.html" />                                                                                                                     
+    <mapID target="tutorial_EnergyBalanceOptions" url="html/tutorial_EnergyBalanceOptions.html" />
     <mapID target="tutorial_FlowOptions" url="html/tutorial_FlowOptions.html" />                                                                                                                     
     <mapID target="tutorial_FluidBalanceOptions" url="html/tutorial_FluidBalanceOptions.html" />                                                                                                     
     <mapID target="tutorial_Grid" url="html/tutorial_Grid.html" />                                                                                                                                   
     <mapID target="tutorial_InitialConcentration" url="html/tutorial_InitialConcentration.html" />                                                                                                   
+    <mapID target="tutorial_InitialTemperature" url="html/tutorial_InitialTemperature.html" />
     <mapID target="tutorial_InitialHydraulicCondition" url="html/tutorial_InitialHydraulicCondition.html" />                                                                                         
     <mapID target="tutorial_ModelOptions" url="html/tutorial_ModelOptions.html" />                                                                                                                   
     <mapID target="tutorial_OutputOptions" url="html/tutorial_OutputOptions.html" />                                                                                                                 

@@ -6,7 +6,7 @@
 <helpset version="2.0">
 
   <!-- title -->
-  <title>Help for VS2DTI - Version 1.4</title>
+  <title>Help for VS2DRTI - Version 1.4</title>
 
   <!-- maps -->
   <maps>
@@ -19,7 +19,7 @@
     <name>TOC</name>
     <label>Table Of Contents</label>
     <type>javax.help.TOCView</type>
-    <data>vs2dtiHelpTOC.xml</data>
+    <data>vs2drtiHelpTOC.xml</data>
   </view>
 
 </helpset>

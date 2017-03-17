@@ -741,7 +741,7 @@ public class vs2TexturalClassData extends mp2TableData implements
 
     /** *************************************************************************************
      */ /********************************************************************************* */
-    int readHeatAndConcData (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
+    int readHeatAndConcData1_3 (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
 
         boolean  linear, freundlich, langmuir, valent;
         int      i;
@@ -794,6 +794,33 @@ public class vs2TexturalClassData extends mp2TableData implements
         }
 
 	return i;
+    }
+
+    /** *************************************************************************************
+     *  New 1.4 version
+     */ /********************************************************************************* */
+    int readHeatAndConcData (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
+
+        int      i;
+        String[] fields = new String[6];
+
+        i = 0;
+        if (heat) {
+            fields   = split ((String) data.elementAt (pos + i++), 6);
+            aRow[21] = new Double (fields[0]);          // alpha-L (heat)
+            aRow[22] = new Double (fields[1]);          // alpha-T (heat)
+            aRow[34] = new Double (fields[2]);          // Cs
+            aRow[35] = new Double (fields[3]);          // KTr
+            aRow[36] = new Double (fields[4]);          // KTs
+            aRow[37] = new Double (fields[5]);          // Cw
+        }
+        if (conc) {
+            fields   = split ((String) data.elementAt (pos + i++), 3);
+            aRow[42] = new Double (fields[0]);          // alpha-L (solute)
+            aRow[43] = new Double (fields[1]);          // alpha-T (solute)
+            aRow[23] = new Double (fields[2]);          // molecular diff.
+        }
+        return i;
     }
 
     /** *************************************************************************************
@@ -874,6 +901,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveBrooksCoreyData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Brooks Corey: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, hb, lambda");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[8]  + " ");
@@ -889,6 +917,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveHaverkampData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Haverkamp: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, A', B', alpha, beta");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[14]  + " ");
@@ -908,14 +937,17 @@ public class vs2TexturalClassData extends mp2TableData implements
         int    j, k;
 	Vector hkmData = (Vector) aRow[20];
 
+        pw.println ("# Tabular Data: Name, Kzz/Khh, Sat Khh, Ss, Porosity");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[19]  + " ");
         pw.print   (aRow[4]  + " ");
         pw.println (aRow[5]);
 
+        pw.println ("# Tabular Data (2A): # of point sets");
         pw.println (hkmData.size());
         for (k=0; k<hkmData.size(); k++) {
+            pw.println ("# Tabular Data (2B): # Pressure Head, Relative K, Moisture Content");
             Object [] hkm = (Object []) hkmData.elementAt(k);
             for (j=0; j<3; j++)
                 pw.print (((Double) hkm[j]).doubleValue() + " ");
@@ -927,6 +959,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveVanGenuchtenData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# van Genuchten: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, alpha, beta");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[11] + " ");
@@ -941,6 +974,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveRossiNimmoData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Rossi-Nimmo: Name, Kzz/Khh, Sat Khh, Ss, Porosity, PSI0, PSID, lambda");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[38] + " ");
@@ -953,7 +987,7 @@ public class vs2TexturalClassData extends mp2TableData implements
 
     /** *************************************************************************************
      */ /********************************************************************************* */
-    public void saveHeatAndConcData (PrintWriter pw, Object aRow[]) throws IOException {
+    public void saveHeatAndConcData1_3 (PrintWriter pw, Object aRow[]) throws IOException {
 
         boolean  linear, freundlich, langmuir, valent;
         int      i;
@@ -983,6 +1017,25 @@ public class vs2TexturalClassData extends mp2TableData implements
 	pw.print   (aRow[31] + " ");		// valent
 	pw.print   (aRow[32] + " ");		// valent
 	pw.println (aRow[33]);			// valent
+    }
+
+    /** *************************************************************************************
+     *  New 1.4 version
+     */ /********************************************************************************* */
+    public void saveHeatAndConcData (PrintWriter pw, Object aRow[]) throws IOException {
+
+        pw.println   ("# heat: Alpha-L, Alpha-T, Cs, KTr, KTs, Cw");
+        pw.print   (aRow[21] + " ");		// alpha-L (heat)
+        pw.print   (aRow[22] + " ");    	// alpha-T (heat)
+        pw.print   (aRow[34] + " ");  		// Heat Cs
+        pw.print   (aRow[35] + " ");  		// Heat KTr
+        pw.print   (aRow[36] + " ");  		// Heat KTs
+        pw.println (aRow[37]);        		// Heat Cw
+
+        pw.println   ("# solute: Alpha-L, Alpha-T, mole. diff.");
+        pw.print   (aRow[42] + " ");		// alpha-L (solute)
+        pw.print   (aRow[43] + " ");    	// alpha-T (solute)
+        pw.println (aRow[23] + " ");		// molecular diff.
     }
 
     /***************************************************************************************/

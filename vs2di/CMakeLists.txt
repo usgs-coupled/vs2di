@@ -37,8 +37,7 @@ set(JAR
 
 set(LIB_JARS
   "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/jh.jar"
-  "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2dhiHelp.jar"
-  "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2dtiHelp.jar"
+  "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2drtiHelp.jar"
   "${CMAKE_CURRENT_BINARY_DIR}/dist/lib/vs2PostHelp.jar"
 )
 

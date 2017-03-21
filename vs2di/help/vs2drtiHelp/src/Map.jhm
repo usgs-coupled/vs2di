@@ -4,6 +4,7 @@
          "http://java.sun.com/products/javahelp/map_2_0.dtd">
 
 <map version="2.0">
+    <mapID target="addChemicalClass" url="html/addChemicalClass.html" />
     <mapID target="addEvapotranspirationPeriod" url="html/addEvapotranspirationPeriod.html" />                                                                                                         
     <mapID target="addGridLines" url="html/addGridLines.html" />                                                                                                                                       
     <mapID target="addRechargePeriod" url="html/addRechargePeriod.html" />                                                                                                                             
@@ -15,14 +16,19 @@
     <mapID target="bcAssignmentOption" url="html/bcAssignmentOption.html" />                                                                                                                           
     <mapID target="bitmap" url="html/bitmap.html" />                                                                                                                                                   
     <mapID target="boundaryConditions" url="html/boundaryConditions.html" />                                                                                                                           
+    <mapID target="bringChemicalZonesToFront" url="html/bringChemicalZonesToFront.html" />
     <mapID target="bringTexturalZonesToFront" url="html/bringTexturalZonesToFront.html" />                                                                                                             
     <mapID target="brooksCorey" url="html/brooksCorey.html" />                                                                                                                                         
     <mapID target="changeContourValue" url="html/changeContourValue.html" />                                                                                                                           
     <mapID target="changeInitialHydraulicCondition" url="html/changeInitialHydraulicCondition.html" />                                                                                                 
+    <mapID target="chemicalClasses" url="html/chemicalClasses.html" />
+    <mapID target="chemicalMap" url="html/chemicalMap.html" />
     <mapID target="contourColorScale" url="html/contourColorScale.html" />                                                                                                 
     <mapID target="contourDrawing" url="html/contourDrawing.html" />                                                                                                 
     <mapID target="copyBoundaryConditions" url="html/copyBoundaryConditions.html" />                                                                                                                   
     <mapID target="createSourceSink" url="html/createSourceSink.html" />                                                                                                                               
+    <mapID target="deleteChemicalClass" url="html/deleteChemicalClass.html" />
+    <mapID target="deleteChemicalZones" url="html/deleteChemicalZones.html" />
     <mapID target="deleteContours" url="html/deleteContours.html" />                                                                                                                                   
     <mapID target="deleteEvapotranspirationPeriod" url="html/deleteEvapotranspirationPeriod.html" />                                                                                                   
     <mapID target="deleteGridLines" url="html/deleteGridLines.html" />                                                                                                                                 
@@ -36,17 +42,18 @@
     <mapID target="discretization" url="html/discretization.html" />                                                                                                                                   
     <mapID target="displayResults" url="html/displayResults.html" />                                                                                                                                   
     <mapID target="domain" url="html/domain.html" />                                                                                                                                                   
+    <mapID target="drawChemicalZone" url="html/drawChemicalZone.html" />
     <mapID target="drawContours" url="html/drawContours.html" />                                                                                                                                       
     <mapID target="drawExteriorBoundary" url="html/drawExteriorBoundary.html" />                                                                                                                       
     <mapID target="drawingOptions" url="html/drawingOptions.html" />                                                                                                                                   
     <mapID target="drawInteriorBoundary" url="html/drawInteriorBoundary.html" />                                                                                                                       
     <mapID target="drawObservationPoints" url="html/drawObservationPoints.html" />                                                                                                                     
     <mapID target="drawTexturalZone" url="html/drawTexturalZone.html" />                                                                                                                               
+    <mapID target="editChemicalClass" url="html/editChemicalClass.html" />
     <mapID target="editEvapotranspirationPeriod" url="html/editEvapotranspirationPeriod.html" />                                                                                                       
     <mapID target="editRechargePeriod" url="html/editRechargePeriod.html" />                                                                                                                           
     <mapID target="editSourceSink" url="html/editSourceSink.html" />                                                                                                                                   
     <mapID target="editTexturalClass" url="html/editTexturalClass.html" />                                                                                                                             
-    <mapID target="energyBalanceOptions" url="html/energyBalanceOptions.html" />
     <mapID target="evaporationParameters" url="html/evaporationParameters.html" />                                                                                                                     
     <mapID target="evapotranspirationCycle" url="html/evapotranspirationCycle.html" />                                                                                                                 
     <mapID target="fig_boundary" url="html/fig_boundary.html" />                                                                                                                                       
@@ -83,13 +90,13 @@
     <mapID target="howToOutput" url="html/howToOutput.html" />                                                                                                                                         
     <mapID target="importETData" url="html/importETData.html" />
     <mapID target="importTexturalClass" url="html/importTexturalClass.html" />                                                                                                                         
-    <mapID target="initialConcentration" url="html/initialConcentration.html" />                                                                                                                       
     <mapID target="initialEquilibriumProfile" url="html/initialEquilibriumProfile.html" />                                                                                                             
     <mapID target="initialHydraulicCondition" url="html/initialHydraulicCondition.html" />                                                                                                             
     <mapID target="initialMoistureContent" url="html/initialMoistureContent.html" />                                                                                                                   
     <mapID target="initialPressureHead" url="html/initialPressureHead.html" />                                                                                                                         
     <mapID target="initialTemperature" url="html/initialTemperature.html" />    
     <mapID target="insertVertexOnBoundary" url="html/insertVertexOnBoundary.html" />                                                                                                                   
+    <mapID target="insertVertexOnChemicalZone" url="html/insertVertexOnChemicalZone.html" />
     <mapID target="insertVertexOnContour" url="html/insertVertexOnContour.html" />                                                                                                                     
     <mapID target="insertVertexOnTexturalZone" url="html/insertVertexOnTexturalZone.html" />                                                                                                           
     <mapID target="interpolationMethods" url="html/interpolationMethods.html" />                                                                                                                       
@@ -100,6 +107,7 @@
     <mapID target="modelOptions" url="html/modelOptions.html" />                                                                                                                                       
     <mapID target="modelOutputFiles" url="html/modelOutputFiles.html" />                                                                                                                               
     <mapID target="moveBoundaries" url="html/moveBoundaries.html" />                                                                                                                                   
+    <mapID target="moveChemicalZones" url="html/moveChemicalZones.html" />
     <mapID target="moveContours" url="html/moveContours.html" />                                                                                                                                       
     <mapID target="moveGrid" url="html/moveGrid.html" />                                                                                                                                               
     <mapID target="moveGridLine" url="html/moveGridLine.html" />                                                                                                                                       
@@ -118,6 +126,7 @@
     <mapID target="rechargePeriodParameters" url="html/rechargePeriodParameters.html" />                                                                                                               
     <mapID target="rechargePeriods" url="html/rechargePeriods.html" />                                                                                                                                 
     <mapID target="reshapeBoundary" url="html/reshapeBoundary.html" />                                                                                                                                 
+    <mapID target="reshapeChemicalZone" url="html/reshapeChemicalZone.html" />
     <mapID target="reshapeContour" url="html/reshapeContour.html" />                                                                                                                                   
     <mapID target="reshapeTexturalZone" url="html/reshapeTexturalZone.html" />                                                                                                                         
     <mapID target="resizeGrid" url="html/resizeGrid.html" />                                                                                                                                           
@@ -126,6 +135,7 @@
     <mapID target="runSimulation" url="html/runSimulation.html" />                                                                                                                                     
     <mapID target="savedSimulationFiles" url="html/savedSimulationFiles.html" />                                                                                                                       
     <mapID target="saveSimulation" url="html/saveSimulation.html" />                                                                                                                                   
+    <mapID target="sendChemicalZonesToBack" url="html/sendChemicalZonesToBack.html" />
     <mapID target="sendTexturalZonesToBack" url="html/sendTexturalZonesToBack.html" />                                                                                                                 
     <mapID target="setCornerPolicy" url="html/setCornerPolicy.html" />                                                                                                                                 
     <mapID target="setEvapotranspirationPeriodLength" url="html/setEvapotranspirationPeriodLength.html" />                                                                                             
@@ -155,8 +165,8 @@
     <mapID target="tutorial_FluidBalanceOptions" url="html/tutorial_FluidBalanceOptions.html" />                                                                                                     
     <mapID target="tutorial_Grid" url="html/tutorial_Grid.html" />                                                                                                                                   
     <mapID target="tutorial_InitialConcentration" url="html/tutorial_InitialConcentration.html" />                                                                                                   
-    <mapID target="tutorial_InitialTemperature" url="html/tutorial_InitialTemperature.html" />
     <mapID target="tutorial_InitialHydraulicCondition" url="html/tutorial_InitialHydraulicCondition.html" />                                                                                         
+    <mapID target="tutorial_InitialTemperature" url="html/tutorial_InitialTemperature.html" />
     <mapID target="tutorial_ModelOptions" url="html/tutorial_ModelOptions.html" />                                                                                                                   
     <mapID target="tutorial_OutputOptions" url="html/tutorial_OutputOptions.html" />                                                                                                                 
     <mapID target="tutorial_Postprocessor" url="html/tutorial_Postprocessor.html" />                                                                                                                 

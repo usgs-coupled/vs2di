@@ -24,7 +24,7 @@
          <tocitem text="Solver" target="solverOptions"/>
          <tocitem text="Output" target="outputOptions"/>
          <tocitem text="Fluid Balance" target="fluidBalanceOptions"/>
-         <tocitem text="Solute Balance" target="soluteBalanceOptions"/>
+         <tocitem text="Energy/Solute Balance" target="soluteBalanceOptions"/>
       </tocitem>
 
       <tocitem text="Specify Textural Classes" target="texturalClasses" expand="false">
@@ -36,6 +36,12 @@
          <tocitem text="Import or export textural class data" target="importTexturalClass"/>
          <tocitem text="Tabular Data" target="workingWithTabularData"/>
       </tocitem>
+      
+      <tocitem text="Specify Chemical Classes" target="chemicalClasses" expand="false">
+         <tocitem text="Add Chemical class" target="addChemicalClass"/>
+         <tocitem text="Edit Chemical class" target="editChemicalClass"/>
+         <tocitem text="Delete Chemical class" target="deleteChemicalClass"/>
+      </tocitem>      
 
       <tocitem text="Specify Evapotranspiration (ET) Cycle" target="evapotranspirationCycle" expand="false">
          <tocitem text="Evaporation Parameters" target="evaporationParameters"/>
@@ -74,6 +80,16 @@
          <tocitem text="Send textural zones to back" target="sendTexturalZonesToBack"/>
          <tocitem text="Delete textural zone" target="deleteTexturalZones"/>
       </tocitem>
+      
+      <tocitem text="Draw the Chemical Zone" target="chemicalMap" expand="false">
+         <tocitem text="Draw chemical zone" target="drawChemicalZone"/>
+         <tocitem text="Reshape chemical zone" target="reshapeChemicalZone"/>
+         <tocitem text="Move chemical zones" target="moveChemicalZones"/>
+         <tocitem text="Insert vertex on chemical zone" target="insertVertexOnChemicalZone"/>
+         <tocitem text="Bring chemical zones to front" target="bringChemicalZonesToFront"/>
+         <tocitem text="Send chemical zones to back" target="sendChemicalZonesToBack"/>
+         <tocitem text="Delete chemical zone" target="deleteChemicalZones"/>
+      </tocitem>      
 
       <tocitem text="Specify Initial Hydraulic Condition" target="initialHydraulicCondition" expand="false">
          <tocitem text="Initial equilibrium profile" target="initialEquilibriumProfile"/>
@@ -82,7 +98,7 @@
          <tocitem text="Change type of initial hydraulic condition" target="changeInitialHydraulicCondition"/>
       </tocitem>
 
-      <tocitem text="Specify Initial Concentration" target="initialConcentration"/>
+      <tocitem text="Specify Initial Temperature" target="initialTemperature"/>
 
       <tocitem text="Specify Recharge Periods" target="rechargePeriods" expand="false">
          <tocitem text="Recharge period parameters" target="rechargePeriodParameters"/>

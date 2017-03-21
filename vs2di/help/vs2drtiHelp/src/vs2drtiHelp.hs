@@ -6,7 +6,7 @@
 <helpset version="2.0">
 
   <!-- title -->
-  <title>Help for VS2DRTI - Version 1.4</title>
+  <title>Help for VS2DRTI</title>
 
   <!-- maps -->
   <maps>

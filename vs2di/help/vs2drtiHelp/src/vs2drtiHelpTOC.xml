@@ -6,9 +6,9 @@
 
    <tocitem text="Overview" target="overview" expand="true">
        <tocitem text="Preprocessor" target="preprocessor"/>
-       <tocitem text="VS2DT 3.3" target="vs2dt3p3"/>
+       <tocitem text="VS2DRT" target="vs2dt3p3"/>
        <tocitem text="Postprocessor" target="postprocessor"/>
-       <tocitem text="New Features in Version 1.3 " target="newFeatures"/>
+       <tocitem text="New Features" target="newFeatures"/>
        <tocitem text="Zooming and Stretching the Display" target="zooming"/>
        <tocitem text="Graphics Buffering" target="graphicsBuffering"/>
    </tocitem>
@@ -150,9 +150,9 @@
 
    <tocitem text="File Management" target="fileManagement">
       <tocitem text="VS2 File" target="VS2File"/>
-      <tocitem text="VS2DT 3.3 Model Input Files" target="modelInputFiles"/>
-      <tocitem text="VS2DT 3.3 Model Output Files" target="modelOutputFiles"/>
-      <tocitem text="How to Control VS2DT 3.3 Output" target="howToOutput"/>
+      <tocitem text="VS2DRT Model Input Files" target="modelInputFiles"/>
+      <tocitem text="VS2DRT Model Output Files" target="modelOutputFiles"/>
+      <tocitem text="How to Control VS2DRT Output" target="howToOutput"/>
       <tocitem text="Saved Simulation File" target="savedSimulationFiles"/>
    </tocitem>
 

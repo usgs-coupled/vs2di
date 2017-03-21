@@ -118,7 +118,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
               mp2JavaHelp.hb.enableHelpOnButton(helpButton, "fluidBalanceOptions", null);
         }
         else if (tabTitle.equalsIgnoreCase("Energy/Solute Balance")) {
-              mp2JavaHelp.hb.enableHelpOnButton(helpButton, "energyBalanceOptions", null);
+              mp2JavaHelp.hb.enableHelpOnButton(helpButton, "soluteBalanceOptions", null);
         }
         else {
               mp2JavaHelp.hb.enableHelpOnButton(helpButton, "basicOptions", null);
@@ -149,7 +149,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
               mp2HelpWindow.showHelpFile ("fluidBalanceOptions.html");
         }
         else if (tabTitle.equalsIgnoreCase("Energy/Solute Balance")) {
-              mp2HelpWindow.showHelpFile ("energyBalanceOptions.html");
+              mp2HelpWindow.showHelpFile ("soluteBalanceOptions.html");
         }
         else {
               mp2HelpWindow.showHelpFile ("contents.html");

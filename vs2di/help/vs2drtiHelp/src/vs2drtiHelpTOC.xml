@@ -81,7 +81,7 @@
          <tocitem text="Delete textural zone" target="deleteTexturalZones"/>
       </tocitem>
       
-      <tocitem text="Draw the Chemical Zone" target="chemicalMap" expand="false">
+      <tocitem text="Draw the Chemical Map" target="chemicalMap" expand="false">
          <tocitem text="Draw chemical zone" target="drawChemicalZone"/>
          <tocitem text="Reshape chemical zone" target="reshapeChemicalZone"/>
          <tocitem text="Move chemical zones" target="moveChemicalZones"/>

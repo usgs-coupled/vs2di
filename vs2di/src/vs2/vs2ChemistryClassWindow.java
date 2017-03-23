@@ -35,8 +35,8 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
 
     protected static final int [] SOLUTE_TRANSPORT_MASK =
                                    {1, 2,  3,  4,  5,  6,  7,  8,  9};
-    
-            
+
+
 
     /**
      * Constructor
@@ -107,7 +107,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
                 int row = table.rowAtPoint(pt);
                 if (me.getClickCount() == 2) {
                     if (editButton.isEnabled()) {
-                        onEdit();                    
+                        onEdit();
                     }
                 }
             }
@@ -127,7 +127,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
                 int row = table.rowAtPoint(pt);
                 if (me.getClickCount() == 2) {
                     if (editButton.isEnabled()) {
-                        onEdit();                    
+                        onEdit();
                     }
                 }
             }
@@ -144,7 +144,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
 
         // Add the soluteTransport panel, which is always present
         tabbedPane.add(soluteTransportPanel, 0);
-        tabbedPane.setTitleAt(0, "Solute transport");                
+        tabbedPane.setTitleAt(0, "Solute transport");
 
         // Set the minimum row count--There is always a row for the default
         // textural class
@@ -160,7 +160,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
 
         // Update the tabs
         UpdateTabs(modelOptions);
-        
+
         assert(tabbedPane.getTabCount() == 1);
         tabbedPane.setSelectedIndex(0);
 
@@ -175,7 +175,7 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
      */
     protected int addRow(int r) {
         // Create a dialog box for user to add a new row of data
-        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemical Class",
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemistry Class",
                     modelOptions, false);
 
         // Create a new row of data and set it in the dialog box
@@ -205,8 +205,8 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
         }
 
         // Create dialog box for user to edit data
-        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemical Class",
-                    modelOptions, true);        
+        vs2ChemistryClassDialog dlg = new vs2ChemistryClassDialog("Add Chemistry Class",
+                    modelOptions, true);
 
         // Put current dat in dialog box and show it
         dlg.aRow = tableData.getRow(r[0]);
@@ -389,11 +389,11 @@ public class vs2ChemistryClassWindow extends mp2TableWindow
 
         // Get the selected row from the previously active table
         int r = activeTable.getSelectedRow();
-        
+
         // Set the new active table
         Component panel = tabbedPane.getSelectedComponent();
         activeTable = ((mp2TablePanel)panel).getTable();
-        
+
         // Set the selected row in the new active table
         activeTable.clearSelection();
         activeTable.addRowSelectionInterval(r, r);

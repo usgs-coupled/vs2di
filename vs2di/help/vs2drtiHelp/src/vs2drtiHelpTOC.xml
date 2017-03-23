@@ -37,10 +37,10 @@
          <tocitem text="Tabular Data" target="workingWithTabularData"/>
       </tocitem>
       
-      <tocitem text="Specify Chemical Classes" target="chemicalClasses" expand="false">
-         <tocitem text="Add Chemical class" target="addChemicalClass"/>
-         <tocitem text="Edit Chemical class" target="editChemicalClass"/>
-         <tocitem text="Delete Chemical class" target="deleteChemicalClass"/>
+      <tocitem text="Specify Chemistry Classes" target="chemicalClasses" expand="false">
+         <tocitem text="Add Chemistry class" target="addChemicalClass"/>
+         <tocitem text="Edit Chemistry class" target="editChemicalClass"/>
+         <tocitem text="Delete Chemistry class" target="deleteChemicalClass"/>
       </tocitem>      
 
       <tocitem text="Specify Evapotranspiration (ET) Cycle" target="evapotranspirationCycle" expand="false">
@@ -81,7 +81,7 @@
          <tocitem text="Delete textural zone" target="deleteTexturalZones"/>
       </tocitem>
       
-      <tocitem text="Draw the Chemical Map" target="chemicalMap" expand="false">
+      <tocitem text="Draw the Chemistry Map" target="chemicalMap" expand="false">
          <tocitem text="Draw chemical zone" target="drawChemicalZone"/>
          <tocitem text="Reshape chemical zone" target="reshapeChemicalZone"/>
          <tocitem text="Move chemical zones" target="moveChemicalZones"/>

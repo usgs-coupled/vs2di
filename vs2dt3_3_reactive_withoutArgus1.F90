@@ -430,6 +430,7 @@
             return
         endif
     endif
+    INPRXZ = 0
     IF(SOLUTE)THEN
     ! Line A-11
         READ(5,*,IOSTAT=myerr)INPRXZ

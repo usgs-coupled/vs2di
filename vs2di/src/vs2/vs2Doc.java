@@ -963,6 +963,13 @@ public class vs2Doc extends mp2Doc implements vs2Constants,
         }
 
         if (isReady == false) {
+            // output missing data
+            //
+            System.out.println("Insufficient data to export.");
+            System.out.println("The following data are missing:");
+            for (int i=0; i<missingData.size(); i++) {
+                System.out.println(" - " + (String) missingData.elementAt(i));
+            }        
             mp2MissingDataDialog dlg = new mp2MissingDataDialog(theApp.getFrame(),
                                                             missingData);
             dlg.setVisible(true);

@@ -511,6 +511,10 @@
     KNNODE=KNLY*KNXR
     !!@@include 'd_arrays.inc' 
     !     allocate arrays
+    write(*,*) 'about to allocate delz', allocated(delz) 
+    write(*,*) 'about to allocate DZZ', allocated(DZZ) 
+    write(*,*) 'about to allocate DXR', allocated(DXR) 
+    write(*,*) 'about to allocate RX', allocated(RX) 
     allocate(DELZ(NLY),DZZ(NLY),DXR(NXR),RX(NXR))
     allocate(HX(NNODES),NTYP(NNODES))
     allocate(THETA(NNODES),THLST(NNODES),SATUR(NNODES),POROSITY(NNODES))

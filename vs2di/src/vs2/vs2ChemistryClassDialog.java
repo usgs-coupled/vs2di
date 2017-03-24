@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.*;
 
 public class vs2ChemistryClassDialog extends vs2Dialog implements vs2Constants,
    vs2VanGenuchtenParameters
@@ -77,7 +78,7 @@ public class vs2ChemistryClassDialog extends vs2Dialog implements vs2Constants,
         super(title, true, modelOptions);
         this.doEdit = doEdit;
         this.modelOptions = modelOptions;
-        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "flowProperties", null);
+        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "chemicalClasses", null);
     }
     
     /**
@@ -195,86 +196,142 @@ public class vs2ChemistryClassDialog extends vs2Dialog implements vs2Constants,
 
         transLeftPanel.add(new JLabel("Solution", SwingConstants.RIGHT));
         transCenterPanel.add(solutionTextField = new JTextField(5));
-        transRightPanel.add(solutionCheckBox = new JCheckBox("As is"));
-        solutionCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                solutionTextField.setEnabled(!solutionCheckBox.isSelected());                
+        transRightPanel.add(solutionCheckBox = new JCheckBox("As is", true));
+        solutionTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                solutionCheckBox.setSelected(!(solutionTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
 
         transLeftPanel.add(new JLabel("Equilibrium phase", SwingConstants.RIGHT));
         transCenterPanel.add(equilibriumPhasesTextField = new JTextField(5));
-        transRightPanel.add(equilibriumPhasesCheckBox = new JCheckBox("As is"));
-        equilibriumPhasesCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                equilibriumPhasesTextField.setEnabled(!equilibriumPhasesCheckBox.isSelected());                
+        transRightPanel.add(equilibriumPhasesCheckBox = new JCheckBox("As is", true));
+        equilibriumPhasesTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                equilibriumPhasesCheckBox.setSelected(!(equilibriumPhasesTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
 
         transLeftPanel.add(new JLabel("Exchange", SwingConstants.RIGHT));
         transCenterPanel.add(exchangeTextField = new JTextField(5));
-        transRightPanel.add(exchangeCheckBox = new JCheckBox("As is"));
-        exchangeCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                exchangeTextField.setEnabled(!exchangeCheckBox.isSelected());                
+        transRightPanel.add(exchangeCheckBox = new JCheckBox("As is", true));
+        exchangeTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                exchangeCheckBox.setSelected(!(exchangeTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
         
         transLeftPanel.add(new JLabel("Surface", SwingConstants.RIGHT));
         transCenterPanel.add(surfaceTextField = new JTextField(5));
-        transRightPanel.add(surfaceCheckBox = new JCheckBox("As is"));
-        surfaceCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                surfaceTextField.setEnabled(!surfaceCheckBox.isSelected());                
+        transRightPanel.add(surfaceCheckBox = new JCheckBox("As is", true));
+        surfaceTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                surfaceCheckBox.setSelected(!(surfaceTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
 
         transLeftPanel.add(new JLabel("Gas phase", SwingConstants.RIGHT));
         transCenterPanel.add(gasPhaseTextField = new JTextField(5));
-        transRightPanel.add(gasPhaseCheckBox = new JCheckBox("As is"));
-        gasPhaseCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                gasPhaseTextField.setEnabled(!gasPhaseCheckBox.isSelected());                
+        transRightPanel.add(gasPhaseCheckBox = new JCheckBox("As is", true));
+        gasPhaseTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                gasPhaseCheckBox.setSelected(!(gasPhaseTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
         
         transLeftPanel.add(new JLabel("Solid solutions", SwingConstants.RIGHT));
         transCenterPanel.add(solidSolutionsTextField = new JTextField(5));
-        transRightPanel.add(solidSolutionsCheckBox = new JCheckBox("As is"));
-        solidSolutionsCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                solidSolutionsTextField.setEnabled(!solidSolutionsCheckBox.isSelected());                
+        transRightPanel.add(solidSolutionsCheckBox = new JCheckBox("As is", true));
+        solidSolutionsTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                solidSolutionsCheckBox.setSelected(!(solidSolutionsTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
         
         transLeftPanel.add(new JLabel("Kinetics", SwingConstants.RIGHT));
         transCenterPanel.add(kineticsTextField = new JTextField(5));
-        transRightPanel.add(kineticsCheckBox = new JCheckBox("As is"));
-        kineticsCheckBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                kineticsTextField.setEnabled(!kineticsCheckBox.isSelected());                
+        transRightPanel.add(kineticsCheckBox = new JCheckBox("As is", true));
+        kineticsTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                updateAsIs();
+            }
+            public void updateAsIs() {
+                kineticsCheckBox.setSelected(!(kineticsTextField.getText().length() > 0));
             }
         }
-        );     
+        );
         ++transportRows;
         
         if (hydraulicRows > transportRows) {

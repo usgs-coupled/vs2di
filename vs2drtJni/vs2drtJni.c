@@ -363,7 +363,6 @@ JNIEXPORT jfloat JNICALL Java_vs2_vs2drt_getModelTime(JNIEnv *env, jclass obj)
 JNIEXPORT void JNICALL Java_vs2_vs2drt_cleanup(JNIEnv *env, jclass obj)
 {
    CLOSEIO();
-   RELEASEMEMORY();
 }
 
 JNIEXPORT void JNICALL Java_vs2_vs2drt_releaseMemory(JNIEnv *env, jclass obj)

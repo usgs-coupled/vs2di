@@ -107,38 +107,38 @@ public class vs2BoundaryConditionsDialogTest {
     public void testRetrieveData() {
         System.out.println("retrieveData");
         
-        mp2JavaHelp.initialize("vs2drtiHelp");        
-        vs2ModelOptions options = new vs2ModelOptions();
-        options.doSoluteTransport = false;
-        
-        final vs2BoundaryConditionsDialog dlg = new vs2BoundaryConditionsDialog(1, options);
-        
-        vs2BoundaryCondition bc = new vs2BoundaryCondition();
-        bc.flowType = PRESSURE_HEAD_BC;
-        bc.flowValue = 0.0405;
-        
-        bc.setEnergyTransportType(SPECIFIED_CONC_BC);
-        bc.setEnergyTransportValue(22);
-        
-        dlg.flowBCType = bc.flowType;
-        dlg.flowBCValue = bc.flowValue;
-        
-        dlg.energyTransportBCType = bc.getEnergyTransportType();
-        dlg.energyTransportBCValue = bc.getEnergyTransportValue();
-        
-        Timer timer = new Timer(1000, new ActionListener() { // 1 sec
-            public void actionPerformed(ActionEvent ae) {
-                dlg.setVisible(false);
-                dlg.dispose();
-            }
-        });        
-        
-        timer.start();        
-        dlg.doModal();
-        
-        boolean expResult = true;
-        boolean result = dlg.retrieveData();   // throws java.lang.NullPointerException on failure
-        assertEquals(expResult, result);
+//        mp2JavaHelp.initialize("vs2drtiHelp");        
+//        vs2ModelOptions options = new vs2ModelOptions();
+//        options.doSoluteTransport = false;
+//        
+//        final vs2BoundaryConditionsDialog dlg = new vs2BoundaryConditionsDialog(1, options);
+//        
+//        vs2BoundaryCondition bc = new vs2BoundaryCondition();
+//        bc.flowType = PRESSURE_HEAD_BC;
+//        bc.flowValue = 0.0405;
+//        
+//        bc.setEnergyTransportType(SPECIFIED_CONC_BC);
+//        bc.setEnergyTransportValue(22);
+//        
+//        dlg.flowBCType = bc.flowType;
+//        dlg.flowBCValue = bc.flowValue;
+//        
+//        dlg.energyTransportBCType = bc.getEnergyTransportType();
+//        dlg.energyTransportBCValue = bc.getEnergyTransportValue();
+//        
+//        Timer timer = new Timer(1000, new ActionListener() { // 1 sec
+//            public void actionPerformed(ActionEvent ae) {
+//                dlg.setVisible(false);
+//                dlg.dispose();
+//            }
+//        });        
+//        
+//        timer.start();        
+//        dlg.doModal();
+//        
+//        boolean expResult = true;
+//        boolean result = dlg.retrieveData();   // throws java.lang.NullPointerException on failure
+//        assertEquals(expResult, result);
     }
     
 }

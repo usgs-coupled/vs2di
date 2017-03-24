@@ -5,6 +5,7 @@
  */
 package vs2;
 
+import java.awt.Dimension;
 import javax.swing.filechooser.FileFilter;
 import mp2.mp2Doc;
 import mp2.mp2FrameManager;
@@ -182,6 +183,153 @@ public class vs2AppTest {
         String result = instance.getPropertiesFileName();
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test testHelp 
+     */
+    @Ignore   // still needs work
+    @Test  
+    public void testHelp() {
+        System.out.println("testHelp");
+        
+        try {
+            vs2App.main(null);
+        
+            java.awt.Robot robot = new java.awt.Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+
+            // show postprocessor
+            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
+            // get frameManager
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            assertNotEquals(null, frameManager);
+            
+            Thread.sleep(100);
+
+//            // get frame
+//            vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
+//            assertNotEquals(null, frame);
+
+            javax.swing.JFrame frame = vs2App.theApp.getFrame();
+
+            /**
+            while (!frame.isShowing()) {
+                Thread.sleep(100);
+                System.out.println("isShowing");
+            }
+            */
+            //while (!frame.isEnabled()) Thread.sleep(100);
+            //while (!frame.isDisplayable()) Thread.sleep(100);
+            //while (!frame.hasFocus()) Thread.sleep(100);
+            //while (!frame.getFocusableWindowState()) Thread.sleep(100);
+            //while (!frame.isActive()) Thread.sleep(100);
+            //while (!frame.isFocusable()) Thread.sleep(100);
+            //while (!frame.isVisible()) Thread.sleep(100);
+
+            //Thread.sleep(20000);
+
+            
+            Dimension d = frame.getSize();
+            System.out.println("h=" + d.height + "w=" + d.width);
+            java.awt.Rectangle r = frame.getBounds();
+            System.out.println("x=" + r.x + "y=" + r.y);
+            
+            java.awt.Point p = frame.getLocationOnScreen();
+            
+            //robot.mouseMove(r.x+d.width, r.y);
+            //robot.mouseMove(r.x, r.y);
+            //robot.mouseMove(r.y, r.x);
+            //robot.mouseMove(p.x+20, p.y+20);
+            //robot.mouseMove(p.x + r.width, p.y);
+            
+            //Thread.sleep(10000);
+            Thread.sleep(100);
+            
+            // Help->Contents
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_H);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_H);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_C);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_C);
+            
+            Thread.sleep(10000);
+            
+            //{{
+//            java.awt.Component c = java.awt.KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+//            while (c != null) {
+//                c = c.getParent();
+//            }            
+            //}}
+            
+            robot.mouseMove(p.x + r.width - 1, p.y + 1);
+            robot.mousePress(java.awt.event.InputEvent.BUTTON1_MASK);
+            robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_MASK);
+            
+            Thread.sleep(3000);
+            
+            
+            // Switch focus to preprocessor (by minimizing help window)
+//            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+//            
+//            robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
+//            robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);            
+//
+//            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
+
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_N);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_N);
+            
+            Thread.sleep(250);
+            
+            // Options->Model...
+            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_O);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_O);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_M);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_M);
+            
+            Thread.sleep(100);
+            
+            // Help button
+            robot.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
+            
+            robot.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
+            
+            robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);            
+
+            Thread.sleep(100);
+        }
+        catch (java.awt.AWTException e) {
+            System.out.println("AWTException");
+        }
+        catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        }
+        catch (Exception e) {
+            System.out.println("Exception");
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Test of main method, of class vs2App.
@@ -401,6 +549,75 @@ public class vs2AppTest {
             System.out.println("Exception");
         }
     }
+    
+    /**
+     * Test testCleanup 
+     */
+    //@Ignore
+    @Test
+    public void testCleanup() {
+        System.out.println("testCleanup");
+        
+        try {
+            vs2App.main(null);
+        
+            // open ex11.vs2
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
+            
+            java.io.File inFile = new java.io.File(path.toString());
+            vs2App.theApp.openFile(inFile);
+            
+            java.awt.Robot robot = new java.awt.Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+
+            // show postprocessor
+            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
+            // get frameManager
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            assertNotEquals(null, frameManager);
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();            
+            
+            Thread.sleep(100);
+
+            // get frame
+            vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
+            assertNotEquals(null, frame);
+            
+            // verify items
+            Thread.sleep(100);
+            assertNotEquals(null, frame.getDisplayChooser());
+            assertEquals(15, frame.getDisplayChooser().getItemCount());            
+            
+            // start run
+            assertNotEquals(null, frame.getRunButton());
+            frame.getRunButton().doClick();
+            
+            // wait until run has finished
+            while (frame.getStopButton().isEnabled()) {
+                Thread.sleep(100);
+            }
+            
+            // change chooser
+            frame.getDisplayChooser().setSelectedIndex(0);  // crashed on r12049-r12598
+            
+            // verify items
+            Thread.sleep(100);
+            assertEquals(15, frame.getDisplayChooser().getItemCount());
+        }
+        catch (java.awt.AWTException e) {
+            System.out.println("AWTException");
+        }
+        catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        }
+        catch (Exception e) {
+            System.out.println("Exception");
+        }
+    }
+    
     
     /**
      * Test PostCloseOpenPost 

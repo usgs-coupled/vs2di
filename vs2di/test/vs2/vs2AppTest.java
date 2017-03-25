@@ -541,74 +541,74 @@ public class vs2AppTest {
 //        }
 //    }
 //    
-//    /**
-//     * Test testCleanup 
-//     */
-//    @Ignore
-//    @Test
-//    public void testCleanup() {
-//        System.out.println("testCleanup");
-//        
-//        try {
-//            vs2App.main(null);
-//        
-//            // open ex11.vs2
-//            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
-//            assertEquals(true, java.nio.file.Files.exists(path));
-//            
-//            java.io.File inFile = new java.io.File(path.toString());
-//            vs2App.theApp.openFile(inFile);
-//            
+    /**
+     * Test testCleanup 
+     */
+    //@Ignore
+    @Test
+    public void testCleanup() {
+        System.out.println("testCleanup");
+        
+        try {
+            vs2App.main(null);
+        
+            // open ex11.vs2
+            java.nio.file.Path path = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/vs2drti", "ex11.vs2");
+            assertEquals(true, java.nio.file.Files.exists(path));
+            
+            java.io.File inFile = new java.io.File(path.toString());
+            vs2App.theApp.openFile(inFile);
+            
 //            java.awt.Robot robot = new java.awt.Robot();
 //            robot.setAutoDelay(40);
 //            robot.setAutoWaitForIdle(true);
-//
-//            // show postprocessor
-//            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
-//            // get frameManager
-//            vs2FrameManager frameManager =
-//                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
-//            assertNotEquals(null, frameManager);
-//            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();            
-//            
-//            Thread.sleep(100);
-//
-//            // get frame
-//            vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
-//            assertNotEquals(null, frame);
-//            
-//            // verify items
-//            Thread.sleep(100);
-//            assertNotEquals(null, frame.getDisplayChooser());
-//            assertEquals(15, frame.getDisplayChooser().getItemCount());            
-//            
-//            // start run
-//            assertNotEquals(null, frame.getRunButton());
-//            frame.getRunButton().doClick();
-//            
-//            // wait until run has finished
-//            while (frame.getStopButton().isEnabled()) {
-//                Thread.sleep(100);
-//            }
-//            
-//            // change chooser
-//            frame.getDisplayChooser().setSelectedIndex(0);  // crashed on r12049-r12598
-//            
-//            // verify items
-//            Thread.sleep(100);
-//            assertEquals(15, frame.getDisplayChooser().getItemCount());
-//        }
+
+            // show postprocessor
+            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
+            // get frameManager
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            assertNotEquals(null, frameManager);
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();            
+            
+            Thread.sleep(100);
+
+            // get frame
+            vs2PostProcessorFrame frame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
+            assertNotEquals(null, frame);
+            
+            // verify items
+            Thread.sleep(100);
+            assertNotEquals(null, frame.getDisplayChooser());
+            assertEquals(15, frame.getDisplayChooser().getItemCount());            
+            
+            // start run
+            assertNotEquals(null, frame.getRunButton());
+            frame.getRunButton().doClick();
+            
+            // wait until run has finished
+            while (frame.getStopButton().isEnabled()) {
+                Thread.sleep(100);
+            }
+            
+            // change chooser
+            frame.getDisplayChooser().setSelectedIndex(0);  // crashed on r12049-r12598
+            
+            // verify items
+            Thread.sleep(100);
+            assertEquals(15, frame.getDisplayChooser().getItemCount());
+        }
 //        catch (java.awt.AWTException e) {
 //            System.out.println("AWTException");
 //        }
-//        catch (InterruptedException e) {
-//            System.out.println("InterruptedException");
-//        }
-//        catch (Exception e) {
-//            System.out.println("Exception");
-//        }
-//    }
-//    
+        catch (InterruptedException e) {
+            System.out.println("InterruptedException");
+        }
+        catch (Exception e) {
+            System.out.println("Exception");
+        }
+    }
+    
 //    
 //    /**
 //     * Test PostCloseOpenPost 

@@ -68,7 +68,8 @@ public class vs2TexturalClassCustomDialog extends JDialog implements mp2Constant
 
         panel.add(helpButton = new JButton("Help"));
         if (mp2App.useJavaHelp()) {
-	        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "importTexturalClass", null);        } else {
+	        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "importTexturalClass", null);
+        } else {
             helpButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     mp2HelpWindow.showHelpFile ("importTexturalClass.html");

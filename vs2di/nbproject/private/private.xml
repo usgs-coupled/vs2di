@@ -10,6 +10,14 @@
             </bookmark>
         </file>
         <file>
+            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
+            <bookmark id="26">
+                <name/>
+                <line>104</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>src/vs2/vs2ChemistryClassData.java</url>
             <bookmark id="31">
                 <name/>
@@ -68,14 +76,6 @@
             <bookmark id="25">
                 <name/>
                 <line>55</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>src/vs2/vs2SourcePropertiesDialog.java</url>
-            <bookmark id="26">
-                <name/>
-                <line>104</line>
                 <key/>
             </bookmark>
         </file>

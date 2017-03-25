@@ -64,7 +64,8 @@ public class vs2EvapotranspirationCustomDialog extends JDialog implements mp2Con
 
         panel.add(helpButton = new JButton("Help"));
         if (mp2App.useJavaHelp()) {
-	        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "importETData", null);        } else {
+	        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "importETData", null);
+        } else {
             helpButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     mp2HelpWindow.showHelpFile ("importETData.html");

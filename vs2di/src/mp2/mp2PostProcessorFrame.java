@@ -1033,11 +1033,13 @@ public abstract class mp2PostProcessorFrame extends JFrame
      * Invoked when the restart computation menu item is selected
      */
     protected void onRestartComputation() {
-        int result = mp2MessageBox.showYesNoDialog(this, 
-                "Do you want to restart the computation?", "Warning");
-        if (result == mp2MessageBox.NO_OPTION) {
-            System.out.println("onRestartComputation:No");
-            return;
+        if (System.getProperty("onRestartComputation").compareToIgnoreCase("Yes") != 0) {
+            int result = mp2MessageBox.showYesNoDialog(this, 
+                    "Do you want to restart the computation?", "Warning");
+            if (result == mp2MessageBox.NO_OPTION) {
+                System.out.println("onRestartComputation:No");
+                return;
+            }
         }
         System.out.println("onRestartComputation:Yes");
         model.closeIO();

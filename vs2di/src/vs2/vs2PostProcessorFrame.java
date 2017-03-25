@@ -1415,6 +1415,14 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     
     /**
      * Only used for unit testing
+     * @return restart computation JMenuItem
+     */
+    public JMenuItem getRestartComputationMenuItem() {
+        return this.restartComputationMenuItem;        
+    }
+    
+    /**
+     * Only used for unit testing
      * @return stop JButton
      */
     public JButton getStopButton() {

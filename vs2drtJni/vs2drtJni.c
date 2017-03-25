@@ -53,6 +53,7 @@ JNIEXPORT void JNICALL Java_vs2_vs2drt_start(JNIEnv *env, jclass obj, jint jold,
    iold = jold;
    ihydr = jhydr;
    isorp = jsorp;
+   RELEASEMEMORY();
    SETUP(&iold, &ihydr, &isorp, filen, len);
 }
 

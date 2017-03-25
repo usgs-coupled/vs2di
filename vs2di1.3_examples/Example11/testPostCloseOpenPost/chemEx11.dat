@@ -1,0 +1,26 @@
+SOLUTION 0  CaCl2
+        units            mmol/kgw
+        temp             25.0
+        pH               7.0     charge
+        pe               12.5    O2(g)   -0.68
+        Ca               0.6
+        Cl               1.2
+SOLUTION 1  Initial solution for column
+        units            mmol/kgw
+        temp             25.0
+        pH               7.0     charge
+        pe               12.5    O2(g)   -0.68
+        Na               1.0
+        K                0.2
+        N(5)             1.2
+END
+EXCHANGE 1
+        -equilibrate 1
+        X                0.0011
+SELECTED_OUTPUT 1
+	-pH
+SELECTED_OUTPUT 2
+USER_PUNCH 2
+-heading pH Na Cl Ca K N
+10 PUNCH -LA("H+"), TOT("Na"), TOT("Cl"), TOT("Ca"), TOT("K"), TOT("N")
+END

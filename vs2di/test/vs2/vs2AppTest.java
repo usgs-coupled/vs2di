@@ -365,9 +365,13 @@ public class vs2AppTest {
             robot.setAutoWaitForIdle(true);
 
             // show postprocessor
-            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
-            
+//            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
+//            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            assertNotEquals(null, frameManager);
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();            
+
             Thread.sleep(100);
             
             // click step twice

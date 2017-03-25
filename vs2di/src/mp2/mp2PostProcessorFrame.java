@@ -268,6 +268,7 @@ public abstract class mp2PostProcessorFrame extends JFrame
         });
         restartComputationMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onRestartComputation");
                 onRestartComputation();
             }
         });
@@ -313,11 +314,13 @@ public abstract class mp2PostProcessorFrame extends JFrame
         });
         stepButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onStep");
                 onStep();
             }
         });
         resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onResetPlaybackToBeginning");
                 onResetPlaybackToBeginning();
             }
         });
@@ -1033,8 +1036,10 @@ public abstract class mp2PostProcessorFrame extends JFrame
         int result = mp2MessageBox.showYesNoDialog(this, 
                 "Do you want to restart the computation?", "Warning");
         if (result == mp2MessageBox.NO_OPTION) {
+            System.out.println("onRestartComputation:No");
             return;
         }
+        System.out.println("onRestartComputation:Yes");
         model.closeIO();
         if (model.getType() == mp2Model.PLAYBACK_BINARY) {
             model = computationalModel;

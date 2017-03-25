@@ -396,8 +396,10 @@ public class vs2AppTest {
             System.out.println("Hit Yes");            
             
             // Do you want to restart the computation? Yes
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+//            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+//            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
             
             robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
             robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
@@ -411,8 +413,10 @@ public class vs2AppTest {
             robot.keyRelease(java.awt.event.KeyEvent.VK_D);
             
             // Do you want to restart the computation? Yes
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
+//            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
+//            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
+            robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
             
             Thread.sleep(250);
         }

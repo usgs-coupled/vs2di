@@ -10,8 +10,8 @@
 
 <P>
 To view and/or modify the model <A HREF="domain.html">domain</A>,
-select "Domain" from the 
-"Active Data" Selector (see  
+select "Domain" from the
+"Active Data" Selector (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_prewindow.html">
 <param name="text" value="figure">
@@ -27,11 +27,17 @@ select "Domain" from the
 <P>
 The simulated domain is roughly rectangular in shape.  The top of the
 domain represents land surface.  There is a slight
-depression in the center of the surface.  It is in this depression that
-contaminant will be introduced.  The bottom of the domain is assumed
-to be impermeable rock upon which a perched water table may exist.
+depression in the center of the surface, which represents an ephemeral stream.
+the stream is assumed to be flowing for 0.1 day with a water temperature of 30<sup>o</sup>C
+and a 0.1 molar concentration of sodium chloride (Solution 2 in the
+Phreeqc input file "tutorial.dat"). For the next 10 days solute-free water (Solution 1) with a temperature
+of 10<sup>o</sup>C infiltrates through the entire
+top boundary. A specified flux boundary condition is used.
+The bottom of the domain is assumed
+to be impermeable rock upon which a perched water table may exist; the temperature of
+that boundary is held constant at 12<sup>o</sup>C.
 The side boundaries are treated as no-flow boundaries except near the
-bottom where seepage faces are allowed to develop.</P>
+bottom where seepage faces are allowed to develop above the water table.</P>
 
 <P>You may:
 <br>&nbsp;•&nbsp;&nbsp;<A HREF="drawExteriorBoundary.html">Draw the exterior boundary</A>
@@ -43,7 +49,7 @@ bottom where seepage faces are allowed to develop.</P>
 </P>
 
 <P><HR WIDTH="50%" ALIGN=LEFT></P>
- 
+
 <P>Next step: <A HREF="tutorial_TexturalMap.html">Textural Map</A></P>
 <P>Previous step: <A HREF="tutorial_DrawingArea.html">Drawing Area</A></P>
 

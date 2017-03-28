@@ -10,9 +10,9 @@
 
 <P>
 To view the <A HREF="boundaryConditions.html">
-boundary conditions</A> window, select "Boundary Conditions" 
+boundary conditions</A> window, select "Boundary Conditions"
 from the "Show" menu.  To manipulate them you must select
-"Boundary Conditions" from the "Active Data" Selector (see  
+"Boundary Conditions" from the "Active Data" Selector (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_prewindow.html">
 <param name="text" value="figure">
@@ -28,25 +28,30 @@ from the "Show" menu.  To manipulate them you must select
 <P>
 Boundary conditions are specified by recharge period, so it is
 necessary to have the "Recharge Period" window showing when
-setting them.  The user must highlight the period of interest.  
+setting them.  The user must highlight the period of interest.
 Boundary conditions can then
 be set along any segment of the domain boundary (either external
 or internal).
 </P>
 <P>
+<P>
 For this example, land surface is represented as a specified flux boundary condition
-(green color) with the flux set at 0.01 m per day.  The concentration of inflowing
-water is set to 0. except in the land surface depression for the
-first recharge period where it is set to 1000 g per cubic meter for
-the 10 day period. (NOTE, this is the only difference in boundary
-conditions between the 2 recharge periods.)</P>
+(green color) with the flux set at 1.0e-8 m per second.  The temperature of inflowing
+water is set to 10 <sup>o</sup>C, and the water is solute free (Solution 1).  For the first recharge period the stream bed is
+represented by a constant pressure boundary condition (blue).  The temperature of the
+inflowing water is set at 30 <sup>o</sup>C and has a 0.1 molar concentration of sodium
+chloride (Solution 2). For the second recharge period, the streambed is treated identical
+to the rest of the top boundary (specified flux) (NOTE, the streambed boundary
+condition is the only one that changes between the 2 recharge periods.)</P>
+
 <P>
 The bottom boundary is assumed to be impermeable, so the
-default "no-flow" boundary condition is used.  
+default "no-flow" boundary condition is used.  Temperature at that boundary is
+fixed at 12 <sup>o</sup>C.
 
 <P>
 Along the vertical side, the boundary is divided into 3 segments.
-The upper half of the side boundary is specified as no-flow.
+The upper half of the side boundary is specified as no water, heat, or solute flow.
 The lower portion above the initial water table is specified as
 a potential seepage face (gold). This designation allows outflow
 if the water table rises. Below the initial water table, the
@@ -59,9 +64,9 @@ the total head is below the zero tick mark, the value is negative.</P>
 <P>You may: </P>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-<tr>  
+<tr>
   <td width="1%" nowrap valign="top" align="left">•</td>
-  <td width="99%" valign="top" align="left"><A HREF="assignBoundaryConditions.html">Assign boundary 
+  <td width="99%" valign="top" align="left"><A HREF="assignBoundaryConditions.html">Assign boundary
     conditions</A> to boundary segments.</td>
 </tr>
 <tr>
@@ -84,7 +89,7 @@ the total head is below the zero tick mark, the value is negative.</P>
 
 
 <P><HR WIDTH="50%" ALIGN=LEFT></P>
- 
+
 <P>Next step: <A HREF="tutorial_Grid.html">Grid Layout</A></P>
 <P>Previous step: <A HREF="tutorial_RechargePeriods.html">Recharge Periods</A></P>
 

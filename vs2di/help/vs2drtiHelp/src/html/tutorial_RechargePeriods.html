@@ -10,11 +10,11 @@
 
 <P>
 To view  the <A HREF="rechargePeriods.html">
-recharge periods</A> window, select "Recharge Period 
+recharge periods</A> window, select "Recharge Period
 Window" from the "Show" menu.  The window will also be
 displayed if "Boundary Conditions" is
-selected from the 
-"Active Data" Selector (see  
+selected from the
+"Active Data" Selector (see
 <object CLASSID="java:com.sun.java.help.impl.JHSecondaryViewer" id=OBJECT1>
 <param name="content" value="./fig_prewindow.html">
 <param name="text" value="figure">
@@ -29,22 +29,23 @@ selected from the
 ).</P>
 <P>
 There are 2 recharge periods for the example simulation, the first
-lasting 10 days and the second lasting 100 days.  
-Aside from boundary conditions all other parameters for the 
-2 recharge periods are identical.  The initial time step size
-is 0.0001 days.  The time step size will be increased for each
-successive step by a factor of 1.2 until a maximum step size of
-1 day is reached.  If convergence of the solver is not attained,
+lasting 0.1 days (8,640 seconds) and the second lasting 10 days
+(864,000 seconds).
+The initial time step size
+is 0.0001 seconds.  The time step size will be increased for each
+successive step by a factor of 1.2 until a maximum step size (100 seconds
+for recharge period 1, and 2,000 seconds for recharge period 2)
+is reached.  If convergence of the solver is not attained,
 the time step size will be reduced by a factor of 0.1.  The maximum
 allowed change in head is 10 m.  Steady state will only be assumed
 when there is no change in computed heads between adjacent time steps.
 If the applied infiltration rate exceeds the ability of the soil
-to imbibe water, then ponding will occur in the simulation with 
+to imbibe water, then ponding will occur in the simulation with
 the elevation of ponded water being equal to that of land surface.
 </P>
 
 <P><HR WIDTH="50%" ALIGN=LEFT></P>
- 
+
 <P>Next step: <A HREF="tutorial_BoundaryConditions.html">Boundary Conditions</A></P>
 <P>Previous step: <A HREF="tutorial_InitialConcentration.html">Initial Concentration</A></P>
 

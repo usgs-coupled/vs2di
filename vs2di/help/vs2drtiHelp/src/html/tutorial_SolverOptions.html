@@ -10,14 +10,15 @@
 
 <P>For the <A HREF="solverOptions.html">solver</A> panel, the following
 values are selected: Relaxation parameter is set at its default value
-of 0.7.  Minimum and maximum allowed iterations are set at 2 and 150, 
+of 0.7.  Minimum and maximum allowed iterations are set at 2 and 50,
 respectively.  The simulation will be terminated if the solver of the
 matrix equation fails to converge.  Maximum number of time steps is 1000.
-Closure criteria are 0.001 for the flow equation and 1.0E-5 for the
+Closure criteria are 1.0e-5 for the flow equation, 1.0E-5 for the
+heat transport equation, 1.0e-4 for velocity, and 1.0e-7 for the solute
 transport equation.  </P>
 
 <P><HR WIDTH="50%" ALIGN=LEFT></P>
- 
+
 <P>Next step: <A HREF="tutorial_OutputOptions.html">Output Options</A></P>
 <P>Previous step: <A HREF="tutorial_TransportOptions.html">Transport Options</A></P>
 

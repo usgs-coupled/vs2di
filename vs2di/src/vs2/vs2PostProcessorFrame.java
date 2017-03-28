@@ -1423,6 +1423,14 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     
     /**
      * Only used for unit testing
+     * @return Exit(Done) JMenuItem
+     */
+    public JMenuItem getExitMenuItem() {
+        return this.exitMenuItem;
+    }
+    
+    /**
+     * Only used for unit testing
      * @return stop JButton
      */
     public JButton getStopButton() {

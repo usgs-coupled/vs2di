@@ -6,6 +6,7 @@
 package vs2;
 
 import java.awt.Dimension;
+import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileFilter;
 import mp2.mp2Doc;
 import mp2.mp2FrameManager;
@@ -31,14 +32,10 @@ public class vs2AppTest {
     
     @BeforeClass
     public static void setUpClass() {
-        java.util.Properties props = System.getProperties();
-        props.put("onRestartComputation.Force.Yes", "Yes");
     }
     
     @AfterClass
     public static void tearDownClass() {
-        java.util.Properties props = System.getProperties();
-        props.remove("onRestartComputation.Force.Yes");
     }
     
     @Before
@@ -364,13 +361,7 @@ public class vs2AppTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-            //java.awt.Robot robot = new java.awt.Robot();
-            //robot.setAutoDelay(40);
-            //robot.setAutoWaitForIdle(true);
-
             // show postprocessor
-//            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
             vs2FrameManager frameManager =
                     (vs2FrameManager) vs2App.theApp.getFrame().getManager();
             assertNotEquals(null, frameManager);
@@ -386,32 +377,29 @@ public class vs2AppTest {
             
             Thread.sleep(100);
             
-            // Action->Restart computation
-//            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-//            
-//            robot.keyPress(java.awt.event.KeyEvent.VK_A);
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-//            
-//            robot.keyPress(java.awt.event.KeyEvent.VK_R);    // This causes EXCEPTION_ACCESS_VIOLATION (-r 11503)
-//            robot.keyRelease(java.awt.event.KeyEvent.VK_R);  // in vs2.vs2drt.getSoluteTransportMassBalanceErrors
-            frame.getRestartComputationMenuItem().doClick();
-            
-            Thread.sleep(250);
+            // answer yes to restart
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("onRestartComputation", "Yes");
+
+                // Action->Restart computation
+                // This causes EXCEPTION_ACCESS_VIOLATION (-r 11503)
+                // in vs2.vs2drt.getSoluteTransportMassBalanceErrors                
+                frame.getRestartComputationMenuItem().doClick();
+
+                Thread.sleep(250);
+            }
         }
-        /*
-        catch (java.awt.AWTException e) {
-            System.out.println("AWTException");
-        }
-        */
         catch (InterruptedException e) {
             System.out.println("InterruptedException");
         }
-        /*
         catch (Exception e) {
             System.out.println("Exception");
         }
-        */
+        finally {
+            java.util.Properties props = System.getProperties();
+            props.remove("onRestartComputation");
+        }
     }
     
     /**
@@ -432,13 +420,8 @@ public class vs2AppTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-            java.awt.Robot robot = new java.awt.Robot();
-            robot.setAutoDelay(40);
-            robot.setAutoWaitForIdle(true);
 
             // show postprocessor
-            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
-            // get frameManager
             vs2FrameManager frameManager =
                     (vs2FrameManager) vs2App.theApp.getFrame().getManager();
             assertNotEquals(null, frameManager);
@@ -467,77 +450,57 @@ public class vs2AppTest {
             // Reset playback to beginning
             assertNotEquals(null, frame.getResetButton());
             frame.getResetButton().doClick();
-            Thread.sleep(1000);            
+            Thread.sleep(100);
             
-            // Action->Restart computation
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
+            // answer yes to restart
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("onRestartComputation", "Yes");
 
-            robot.keyPress(java.awt.event.KeyEvent.VK_A);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_R);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_R);
+                // Action->Restart computation
+                frame.getRestartComputationMenuItem().doClick();
 
-            // Do you want to restart the computation?
-            // Yes
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
-            
-            // verify items
-            Thread.sleep(1000);            
-            assertEquals(15, frame.getDisplayChooser().getItemCount());
-            
-            // start run again
-            assertNotEquals(null, frame.getRunButton());
-            frame.getRunButton().doClick();
-            
-            // wait until run has finished
-            while (frame.getStopButton().isEnabled()) {
+                // verify items
                 Thread.sleep(100);
+                assertEquals(15, frame.getDisplayChooser().getItemCount());
+
+                // start run again
+                assertNotEquals(null, frame.getRunButton());
+                frame.getRunButton().doClick();
+
+                // wait until run has finished
+                while (frame.getStopButton().isEnabled()) {
+                    Thread.sleep(100);
+                }
+
+                // Reset playback to beginning
+                assertNotEquals(null, frame.getResetButton());
+                frame.getResetButton().doClick();
+                Thread.sleep(1000);
             }
-            
-            // Reset playback to beginning
-            assertNotEquals(null, frame.getResetButton());
-            frame.getResetButton().doClick();
-            Thread.sleep(1000);            
-            
-            // Action->Restart computation
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
 
-            robot.keyPress(java.awt.event.KeyEvent.VK_A);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_R);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_R);
+            // answer no to restart
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("onRestartComputation", "No");
 
-            // Do you want to restart the computation?
-            // No
-            Thread.sleep(100);
-            robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);            
-            
-            // must close postprocessor or remaining tests may fail
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyPress(java.awt.event.KeyEvent.VK_F4);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F4);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);            
-            
+                // Action->Restart computation
+                frame.getRestartComputationMenuItem().doClick();
+            }
+
             // verify items
             Thread.sleep(100);
             assertEquals(15, frame.getDisplayChooser().getItemCount());
-        }
-        catch (java.awt.AWTException e) {
-            System.out.println("AWTException");
         }
         catch (InterruptedException e) {
             System.out.println("InterruptedException");
         }
         catch (Exception e) {
             System.out.println("Exception");
+        }
+        finally {
+            java.util.Properties props = System.getProperties();
+            props.remove("onRestartComputation");
         }
     }
     
@@ -559,13 +522,7 @@ public class vs2AppTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-//            java.awt.Robot robot = new java.awt.Robot();
-//            robot.setAutoDelay(40);
-//            robot.setAutoWaitForIdle(true);
-
             // show postprocessor
-            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
-            // get frameManager
             vs2FrameManager frameManager =
                     (vs2FrameManager) vs2App.theApp.getFrame().getManager();
             assertNotEquals(null, frameManager);
@@ -598,9 +555,6 @@ public class vs2AppTest {
             Thread.sleep(100);
             assertEquals(15, frame.getDisplayChooser().getItemCount());
         }
-//        catch (java.awt.AWTException e) {
-//            System.out.println("AWTException");
-//        }
         catch (InterruptedException e) {
             System.out.println("InterruptedException");
         }
@@ -632,12 +586,7 @@ public class vs2AppTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-            java.awt.Robot robot = new java.awt.Robot();
-            robot.setAutoDelay(40);
-            robot.setAutoWaitForIdle(true);
-
             // show postprocessor
-            // NOTE: robot.keyPress(java.awt.event.KeyEvent.VK_F6) doesnt seem to work in jenkins
             // get frameManager
             vs2FrameManager frameManager =
                     (vs2FrameManager) vs2App.theApp.getFrame().getManager();
@@ -646,18 +595,22 @@ public class vs2AppTest {
             
             Thread.sleep(100);
             
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_A);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_D);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+            vs2PostProcessorFrame postProcessorFrame = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
+            assertNotEquals(null, postProcessorFrame);
 
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
+            // Action->Done->(The computation is not finished. Do you want to quit anyway?)->Yes
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("quitOK", "Yes");
+
+                JMenuItem doneMenuItem = postProcessorFrame.getExitMenuItem();
+                assertNotEquals(null, doneMenuItem);
+                assertEquals(true, doneMenuItem.isEnabled());
+                doneMenuItem.doClick(); 
+
+                Thread.sleep(100);
+            }
+
             // open ex11-test.vs2
             java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/Example11/testPostCloseOpenPost", "ex11-test.vs2");
             assertEquals(true, java.nio.file.Files.exists(path2));
@@ -665,26 +618,22 @@ public class vs2AppTest {
             java.io.File inFile2 = new java.io.File(path2.toString());
             vs2App.theApp.openFile(inFile2);
 
-            Thread.sleep(250);
+            Thread.sleep(100);
             
             frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();
             
-            // must close postprocessor or remaining tests may fail
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyPress(java.awt.event.KeyEvent.VK_A);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_A);
-            robot.keyPress(java.awt.event.KeyEvent.VK_D);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+            // Action->Done->(The computation is not finished. Do you want to quit anyway?)->Yes
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("quitOK", "Yes");
 
-            // The computation is not finished. Do you want to quit anyway? Yes
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);          
+                JMenuItem doneMenuItem = postProcessorFrame.getExitMenuItem();
+                assertNotEquals(null, doneMenuItem);
+                assertEquals(true, doneMenuItem.isEnabled());
+                doneMenuItem.doClick(); 
 
-            Thread.sleep(250);
-        }
-        catch (java.awt.AWTException e) {
-            System.out.println("AWTException");
+                Thread.sleep(100);
+            }
         }
         catch (InterruptedException e) {
             System.out.println("InterruptedException");
@@ -692,7 +641,11 @@ public class vs2AppTest {
         catch (Exception e) {
             System.out.println("Exception");
         }
-    }    
+        finally {
+            java.util.Properties props = System.getProperties();
+            props.remove("quitOK");
+        }
+    }
 
     /**
      * Test of typeCheck method, of class vs2App.

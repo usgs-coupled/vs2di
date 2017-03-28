@@ -7,6 +7,7 @@ package vs2;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import javax.swing.JMenuItem;
 import mp2.mp2ComputationalModel;
 import mp2.mp2PlaybackBinary;
 import mp2.mp2PostProcessorView;
@@ -46,9 +47,10 @@ public class vs2PostProcessorFrameTest {
     /**
      * Test of onExit method, of class vs2PostProcessorFrame.
      */
+    //@Ignore
     @Test
     public void testOnExit() {
-        System.out.println("onExit");
+        System.out.println("testOnExit");
         try {
             vs2App.main(null);
             
@@ -58,99 +60,51 @@ public class vs2PostProcessorFrameTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-            java.awt.Robot robot = new java.awt.Robot();
-            robot.setAutoDelay(40);
-            robot.setAutoWaitForIdle(true);
-
             // show postprocessor
-            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
-            
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();
+
             Thread.sleep(100);
-            
+
             // click step
             vs2PostProcessorFrame instance = (vs2PostProcessorFrame)vs2App.theApp.getPostProcessorFrame();
-            assertNotEquals(instance, null);
+            assertNotEquals(null, instance);
             instance.getStepButton().doClick();
-            
-            Thread.sleep(100);
-            
-            // Action->Done
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
-            // answer no (The computation is not finished. Do you want to quit anyway?)
-            robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            instance.getStepButton().doClick();    // this used to cause an EXCEPTION_ACCESS_VIOLATION
 
             Thread.sleep(100);
-            
-            // Action->Done
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
+
+            // answer no (The computation is not finished. Do you want to quit anyway?)
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("quitOK", "No");
+
+                // Action->Done
+                JMenuItem done = instance.getExitMenuItem();
+                assertNotEquals(null, done);
+                assertEquals(true, done.isEnabled());
+                done.doClick();
+
+                Thread.sleep(100);
+
+                instance.getStepButton().doClick();    // this used to cause an EXCEPTION_ACCESS_VIOLATION
+
+                Thread.sleep(100);
+            }
+
             // answer yes (The computation is not finished. Do you want to quit anyway?)
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
-            // Minimize main window
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyPress(java.awt.event.KeyEvent.VK_N);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_N);            
-            
-            Thread.sleep(100);
-        }
-        catch (java.awt.AWTException e) {
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("quitOK", "Yes");
+
+                // Action->Done
+                JMenuItem done = instance.getExitMenuItem();
+                assertNotEquals(null, done);
+                assertEquals(true, done.isEnabled());
+                done.doClick();
+
+                Thread.sleep(100);
+            }
         }
         catch (InterruptedException e) {
         }
@@ -173,13 +127,10 @@ public class vs2PostProcessorFrameTest {
             java.io.File inFile = new java.io.File(path.toString());
             vs2App.theApp.openFile(inFile);
             
-            java.awt.Robot robot = new java.awt.Robot();
-            robot.setAutoDelay(40);
-            robot.setAutoWaitForIdle(true);
-
             // show postprocessor
-            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
+            vs2FrameManager frameManager =
+                    (vs2FrameManager) vs2App.theApp.getFrame().getManager();
+            frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();
             
             Thread.sleep(100);
             
@@ -191,90 +142,41 @@ public class vs2PostProcessorFrameTest {
             
             Thread.sleep(100);
             
-            // Action->Done
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
             // answer yes (The computation is not finished. Do you want to quit anyway?)
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            // open flow/ex1
-            java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/flow/testRunEx11ThenFlowEx1", "example1.1_4.vs2");
-            assertEquals(true, java.nio.file.Files.exists(path2));
-            
-            java.io.File inFile2 = new java.io.File(path2.toString());
-            vs2App.theApp.openFile(inFile2);
-            
-            Thread.sleep(100);
-            
-            // show postprocessor    (this used to cause an exception in vs2drtJni
-            robot.keyPress(java.awt.event.KeyEvent.VK_F6);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_F6);
-            
-            Thread.sleep(100);
-            
-            // Action->Done
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_DOWN);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN);
-            
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
-            // answer yes (The computation is not finished. Do you want to quit anyway?)
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            
-            Thread.sleep(100);
-            
-            // Minimize main window
-            robot.keyPress(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_ALT);
-            robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE);
-            robot.keyPress(java.awt.event.KeyEvent.VK_N);
-            robot.keyRelease(java.awt.event.KeyEvent.VK_N);            
+            {
+                java.util.Properties props = System.getProperties();
+                props.put("quitOK", "Yes");
 
-            Thread.sleep(1000);
-        }
-        catch (java.awt.AWTException e) {
+                // Action->Done
+                JMenuItem done = instance.getExitMenuItem();
+                assertNotEquals(null, done);
+                assertEquals(true, done.isEnabled());
+                done.doClick();
+
+                Thread.sleep(100);
+
+                // open flow/ex1
+                java.nio.file.Path path2 = java.nio.file.Paths.get(System.getProperty("user.dir"), "../vs2di1.3_examples/flow/testRunEx11ThenFlowEx1", "example1.1_4.vs2");
+                assertEquals(true, java.nio.file.Files.exists(path2));
+
+                java.io.File inFile2 = new java.io.File(path2.toString());
+                vs2App.theApp.openFile(inFile2);
+
+                Thread.sleep(100);
+
+                // show postprocessor (this used to cause an exception in vs2drtJni
+                frameManager.getMenuItem(mp2.mp2Constants.POST_PROCESSOR).doClick();
+
+                Thread.sleep(100);
+
+                // Action->Done
+                done = instance.getExitMenuItem();
+                assertNotEquals(null, done);
+                assertEquals(true, done.isEnabled());
+                done.doClick();
+
+                Thread.sleep(1000);
+            }
         }
         catch (InterruptedException e) {
         }

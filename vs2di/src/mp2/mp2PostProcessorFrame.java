@@ -1033,13 +1033,19 @@ public abstract class mp2PostProcessorFrame extends JFrame
      * Invoked when the restart computation menu item is selected
      */
     protected void onRestartComputation() {
-        if (System.getProperty("onRestartComputation.Force.Yes") == null) {
-            int result = mp2MessageBox.showYesNoDialog(this, 
+        int result = mp2MessageBox.NO_OPTION;
+        if (System.getProperty("onRestartComputation") == null) {
+            result = mp2MessageBox.showYesNoDialog(this, 
                     "Do you want to restart the computation?", "Warning");
-            if (result == mp2MessageBox.NO_OPTION) {
-                System.out.println("onRestartComputation:No");
-                return;
+        }
+        else {
+            if (System.getProperty("onRestartComputation").compareToIgnoreCase("Yes") == 0) {
+                result = mp2MessageBox.YES_OPTION;
             }
+        }
+        if (result == mp2MessageBox.NO_OPTION) {
+            System.out.println("onRestartComputation:No");
+            return;
         }
         System.out.println("onRestartComputation:Yes");
         model.closeIO();
@@ -1308,11 +1314,22 @@ public abstract class mp2PostProcessorFrame extends JFrame
             isSimulating = false;
         }
 
-        int result = mp2MessageBox.showYesNoDialog(this, "The computation is not finished. " + 
-            "Do you want to quit anyway?", "Warning");
+        int result = mp2MessageBox.NO_OPTION;
+        if (System.getProperty("quitOK") == null) {
+            result = mp2MessageBox.showYesNoDialog(this,
+                    "The computation is not finished. " +
+                            "Do you want to quit anyway?", "Warning");
+        }
+        else {
+            if (System.getProperty("quitOK").compareToIgnoreCase("Yes") == 0) {
+                result = mp2MessageBox.YES_OPTION;
+            }
+        }
         if (result == mp2MessageBox.NO_OPTION) {
+            System.out.println("quitOK:No");
             return false;
         }
+        System.out.println("quitOK:Yes");
         model.closeIO();
         runStatus = 1;
         return true;

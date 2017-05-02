@@ -1474,7 +1474,7 @@
     common/ITEMK/KNLY,KNXR,KNNODE
     integer :: iu = 101
     INTEGER       :: myerr, iPRNT
-    INTEGER :: IIDUM(3)
+    INTEGER, DIMENSION(:), ALLOCATABLE :: IIDUM
 
     !!@@include 'd_idummAlloc.inc'
     allocate(IDUM(NXR))
@@ -2224,6 +2224,7 @@
 181             CONTINUE
 182         CONTINUE
         ELSE if (IREAD.EQ.1)then
+            allocate(iidum(nxr))
             DO 403 K=1,7
                 DO 402 J=1,NLY
     ! Line B-32
@@ -2241,6 +2242,7 @@
 401                 continue
 402             continue
 403         continue
+            deallocate(iidum)
         END IF  
         DO 185 I=1, Nsol
             Solcomp(I)=0.0d0

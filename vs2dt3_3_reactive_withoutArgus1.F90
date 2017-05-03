@@ -287,6 +287,7 @@
     !  ---- READ AND WRITE PROBLEM TITLE AND SPACE AND TIME CONSTANTS
     !
     JSTOP=0
+    RM_OK=.TRUE.
     ! Line A-1
     READ(5,4000,IOSTAT=myerr) TITL
     if (myerr .ne. 0) then

@@ -171,8 +171,11 @@ public abstract class mp2PostProcessorFrame extends JFrame
         optionMenu.add(vectorMenuItem = new JMenuItem("Vector..."));
         optionMenu.addSeparator();
         optionMenu.add(simulationMenuItem = new JMenuItem("Simulation..."));
+        /*
         optionMenu.addSeparator();
         optionMenu.add(bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false));
+        */
+        bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false);
 
         // Tool bar
         toolBar = new JToolBar();

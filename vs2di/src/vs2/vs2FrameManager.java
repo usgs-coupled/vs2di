@@ -338,8 +338,10 @@ public class vs2FrameManager extends mp2FrameManager
         helpMenu.add(helpMenuItem);
         helpMenu.add(aboutMenuItem);
 
+        /*
         frame.getMenu(OPTIONS_MENU).addSeparator();
         frame.getMenu(OPTIONS_MENU).add(bufferedGraphicsMenuItem);
+        */
 
         JComboBox dataChooser = frame.getDataChooser();
         dataChooser.removeAllItems();

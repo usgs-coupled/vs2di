@@ -10,7 +10,6 @@
        <tocitem text="Postprocessor" target="postprocessor"/>
        <tocitem text="New Features" target="newFeatures"/>
        <tocitem text="Zooming and Stretching the Display" target="zooming"/>
-       <tocitem text="Graphics Buffering" target="graphicsBuffering"/>
    </tocitem>
 
    <tocitem text="How to Set Up a Simulation" target="setupSimulation" expand="true">

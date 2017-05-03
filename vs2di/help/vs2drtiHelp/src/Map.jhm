@@ -83,7 +83,6 @@
     <mapID target="flowProperties" url="html/flowProperties.html" />                                                                                                                                   
     <mapID target="fluidBalanceOptions" url="html/fluidBalanceOptions.html" />                                                                                                                         
     <mapID target="freundlich" url="html/freundlich.html" />                                                                                                                                           
-    <mapID target="graphicsBuffering" url="html/graphicsBuffering.html" />                                                                                                                             
     <mapID target="grid" url="html/grid.html" />                                                                                                                                                       
     <mapID target="gridWindow" url="html/gridWindow.html" />                                                                                                                                           
     <mapID target="haverkamp" url="html/haverkamp.html" />                                                                                                                                             

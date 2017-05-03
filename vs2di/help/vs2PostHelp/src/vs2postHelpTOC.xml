@@ -8,7 +8,6 @@
        <tocitem text="Animation speed" target="animationSpeed"/>
        <tocitem text="Printing" target="print"/>
        <tocitem text="Exporting the drawing as a bitmap" target="bitmap"/>
-       <tocitem text="Graphics Buffering" target="graphicsBuffering"/>
    </tocitem>
 
    <tocitem text="Playback Mode" target="playbackMode" expand="true">

@@ -78,7 +78,7 @@ public class vs2ChemistryClassDialog extends vs2Dialog implements vs2Constants,
         super(title, true, modelOptions);
         this.doEdit = doEdit;
         this.modelOptions = modelOptions;
-        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "chemicalClasses", null);
+        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "chemistryClasses", null);
     }
     
     /**

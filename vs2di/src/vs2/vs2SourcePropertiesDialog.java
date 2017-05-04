@@ -28,7 +28,7 @@ public class vs2SourcePropertiesDialog extends mp2Dialog implements vs2Constants
             
     public vs2SourcePropertiesDialog(Object [] customArray) {
         super("Source/Sink Properties", true, customArray);
-	    mp2JavaHelp.hb.enableHelpOnButton(helpButton, "sourceStrength", null);
+        mp2JavaHelp.hb.enableHelpOnButton(helpButton, "sourceSinkDialog", null);
         tableData = (mp2TableData) customArray[0];
         transport = (String) customArray[1];
         diffusiveTransport = "Conductive heat flow (H)";

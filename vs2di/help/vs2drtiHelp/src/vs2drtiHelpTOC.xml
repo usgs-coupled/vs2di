@@ -36,10 +36,10 @@
          <tocitem text="Tabular Data" target="workingWithTabularData"/>
       </tocitem>
       
-      <tocitem text="Specify Chemistry Classes" target="chemicalClasses" expand="false">
-         <tocitem text="Add Chemistry class" target="addChemicalClass"/>
-         <tocitem text="Edit Chemistry class" target="editChemicalClass"/>
-         <tocitem text="Delete Chemistry class" target="deleteChemicalClass"/>
+      <tocitem text="Specify Chemistry Classes" target="chemistryClasses" expand="false">
+         <tocitem text="Add Chemistry class" target="addChemistryClass"/>
+         <tocitem text="Edit Chemistry class" target="editChemistryClass"/>
+         <tocitem text="Delete Chemistry class" target="deleteChemistryClass"/>
       </tocitem>      
 
       <tocitem text="Specify Evapotranspiration (ET) Cycle" target="evapotranspirationCycle" expand="false">
@@ -80,14 +80,14 @@
          <tocitem text="Delete textural zone" target="deleteTexturalZones"/>
       </tocitem>
       
-      <tocitem text="Draw the Chemistry Map" target="chemicalMap" expand="false">
-         <tocitem text="Draw chemical zone" target="drawChemicalZone"/>
-         <tocitem text="Reshape chemical zone" target="reshapeChemicalZone"/>
-         <tocitem text="Move chemical zones" target="moveChemicalZones"/>
-         <tocitem text="Insert vertex on chemical zone" target="insertVertexOnChemicalZone"/>
-         <tocitem text="Bring chemical zones to front" target="bringChemicalZonesToFront"/>
-         <tocitem text="Send chemical zones to back" target="sendChemicalZonesToBack"/>
-         <tocitem text="Delete chemical zone" target="deleteChemicalZones"/>
+      <tocitem text="Draw the Chemistry Map" target="chemistryMap" expand="false">
+         <tocitem text="Draw chemistry zone" target="drawChemistryZone"/>
+         <tocitem text="Reshape chemistry zone" target="reshapeChemistryZone"/>
+         <tocitem text="Move chemistry zones" target="moveChemistryZones"/>
+         <tocitem text="Insert vertex on chemistry zone" target="insertVertexOnChemistryZone"/>
+         <tocitem text="Bring chemistry zones to front" target="bringChemistryZonesToFront"/>
+         <tocitem text="Send chemistry zones to back" target="sendChemistryZonesToBack"/>
+         <tocitem text="Delete chemistry zone" target="deleteChemistryZones"/>
       </tocitem>      
 
       <tocitem text="Specify Initial Hydraulic Condition" target="initialHydraulicCondition" expand="false">
@@ -182,13 +182,15 @@
       <tocitem text="Solver Options" target="tutorial_SolverOptions"/>
       <tocitem text="Output Options" target="tutorial_OutputOptions"/>
       <tocitem text="Fluid Balance Options" target="tutorial_FluidBalanceOptions"/>
-      <tocitem text="Solute Balance Options" target="tutorial_SoluteBalanceOptions"/>
+      <tocitem text="Energy/Solute Balance Options" target="tutorial_EnergySoluteBalanceOptions"/>
       <tocitem text="Textural Classes" target="tutorial_TexturalClasses"/>
+      <tocitem text="Chemistry Classes" target="tutorial_ChemistryClasses"/>
       <tocitem text="Drawing Area" target="tutorial_DrawingArea"/>
       <tocitem text="Domain" target="tutorial_Domain"/>
       <tocitem text="Textural Map" target="tutorial_TexturalMap"/>
+      <tocitem text="Chemistry Map" target="tutorial_ChemistryMap"/>      
       <tocitem text="Initial Hydraulic Condition" target="tutorial_InitialHydraulicCondition"/>
-      <tocitem text="Initial Concentration" target="tutorial_InitialConcentration"/>
+      <tocitem text="Initial Temperature" target="tutorial_InitialTemperature"/>
       <tocitem text="Recharge Periods" target="tutorial_RechargePeriods"/>
       <tocitem text="Boundary Conditions" target="tutorial_BoundaryConditions"/>
       <tocitem text="Grid Layout" target="tutorial_Grid"/>

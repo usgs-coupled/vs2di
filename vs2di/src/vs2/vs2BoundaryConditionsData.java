@@ -439,10 +439,9 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                 }
                                 if (modelOptions.doSoluteTransport) {
                                     s = String.valueOf(bc.getSoluteTransportType() + " " +
-                                            bc.getSoluteTransportValue() +
-                                            " -1 1.");
+                                            bc.getSoluteTransportValue());
                                     pw.println(s + vs2App.tab(s, commentOffset)
-                                            + "/C-13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                                            + "/C-13 -- NTC, INSBC1");
                                 }                                
                             }
                         }
@@ -486,10 +485,9 @@ public class vs2BoundaryConditionsData extends mp2BoundaryConditionsData
                                 }
                                 if (modelOptions.doSoluteTransport) {
                                     s = String.valueOf(bc.getSoluteTransportType() + " " +
-                                            bc.getSoluteTransportValue() +
-                                            " -1 1.");   
+                                            bc.getSoluteTransportValue());   
                                     pw.println(s + vs2App.tab(s, commentOffset)
-                                            + "/C-13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                                            + "/C-13 -- NTC, INSBC1");
                                 }
                             }
                         }

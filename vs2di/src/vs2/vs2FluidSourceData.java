@@ -70,10 +70,9 @@ public class vs2FluidSourceData extends mp2SourceData
                 if (modelOptions.doSoluteTransport) {
                     transportType = ((Integer) aRow[3]).intValue();
                     int solnum = ((Integer) aRow[4]).intValue();
-                    s = String.valueOf(transportType + " " + solnum +
-                            " -1 1.");
+                    s = String.valueOf(transportType + " " + solnum);
                     pw.println(s + vs2App.tab(s, commentOffset)
-                            + "/C-13 -- NTC, INSBC1, INSBC2, SBFRAC");
+                            + "/C-13 -- NTC, INSBC1");
                 }
             } else {
                 s = String.valueOf((row+2) + " " + (col+2) + " " + flowType + " " + (float) flowValue);

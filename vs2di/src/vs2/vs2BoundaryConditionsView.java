@@ -244,6 +244,7 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
         for (int i = 0; i < bcValue.length; ++i) {
             bcValue[i] = 0;
         }
+        line = line.replaceAll("\\s\\s+", " ");
         String[] items = line.split(" ");
         for (int i = 0; i < items.length; ++i) {
             try {

@@ -512,10 +512,6 @@
     KNNODE=KNLY*KNXR
     !!@@include 'd_arrays.inc' 
     !     allocate arrays
-    write(*,*) 'about to allocate delz', allocated(delz) 
-    write(*,*) 'about to allocate DZZ', allocated(DZZ) 
-    write(*,*) 'about to allocate DXR', allocated(DXR) 
-    write(*,*) 'about to allocate RX', allocated(RX) 
     allocate(DELZ(NLY),DZZ(NLY),DXR(NXR),RX(NXR))
     allocate(HX(NNODES),NTYP(NNODES))
     allocate(THETA(NNODES),THLST(NNODES),SATUR(NNODES),POROSITY(NNODES))
@@ -1141,7 +1137,8 @@
     use react
     use SCON
     USE vs2dt_rm
-    USE PhreeqcRM   
+    USE PhreeqcRM  
+    USE reduce_time
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     common/conversion/CNVTM,CNVTMI 
@@ -1198,6 +1195,8 @@
     IF (JSTOP.GT.1) THEN
         RETURN
     ENDIF
+    
+    write(*,"(A,F12.2)") "Beginning time: ", stim
     !
     TRANS1=.FALSE.
     !     IF(.NOT.SSTATE) THEN
@@ -1211,8 +1210,13 @@
     !   SET UP AND SOLVE MATRIX EQUATIONS FOR FLOW
     !
     if(nit3.gt.100) then
-        jstop = 11
-        return
+        nit3=0
+        reduce_time_step = .true.
+        write(*,*) "WARNING: Reducing time step for flow/heat iteration."
+        !jstop = 11
+        !return
+    else
+        reduce_time_step = .false.
     end if
     nit=0
     CALL VSMGEN
@@ -1354,7 +1358,7 @@
             status = RM_SetSaturation(rm_id, satur)
             call SetConcentrationsRM(cc)
             !if (npscrn .ne. 0) then
-            write(msg,"(A,F12.2)") "Chemistry at time: ", stim
+            write(msg,"(A)") "   Chemistry"
             status = RM_SetScreenOn(rm_id, 1)
             status = RM_ScreenMessage(rm_id, msg)
             status = RM_SetScreenOn(rm_id, 0)
@@ -3159,6 +3163,8 @@
     use scon
     use equats
     use temp
+    use TRXXH
+    use REDUCE_TIME
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -3191,6 +3197,7 @@
     !     ESTABLISH TIME-DEPENDENT PARAMETERS GOVERNING EVAPORATION AND
     !     TRANSPIRATION.  DETERMINE ROOT ACTIVITY.
     !
+    if (reduce_time_step) goto 1000
 10  IF ( BCIT.OR. ETSIM) THEN
         CALL VSPET
         DO 20 J=2,NLYY
@@ -3373,13 +3380,14 @@
     IF(NIT.LE.ITMAX) GO TO 30
     !
     !   MAXIMUM NUMBER OF ITERATIONS EXCEEDED
-    !   
+    !     
     PRINT*,'ERROR: EXCEEDED PERMITTED NUMBER OF ITERATIONS'
     WRITE (6,4000) NIT,KTIM,STIM,TUNIT
     !
     !   AUTOMATICALLY REDUCE TIME STEP SIZE, BUT NOT MORE
     !   THAN TWICE.
     !
+1000 continue 
     IF(DELT.LE.DLTMIN.OR.I13.GT.2.OR.TRED.LE.0.0D0) THEN
         IF(.NOT.ITSTOP)RETURN
         !
@@ -3412,7 +3420,10 @@
         !   RESET HEADS TO VALUES AT END OF PREVIOUS TIME STEP.
         !
         DO 50 II=1,NNODES
-            IF(NTYP(II).NE.1.AND.HX(II).GT.0.0D0) P(II)=PXXX(II)
+            IF(NTYP(II).NE.1.AND.HX(II).GT.0.0D0) THEN
+                P(II)=PXXX(II)
+                IF (HEAT) TT(II) = TTOLD(II)
+            ENDIF
 50      CONTINUE
         NIT=1
         GO TO 10
@@ -3524,6 +3535,9 @@
     IF(MOD(NT,L2).EQ.0.OR.NT.EQ.1)NTH=0
     NTH=NTH+1
     W=HM(NTH)
+    CALL RANDOM_NUMBER(XF)
+    XF = 1.0 - XF/10.0
+    W = XF * W
     ITEST=0
     DO 40 I=1,NNODES
         DEL(I)=0.0D0
@@ -3535,7 +3549,11 @@
     !
     ! CHOOSE SIP NORMAL OR REVERSE ALGORITHM
     !
-    IF(MOD(NT,2)) 50,80,50
+    IF (NT < ITMAX) THEN
+        IF(MOD(NT,2)) 50,80,50
+    ELSE
+        GOTO 50
+    ENDIF
     ! ......................................................................
     ! ORDER EQUATIONS WITH ROW 1 FIRST  -  3X3 EXAMPLE:
     !    1 2 3
@@ -3792,6 +3810,11 @@
     IF(MOD(NT,LS2).EQ.0.OR.NT.EQ.1)NTHS=0
     NTHS=NTHS+1
     WS=HMS(NTHS)
+    
+    CALL RANDOM_NUMBER(XF)
+    XF = 1.0 - XF/10.0
+    WS = XF * WS
+    
     ITESTS=0
     DO 40 I=1,NNODES
         DEL(I)=0.0D0
@@ -3803,7 +3826,12 @@
     !
     ! CHOOSE SIP NORMAL OR REVERSE ALGORITHM
     !
-    IF(MOD(NT,2)) 50,80,50
+    IF (NT < ITMAX) THEN
+        IF(MOD(NT,2)) 50,80,50
+    ELSE
+        GOTO 50
+    ENDIF
+    
     ! ......................................................................
     ! ORDER EQUATIONS WITH ROW 1 FIRST  -  3X3 EXAMPLE:
     !    1 2 3
@@ -7830,7 +7858,8 @@
         !
         !   INITIALIZE VARIABLES
         !
-        do 50 it=1,itmax
+        itmax_heat = itmax * 2
+        do 50 it=1,itmax_heat
             DO 20 I=2,NXRR
                 N1=NLY*(I-1)
                 DO 20 J=2,NLYY
@@ -8156,6 +8185,7 @@
             !
             CALL SLVSIP
             IF(ITEST.EQ.0) THEN
+                if (it > itmax) write(*,*) '***Heat iterations: ', it
                 RETURN
             END IF
 50      CONTINUE
@@ -8196,6 +8226,7 @@
     use pit
     use ptet
     use tempcc
+    use COMPNAM
     use react
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
@@ -8215,6 +8246,7 @@
     !...........................................................................
     !
     do 60 M=1,Nsol
+        itmax_sol = itmax * 2
         NIS1=0
 
         IF(jflag2.EQ.1) THEN
@@ -8229,8 +8261,7 @@
         !
         !   INITIALIZE VARIABLES
         !
-
-        do 50 it=1,itmax
+        do 50 it=1,itmax_sol
             DO 20 I=2,NXRR
                 N1=NLY*(I-1)
                 DO 20 J=2,NLYY
@@ -8592,18 +8623,19 @@
                             END IF
 40                  CONTINUE
                 END IF
+                if (it > itmax) write(*,*) '***Solute iterations: ', it, compname(m)
                 go to 60
             END IF
 
-50      CONTINUE
+50      CONTINUE        
         WRITE(6,4000)
         IF (.NOT.ITSTOP) GO TO 60
         JSTOP=10
         JFLAG=1
-        PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
-        ,' TRANSPORT EQUATION'
+        PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
+        ,' TRANSPORT EQUATION '
         WRITE(6,4010)
-60  CONTINUE   
+60  CONTINUE 
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
     ,' TRANSPORT EQUATION')

@@ -133,6 +133,10 @@
       double precision, allocatable::PITT(:)
       end module PIT
 
+      MODULE REDUCE_TIME
+      LOGICAL REDUCE_TIME_STEP
+      END MODULE REDUCE_TIME
+    
       module SIP
       double precision, allocatable::DEL(:),ETA(:),V(:)
       end module SIP

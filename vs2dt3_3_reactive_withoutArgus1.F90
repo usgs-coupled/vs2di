@@ -3549,7 +3549,7 @@
     !
     ! CHOOSE SIP NORMAL OR REVERSE ALGORITHM
     !
-    IF (NT < ITMAX) THEN
+    IF (NT < ITMAX/2) THEN
         IF(MOD(NT,2)) 50,80,50
     ELSE
         GOTO 50
@@ -3826,7 +3826,7 @@
     !
     ! CHOOSE SIP NORMAL OR REVERSE ALGORITHM
     !
-    IF (NT < ITMAX) THEN
+    IF (NT < ITMAX/2) THEN
         IF(MOD(NT,2)) 50,80,50
     ELSE
         GOTO 50
@@ -7858,8 +7858,7 @@
         !
         !   INITIALIZE VARIABLES
         !
-        itmax_heat = itmax * 2
-        do 50 it=1,itmax_heat
+        do 50 it=1,itmax
             DO 20 I=2,NXRR
                 N1=NLY*(I-1)
                 DO 20 J=2,NLYY
@@ -8185,7 +8184,7 @@
             !
             CALL SLVSIP
             IF(ITEST.EQ.0) THEN
-                if (it > itmax) write(*,*) '***Heat iterations: ', it
+                if (it > itmax/2) write(*,*) '***Heat iterations: ', it
                 RETURN
             END IF
 50      CONTINUE
@@ -8246,7 +8245,6 @@
     !...........................................................................
     !
     do 60 M=1,Nsol
-        itmax_sol = itmax * 2
         NIS1=0
 
         IF(jflag2.EQ.1) THEN
@@ -8261,7 +8259,7 @@
         !
         !   INITIALIZE VARIABLES
         !
-        do 50 it=1,itmax_sol
+        do 50 it=1,itmax
             DO 20 I=2,NXRR
                 N1=NLY*(I-1)
                 DO 20 J=2,NLYY
@@ -8623,7 +8621,7 @@
                             END IF
 40                  CONTINUE
                 END IF
-                if (it > itmax) write(*,*) '***Solute iterations: ', it, compname(m)
+                if (it > itmax/2) write(*,*) '***Solute iterations: ', it, compname(m)
                 go to 60
             END IF
 

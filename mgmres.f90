@@ -492,7 +492,8 @@ subroutine ilu_cr ( n, nz_num, ia, ja, a, ua, l )
   real ( kind = 8 ) a(nz_num)
   integer ( kind = 4 ) i
   integer ( kind = 4 ) ia(n+1)
-  integer ( kind = 4 ) iw(n)
+  !integer ( kind = 4 ) iw(n)                    ! allocate
+  integer ( kind = 4 ), allocatable :: iw(:) 
   integer ( kind = 4 ) j
   integer ( kind = 4 ) ja(nz_num)
   integer ( kind = 4 ) jj
@@ -505,6 +506,9 @@ subroutine ilu_cr ( n, nz_num, ia, ja, a, ua, l )
 !
 !  Copy A.
 !
+  allocate (iw(n))
+  iw = 0
+  
   l(1:nz_num) = a(1:nz_num)
 
   do i = 1, n
@@ -556,7 +560,7 @@ subroutine ilu_cr ( n, nz_num, ia, ja, a, ua, l )
   end do
 
   l(ua(1:n)) = 1.0D+00 / l(ua(1:n))
-
+  deallocate (iw)
   return
 end
 subroutine lus_cr ( n, nz_num, ia, ja, l, ua, r, z )
@@ -621,11 +625,13 @@ subroutine lus_cr ( n, nz_num, ia, ja, l, ua, r, z )
   real ( kind = 8 ) l(nz_num)
   real ( kind = 8 ) r(n)
   integer ( kind = 4 ) ua(n)
-  real ( kind = 8 ) w(n)
+  !real ( kind = 8 ) w(n)                    ! allocate
+  real ( kind = 8 ), allocatable :: w(:)                    ! allocate
   real ( kind = 8 ) z(n)
 !
 !  Copy R in.
 !
+  allocate(w(n))
   w(1:n) = r(1:n)
 !
 !  Solve L * w = w where L is unit lower triangular.
@@ -649,6 +655,7 @@ subroutine lus_cr ( n, nz_num, ia, ja, l, ua, r, z )
 !
   z(1:n) = w(1:n)
 
+  deallocate(w)
   return
 end
 subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
@@ -746,10 +753,13 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
 
   real ( kind = 8 ) a(nz_num)
   real ( kind = 8 ) av
-  real ( kind = 8 ) c(1:mr)
+  !real ( kind = 8 ) c(1:mr)                    ! allocate
+  real ( kind = 8 ), allocatable :: c(:)
   real ( kind = 8 ), parameter :: delta = 1.0D-03
-  real ( kind = 8 ) g(1:mr+1)
-  real ( kind = 8 ) h(1:mr+1,1:mr)
+  !real ( kind = 8 ) g(1:mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: g(:)
+  !real ( kind = 8 ) h(1:mr+1,1:mr)                    ! allocate
+  real ( kind = 8 ), allocatable :: h(:,:)
   real ( kind = 8 ) htmp
   integer ( kind = 4 ) i
   integer ( kind = 4 ) ia(nz_num)
@@ -761,18 +771,37 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k_copy
   real ( kind = 8 ) mu
-  real ( kind = 8 ) r(1:n)
+  !real ( kind = 8 ) r(1:n)                    ! allocate
+  real ( kind = 8 ), allocatable :: r(:)
   real ( kind = 8 ) rho
   real ( kind = 8 ) rho_tol
   real ( kind = 8 ) rhs(1:n)
-  real ( kind = 8 ) s(1:mr)
+  !real ( kind = 8 ) s(1:mr)                    ! allocate
+  real ( kind = 8 ), allocatable :: s(:)
   real ( kind = 8 ) tol_abs
   real ( kind = 8 ) tol_rel
-  real ( kind = 8 ) v(1:n,1:mr+1)
+  !real ( kind = 8 ) v(1:n,1:mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: v(:,:)
   logical, parameter :: verbose = .true.
   real ( kind = 8 ) x(1:n)
-  real ( kind = 8 ) y(1:mr+1)
+  !real ( kind = 8 ) y(1:mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: y(:)
 
+  allocate(c(mr))
+  allocate(g(mr+1))
+  allocate(h(mr+1,mr)) 
+  allocate(r(n))
+  allocate (s(mr))
+  allocate (v(n,mr+1))
+  allocate (y(mr+1))
+  c = 0.0d0
+  g = 0.0d0
+  h = 0.0d0
+  r = 0.0d0
+  s = 0.0d0
+  v = 0.0d0
+  y = 0.0d0
+  
   itr_used = 0
 
   if ( n < mr ) then
@@ -894,7 +923,13 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
     write ( *, '(a,i8)'    ) '  Iterations = ', itr_used
     write ( *, '(a,g14.6)' ) '  Final residual = ', rho
   end if
-
+  deallocate (c)
+  deallocate (g)
+  deallocate (h) 
+  deallocate (r)
+  deallocate (s)
+  deallocate (v)
+  deallocate (y)
   return
 end
 subroutine mult_givens ( c, s, k, g )
@@ -1072,10 +1107,13 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
 
   real ( kind = 8 ) a(nz_num)
   real ( kind = 8 ) av
-  real ( kind = 8 ) c(mr+1)
+  !real ( kind = 8 ) c(mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: c(:)
   real ( kind = 8 ), parameter :: delta = 1.0D-03
-  real ( kind = 8 ) g(mr+1)
-  real ( kind = 8 ) h(mr+1,mr)
+  !real ( kind = 8 ) g(mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: g(:)
+  !real ( kind = 8 ) h(mr+1,mr)                    ! allocate
+  real ( kind = 8 ), allocatable :: h(:,:)
   real ( kind = 8 ) htmp
   integer ( kind = 4 ) i
   integer ( kind = 4 ) ia(n+1)
@@ -1086,21 +1124,46 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   integer ( kind = 4 ) ja(nz_num)
   integer ( kind = 4 ) k
   integer ( kind = 4 ) k_copy
-  real ( kind = 8 ) l(ia(n+1)+1)
+  !real ( kind = 8 ) l(ia(n+1)+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: l(:)
   real ( kind = 8 ) mu
-  real ( kind = 8 ) r(n)
+  !real ( kind = 8 ) r(n)                    ! allocate
+  real ( kind = 8 ), allocatable :: r(:)
   real ( kind = 8 ) rho
   real ( kind = 8 ) rho_tol
   real ( kind = 8 ) rhs(n)
-  real ( kind = 8 ) s(mr+1)
+  !real ( kind = 8 ) s(mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: s(:)
   real ( kind = 8 ) tol_abs
   real ( kind = 8 ) tol_rel
-  integer ( kind = 4 ) ua(n)
-  real ( kind = 8 ) v(n,mr+1);
+  !integer ( kind = 4 ) ua(n)                    ! allocate
+  integer ( kind = 4 ), allocatable :: ua(:) 
+  !real ( kind = 8 ) v(n,mr+1);                    ! allocate
+  real ( kind = 8 ), allocatable :: v(:,:)
   logical, parameter :: verbose = .true.
   real ( kind = 8 ) x(n)
-  real ( kind = 8 ) y(mr+1)
+  !real ( kind = 8 ) y(mr+1)                    ! allocate
+  real ( kind = 8 ), allocatable :: y(:)
 
+  allocate (c(mr+1))
+  allocate (g(mr+1))
+  allocate (h(mr+1,mr))
+  allocate (l(ia(n+1)+1))
+  allocate (r(n))
+  allocate (s(mr+1))
+  allocate (ua(n))
+  allocate (v(n,mr+1))
+  allocate (y(mr+1))
+  
+  c = 0.0d0
+  g = 0.0d0
+  h = 0.0d0
+  l = 0.0d0
+  r = 0.0d0
+  ua = 0
+  v = 0.0d0
+  y = 0.0d0
+  
   itr_used = 0
 
   call rearrange_cr ( n, nz_num, ia, ja, a )
@@ -1224,7 +1287,15 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
     write ( *, '(a,i6)' ) '  Iterations = ', itr_used
     write ( *, '(a,g14.6)' ) '  Final residual = ', rho
   end if
-
+  deallocate (c)
+  deallocate (g)
+  deallocate (h)
+  deallocate (l)
+  deallocate (r)
+  deallocate (s)
+  deallocate (ua)
+  deallocate (v)
+  deallocate (y)
   return
 end
 subroutine r8vec_uniform_01 ( n, seed, r )
@@ -1294,7 +1365,7 @@ subroutine r8vec_uniform_01 ( n, seed, r )
   integer ( kind = 4 ) i
   integer ( kind = 4 ) k
   integer ( kind = 4 ) seed
-  real ( kind = 8 ) r(n)
+  real ( kind = 8 ) r(n)                    ! allocate
 
   if ( seed == 0 ) then
     write ( *, '(a)' ) ' '

@@ -1139,6 +1139,9 @@
     USE vs2dt_rm
     USE PhreeqcRM  
     USE reduce_time
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     common/conversion/CNVTM,CNVTMI 
@@ -1173,7 +1176,8 @@
     COMMON/SCON1/ITESTS
     character(100) msg
     integer :: iPRNT
-
+    integer :: ifet2 = 0
+    
     !
     ! -------------------------------------------------------------
     !       START OF TIME LOOP
@@ -1196,7 +1200,7 @@
         RETURN
     ENDIF
     
-    write(*,"(A,F12.2)") "Beginning time: ", stim
+    write(stderr,"(A,F12.2)") "Beginning time: ", stim
     !
     TRANS1=.FALSE.
     !     IF(.NOT.SSTATE) THEN
@@ -1209,11 +1213,11 @@
     !
     !   SET UP AND SOLVE MATRIX EQUATIONS FOR FLOW
     !
-    if(nit3.gt.100) then
+    if((nit3.gt.100) .or. (jstop .eq.10)) then
         nit3=0
         reduce_time_step = .true.
-        write(*,*) "WARNING: Reducing time step for flow/heat iteration."
-        !jstop = 11
+        jstop = 0
+        write(stderr,*) "WARNING: Reducing time step."        !jstop = 11
         !return
     else
         reduce_time_step = .false.
@@ -1292,7 +1296,7 @@
         !   SET UP AND SOLVE MATRIX EQUATION FOR TRANSPORT
         !
         CALL VTSETUPSOL
-
+        if (jstop .eq. 10) goto 170
         !      NISS=NISS+ NIS1
         !
         !   PRINT RESULTS AND COMPUTE MASS BALANCE COMPONENTS
@@ -2779,15 +2783,16 @@
                     JSTOP = 273
                     return
                 endif
-
-                !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                allocate(bcsol1(1,nSol), ibsol1(1))
-                ibsol1(1) = insbc1
-                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
-                do i = 1, nsol
-                    bcsol(i) = bcsol1(1,i)
-                enddo
-                deallocate(bcsol1, ibsol1)
+                if (ntc .ne. 0) then
+                    !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+                    allocate(bcsol1(1,nSol), ibsol1(1))
+                    ibsol1(1) = insbc1
+                    status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
+                    do i = 1, nsol
+                        bcsol(i) = bcsol1(1,i)
+                    enddo
+                    deallocate(bcsol1, ibsol1)
+                endif
 
             ELSE
                 NTC=0
@@ -3165,6 +3170,7 @@
     use temp
     use TRXXH
     use REDUCE_TIME
+    use TRXX
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -3388,7 +3394,8 @@
     !   THAN TWICE.
     !
 1000 continue 
-    IF(DELT.LE.DLTMIN.OR.I13.GT.2.OR.TRED.LE.0.0D0) THEN
+    !IF(DELT.LE.DLTMIN.OR.I13.GT.2.OR.TRED.LE.0.0D0) THEN
+    IF(DELT.LE.DLTMIN.OR.TRED.LE.0.0D0) THEN
         IF(.NOT.ITSTOP)RETURN
         !
         !   TERMINATE SIMULATION.
@@ -3419,6 +3426,15 @@
         !
         !   RESET HEADS TO VALUES AT END OF PREVIOUS TIME STEP.
         !
+        if (solute) then
+            do 203 J=1,NLY
+                DO 203 N=1,NXR
+                    DO 201 M=1,Nsol
+                        IN=NLY*(N-1)+J
+                        CC(M,IN) = CCOLD(M,IN)
+201                 CONTINUE
+203         CONTINUE
+        endif
         DO 50 II=1,NNODES
             IF(NTYP(II).NE.1.AND.HX(II).GT.0.0D0) THEN
                 P(II)=PXXX(II)
@@ -7831,6 +7847,9 @@
     use trxv
     use temp
     use pit
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -8184,7 +8203,7 @@
             !
             CALL SLVSIP
             IF(ITEST.EQ.0) THEN
-                if (it > itmax/2) write(*,*) '***Heat iterations: ', it
+                if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
                 RETURN
             END IF
 50      CONTINUE
@@ -8227,6 +8246,9 @@
     use tempcc
     use COMPNAM
     use react
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -8621,7 +8643,7 @@
                             END IF
 40                  CONTINUE
                 END IF
-                if (it > itmax/2) write(*,*) '***Solute iterations: ', it, compname(m)
+                if (it > itmax/2) write(stderr,*) '***Solute iterations: ', it, compname(m)
                 go to 60
             END IF
 
@@ -8633,7 +8655,7 @@
         PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
         ,' TRANSPORT EQUATION '
         WRITE(6,4010)
-60  CONTINUE 
+60  CONTINUE
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
     ,' TRANSPORT EQUATION')

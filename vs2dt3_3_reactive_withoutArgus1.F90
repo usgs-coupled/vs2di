@@ -1177,7 +1177,7 @@
     character(100) msg
     integer :: iPRNT
     integer :: ifet2 = 0
-    
+
     !
     ! -------------------------------------------------------------
     !       START OF TIME LOOP
@@ -2784,14 +2784,14 @@
                     return
                 endif
                 if (ntc .ne. 0) then
-                    !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                    allocate(bcsol1(1,nSol), ibsol1(1))
-                    ibsol1(1) = insbc1
-                    status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
-                    do i = 1, nsol
-                        bcsol(i) = bcsol1(1,i)
-                    enddo
-                    deallocate(bcsol1, ibsol1)
+                !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+                allocate(bcsol1(1,nSol), ibsol1(1))
+                ibsol1(1) = insbc1
+                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
+                do i = 1, nsol
+                    bcsol(i) = bcsol1(1,i)
+                enddo
+                deallocate(bcsol1, ibsol1)
                 endif
 
             ELSE
@@ -7847,6 +7847,7 @@
     use trxv
     use temp
     use pit
+    use gmres1
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
                                           stdout=>output_unit, &
                                           stderr=>error_unit
@@ -7861,6 +7862,11 @@
     COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
     integer hydraulicFunctionType
     common/functiontype/ hydraulicFunctionType
+      allocate (a_gmr(5*nnodes))
+      allocate (rhs_gmr(nnodes))
+!      allocate (x3(nnodes))
+      allocate (ia_gmr(5*nnodes))
+      allocate (ja_gmr(5*nnodes))
 
     !............................................................................
     !      
@@ -8201,7 +8207,85 @@
             !
             !   CALL MATRIX SOLVER
             !
-            CALL SLVSIP
+  !          CALL SLVSIP
+  !
+!   installing gmress solver. No need for iterating on heat equation
+!    first step is to move coefficients into storate gmres storage
+!    arrays. We need to reorder nodes, numbering only the active
+!    nodes.
+! 
+      n_order = 0
+      nz_num = 0
+      nly2 = nly - 2
+      DO 300 I=2,NXRR
+      N1=NLY*(I-1)
+      DO 300 J=2,NLYY
+      N=N1+J
+      if(hx(n).eq.0.0d0.or.nctyp(n).eq.1) then
+       n_order = n_order + 1
+       nz_num = nz_num + 1
+       a_gmr(nz_num) = 1.0d0
+       ia_gmr(nz_num) = n_order
+       ja_gmr(nz_num) = n_order
+       rhs_gmr(n_order) = 0.0d0
+       xi(n_order) = 0.0d0
+      else
+       n_order = n_order + 1
+       nz_num = nz_num + 1
+       a_gmr(nz_num) = e(n)
+       ia_gmr(nz_num) = n_order
+       ja_gmr(nz_num) = n_order
+       rhs_gmr(n_order) = rhs(n)
+       xi(n_order) = 0.0d0      
+       if(a(n).ne.0.0d0) then
+         nz_num = nz_num + 1
+         a_gmr(nz_num) = a(n)
+         ia_gmr(nz_num) = n_order
+         ja_gmr(nz_num) = n_order - nly2
+       end if
+       if(b(n).ne.0.0d0) then
+         nz_num = nz_num +1
+         a_gmr(nz_num) = b(n)
+         ia_gmr(nz_num) = n_order
+         ja_gmr(nz_num) = n_order - 1
+       end if
+       if(c(n).ne.0.0d0) then
+         nz_num = nz_num +1
+         a_gmr(nz_num) = c(n)
+         ia_gmr(nz_num) = n_order
+         ja_gmr(nz_num) = n_order +  nly2
+       end if
+       if(d(n).ne.0.0d0) then
+         nz_num = nz_num +1
+         a_gmr(nz_num) = d(n)
+         ia_gmr(nz_num) = n_order
+         ja_gmr(nz_num) = n_order + 1
+       end if
+      end if   
+  300 continue
+      itmax1 = itmax/10
+!      mr = n_order - 1
+!      mr = 200
+      mr = MIN0(20,n_order-1)
+      call mgmres_st(n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr
+     *  ,itmax1, mr, eps1, eps1)
+!           call mgmres_st(n_order, nz_num, itmax1, mr, eps1, eps1)
+      n_order = 0
+      DO 301 I=2,NXRR
+      N1=NLY*(I-1)
+      DO 301 J=2,NLYY
+      N=N1+J
+      n_order = n_order + 1
+      if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
+       cc(n) = cc(n) + xi(n_order)
+      end if
+  301 continue
+      deallocate (a_gmr)
+      deallocate (rhs_gmr)
+      deallocate (ia_gmr)
+      deallocate (ja_gmr)
+      return
+
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
                 RETURN
@@ -8655,7 +8739,7 @@
         PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
         ,' TRANSPORT EQUATION '
         WRITE(6,4010)
-60  CONTINUE
+60  CONTINUE 
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
     ,' TRANSPORT EQUATION')

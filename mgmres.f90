@@ -786,7 +786,8 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
   real ( kind = 8 ) x(1:n)
   !real ( kind = 8 ) y(1:mr+1)                    ! allocate
   real ( kind = 8 ), allocatable :: y(:)
-
+  real ( kind = 8 ) xdiff, xdiffMax
+  
   allocate(c(mr))
   allocate(g(mr+1))
   allocate(h(mr+1,mr)) 
@@ -801,6 +802,8 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
   s = 0.0d0
   v = 0.0d0
   y = 0.0d0
+  xdiff = 0.0d0
+  xdiffMax = 0.0d0
   
   itr_used = 0
 
@@ -822,6 +825,7 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
     rho = sqrt ( dot_product ( r(1:n), r(1:n) ) )
 
     if ( verbose ) then
+      write ( *, '(a)'       ) ' '
       write ( *, '(a,i8,a,g14.6)' ) '  ITR = ', itr, '  Residual = ', rho
     end if
 
@@ -890,7 +894,8 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
       itr_used = itr_used + 1
 
       if ( verbose ) then
-        write ( *, '(a,i8,a,g14.6)' ) '  K =   ', k, '  Residual = ', rho
+        write ( *, '(a,i8,2(a,g14.6))' ) '  K =   ',k,'  Residual = ',&
+        rho, ' xdiff = ', xdiffMax
       end if
 
       if ( rho <= rho_tol .and. rho <= tol_abs ) then
@@ -906,11 +911,17 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
     do i = k, 1, -1
       y(i) = ( g(i) - dot_product ( h(i,i+1:k+1), y(i+1:k+1) ) ) / h(i,i)
     end do
-
+    xdiffMax = 0.0d0
     do i = 1, n
-      x(i) = x(i) + dot_product ( v(i,1:k+1), y(1:k+1) )
+!      x(i) = x(i) + dot_product ( v(i,1:k+1), y(1:k+1) )
+      xdiff = dot_product ( v(i,1:k+1), y(1:k+1) )
+      x(i) = x(i) + xdiff
+      xdiff = dabs(xdiff)
+      if (xdiff.gt.xdiffMax) xdiffMax = xdiff
     end do
-
+    if(xdiffMax <= tol_abs) then
+      exit
+    end if
     if ( rho <= rho_tol .and. rho <= tol_abs ) then
       exit
     end if
@@ -918,10 +929,11 @@ subroutine mgmres_st ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, tol_abs, &
   end do
 
   if ( verbose ) then
-    write ( *, '(a)'       ) ' '
+!    write ( *, '(a)'       ) ' '
     write ( *, '(a)'       ) 'MGMRES_ST:'
-    write ( *, '(a,i8)'    ) '  Iterations = ', itr_used
-    write ( *, '(a,g14.6)' ) '  Final residual = ', rho
+    write ( *, '(a,i8)'    ) ' Iterations = ', itr_used
+    write ( *, '(a,g14.6)' ) ' Final residual = ',rho,' xdiff = ',&
+    xdiffMax
   end if
   deallocate (c)
   deallocate (g)

@@ -147,6 +147,14 @@
       integer NUMT, ITMAX, MINIT, ITEST
       end module SCON
 
+      module gmres1
+      double precision, allocatable::a_gmr(:)
+      double precision, allocatable::rhs_gmr(:)
+      double precision, allocatable::x3(:)
+      integer (kind=4), allocatable::ia_gmr(:)
+      integer (kind=4), allocatable::ja_gmr(:)
+      end module gmres1
+
       module TEMP
       double precision, allocatable::RHO(:),RHOOLD(:)
       double precision RHOMAX

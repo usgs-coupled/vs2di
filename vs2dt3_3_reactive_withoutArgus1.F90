@@ -8207,85 +8207,88 @@
             !
             !   CALL MATRIX SOLVER
             !
-  !          CALL SLVSIP
-  !
+!#define GMRES
+#ifndef GMRES
+         CALL SLVSIP
+#else         
+!
 !   installing gmress solver. No need for iterating on heat equation
 !    first step is to move coefficients into storate gmres storage
 !    arrays. We need to reorder nodes, numbering only the active
 !    nodes.
 ! 
-      n_order = 0
-      nz_num = 0
-      nly2 = nly - 2
-      DO 300 I=2,NXRR
-      N1=NLY*(I-1)
-      DO 300 J=2,NLYY
-      N=N1+J
-      if(hx(n).eq.0.0d0.or.nctyp(n).eq.1) then
-       n_order = n_order + 1
-       nz_num = nz_num + 1
-       a_gmr(nz_num) = 1.0d0
-       ia_gmr(nz_num) = n_order
-       ja_gmr(nz_num) = n_order
-       rhs_gmr(n_order) = 0.0d0
-       xi(n_order) = 0.0d0
-      else
-       n_order = n_order + 1
-       nz_num = nz_num + 1
-       a_gmr(nz_num) = e(n)
-       ia_gmr(nz_num) = n_order
-       ja_gmr(nz_num) = n_order
-       rhs_gmr(n_order) = rhs(n)
-       xi(n_order) = 0.0d0      
-       if(a(n).ne.0.0d0) then
-         nz_num = nz_num + 1
-         a_gmr(nz_num) = a(n)
-         ia_gmr(nz_num) = n_order
-         ja_gmr(nz_num) = n_order - nly2
-       end if
-       if(b(n).ne.0.0d0) then
-         nz_num = nz_num +1
-         a_gmr(nz_num) = b(n)
-         ia_gmr(nz_num) = n_order
-         ja_gmr(nz_num) = n_order - 1
-       end if
-       if(c(n).ne.0.0d0) then
-         nz_num = nz_num +1
-         a_gmr(nz_num) = c(n)
-         ia_gmr(nz_num) = n_order
-         ja_gmr(nz_num) = n_order +  nly2
-       end if
-       if(d(n).ne.0.0d0) then
-         nz_num = nz_num +1
-         a_gmr(nz_num) = d(n)
-         ia_gmr(nz_num) = n_order
-         ja_gmr(nz_num) = n_order + 1
-       end if
-      end if   
-  300 continue
-      itmax1 = itmax/10
-!      mr = n_order - 1
-!      mr = 200
-      mr = MIN0(20,n_order-1)
-      call mgmres_st(n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr
-     *  ,itmax1, mr, eps1, eps1)
-!           call mgmres_st(n_order, nz_num, itmax1, mr, eps1, eps1)
-      n_order = 0
-      DO 301 I=2,NXRR
-      N1=NLY*(I-1)
-      DO 301 J=2,NLYY
-      N=N1+J
-      n_order = n_order + 1
-      if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
-       cc(n) = cc(n) + xi(n_order)
-      end if
-  301 continue
-      deallocate (a_gmr)
-      deallocate (rhs_gmr)
-      deallocate (ia_gmr)
-      deallocate (ja_gmr)
-      return
-
+         n_order = 0
+         nz_num = 0
+         nly2 = nly - 2
+         DO 300 I=2,NXRR
+             N1=NLY*(I-1)
+             DO 300 J=2,NLYY
+                 N=N1+J
+                 if(hx(n).eq.0.0d0.or.nctyp(n).eq.1) then
+                     n_order = n_order + 1
+                     nz_num = nz_num + 1
+                     a_gmr(nz_num) = 1.0d0
+                     ia_gmr(nz_num) = n_order
+                     ja_gmr(nz_num) = n_order
+                     rhs_gmr(n_order) = 0.0d0
+                     xi(n_order) = 0.0d0
+                 else
+                     n_order = n_order + 1
+                     nz_num = nz_num + 1
+                     a_gmr(nz_num) = e(n)
+                     ia_gmr(nz_num) = n_order
+                     ja_gmr(nz_num) = n_order
+                     rhs_gmr(n_order) = rhs(n)
+                     xi(n_order) = 0.0d0      
+                     if(a(n).ne.0.0d0) then
+                         nz_num = nz_num + 1
+                         a_gmr(nz_num) = a(n)
+                         ia_gmr(nz_num) = n_order
+                         ja_gmr(nz_num) = n_order - nly2
+                     end if
+                     if(b(n).ne.0.0d0) then
+                         nz_num = nz_num +1
+                         a_gmr(nz_num) = b(n)
+                         ia_gmr(nz_num) = n_order
+                         ja_gmr(nz_num) = n_order - 1
+                     end if
+                     if(c(n).ne.0.0d0) then
+                         nz_num = nz_num +1
+                         a_gmr(nz_num) = c(n)
+                         ia_gmr(nz_num) = n_order
+                         ja_gmr(nz_num) = n_order +  nly2
+                     end if
+                     if(d(n).ne.0.0d0) then
+                         nz_num = nz_num +1
+                         a_gmr(nz_num) = d(n)
+                         ia_gmr(nz_num) = n_order
+                         ja_gmr(nz_num) = n_order + 1
+                     end if
+                 end if   
+300      continue
+         itmax1 = itmax/10
+         !      mr = n_order - 1
+         !      mr = 200
+         mr = MIN0(20,n_order-1)
+         call mgmres_st(n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr \
+            ,itmax1, mr, eps1, eps1)
+         !           call mgmres_st(n_order, nz_num, itmax1, mr, eps1, eps1)
+         n_order = 0
+         DO 301 I=2,NXRR
+             N1=NLY*(I-1)
+             DO 301 J=2,NLYY
+                 N=N1+J
+                 n_order = n_order + 1
+                 if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
+                     cc(n) = cc(n) + xi(n_order)
+                 end if
+301      continue
+         deallocate (a_gmr)
+         deallocate (rhs_gmr)
+         deallocate (ia_gmr)
+         deallocate (ja_gmr)
+         return
+#endif
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
                 RETURN

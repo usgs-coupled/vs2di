@@ -1152,7 +1152,8 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   integer ( kind = 4 ), allocatable :: ua(:) 
   !real ( kind = 8 ) v(n,mr+1);                    ! allocate
   real ( kind = 8 ), allocatable :: v(:,:)
-  logical, parameter :: verbose = .true.
+  !logical, parameter :: verbose = .true.
+  logical, parameter :: verbose = .false.
   real ( kind = 8 ) x(n)
   !real ( kind = 8 ) y(mr+1)                    ! allocate
   real ( kind = 8 ), allocatable :: y(:)

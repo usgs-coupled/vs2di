@@ -168,6 +168,7 @@
     use react
     USE vs2dt_rm
     USE PhreeqcRM
+    use gmres1, only : a_gmr, ia_gmr, ja_gmr, rhs_gmr
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
     !{{
     !!      INTEGER, INTENT(IN) :: iold
@@ -548,6 +549,13 @@
     bltemp42(Nsol),bltemp45(Nsol),bltemp60(Nsol))
     allocate(COMPNAME(Nsol))       
     allocate(CCBR(Nsol,NNODES),CCAR(Nsol,NNODES))      
+    
+    allocate (a_gmr(5*nnodes))
+    allocate (rhs_gmr(nnodes))
+    !      allocate (x3(nnodes))
+    allocate (ia_gmr(5*nnodes))
+    allocate (ja_gmr(5*nnodes))
+    
     IF (SOLUTE) THEN  
         DO 7 I=1,Nsol 
             compname(I)  = scompname(I)
@@ -7848,6 +7856,7 @@
     use temp
     use pit
     use gmres1
+    use trxx, only: nctyp
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
                                           stdout=>output_unit, &
                                           stderr=>error_unit
@@ -7862,11 +7871,6 @@
     COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
     integer hydraulicFunctionType
     common/functiontype/ hydraulicFunctionType
-      allocate (a_gmr(5*nnodes))
-      allocate (rhs_gmr(nnodes))
-!      allocate (x3(nnodes))
-      allocate (ia_gmr(5*nnodes))
-      allocate (ja_gmr(5*nnodes))
 
     !............................................................................
     !      
@@ -8207,16 +8211,15 @@
             !
             !   CALL MATRIX SOLVER
             !
-!#define GMRES
+#define GMRES
 #ifndef GMRES
          CALL SLVSIP
 #else         
-!
-!   installing gmress solver. No need for iterating on heat equation
-!    first step is to move coefficients into storate gmres storage
-!    arrays. We need to reorder nodes, numbering only the active
-!    nodes.
-! 
+         !   installing gmress solver. No need for iterating on heat equation
+         !    first step is to move coefficients into storate gmres storage
+         !    arrays. We need to reorder nodes, numbering only the active
+         !    nodes.
+         ! 
          n_order = 0
          nz_num = 0
          nly2 = nly - 2
@@ -8224,11 +8227,12 @@
              N1=NLY*(I-1)
              DO 300 J=2,NLYY
                  N=N1+J
-                 if(hx(n).eq.0.0d0.or.nctyp(n).eq.1) then
+                 if(hx(n).eq.0.0d0.or.nhtyp(n).eq.1) then
                      n_order = n_order + 1
                      nz_num = nz_num + 1
                      a_gmr(nz_num) = 1.0d0
-                     ia_gmr(nz_num) = n_order
+                     !       ia_gmr(nz_num) = n_order
+                     ia_gmr(n_order) = nz_num
                      ja_gmr(nz_num) = n_order
                      rhs_gmr(n_order) = 0.0d0
                      xi(n_order) = 0.0d0
@@ -8236,42 +8240,48 @@
                      n_order = n_order + 1
                      nz_num = nz_num + 1
                      a_gmr(nz_num) = e(n)
-                     ia_gmr(nz_num) = n_order
+                     !       ia_gmr(nz_num) = n_order
+                     ia_gmr(n_order) = nz_num
                      ja_gmr(nz_num) = n_order
                      rhs_gmr(n_order) = rhs(n)
                      xi(n_order) = 0.0d0      
                      if(a(n).ne.0.0d0) then
                          nz_num = nz_num + 1
                          a_gmr(nz_num) = a(n)
-                         ia_gmr(nz_num) = n_order
+                         !         ia_gmr(nz_num) = n_order
                          ja_gmr(nz_num) = n_order - nly2
                      end if
                      if(b(n).ne.0.0d0) then
                          nz_num = nz_num +1
                          a_gmr(nz_num) = b(n)
-                         ia_gmr(nz_num) = n_order
+                         !         ia_gmr(nz_num) = n_order
                          ja_gmr(nz_num) = n_order - 1
                      end if
                      if(c(n).ne.0.0d0) then
                          nz_num = nz_num +1
                          a_gmr(nz_num) = c(n)
-                         ia_gmr(nz_num) = n_order
+                         !         ia_gmr(nz_num) = n_order
                          ja_gmr(nz_num) = n_order +  nly2
                      end if
                      if(d(n).ne.0.0d0) then
                          nz_num = nz_num +1
                          a_gmr(nz_num) = d(n)
-                         ia_gmr(nz_num) = n_order
+                         !         ia_gmr(nz_num) = n_order
                          ja_gmr(nz_num) = n_order + 1
                      end if
                  end if   
 300      continue
+         ia_gmr(n_order+1) = nz_num + 1
          itmax1 = itmax/10
          !      mr = n_order - 1
          !      mr = 200
          mr = MIN0(20,n_order-1)
-         call mgmres_st(n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr \
-            ,itmax1, mr, eps1, eps1)
+         !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
+         !   tol_abs, tol_rel )
+         call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
+            eps1, eps1 )
+         !call mgmres_st(n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr \
+         !  ,itmax1, mr, eps1, eps1)
          !           call mgmres_st(n_order, nz_num, itmax1, mr, eps1, eps1)
          n_order = 0
          DO 301 I=2,NXRR
@@ -8280,14 +8290,9 @@
                  N=N1+J
                  n_order = n_order + 1
                  if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
-                     cc(n) = cc(n) + xi(n_order)
+                     tt(n) = tt(n) + xi(n_order)
                  end if
 301      continue
-         deallocate (a_gmr)
-         deallocate (rhs_gmr)
-         deallocate (ia_gmr)
-         deallocate (ja_gmr)
-         return
 #endif
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
@@ -9124,6 +9129,7 @@
     use trxy1
     use trxy2
     use vs2dt_rm
+    use gmres1
     IMPLICIT NONE
     COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
     DOUBLE PRECISION STIM, DSMAX
@@ -9262,6 +9268,11 @@
     if (allocated(XIS)) deallocate(XIS)
     if (allocated(XNODE)) deallocate(XNODE)
     if (allocated(ZNODE)) deallocate(ZNODE)
+    if (allocated(A_GMR)) deallocate(A_GMR)
+    if (allocated(IA_GMR)) deallocate(IA_GMR)
+    if (allocated(JA_GMR)) deallocate(JA_GMR)
+    if (allocated(RHS_GMR)) deallocate(RHS_GMR)
+    
     if (rm_id .ge. 0) then
 #ifdef USE_MPI
         status = RM_MpiWorkerBreak(rm_id)

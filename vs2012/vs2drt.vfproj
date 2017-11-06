@@ -172,14 +172,15 @@
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<File RelativePath="..\Call_RM.F90"/>
+		<File RelativePath="..\mgmres.f90"/>
 		<File RelativePath="..\modules.f90"/>
 		<File RelativePath="..\PhreeqcRM\src\RM_interface.F90"/>
 		<File RelativePath="..\vs2dt3_3_reactive_withoutArgus1.f90">
 			<FileConfiguration Name="openmp_debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
-			<FileConfiguration Name="mpi_debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="serial_debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="mpi_debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="mpi|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter></Files>

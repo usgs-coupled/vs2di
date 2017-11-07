@@ -1188,7 +1188,7 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   if ( verbose ) then
     write ( *, '(a)' ) ' '
     write ( *, '(a)' ) 'PMGMRES_ILU_CR'
-    write ( *, '(a,i4)' ) '  Number of unknowns = ', n
+    write ( *, '(a,i8)' ) '  Number of unknowns = ', n
   end if
 
   do itr = 1, itr_max

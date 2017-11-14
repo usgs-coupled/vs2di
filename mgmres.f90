@@ -1158,6 +1158,12 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   !real ( kind = 8 ) y(mr+1)                    ! allocate
   real ( kind = 8 ), allocatable :: y(:)
 
+  ! dlp Is this OK to guard against all 0 concentrations?
+  if (maxval(rhs) .eq. 0.0d0) then
+      x = 0
+      return
+  endif
+  
   allocate (c(mr+1))
   allocate (g(mr+1))
   allocate (h(mr+1,mr))

@@ -2791,16 +2791,19 @@
                     JSTOP = 273
                     return
                 endif
-                if (ntc .ne. 0) then
-                !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                allocate(bcsol1(1,nSol), ibsol1(1))
-                ibsol1(1) = insbc1
-                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
-                do i = 1, nsol
-                    bcsol(i) = bcsol1(1,i)
-                enddo
-                deallocate(bcsol1, ibsol1)
-                endif
+                ! dlp
+                !if (ntc .ne. 0) then
+                    !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+                    allocate(bcsol1(1,nSol), ibsol1(1))
+                    ibsol1(1) = insbc1
+                    status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
+                    do i = 1, nsol
+                        bcsol(i) = bcsol1(1,i)
+                    enddo
+                    deallocate(bcsol1, ibsol1)
+                !else
+                !    bcsol = 0.0d0
+                !endif
 
             ELSE
                 NTC=0
@@ -3179,6 +3182,7 @@
     use TRXXH
     use REDUCE_TIME
     use TRXX
+    use gmres1
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -3199,6 +3203,8 @@
     COMMON/TCON1/NIS,NIS1,NIS3
     COMMON/FLO/FLOW
     COMMON/SCON1/ITESTS
+    LOGICAL TRANS,TRANS1,TRANS2,SSTATE
+    COMMON/TRXY/EPS1,EPS2,EPS3,TRANS,TRANS1,TRANS2,SSTATE,MB9(99),NMB9
     !
     ! ......................................................................
     !  START OF LINEARIZATION ITERATION LOOP
@@ -3385,12 +3391,101 @@
     !    CALL SOLUTION ALGORITHM
     !
     NIT=NIT+1
-    CALL SLVSIP
+    !use_gmres_flow = .false.
+    if (.not. use_gmres_flow) then
+        CALL SLVSIP
+    else
+        !   installing gmress solver. No need for iterating on heat equation
+        !    first step is to move coefficients into storate gmres storage
+        !    arrays. We need to reorder nodes, numbering only the active
+        !    nodes.
+        ! 
+        ia_gmr = 0
+        ja_gmr = 0
+        a_gmr = 0.0d0
+        xi = 0.0d0
+        rhs_gmr = 0.0d0       
+        n_order = 0
+        nz_num = 0
+        nly2 = nly - 2
+        DO 300 I=2,NXRR
+            N1=NLY*(I-1)
+            DO 300 J=2,NLYY
+                N=N1+J
+                if(hx(n).eq.0.0d0.or.ntyp(n).eq.1) then
+                    n_order = n_order + 1
+                    nz_num = nz_num + 1
+                    a_gmr(nz_num) = 1.0d0
+                    !       ia_gmr(nz_num) = n_order
+                    ia_gmr(n_order) = nz_num
+                    ja_gmr(nz_num) = n_order
+                    rhs_gmr(n_order) = 0.0d0
+                    xi(n_order) = 0.0d0
+                else
+                    n_order = n_order + 1
+                    nz_num = nz_num + 1
+                    a_gmr(nz_num) = e(n)
+                    !       ia_gmr(nz_num) = n_order
+                    ia_gmr(n_order) = nz_num
+                    ja_gmr(nz_num) = n_order
+                    rhs_gmr(n_order) = rhs(n)
+                    xi(n_order) = 0.0d0      
+                    if(a(n).ne.0.0d0) then
+                        nz_num = nz_num + 1
+                        a_gmr(nz_num) = a(n)
+                        !         ia_gmr(nz_num) = n_order
+                        ja_gmr(nz_num) = n_order - nly2
+                    end if
+                    if(b(n).ne.0.0d0) then
+                        nz_num = nz_num +1
+                        a_gmr(nz_num) = b(n)
+                        !         ia_gmr(nz_num) = n_order
+                        ja_gmr(nz_num) = n_order - 1
+                    end if
+                    if(c(n).ne.0.0d0) then
+                        nz_num = nz_num +1
+                        a_gmr(nz_num) = c(n)
+                        !         ia_gmr(nz_num) = n_order
+                        ja_gmr(nz_num) = n_order +  nly2
+                    end if
+                    if(d(n).ne.0.0d0) then
+                        nz_num = nz_num +1
+                        a_gmr(nz_num) = d(n)
+                        !         ia_gmr(nz_num) = n_order
+                        ja_gmr(nz_num) = n_order + 1
+                    end if
+                end if   
+300     continue
+        ia_gmr(n_order+1) = nz_num + 1
+        itmax1 = itmax/10
+        !      mr = n_order - 1
+        !      mr = 200
+        mr = MIN0(20,n_order-1)
+        !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
+        !   tol_abs, tol_rel )
+        call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
+        eps1, eps1 )
+        n_order = 0
+        DO 301 I=2,NXRR
+            N1=NLY*(I-1)
+            DO 301 J=2,NLYY
+                N=N1+J
+                n_order = n_order + 1
+                if(hx(n).ne.0.0d0.and.ntyp(n).ne.1) then
+                    p(n) = p(n) + xi(n_order)
+                end if
+301     continue      
+    endif
+    
     IF(NIT.LT.MINIT) GO TO 30
     !
     !   IF SOLUTION HAS BEEN FOUND THEN RETURN
     !
-    IF(ITEST.EQ.0) RETURN
+    IF(ITEST.EQ.0) then
+        print *, "Done with flow."
+        RETURN
+    endif
+    
     IF(NIT.LE.ITMAX) GO TO 30
     !
     !   MAXIMUM NUMBER OF ITERATIONS EXCEEDED
@@ -4883,6 +4978,7 @@
                             do 25 M3=1,Nsol  
                                 !      BL(42)=BL(42)+QQ(IN)*CSS(M3,IN)
                                 BLSOL(M3,9)=BLSOL(M3,9)+ QQ(IN)*CSS(M3,IN)
+                                ! dlp uses css
 25                          continue
                         END IF
                     END IF
@@ -4910,6 +5006,7 @@
                                 do 26 M4=1,Nsol  
                                     !      BL(36)=BL(36)-QX*CSS(M4,IN)
                                     BLSOL(M4,3)=BLSOL(M4,3)-QX*CSS(M4,IN)
+                                    ! dlp uses css
 26                              continue  
                             end if
                         ELSE
@@ -7871,7 +7968,6 @@
     COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
     integer hydraulicFunctionType
     common/functiontype/ hydraulicFunctionType
-    logical use_gmres /.true./
 
     !............................................................................
     !      
@@ -8212,8 +8308,8 @@
             !
             !   CALL MATRIX SOLVER
             !
-            use_gmres = .false.
-            if (.not. use_gmres) then
+            !use_gmres_heat = .false.
+            if (.not. use_gmres_heat) then
                 CALL SLVSIP
             else  
                 !   installing gmress solver. No need for iterating on heat equation
@@ -8221,6 +8317,11 @@
                 !    arrays. We need to reorder nodes, numbering only the active
                 !    nodes.
                 ! 
+                !ia_gmr = 0
+                !ja_gmr = 0
+                !a_gmr = 0.0d0
+                !xi = 0.0d0
+                !rhs_gmr = 0.0d0
                 n_order = 0
                 nz_num = 0
                 nly2 = nly - 2
@@ -8280,20 +8381,21 @@
                 !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
                 !   tol_abs, tol_rel )
                 call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
-                    eps1, eps1 )
+                    eps2, eps2 )
                 n_order = 0
                 DO 301 I=2,NXRR
                     N1=NLY*(I-1)
                     DO 301 J=2,NLYY
                         N=N1+J
                         n_order = n_order + 1
-                        if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
+                        if(hx(n).ne.0.0d0.and.nhtyp(n).ne.1) then
                             tt(n) = tt(n) + xi(n_order)
                         end if
 301             continue
             endif   
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
+                print *, "Done with heat."
                 RETURN
             END IF
 50      CONTINUE
@@ -8336,6 +8438,7 @@
     use tempcc
     use COMPNAM
     use react
+    use gmres1
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
                                           stdout=>output_unit, &
                                           stderr=>error_unit
@@ -8660,13 +8763,18 @@
                     IF (CIT.AND.JFLAG2.NE.1) RHSS(N)=RHSS(N)-AOC(N)*CCOLD(M,IM1)&
                     -BOC(N)*CCOLD(M,JM1)-COC(N)*CCOLD(M,IP1)-DOC(N)*CCOLD(M,JP1)&
                     -EOC(N)*CCOLD(M,N)
-                    IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1)RHSS(N)=RHSS(N)-QQ(N)&
-                    *CSS(M,N)
+                     IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1)RHSS(N)=RHSS(N)-QQ(N)&
+                        *CSS(M,N)
+                    ! dlp IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1 .and. nctyp(n) .gt. 0) then
+                    !    RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
+                    !endif
                     IF(QS(N).LT.0.0D0 .AND. NCTYP(N).EQ.0) then
                         if(cit.and.jflag2.ne.1) then
                             RHSS(N)=RHSS(N)+0.5d0*(QS(N)+dum(n))*CSS(M,N)
+                            !dlp uses css
                         else
                             RHSS(N) = RHSS(N)+ QS(N)*CSS(M,N)
+                            !dlp uses css
                         end if
                     end if
                     IF(QS(N).LE.0.0D0 .AND.NCTYP(N).EQ.2)RHSS(N)=RHSS(N)-CSS(M,N)
@@ -8677,13 +8785,100 @@
             !
             !   CALL MATRIX SOLVER
             !
-            CALL SLVSIPSOL
-            DO 31 I=2,NXRR
-                N1=NLY*(I-1)
-                DO 31 J=2,NLYY
-                    N=N1+J
-                    CC(M,N)=TempC(N)
-31          CONTINUE   
+            !use_gmres_solute = .false.
+            if (.not. use_gmres_solute) then
+                CALL SLVSIPSOL
+                DO 31 I=2,NXRR
+                    N1=NLY*(I-1)
+                    DO 31 J=2,NLYY
+                        N=N1+J
+                        CC(M,N)=TempC(N)
+31              CONTINUE       
+            else  
+                !   installing gmress solver. No need for iterating on heat equation
+                !    first step is to move coefficients into storate gmres storage
+                !    arrays. We need to reorder nodes, numbering only the active
+                !    nodes.
+                ! 
+                ia_gmr = 0
+                ja_gmr = 0
+                a_gmr = 0.0d0
+                xis = 0.0d0
+                rhs_gmr = 0.0d0 
+                n_order = 0
+                nz_num = 0
+                nly2 = nly - 2
+                DO 300 I=2,NXRR
+                    N1=NLY*(I-1)
+                    DO 300 J=2,NLYY
+                        N=N1+J
+                        if(hx(n).eq.0.0d0.or.nctyp(n).eq.1) then
+                            n_order = n_order + 1
+                            nz_num = nz_num + 1
+                            a_gmr(nz_num) = 1.0d0
+                            !       ia_gmr(nz_num) = n_order
+                            ia_gmr(n_order) = nz_num
+                            ja_gmr(nz_num) = n_order
+                            rhs_gmr(n_order) = 0.0d0
+                            xis(n_order) = 0.0d0
+                        else
+                            n_order = n_order + 1
+                            nz_num = nz_num + 1
+                            a_gmr(nz_num) = es(n)
+                            !       ia_gmr(nz_num) = n_order
+                            ia_gmr(n_order) = nz_num
+                            ja_gmr(nz_num) = n_order
+                            rhs_gmr(n_order) = rhss(n)
+                            xis(n_order) = 0.0d0      
+                            if(as(n).ne.0.0d0) then
+                                nz_num = nz_num + 1
+                                a_gmr(nz_num) = as(n)
+                                !         ia_gmr(nz_num) = n_order
+                                ja_gmr(nz_num) = n_order - nly2
+                            end if
+                            if(bs(n).ne.0.0d0) then
+                                nz_num = nz_num +1
+                                a_gmr(nz_num) = bs(n)
+                                !         ia_gmr(nz_num) = n_order
+                                ja_gmr(nz_num) = n_order - 1
+                            end if
+                            if(cs(n).ne.0.0d0) then
+                                nz_num = nz_num +1
+                                a_gmr(nz_num) = cs(n)
+                                !         ia_gmr(nz_num) = n_order
+                                ja_gmr(nz_num) = n_order +  nly2
+                            end if
+                            if(ds(n).ne.0.0d0) then
+                                nz_num = nz_num +1
+                                a_gmr(nz_num) = ds(n)
+                                !         ia_gmr(nz_num) = n_order
+                                ja_gmr(nz_num) = n_order + 1
+                            end if
+                        end if   
+300             continue
+                ia_gmr(n_order+1) = nz_num + 1
+                itmax1 = itmax/10
+                !      mr = n_order - 1
+                !      mr = 200
+                mr = MIN0(20,n_order-1)
+                !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
+                !   tol_abs, tol_rel )
+                call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xis, rhs_gmr, itmax1, mr, &
+                    eps3, eps3 )
+                n_order = 0
+                DO 301 I=2,NXRR
+                    N1=NLY*(I-1)
+                    DO 301 J=2,NLYY
+                        N=N1+J
+                        n_order = n_order + 1
+                        if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
+                            cc(m,n) = cc(m,n) + xis(n_order)
+                        end if
+301             continue
+                print *, "   Done with component ", m
+            endif   
+            
+ 
             !C      WRITE(6,*)'TempC After ########### ',M
             !      CALL VSOUTS(1,TempC(N))
             IF(ITESTS.EQ.0) THEN

@@ -1021,7 +1021,7 @@ subroutine mult_givens ( c, s, k, g )
 
   return
 end
-subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
+logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   tol_abs, tol_rel )
 
 !*****************************************************************************80
@@ -1158,12 +1158,13 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   !real ( kind = 8 ) y(mr+1)                    ! allocate
   real ( kind = 8 ), allocatable :: y(:)
 
+  pmgmres_ilu_cr = .false.
   ! dlp Is this OK to guard against all 0 concentrations?
   if (maxval(rhs) .eq. 0.0d0) then
       x = 0
+      pmgmres_ilu_cr = .true.
       return
   endif
-  
   allocate (c(mr+1))
   allocate (g(mr+1))
   allocate (h(mr+1,mr))
@@ -1277,6 +1278,7 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
       end if
 
       if ( rho <= rho_tol .and. rho <= tol_abs ) then
+        pmgmres_ilu_cr = .true.
         exit
       end if
 
@@ -1295,6 +1297,7 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
     end do
 
     if ( rho <= rho_tol .and. rho <= tol_abs ) then
+      pmgmres_ilu_cr = .true.
       exit
     end if
 
@@ -1316,7 +1319,7 @@ subroutine pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   deallocate (v)
   deallocate (y)
   return
-end
+end function pmgmres_ilu_cr
 subroutine r8vec_uniform_01 ( n, seed, r )
 
 !*****************************************************************************80

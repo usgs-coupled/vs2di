@@ -3205,6 +3205,7 @@
     COMMON/SCON1/ITESTS
     LOGICAL TRANS,TRANS1,TRANS2,SSTATE
     COMMON/TRXY/EPS1,EPS2,EPS3,TRANS,TRANS1,TRANS2,SSTATE,MB9(99),NMB9
+    logical solved, pmgmres_ilu_cr
     !
     ! ......................................................................
     !  START OF LINEARIZATION ITERATION LOOP
@@ -3463,7 +3464,7 @@
         mr = MIN0(20,n_order-1)
         !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
         !   tol_abs, tol_rel )
-        call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
+        solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
         eps1, eps1 )
         n_order = 0
         DO 301 I=2,NXRR
@@ -3474,7 +3475,10 @@
                 if(hx(n).ne.0.0d0.and.ntyp(n).ne.1) then
                     p(n) = p(n) + xi(n_order)
                 end if
-301     continue      
+301     continue  
+        if (.not. solved) then
+            nit = minit
+        endif
     endif
     
     IF(NIT.LT.MINIT) GO TO 30
@@ -7968,6 +7972,7 @@
     COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
     integer hydraulicFunctionType
     common/functiontype/ hydraulicFunctionType
+    logical solved, pmgmres_ilu_cr
 
     !............................................................................
     !      
@@ -8380,7 +8385,7 @@
                 mr = MIN0(20,n_order-1)
                 !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
                 !   tol_abs, tol_rel )
-                call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
+                solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
                     eps2, eps2 )
                 n_order = 0
                 DO 301 I=2,NXRR
@@ -8392,6 +8397,12 @@
                             tt(n) = tt(n) + xi(n_order)
                         end if
 301             continue
+                if (.not. solved) then
+                    print *, "mgmres failed for heat &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&."
+                    exit
+                else
+                    print *, "mgmres success for heat *****."
+                endif
             endif   
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
@@ -8456,6 +8467,7 @@
     COMMON/TCON1/NIS,NIS1,NIS3
     COMMON/SCON1/ITESTS     
     COMMON/JCONF/JFLAG2
+    logical solved, pmgmres_ilu_cr
     !
     !...........................................................................
     !
@@ -8863,7 +8875,7 @@
                 mr = MIN0(20,n_order-1)
                 !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
                 !   tol_abs, tol_rel )
-                call pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xis, rhs_gmr, itmax1, mr, &
+                solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xis, rhs_gmr, itmax1, mr, &
                     eps3, eps3 )
                 n_order = 0
                 DO 301 I=2,NXRR
@@ -8876,6 +8888,9 @@
                         end if
 301             continue
                 print *, "   Done with component ", m
+                if (.not. solved) then
+                    stop "mgmres failed for component."
+                endif
             endif   
             
  

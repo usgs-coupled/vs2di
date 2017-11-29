@@ -1321,15 +1321,17 @@
         do 161 J=1,NLY
             do 150 N=1,NXR
                 IN=NLY*(N-1)+1
-                if(hydraulicFunctionType.eq.0)then
-                    THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.1)then
-                    THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.2)then
-                    THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.4)then
-                    THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
-                end if
+                IF(HX(IN).GT.0.0D0) THEN
+                    if(hydraulicFunctionType.eq.0)then
+                        THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.1)then
+                        THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.2)then
+                        THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.4)then
+                        THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
+                    end if
+                ENDIF
 150         CONTINUE
 161     CONTINUE 
         iprrestartflag = 0 
@@ -2332,15 +2334,17 @@
         do 162 J=1,NLY
             do 156 N=1,NXR
                 IN=NLY*(N-1)+1
-                if(hydraulicFunctionType.eq.0)then
-                    THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.1)then
-                    THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.2)then
-                    THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
-                else if(hydraulicFunctionType.eq.4)then
-                    THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
-                end if
+                IF(HX(IN).GT.0.0D0) THEN
+                    if(hydraulicFunctionType.eq.0)then
+                        THETA(IN)=VSTHUBC(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.1)then
+                        THETA(IN)=VSTHUVG(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.2)then
+                        THETA(IN)=VSTHUHK(P(IN),JTEX(IN))
+                    else if(hydraulicFunctionType.eq.4)then
+                        THETA(IN)=VSTHUOT(P(IN),JTEX(IN))
+                    end if
+                ENDIF
 156         CONTINUE
 162     CONTINUE 
         iprrestartflag = 0 
@@ -2792,7 +2796,9 @@
                     return
                 endif
                 ! dlp
-                !if (ntc .ne. 0) then
+                if ((ntc .eq. 0) .and. (ntx .ne. 1) .and. (ntx .ne. 2) .and. (ntx .ne. 6)) then
+                    bcsol = 1d300
+                else
                     !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
                     allocate(bcsol1(1,nSol), ibsol1(1))
                     ibsol1(1) = insbc1
@@ -2801,10 +2807,7 @@
                         bcsol(i) = bcsol1(1,i)
                     enddo
                     deallocate(bcsol1, ibsol1)
-                !else
-                !    bcsol = 0.0d0
-                !endif
-
+                endif
             ELSE
                 NTC=0
             END IF
@@ -4983,6 +4986,10 @@
                                 !      BL(42)=BL(42)+QQ(IN)*CSS(M3,IN)
                                 BLSOL(M3,9)=BLSOL(M3,9)+ QQ(IN)*CSS(M3,IN)
                                 ! dlp uses css
+                                if (CSS(M3,IN) > 1e10) then
+                                    stop "Stopping 1"
+                                endif   
+                                
 25                          continue
                         END IF
                     END IF
@@ -5011,6 +5018,9 @@
                                     !      BL(36)=BL(36)-QX*CSS(M4,IN)
                                     BLSOL(M4,3)=BLSOL(M4,3)-QX*CSS(M4,IN)
                                     ! dlp uses css
+                                    if (CSS(M4,IN) > 1e10) then
+                                        stop "Stopping 1"
+                                    endif   
 26                              continue  
                             end if
                         ELSE
@@ -8775,8 +8785,13 @@
                     IF (CIT.AND.JFLAG2.NE.1) RHSS(N)=RHSS(N)-AOC(N)*CCOLD(M,IM1)&
                     -BOC(N)*CCOLD(M,JM1)-COC(N)*CCOLD(M,IP1)-DOC(N)*CCOLD(M,JP1)&
                     -EOC(N)*CCOLD(M,N)
-                     IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1)RHSS(N)=RHSS(N)-QQ(N)&
-                        *CSS(M,N)
+                     IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1) then
+                         RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
+                         if (css(m,n) > 1e10) then
+                             stop "should not get here"
+                         endif
+                     endif
+                     
                     ! dlp IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1 .and. nctyp(n) .gt. 0) then
                     !    RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
                     !endif
@@ -8784,9 +8799,15 @@
                         if(cit.and.jflag2.ne.1) then
                             RHSS(N)=RHSS(N)+0.5d0*(QS(N)+dum(n))*CSS(M,N)
                             !dlp uses css
+                         if (css(m,n) > 1e10) then
+                            stop "should not get here"
+                         endif
                         else
                             RHSS(N) = RHSS(N)+ QS(N)*CSS(M,N)
                             !dlp uses css
+                         if (css(m,n) > 1e10) then
+                             stop "should not get here"
+                         endif
                         end if
                     end if
                     IF(QS(N).LE.0.0D0 .AND.NCTYP(N).EQ.2)RHSS(N)=RHSS(N)-CSS(M,N)

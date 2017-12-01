@@ -9,7 +9,7 @@
 			Name="openmp_debug|Win32"
 			>
 			<DebugSettings
-				Command=""
+				Command="c:\cruncher\VS2DI\reactive\vs2drt_trunk\src\vs2008\openmp_debug\vs2drt.exe"
 				WorkingDirectory=""
 				CommandArguments=""
 				Attach="false"

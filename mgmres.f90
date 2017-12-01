@@ -1157,6 +1157,11 @@ logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
   real ( kind = 8 ) x(n)
   !real ( kind = 8 ) y(mr+1)                    ! allocate
   real ( kind = 8 ), allocatable :: y(:)
+!  real ( kind = 8 ), allocatable :: y(:)
+  real ( kind = 8 ) xdiff, xdiffMax
+  
+  xdiff = 0.0d0
+  xdiffMax = 0.0d0
 
   pmgmres_ilu_cr = .false.
   ! dlp Is this OK to guard against all 0 concentrations?
@@ -1209,7 +1214,8 @@ logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
     rho = sqrt ( dot_product ( r, r ) )
 
     if ( verbose ) then
-      write ( *, '(a,i4,a,g14.6)' ) '  ITR = ', itr, '  Residual = ', rho
+      write ( *, '(a,i4,a,g14.6,a,g14.6)' ) '  ITR = ', itr, '  Residual = ', rho,&
+       ' xdiff = ', xdiffMax
     end if
 
     if ( itr == 1 ) then
@@ -1274,13 +1280,14 @@ logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
       itr_used = itr_used + 1
 
       if ( verbose ) then
-        write ( *, '(a,i4,a,g14.6)' ) '  K = ', k, '  Residual = ', rho
+        write ( *, '(a,i4,a,g14.6)' ) '  K = ', k, '  Residual = ', rho,&
+          ' xdiff = ', xdiffMax
       end if
 
-      if ( rho <= rho_tol .and. rho <= tol_abs ) then
-        pmgmres_ilu_cr = .true.
-        exit
-      end if
+!      if ( rho <= rho_tol .and. rho <= tol_abs ) then
+!        pmgmres_ilu_cr = .true.
+!        exit
+!      end if
 
     end do
 
@@ -1291,15 +1298,27 @@ logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
     do i = k, 1, -1
       y(i) = ( g(i) - dot_product ( h(i,i+1:k+1), y(i+1:k+1) ) ) / h(i,i)
     end do
-
+!
+!  new tolerance check
+!    
+    xdiffMax = 0.0d0
     do i = 1, n
-      x(i) = x(i) + dot_product ( v(i,1:k+1), y(1:k+1) )
+      !      x(i) = x(i) + dot_product ( v(i,1:k+1), y(1:k+1) )
+      xdiff = dot_product ( v(i,1:k+1), y(1:k+1) )
+      x(i) = x(i) + xdiff
+      xdiff = dabs(xdiff)
+      if (xdiff.gt.xdiffMax) xdiffMax = xdiff
     end do
-
-    if ( rho <= rho_tol .and. rho <= tol_abs ) then
+    if(xdiffMax <= tol_abs) then
       pmgmres_ilu_cr = .true.
       exit
     end if
+!
+!
+!    if ( rho <= rho_tol .and. rho <= tol_abs ) then
+!      pmgmres_ilu_cr = .true.
+!      exit
+!    end if
 
   end do
 

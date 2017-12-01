@@ -3209,6 +3209,7 @@
     LOGICAL TRANS,TRANS1,TRANS2,SSTATE
     COMMON/TRXY/EPS1,EPS2,EPS3,TRANS,TRANS1,TRANS2,SSTATE,MB9(99),NMB9
     logical solved, pmgmres_ilu_cr
+    real ( kind = 8 ) xdiff, xdiffMax
     !
     ! ......................................................................
     !  START OF LINEARIZATION ITERATION LOOP
@@ -3241,6 +3242,8 @@
     IF (ETSIM)CALL VSPLNT
     IF(SEEP) CALL VSSFAC
     if(GRAV.and.nit.eq.0) CALL vsgrav_dr
+    xdiffMax = 0.0D0
+    ITEST = 0
     !
     ! .....................................................................
     !
@@ -3468,7 +3471,7 @@
         !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
         !   tol_abs, tol_rel )
         solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
-        eps1, eps1 )
+        eps, eps )
         n_order = 0
         DO 301 I=2,NXRR
             N1=NLY*(I-1)
@@ -3477,6 +3480,8 @@
                 n_order = n_order + 1
                 if(hx(n).ne.0.0d0.and.ntyp(n).ne.1) then
                     p(n) = p(n) + xi(n_order)
+                    xdiff = dabs(xi(n_order))
+                    if (xdiff.gt.xdiffMax) xdiffMax = xdiff
                 end if
 301     continue  
         if (.not. solved) then
@@ -3485,6 +3490,7 @@
     endif
     
     IF(NIT.LT.MINIT) GO TO 30
+    if(xdiffMax.gt.eps) ITEST = 1
     !
     !   IF SOLUTION HAS BEEN FOUND THEN RETURN
     !

@@ -1185,6 +1185,7 @@
     character(100) msg
     integer :: iPRNT
     integer :: ifet2 = 0
+    integer :: numReductions
 
     !
     ! -------------------------------------------------------------
@@ -1215,6 +1216,7 @@
     !
     !   SET UP AND SOLVE MATRIX EQUATIONS FOR FLOW
     !
+    numReductions = 0
     NIT3=0
     TRANS2=.FALSE.
 170 TRANS1=.FALSE.
@@ -1225,6 +1227,12 @@
         nit3=0
         reduce_time_step = .true.
         jstop = 0
+        if (numReductions.ge.3) then
+          write(6,4000)
+          jstop = 13
+          return
+        end if
+        numReductions = numReductions + 1
         write(stderr,*) "WARNING: Reducing time step."        !jstop = 11
         !return
     else
@@ -1407,6 +1415,8 @@
     !     END OF TIME LOOP
     !-------------------------------------------------------------------
     RETURN
+4000 FORMAT(5x,'  Maximum number of time step reductions for transport' &
+     ' (3) exceeded. Simulation stopped.')
 4260 FORMAT(5X,'-- WARNING --  INFILTRATION/PONDING BOUNDARY WAS NOT',  &
     ' SOLVED ACCURATELY FOR THIS TIME STEP')
     END
@@ -2796,8 +2806,9 @@
                     return
                 endif
                 ! dlp
-                if ((ntc .eq. 0) .and. (ntx .ne. 1) .and. (ntx .ne. 2) .and. (ntx .ne. 6)) then
-                    bcsol = 1d300
+                if ((ntc .eq. 0) .and. ((ntx .eq.0).or.(ntx .eq.3).or. &
+                  (ntx .eq.4).or.(ntx.eq.5).or.(ntx.eq.7))) then
+                    bcsol = 0.0D0
                 else
                     !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
                     allocate(bcsol1(1,nSol), ibsol1(1))
@@ -2807,7 +2818,7 @@
                         bcsol(i) = bcsol1(1,i)
                     enddo
                     deallocate(bcsol1, ibsol1)
-                endif
+               endif
             ELSE
                 NTC=0
             END IF
@@ -2859,16 +2870,20 @@
                     JSTOP = 277
                     return
                 endif
-
-                !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
-                allocate(bcsol1(1,nSol), ibsol1(1))
-                ibsol1(1) = insbc1
-                status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
-                do i = 1, nsol
-                    bcsol(i) = bcsol1(1,i)
-                enddo
-                deallocate(bcsol1, ibsol1)
-
+                ! dlp
+                if ((ntc .eq. 0) .and. ((ntx .eq.0).or.(ntx .eq.3).or. &
+                  (ntx .eq.4).or.(ntx.eq.5).or.(ntx.eq.7))) then
+                    bcsol = 0.0D0
+                else
+                 !#CALL SETUP_BOUNDARY_CONDITIONS(INSBC1,INSBC2,SBFRAC,BCSOL)
+                 allocate(bcsol1(1,nSol), ibsol1(1))
+                 ibsol1(1) = insbc1
+                 status = RM_InitialPhreeqc2Concentrations(rm_id, bcsol1, 1, ibsol1)
+                 do i = 1, nsol
+                     bcsol(i) = bcsol1(1,i)
+                 enddo
+                 deallocate(bcsol1, ibsol1)
+                end if
             ELSE
                 NTC=0
             END IF
@@ -3472,6 +3487,7 @@
         !   tol_abs, tol_rel )
         solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
         eps, eps )
+        if (solved) then
         n_order = 0
         DO 301 I=2,NXRR
             N1=NLY*(I-1)
@@ -3484,8 +3500,10 @@
                     if (xdiff.gt.xdiffMax) xdiffMax = xdiff
                 end if
 301     continue  
-        if (.not. solved) then
-            nit = minit
+!        if (.not. solved) then
+!            nit = minit
+         else
+            nit = itmax + 1
         endif
     endif
     
@@ -8793,9 +8811,6 @@
                     -EOC(N)*CCOLD(M,N)
                      IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1) then
                          RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
-                         if (css(m,n) > 1e10) then
-                             stop "should not get here"
-                         endif
                      endif
                      
                     ! dlp IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1 .and. nctyp(n) .gt. 0) then
@@ -8805,15 +8820,10 @@
                         if(cit.and.jflag2.ne.1) then
                             RHSS(N)=RHSS(N)+0.5d0*(QS(N)+dum(n))*CSS(M,N)
                             !dlp uses css
-                         if (css(m,n) > 1e10) then
-                            stop "should not get here"
-                         endif
+
                         else
                             RHSS(N) = RHSS(N)+ QS(N)*CSS(M,N)
-                            !dlp uses css
-                         if (css(m,n) > 1e10) then
-                             stop "should not get here"
-                         endif
+
                         end if
                     end if
                     IF(QS(N).LE.0.0D0 .AND.NCTYP(N).EQ.2)RHSS(N)=RHSS(N)-CSS(M,N)
@@ -8834,11 +8844,11 @@
                         CC(M,N)=TempC(N)
 31              CONTINUE       
             else  
-                !   installing gmress solver. No need for iterating on heat equation
+                !   installing gmress solver. No need for iterating on solute equation
                 !    first step is to move coefficients into storate gmres storage
-                !    arrays. We need to reorder nodes, numbering only the active
-                !    nodes.
+                !    arrays. We need to reorder nodes.
                 ! 
+                ITESTS = 1
                 ia_gmr = 0
                 ja_gmr = 0
                 a_gmr = 0.0d0
@@ -8904,6 +8914,7 @@
                 !   tol_abs, tol_rel )
                 solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xis, rhs_gmr, itmax1, mr, &
                     eps3, eps3 )
+                if(solved) then
                 n_order = 0
                 DO 301 I=2,NXRR
                     N1=NLY*(I-1)
@@ -8914,9 +8925,17 @@
                             cc(m,n) = cc(m,n) + xis(n_order)
                         end if
 301             continue
+                ITESTS = 0
                 print *, "   Done with component ", m
-                if (.not. solved) then
-                    stop "mgmres failed for component."
+                else
+!                if (.not. solved) then
+!                    stop "mgmres failed for component."
+                 JSTOP=10
+                 JFLAG=1
+                 PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
+                ,' TRANSPORT EQUATION '
+                 WRITE(6,4000)
+                 RETURN
                 endif
             endif   
             
@@ -8981,7 +9000,8 @@
         JFLAG=1
         PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
         ,' TRANSPORT EQUATION '
-        WRITE(6,4010)
+        WRITE(6,4000)
+        RETURN
 60  CONTINUE 
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&

@@ -1165,7 +1165,8 @@ logical function pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
 
   pmgmres_ilu_cr = .false.
   ! dlp Is this OK to guard against all 0 concentrations?
-  if (maxval(rhs) .eq. 0.0d0) then
+!  if (maxval(rhs) .eq. 0.0d0) then
+  if(maxval(rhs) .eq. 0.0d0 .and. minval(rhs) .eq. 0.0d0) then
       x = 0
       pmgmres_ilu_cr = .true.
       return

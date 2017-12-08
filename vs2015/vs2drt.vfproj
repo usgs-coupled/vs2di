@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A35940C4-7A25-405E-9211-44EB3C8F607C}">
+	<Platforms>
+		<Platform Name="x64"/></Platforms>
+	<Configurations>
+		<Configuration Name="openmp_debug|x64" DeleteExtensionsOnClean="*.cod;*__genmod.*;*.mod;*.pdb;*.asm;*.lst;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" MultiProcessorCompilation="true" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" PreprocessorDefinitions="USE_OPENMP" EnableRecursion="true" ReentrantCode="reentrancyThreaded" WarnInterfaces="true" Traceback="true" NullPointerCheck="true" BoundsCheck="true" UninitializedVariablesCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib "/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="openmp|x64">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" MultiProcessorCompilation="true" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" PreprocessorDefinitions="USE_OPENMP" EnableRecursion="true" ReentrantCode="reentrancyThreaded" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\" IgnoreDefaultLibraryNames="LIBCMTD.lib" SubSystem="subSystemConsole" InterproceduralOptimizations="false" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="mpi_debug|x64" DeleteExtensionsOnClean="*.cod;*__genmod.*;*.mod;*.pdb;*.asm;*.lst;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" MultiProcessorCompilation="true" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include;$(MSMPI_INC);$(MSMPI_INC)\x64" PreprocessorDefinitions="USE_MPI" EnableRecursion="true" ReentrantCode="reentrancyThreaded" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\;$(MSMPI_LIB64)" IgnoreDefaultLibraryNames="LIBCMT.lib" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib msmpi.lib msmpifec.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="mpi|x64" DeleteExtensionsOnClean="*.cod;*__genmod.*;*.mod;*.pdb;*.asm;*.lst;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" MultiProcessorCompilation="true" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include;$(MSMPI_INC);$(MSMPI_INC)\x64" PreprocessorDefinitions="USE_MPI" EnableRecursion="true" ReentrantCode="reentrancyThreaded" WarnInterfaces="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\;$(MSMPI_LIB64)" IgnoreDefaultLibraryNames="LIBCMT.lib" GenerateDebugInformation="true" SubSystem="subSystemConsole" InterproceduralOptimizations="false" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib msmpi.lib msmpifec.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="serial|x64">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" MultiProcessorCompilation="true" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" OpenMPConditionalCompilation="false" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\" IgnoreDefaultLibraryNames="LIBCMTD.lib" SubSystem="subSystemConsole" InterproceduralOptimizations="false" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="serial_debug|x64" DeleteExtensionsOnClean="*.cod;*__genmod.*;*.mod;*.pdb;*.asm;*.lst;*.map;*.dyn;*.dpi;*.tmp;*.log;*.ilk;*.exe;$(TargetPath)">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" MultiProcessorCompilation="true" Optimization="optimizeDisabled" Preprocess="preprocessYes" AdditionalIncludeDirectories="../include" OpenMPConditionalCompilation="false" EnableRecursion="true" WarnInterfaces="true" Traceback="true" NullPointerCheck="true" BoundsCheck="true" UninitializedVariablesCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" AdditionalLibraryDirectories="$(Platform)\$(Configuration)\" GenerateDebugInformation="true" SubSystem="subSystemConsole" AdditionalDependencies="PhreeqcRM.lib libvs2drt.lib "/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd">
+		<File RelativePath="..\include\c_arrays.inc"/>
+		<File RelativePath="..\include\c_disch.inc"/>
+		<File RelativePath="..\include\c_dumm.inc"/>
+		<File RelativePath="..\include\c_dumm1.inc"/>
+		<File RelativePath="..\include\c_dumm2.inc"/>
+		<File RelativePath="..\include\c_equat.inc"/>
+		<File RelativePath="..\include\c_equats.inc"/>
+		<File RelativePath="..\include\c_hcon.inc"/>
+		<File RelativePath="..\include\c_idumm.inc"/>
+		<File RelativePath="..\include\c_ihdum.inc"/>
+		<File RelativePath="..\include\c_isdum.inc"/>
+		<File RelativePath="..\include\c_jtxx.inc"/>
+		<File RelativePath="..\include\c_kcon.inc"/>
+		<File RelativePath="..\include\c_kdum.inc"/>
+		<File RelativePath="..\include\c_mprop.inc"/>
+		<File RelativePath="..\include\c_obsp.inc"/>
+		<File RelativePath="..\include\c_obst.inc"/>
+		<File RelativePath="..\include\c_pit.inc"/>
+		<File RelativePath="..\include\c_plott.inc"/>
+		<File RelativePath="..\include\c_press.inc"/>
+		<File RelativePath="..\include\c_ptet.inc"/>
+		<File RelativePath="..\include\c_rprop.inc"/>
+		<File RelativePath="..\include\c_rpropsh.inc"/>
+		<File RelativePath="..\include\c_rspac.inc"/>
+		<File RelativePath="..\include\c_scon.inc"/>
+		<File RelativePath="..\include\c_sconItmax.inc"/>
+		<File RelativePath="..\include\c_sip.inc"/>
+		<File RelativePath="..\include\c_spfc.inc"/>
+		<File RelativePath="..\include\c_temp.inc"/>
+		<File RelativePath="..\include\c_trxv.inc"/>
+		<File RelativePath="..\include\c_trxx.inc"/>
+		<File RelativePath="..\include\c_trxxh.inc"/>
+		<File RelativePath="..\include\c_trxy1.inc"/>
+		<File RelativePath="..\include\c_trxy2.inc"/>
+		<File RelativePath="..\include\d_arrays.inc"/>
+		<File RelativePath="..\include\d_BF.inc"/>
+		<File RelativePath="..\include\d_BFAlloc.inc"/>
+		<File RelativePath="..\include\d_cleanup.inc"/>
+		<File RelativePath="..\include\d_cleanup1.inc"/>
+		<File RelativePath="..\include\d_compnam.inc"/>
+		<File RelativePath="..\include\d_compname.inc"/>
+		<File RelativePath="..\include\d_compnamm.inc"/>
+		<File RelativePath="..\include\d_coordin.inc"/>
+		<File RelativePath="..\include\d_disch.inc"/>
+		<File RelativePath="..\include\d_dumm.inc"/>
+		<File RelativePath="..\include\d_dumm1.inc"/>
+		<File RelativePath="..\include\d_dumm1Alloc.inc"/>
+		<File RelativePath="..\include\d_dumm1Dealloc.inc"/>
+		<File RelativePath="..\include\d_dumm2.inc"/>
+		<File RelativePath="..\include\d_dumm2Alloc.inc"/>
+		<File RelativePath="..\include\d_dumm2Dealloc.inc"/>
+		<File RelativePath="..\include\d_dumm3.inc"/>
+		<File RelativePath="..\include\d_dumm3Alloc.inc"/>
+		<File RelativePath="..\include\d_dumm3Dealloc.inc"/>
+		<File RelativePath="..\include\d_equat.inc"/>
+		<File RelativePath="..\include\d_equats.inc"/>
+		<File RelativePath="..\include\d_hcon.inc"/>
+		<File RelativePath="..\include\d_idumm.inc"/>
+		<File RelativePath="..\include\d_idummAlloc.inc"/>
+		<File RelativePath="..\include\d_ihdum.inc"/>
+		<File RelativePath="..\include\d_ihdummAlloc.inc"/>
+		<File RelativePath="..\include\d_ihdummDealloc.inc"/>
+		<File RelativePath="..\include\d_isdum.inc"/>
+		<File RelativePath="..\include\d_isdummAlloc.inc"/>
+		<File RelativePath="..\include\d_isdummDealloc.inc"/>
+		<File RelativePath="..\include\d_itemblo.inc"/>
+		<File RelativePath="..\include\d_itembloAlloc.inc"/>
+		<File RelativePath="..\include\d_itembloDealloc.inc"/>
+		<File RelativePath="..\include\d_itemtxb.inc"/>
+		<File RelativePath="..\include\d_itemtxbAlloc.inc"/>
+		<File RelativePath="..\include\d_itemtxbDealloc.inc"/>
+		<File RelativePath="..\include\d_jtxx.inc"/>
+		<File RelativePath="..\include\d_kcon.inc"/>
+		<File RelativePath="..\include\d_kdum.inc"/>
+		<File RelativePath="..\include\d_kdumDealloc.inc"/>
+		<File RelativePath="..\include\d_modules.inc"/>
+		<File RelativePath="..\include\d_mprop.inc"/>
+		<File RelativePath="..\include\d_obsp.inc"/>
+		<File RelativePath="..\include\d_obst.inc"/>
+		<File RelativePath="..\include\d_phreecc.inc"/>
+		<File RelativePath="..\include\d_pit.inc"/>
+		<File RelativePath="..\include\d_plott.inc"/>
+		<File RelativePath="..\include\d_press.inc"/>
+		<File RelativePath="..\include\d_pricont.inc"/>
+		<File RelativePath="..\include\d_ptet.inc"/>
+		<File RelativePath="..\include\d_ptetAlloc.inc"/>
+		<File RelativePath="..\include\d_react.inc"/>
+		<File RelativePath="..\include\d_rpropsh.inc"/>
+		<File RelativePath="..\include\d_rpropshAlloc.inc"/>
+		<File RelativePath="..\include\d_rspac.inc"/>
+		<File RelativePath="..\include\d_scon.inc"/>
+		<File RelativePath="..\include\d_sconAlloc.inc"/>
+		<File RelativePath="..\include\d_sip.inc"/>
+		<File RelativePath="..\include\d_solindex.inc"/>
+		<File RelativePath="..\include\d_solmassb.inc"/>
+		<File RelativePath="..\include\d_spfc.inc"/>
+		<File RelativePath="..\include\d_spfcAlloc.inc"/>
+		<File RelativePath="..\include\d_temp.inc"/>
+		<File RelativePath="..\include\d_tempcc.inc"/>
+		<File RelativePath="..\include\d_trxv.inc"/>
+		<File RelativePath="..\include\d_trxx.inc"/>
+		<File RelativePath="..\include\d_trxxh.inc"/>
+		<File RelativePath="..\include\d_trxy1.inc"/>
+		<File RelativePath="..\include\d_trxy2.inc"/></Filter>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath="..\Call_RM.F90"/>
+		<File RelativePath="..\mgmres.f90"/>
+		<File RelativePath="..\modules.f90"/>
+		<File RelativePath="..\PhreeqcRM\src\RM_interface.F90"/>
+		<File RelativePath="..\vs2dt3_3_reactive_withoutArgus1.f90">
+			<FileConfiguration Name="openmp_debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="serial_debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="mpi_debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="mpi|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter></Files>
+	<Globals/></VisualStudioProject>

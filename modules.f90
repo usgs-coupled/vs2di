@@ -154,8 +154,8 @@
       integer (kind=4), allocatable::ia_gmr(:)
       integer (kind=4), allocatable::ja_gmr(:)
       logical use_gmres_flow /.false./
-      logical use_gmres_heat /.false./
-      logical use_gmres_solute /.false./
+      logical use_gmres_heat /.true./
+      logical use_gmres_solute /.true./
       end module gmres1
 
       module TEMP

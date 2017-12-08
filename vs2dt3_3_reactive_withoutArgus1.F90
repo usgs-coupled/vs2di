@@ -8421,6 +8421,7 @@
                 !   tol_abs, tol_rel )
                 solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
                     eps2, eps2 )
+                if (solved) then
                 n_order = 0
                 DO 301 I=2,NXRR
                     N1=NLY*(I-1)
@@ -8431,11 +8432,20 @@
                             tt(n) = tt(n) + xi(n_order)
                         end if
 301             continue
-                if (.not. solved) then
-                    print *, "mgmres failed for heat &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&."
-                    exit
+                ITEST = 0
                 else
-                    print *, "mgmres success for heat *****."
+!                if (.not. solved) then
+!                    print *, "mgmres failed for heat &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&."
+!                    exit
+                 JSTOP=10
+                 JFLAG=1
+                 PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT'&
+                ,' TRANSPORT EQUATION '
+                 WRITE(6,4000)
+                 RETURN
+                 
+!                else
+!                    print *, "mgmres success for heat *****."
                 endif
             endif   
             IF(ITEST.EQ.0) THEN
@@ -8450,7 +8460,7 @@
         JFLAG=1
         PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT '&
         ,' TRANSPORT EQUATION'
-        WRITE(6,4010)
+!        WRITE(6,4010)
         RETURN
 4000    FORMAT(' MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT TRANSPORT'&
         ,' EQUATION')

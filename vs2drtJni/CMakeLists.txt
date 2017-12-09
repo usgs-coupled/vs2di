@@ -257,6 +257,7 @@ endif()
 
 SET(vs2drtf_SOURCES
   src/Call_RM.F90
+  src/mgmres.f90
   src/modules.f90
   src/vs2dt3_3_reactive_withoutArgus1.F90
   ${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/RM_interface.F90

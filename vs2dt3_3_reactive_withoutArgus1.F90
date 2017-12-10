@@ -65,8 +65,8 @@
 #endif
     call system_clock(clock1, clockrate, clockmax)
     secs = real( clock1 - clock0) / real(clockrate)
-    print*,'JSTOP = ',JSTOP
-    print*,'Code took ', secs, ' seconds' 
+    write(stderr,*) 'JSTOP = ',JSTOP
+    write(stderr,*) 'Code took ', secs, ' seconds' 
     stop
     end
     !include 'd_modules.inc'
@@ -1209,7 +1209,7 @@
         RETURN
     ENDIF
     
-    write(stderr,"(A,F12.2)") "Beginning time: ", stim
+    write(stderr,"(A,F12.4)") "Beginning time: ", stim
     !
     TRANS1=.FALSE.
     !     IF(.NOT.SSTATE) THEN
@@ -3120,7 +3120,7 @@
         IF(KTIM.GT.NUMT) THEN
             JSTOP=8
             JPLT=1
-            PRINT*,'Maximum number of time steps exceeded' &
+            write(stderr,*) 'Maximum number of time steps exceeded' &
             , ' Simulation terminated'
             WRITE(6,4080)
         END IF
@@ -3513,7 +3513,7 @@
     !   IF SOLUTION HAS BEEN FOUND THEN RETURN
     !
     IF(ITEST.EQ.0) then
-        print *, "Done with flow."
+        write(stderr,*) "  Done with flow."
         RETURN
     endif
     
@@ -3521,7 +3521,7 @@
     !
     !   MAXIMUM NUMBER OF ITERATIONS EXCEEDED
     !     
-    PRINT*,'ERROR: EXCEEDED PERMITTED NUMBER OF ITERATIONS'
+    write(stderr,*) 'ERROR: EXCEEDED PERMITTED NUMBER OF ITERATIONS'
     WRITE (6,4000) NIT,KTIM,STIM,TUNIT
     !
     !   AUTOMATICALLY REDUCE TIME STEP SIZE, BUT NOT MORE
@@ -8410,7 +8410,7 @@
                                 !         ia_gmr(nz_num) = n_order
                                 ja_gmr(nz_num) = n_order + 1
                             end if
-                        end if   
+                        end if
 300             continue
                 ia_gmr(n_order+1) = nz_num + 1
                 itmax1 = itmax/10
@@ -8422,35 +8422,29 @@
                 solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xi, rhs_gmr, itmax1, mr, &
                     eps2, eps2 )
                 if (solved) then
-                n_order = 0
-                DO 301 I=2,NXRR
-                    N1=NLY*(I-1)
-                    DO 301 J=2,NLYY
-                        N=N1+J
-                        n_order = n_order + 1
-                        if(hx(n).ne.0.0d0.and.nhtyp(n).ne.1) then
-                            tt(n) = tt(n) + xi(n_order)
-                        end if
-301             continue
-                ITEST = 0
+                    n_order = 0
+                    DO 301 I=2,NXRR
+                        N1=NLY*(I-1)
+                        DO 301 J=2,NLYY
+                            N=N1+J
+                            n_order = n_order + 1
+                            if(hx(n).ne.0.0d0.and.nhtyp(n).ne.1) then
+                                tt(n) = tt(n) + xi(n_order)
+                            end if
+301                 continue
+                    ITEST = 0
                 else
-!                if (.not. solved) then
-!                    print *, "mgmres failed for heat &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&."
-!                    exit
-                 JSTOP=10
-                 JFLAG=1
-                 PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT'&
-                ,' TRANSPORT EQUATION '
-                 WRITE(6,4000)
-                 RETURN
-                 
-!                else
-!                    print *, "mgmres success for heat *****."
+                    JSTOP=10
+                    JFLAG=1
+                    write(stderr,*) 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT'&
+                        ,' TRANSPORT EQUATION '
+                    WRITE(6,4000)
+                    RETURN
                 endif
-            endif   
+            endif
             IF(ITEST.EQ.0) THEN
                 if (it > itmax/2) write(stderr,*) '***Heat iterations: ', it
-                print *, "Done with heat."
+                write(stderr,*) "  Done with heat."
                 RETURN
             END IF
 50      CONTINUE
@@ -8458,9 +8452,9 @@
         IF (.NOT.ITSTOP) RETURN
         JSTOP=10
         JFLAG=1
-        PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT '&
-        ,' TRANSPORT EQUATION'
-!        WRITE(6,4010)
+        write(stderr,*) 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT '&
+            ,' TRANSPORT EQUATION'
+        !        WRITE(6,4010)
         RETURN
 4000    FORMAT(' MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR HEAT TRANSPORT'&
         ,' EQUATION')
@@ -8495,8 +8489,8 @@
     use react
     use gmres1
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
-                                          stdout=>output_unit, &
-                                          stderr=>error_unit
+        stdout=>output_unit, &
+        stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -8509,7 +8503,7 @@
     integer hydraulicFunctionType
     common/functiontype/ hydraulicFunctionType
     COMMON/TCON1/NIS,NIS1,NIS3
-    COMMON/SCON1/ITESTS     
+    COMMON/SCON1/ITESTS
     COMMON/JCONF/JFLAG2
     logical solved, pmgmres_ilu_cr
     !
@@ -8595,7 +8589,7 @@
                         !      SS1=HT(N2,4)*(THETA(N)+RET(N))
                         !
                         !c******************
-                        !  following change made 7-3-04 to correct dctheta/dt 
+                        !  following change made 7-3-04 to correct dctheta/dt
                         !   calculation - see written notes
                         !
                         !******************
@@ -8648,7 +8642,7 @@
                             END IF
                         END IF
 
-                        !C#    left (n-1,j)      
+                        !C#    left (n-1,j)
                         IF(HX(JM1).NE.0.0D0) THEN
                             !C#    B(N)=0.5D0*(DZ1(N)*(RHO(N)+RHO(JM1))+DX2(N)-DX2(IP1))
                             IF(.NOT.CIS) THEN
@@ -8686,7 +8680,7 @@
                             !C#
                         END IF
 
-                        !C#  Bottom (n,j+1)      
+                        !C#  Bottom (n,j+1)
                         IF(HX(IP1).NE.0.0D0) THEN
                             !C#    C(N)=0.5D0*(DX1(IP1)*(RHO(N)+RHO(IP1))-DZ2(N)+DZ2(JP1))
                             IF(.NOT.CIS) THEN
@@ -8724,7 +8718,7 @@
                             !C#
                         END IF
 
-                        !C#  right (n+1,j)      
+                        !C#  right (n+1,j)
                         IF(HX(JP1).NE.0.0D0) THEN
                             !C#    D(N)=0.5D0*(DZ1(JP1)*(RHO(N)+RHO(JP1))-DX2(N)+DX2(IP1))
                             IF(.NOT.CIS) THEN
@@ -8743,7 +8737,7 @@
                             IF(HX(IM2).GT.0.0D0 .AND. HX(IM1).GT.0.0D0) THEN
                                 IF(HX(IP1).GT.0.0D0 .AND. HX(IP3).GT.0.0D0) THEN
                                     AS(N)=AS(N)-TEMPP
-                                    CS(N)=CS(N)+TEMPP      
+                                    CS(N)=CS(N)+TEMPP
                                     !     CALL VSOUTS(1,TempC(N))
                                     RHSS(N)=RHSS(N)+TEMPP*(CC(M,IM2)-CC(M,IP3))
                                 ELSE
@@ -8764,7 +8758,7 @@
                         END IF
                         if (NPV.ge.0) then
                             IF(Q(N).LT.0.0D0 .AND. NTYP(N) .NE. 5) ES(N)=ES(N)+Q(N)
-                        end if  
+                        end if
                         IF(QQ(N).LT.0.0D0) ES(N)=ES(N)+QQ(N)
                         IF(QS(N).GT.0.0D0) ES(N)=ES(N)-QS(N)
                         !C
@@ -8779,7 +8773,7 @@
                             DS(N)=0.5D0*DS(N)
                             ES(N)=0.5D0*ES(N)
                         END IF
-                        ES(N)=ES(N)-VOL*(THETA(N)+SS)/DELT 
+                        ES(N)=ES(N)-VOL*(THETA(N)+SS)/DELT
                     END IF
 20          CONTINUE
             !     WRITE(6,*)'TempC Before ########### ',M
@@ -8810,30 +8804,24 @@
 
                     if (ntyp(n).eq.1) then
                         RHSS(N)=RHSS(N)-VOL*THETA(N)*CCOLD(M,N)/DELT-AS(N)*CC(M,IM1)&
-                        -BS(N)*CC(M,JM1)-CS(N)*CC(M,IP1)-DS(N)*CC(M,JP1)-ES(N)*CC(M,N)
+                            -BS(N)*CC(M,JM1)-CS(N)*CC(M,IP1)-DS(N)*CC(M,JP1)-ES(N)*CC(M,N)
                     else
                         RHSS(N)=RHSS(N)-VOL*THLST(N)*CCOLD(M,N)/DELT-AS(N)*CC(M,IM1)&
-                        -BS(N)*CC(M,JM1)-CS(N)*CC(M,IP1)-DS(N)*CC(M,JP1)-ES(N)*CC(M,N)
+                            -BS(N)*CC(M,JM1)-CS(N)*CC(M,IP1)-DS(N)*CC(M,JP1)-ES(N)*CC(M,N)
                     end if
                     !C#
                     IF (CIT.AND.JFLAG2.NE.1) RHSS(N)=RHSS(N)-AOC(N)*CCOLD(M,IM1)&
-                    -BOC(N)*CCOLD(M,JM1)-COC(N)*CCOLD(M,IP1)-DOC(N)*CCOLD(M,JP1)&
-                    -EOC(N)*CCOLD(M,N)
-                     IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1) then
-                         RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
-                     endif
-                     
-                    ! dlp IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1 .and. nctyp(n) .gt. 0) then
-                    !    RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
-                    !endif
+                        -BOC(N)*CCOLD(M,JM1)-COC(N)*CCOLD(M,IP1)-DOC(N)*CCOLD(M,JP1)&
+                        -EOC(N)*CCOLD(M,N)
+                    IF(QQ(N).GT.0.0D0 .and. ntyp(n).ne.1) then
+                        RHSS(N)=RHSS(N)-QQ(N)*CSS(M,N)
+                    endif
+
                     IF(QS(N).LT.0.0D0 .AND. NCTYP(N).EQ.0) then
                         if(cit.and.jflag2.ne.1) then
                             RHSS(N)=RHSS(N)+0.5d0*(QS(N)+dum(n))*CSS(M,N)
-                            !dlp uses css
-
                         else
                             RHSS(N) = RHSS(N)+ QS(N)*CSS(M,N)
-
                         end if
                     end if
                     IF(QS(N).LE.0.0D0 .AND.NCTYP(N).EQ.2)RHSS(N)=RHSS(N)-CSS(M,N)
@@ -8844,7 +8832,6 @@
             !
             !   CALL MATRIX SOLVER
             !
-            !use_gmres_solute = .false.
             if (.not. use_gmres_solute) then
                 CALL SLVSIPSOL
                 DO 31 I=2,NXRR
@@ -8852,18 +8839,18 @@
                     DO 31 J=2,NLYY
                         N=N1+J
                         CC(M,N)=TempC(N)
-31              CONTINUE       
-            else  
+31              CONTINUE
+            else
                 !   installing gmress solver. No need for iterating on solute equation
                 !    first step is to move coefficients into storate gmres storage
                 !    arrays. We need to reorder nodes.
-                ! 
+                !
                 ITESTS = 1
                 ia_gmr = 0
                 ja_gmr = 0
                 a_gmr = 0.0d0
                 xis = 0.0d0
-                rhs_gmr = 0.0d0 
+                rhs_gmr = 0.0d0
                 n_order = 0
                 nz_num = 0
                 nly2 = nly - 2
@@ -8888,7 +8875,7 @@
                             ia_gmr(n_order) = nz_num
                             ja_gmr(nz_num) = n_order
                             rhs_gmr(n_order) = rhss(n)
-                            xis(n_order) = 0.0d0      
+                            xis(n_order) = 0.0d0
                             if(as(n).ne.0.0d0) then
                                 nz_num = nz_num + 1
                                 a_gmr(nz_num) = as(n)
@@ -8913,43 +8900,39 @@
                                 !         ia_gmr(nz_num) = n_order
                                 ja_gmr(nz_num) = n_order + 1
                             end if
-                        end if   
+                        end if
 300             continue
                 ia_gmr(n_order+1) = nz_num + 1
                 itmax1 = itmax/10
                 !      mr = n_order - 1
                 !      mr = 200
                 mr = MIN0(20,n_order-1)
-                !call pmgmres_ilu_cr ( n, nz_num, ia, ja, a, x, rhs, itr_max, mr, &
-                !   tol_abs, tol_rel )
                 solved = pmgmres_ilu_cr ( n_order, nz_num, ia_gmr, ja_gmr, a_gmr, xis, rhs_gmr, itmax1, mr, &
                     eps3, eps3 )
                 if(solved) then
-                n_order = 0
-                DO 301 I=2,NXRR
-                    N1=NLY*(I-1)
-                    DO 301 J=2,NLYY
-                        N=N1+J
-                        n_order = n_order + 1
-                        if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
-                            cc(m,n) = cc(m,n) + xis(n_order)
-                        end if
-301             continue
-                ITESTS = 0
-                print *, "   Done with component ", m
+                    n_order = 0
+                    DO 301 I=2,NXRR
+                        N1=NLY*(I-1)
+                        DO 301 J=2,NLYY
+                            N=N1+J
+                            n_order = n_order + 1
+                            if(hx(n).ne.0.0d0.and.nctyp(n).ne.1) then
+                                cc(m,n) = cc(m,n) + xis(n_order)
+                            end if
+301                 continue
+                    ITESTS = 0
+                    write(stderr,*) "    ", compname(m)
                 else
-!                if (.not. solved) then
-!                    stop "mgmres failed for component."
-                 JSTOP=10
-                 JFLAG=1
-                 PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
-                ,' TRANSPORT EQUATION '
-                 WRITE(6,4000)
-                 RETURN
+                    JSTOP=10
+                    JFLAG=1
+                    write(stderr,*) 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
+                        ,' TRANSPORT EQUATION '
+                    WRITE(6,4000)
+                    RETURN
                 endif
-            endif   
-            
- 
+            endif
+
+
             !C      WRITE(6,*)'TempC After ########### ',M
             !      CALL VSOUTS(1,TempC(N))
             IF(ITESTS.EQ.0) THEN
@@ -9008,7 +8991,7 @@
         IF (.NOT.ITSTOP) GO TO 60
         JSTOP=10
         JFLAG=1
-        PRINT*, 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
+        write(stderr,*) 'ERROR: MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE'&
         ,' TRANSPORT EQUATION '
         WRITE(6,4000)
         RETURN

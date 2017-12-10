@@ -1,6 +1,9 @@
     Program Main
     USE vs2dt_rm
     USE PhreeqcRM
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     COMMON/JCON/JSTOP,JFLAG,jflag1
     character*80 filen
     integer :: clock0, clock1, clockmax, clockrate, ticks
@@ -2557,6 +2560,9 @@
     use solindex
     use PhreeqcRM
     use vs2dt_rm
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -3201,6 +3207,9 @@
     use REDUCE_TIME
     use TRXX
     use gmres1
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                          stdout=>output_unit, &
+                                          stderr=>error_unit
     IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
@@ -3500,10 +3509,9 @@
                     if (xdiff.gt.xdiffMax) xdiffMax = xdiff
                 end if
 301     continue  
-!        if (.not. solved) then
-!            nit = minit
          else
             nit = itmax + 1
+            xdiffMax = 2*eps
         endif
     endif
     

@@ -44,7 +44,7 @@ public class vs2SoilFunctionDialog extends vs2TexturalClassDialog
         String T = modelOptions.T();
         String L = modelOptions.L();
         String Q = modelOptions.Q();
-        String QoverT = modelOptions.QoverT();
+//        String QoverT = modelOptions.QoverT();
         String super_minus = modelOptions.SuperMinus();
 
         // Call the superclass method to make the color button

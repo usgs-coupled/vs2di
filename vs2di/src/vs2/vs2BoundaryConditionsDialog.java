@@ -100,7 +100,7 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
         // units
         String T = modOpt.T();
         String L = modOpt.L();
-        String QoverT = modOpt.QoverT();
+        String Q = modOpt.Q();
 
         // Make a center panel to hold all the components.
         JPanel centerPanel = new JPanel(false);
@@ -201,8 +201,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
 
             unitsPanel.add(new JLabel(" "));
             unitsPanel.add(boundaryTempLabel = new JLabel("°C"));
-            diffEnergyFluxLabel = new JLabel(QoverT + "/" + L, SwingConstants.CENTER);
-            diffEnergyFluxLabel = new JLabel(QoverT + "/" + L);
+            diffEnergyFluxLabel = new JLabel(Q + "/(" + T + "·" + L + ")", SwingConstants.CENTER);
+            diffEnergyFluxLabel = new JLabel(Q + "/(" + T + "·" + L + ")");
             unitsPanel.add(diffEnergyFluxLabel);
             
             boundaryTempLabel.setVisible(false);

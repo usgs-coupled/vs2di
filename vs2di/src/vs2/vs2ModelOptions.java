@@ -310,10 +310,6 @@ public class vs2ModelOptions implements vs2Constants, Serializable {
         return energyUnit.trim();
     }
 
-    String QoverT() {
-        return "W";
-    }
-
     String SuperMinus() {
         return "⁻";
     }    

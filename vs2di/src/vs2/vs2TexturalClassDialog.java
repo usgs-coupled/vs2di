@@ -116,7 +116,6 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         String T = modelOptions.T();
         String L = modelOptions.L();
         String Q = modelOptions.Q();
-        String QoverT = modelOptions.QoverT();
         String super_minus = modelOptions.SuperMinus();        
         
         // Create a penal for transport properties
@@ -163,11 +162,11 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
 
         transLeftPanel.add(new JLabel("KTr", SwingConstants.RIGHT));
         transRightPanel.add(KTrTextField = new JTextField(5));
-        transUnitsPanel.add(new JLabel(QoverT + "/(" + L + "°C)", SwingConstants.CENTER));
+        transUnitsPanel.add(new JLabel("J/(" + T + "·" + L + "°C)", SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("KTs", SwingConstants.RIGHT));
         transRightPanel.add(KTsTextField = new JTextField(5));
-        transUnitsPanel.add(new JLabel(QoverT + "/(" + L + "°C)", SwingConstants.CENTER));
+        transUnitsPanel.add(new JLabel("J/(" + T + "·" + L + "°C)", SwingConstants.CENTER));
 
         transLeftPanel.add(new JLabel("Cw", SwingConstants.RIGHT));
         transRightPanel.add(CwTextField = new JTextField(5));
@@ -195,7 +194,6 @@ public abstract class vs2TexturalClassDialog extends vs2Dialog implements vs2Con
         String T = modelOptions.T();
         String L = modelOptions.L();
         String Q = modelOptions.Q();
-        String QoverT = modelOptions.QoverT();
         String super_minus = modelOptions.SuperMinus();
         
         // Create a penal for transport properties

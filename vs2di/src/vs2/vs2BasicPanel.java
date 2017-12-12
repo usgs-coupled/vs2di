@@ -325,22 +325,6 @@ public class vs2BasicPanel extends vs2ModelOptionsPanel {
             otherLengthUnitTextField.setEnabled(true);
         }
         
-        // only allow sec for time if heat transport
-        if (doEnergyTransportCheckBox.isSelected()) {
-            secRadioButton.setSelected(true);
-            hourRadioButton.setEnabled(false);
-            dayRadioButton.setEnabled(false);
-            yearRadioButton.setEnabled(false);
-            otherTimeRadioButton.setEnabled(false);
-            otherTimeUnitTextField.setEnabled(false);
-        } else {
-            hourRadioButton.setEnabled(true);
-            dayRadioButton.setEnabled(true);
-            yearRadioButton.setEnabled(true);
-            otherTimeRadioButton.setEnabled(true);            
-            otherTimeUnitTextField.setEnabled(true);
-        }
-        
         parentDialog.solverPanel.doEnergyTransport(
                 doEnergyTransportCheckBox.isSelected());
     }

@@ -3334,7 +3334,11 @@
                 IF(NIT.GT.0.AND.XI(N).NE.0.0D0) G1=(P(N)-PXXX(N))*&
                 (GSF+GSS-PITT(N))/XI(N)
                 PITT(N)=GSF+GSS
-                G1=-G1/DELT
+                if (.not. use_gmres_flow) then
+                 G1=-G1/DELT
+                else
+                 G1 = 0.0d0
+                end if
                 GSF=-GSF/DELT
                 GSS=-GSS/DELT
                 IF(WUS.EQ.0.0D0) THEN

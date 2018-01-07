@@ -701,6 +701,9 @@ public class vs2FrameManager extends mp2FrameManager
             panel.add(new JLabel("of triangle.c has granted free distribution of that program for noncommercial"));
             panel.add(new JLabel("use. Distribution of triangle.c as part of a commerical system is permissible"));
             panel.add(new JLabel("only by direct arrangement with the author of that program."));
+            panel.add(new JLabel("A component of this software uses the program pmgmres_ilu_cr written by Lili Ju"));
+            panel.add(new JLabel("and John Burkardt. This program is distributed under the GNU LGPL license"));
+            panel.add(new JLabel("(https://www.gnu.org/licenses/lgpl-3.0.en.html). "));
 
             panel = new JPanel(new GridLayout(0, 1));
             gridbag.setConstraints(panel, c);
@@ -708,10 +711,10 @@ public class vs2FrameManager extends mp2FrameManager
             panel.setBorder(new CompoundBorder(
                     BorderFactory.createTitledBorder("Credits"),
                     new EmptyBorder(2, 5, 5, 5)));
-            panel.add(new JLabel(program + " was written by:"));
-            panel.add(new JLabel("Paul Hsieh (pahsieh@usgs.gov), U.S. Geological Survey, Menlo Park, CA"));
-            panel.add(new JLabel("William Wingle (wwingle@mines.edu), Colorado School of Mines, Golden, CO"));
-            panel.add(new JLabel("Richard Healy (rwhealy@usgs.gov), U.S. Geological Survey, Denver, CO"));
+            panel.add(new JLabel("The VS2DRTI graphical user interface was developed by Scott Charlton"));
+            panel.add(new JLabel("(charlton@usgs.gov) U.S. Geological Survey, Golden, CO from the VS2DI interface"));
+            panel.add(new JLabel("written by Paul Hsieh (pahseih@usgs.gov), U.S. Geological Survey, Menlo Park, CA"));
+            panel.add(new JLabel("and William Wingle (wwingle@mines.edu), Colorado School of Mines, Golden CO."));
 
             panel = new JPanel(new GridLayout(0, 1));
             gridbag.setConstraints(panel, c);

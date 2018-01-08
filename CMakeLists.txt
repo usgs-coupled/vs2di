@@ -13,6 +13,7 @@ vs2dt3_3_reactive_withoutArgus1.F90
 # source
 SET(vs2drt_SOURCES
 ${vs2drt_F90_SOURCES}
+mgmres.f90
 modules.f90
 )
 

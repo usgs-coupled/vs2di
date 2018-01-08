@@ -330,7 +330,7 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                     v = v.substring(0, v.length()-2);
                 }
                 if (bc.getEnergyTransportType() == DEFAULT_CONC_BC) {
-                    label += ", J = 0";
+                    label += ", Jh = 0";
                 }
                 if (bc.getEnergyTransportType() == SPECIFIED_CONC_BC) {
                     label += ", Tb = " + v;
@@ -342,7 +342,7 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
             if (modelOptions.doSoluteTransport) {
                 String v = String.valueOf(bc.getSoluteTransportValue());
                 if (bc.getSoluteTransportType() == DEFAULT_CONC_BC) {
-                    label += ", J = 0";
+                    label += ", Js = 0";
                 }
                 if (bc.getSoluteTransportType() == SPECIFIED_CONC_BC) {
                     label += ", Sb = " + v;

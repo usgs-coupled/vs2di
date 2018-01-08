@@ -77,8 +77,8 @@ public class vs2BoundaryConditionsDialog extends vs2Dialog
     protected final static String evapotrans = "Evaporation/transpiration (ET)";
     protected final static String seepageFace = "Possible seepage face (seep)";
     protected final static String gravityDrain = "Gravity drain (grv_drn)";
-    protected static String noEnergyFlux = "No energy flux (J = 0)";
-    protected static String noSoluteFlux = "No solute flux (J = 0)";
+    protected static String noEnergyFlux = "No energy flux (Jh = 0)";
+    protected static String noSoluteFlux = "No solute flux (Js = 0)";
     protected static String boundaryTemp = "Specified temperature at boundary (Tb)";
     protected static String boundaryConc = "Specified solution at boundary (Sb)";
     protected static String promptTemp = "Specified temperature";

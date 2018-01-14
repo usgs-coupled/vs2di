@@ -114,17 +114,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2BasicPanel.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2SoilFunctionDialog.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TabularDataDialog.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TexturalClassWindow.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2BoundaryConditionsDialog.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ModelOptions.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2BoundaryConditionsView.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2ModelOptionsDialog.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/mp2/mp2AbstractGridData.java</file>
-            <file>file:/T:/Programs/vs2di-trunk/vs2di/src/vs2/vs2TexturalClassDialog.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

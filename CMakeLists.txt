@@ -40,6 +40,9 @@ if (WIN32)
   install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/vs2drti1.4_examples/
           DESTINATION examples
   )
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc/
+          DESTINATION doc
+  )
 endif()
 
 INCLUDE(CPack)

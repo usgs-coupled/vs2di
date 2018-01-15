@@ -1,0 +1,12 @@
+SOLUTION 0 Recharge solution
+-density 0.99704 
+-units mg/L
+Cl 0
+USER_PRINT
+10 print totmol("Cl") * GFW("Cl") / soln_vol
+END
+SOLUTION 1 Initial solution
+-density 0.99704
+-units mg/L
+Cl 10
+END

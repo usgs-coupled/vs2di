@@ -1,0 +1,113 @@
+Verification Problem 1 in WRIR 96-4230, p. 5
+10765.0 0. 0.          /A-2 -- TMAX, STIM, ANG
+m   sec g   J          /A-3 -- ZUNIT, TUNIT, CUNX, HUNX
+3 65                   /A-4 -- NXR, NLY
+1 1000                 /A-5 -- NRECH, NUMT
+F T T F                /A-6 -- RAD, ITSTOP, HEAT, SOLUTE
+T T                    /A-10 -- CIS, CIT
+F F F F F              /A-12 -- F11P, F7P, F8P, F9P, F6P
+F F T F F              /A-13 -- THPT, SPNT, PPNT, HPNT, VPNT
+0 1                    /A-14 -- IFAC, FACX. A-15 begins next line: DXR
+1.0 1.0 1.0
+0 1                    /A-17 -- JFAC, FACZ. A-18 begins next line: DELZ
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+1.0 1.0 1.0 1.0 1.0 /End A-18
+1.0E-4 0.7 0.5         /B-1 -- EPS, HMAX, WUS
+1.0E-5 0.001           /B-2 -- EPS1, EPS2
+2 80                   /B-4 -- MINIT, ITMAX
+T                      /B-5 -- PHRD
+2 6                    /B-6 -- NTEX, NPROP
+1                      /B-7 -- HFT hydraulicFunctionType
+1                      /B-8 -- ITEX. B-9 to begin next line: HK
+1.0 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0    /B-10 -- HT
+2                      /B-8 -- ITEX. B-9 to begin next line: HK
+1.0 1.389E-4 0.0 0.5 0.05 0.0 3.0
+10.0 10.0 2080000.0 1.8 1.8 4200000.0    /B-10 -- HT
+0                      /B-12 -- IROW. B-13 begins next line: JTEX
+1 1 1 
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 2 1
+1 1 1 /End B-13
+0 1.0                  /B-15 -- IREAD, FACTOR
+F F                    /B-18 -- BCIT, ETSIM
+0 20.0                 /B-28 -- IREAD, FACTOR
+10765.0 107.65         /C-1 -- TPER, DELT (Recharge Period 1)
+1.0 107.65 0.001 0.1    /C-2 -- TMLT, DLTMX, DLTMIN, TRED
+100.0 0.0              /C-3 -- DSMAX, STERR
+100.0                  /C-4 -- POND
+F                      /C-5 -- PRNT
+F F F                  /C-6 -- BCIT, ETSIM, SEEP
+0                      /C-10 -- IBC
+2 2 1 1.0              /C-11 -- JJ, NN, NTX, PFDUM
+1 21.0                 /C-12 -- NTT, TF
+64 2 1 1.0             /C-11 -- JJ, NN, NTX, PFDUM
+0 20.0                 /C-12 -- NTT, TF
+-999999                /C-19 -- End of data for recharge period 1
+-999999 /End of input data file

@@ -1,0 +1,25 @@
+SOLUTION 1  Initial solution
+        units            mol/L
+        temp             25.0
+        pH               7.0     charge
+        pe               12.5    O2(g)   -0.68   
+END     
+SOLUTION 2  Infiltrating solution
+        units            mol/L
+        temp             25.0
+        pH               7.0     charge
+        pe               12.5    O2(g)   -0.68
+        Na               0.01
+        Cl               0.01
+END
+SELECTED_OUTPUT 1
+    -file                 selected_output_1.sel
+    -reset                false
+    -pH                   true
+USER_PUNCH 1
+    -headings Na_mgL Cl_mgL
+    -start
+10 PUNCH TOT("Na") * GFW("Na") * 1000
+20 PUNCH TOT("Cl") * GFW("Cl") * 1000
+    -end
+END

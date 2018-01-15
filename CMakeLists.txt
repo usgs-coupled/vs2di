@@ -37,6 +37,9 @@ if (WIN32)
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/vs2drtJni/src/_vs2012_x64/Release/vs2drt.exe
           DESTINATION ${CMAKE_INSTALL_BINDIR}
   )
+  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/vs2drti1.4_examples/
+          DESTINATION examples
+  )
 endif()
 
 INCLUDE(CPack)

@@ -8,6 +8,7 @@ add_subdirectory(WinLauncher_1.3/vs2drti)
 add_subdirectory(WinLauncher_1.3/vs2post)
 add_subdirectory(src)
 add_subdirectory(vs2di)
+add_subdirectory(vs2drtJni/src/PhreeqcRM/database)
 
 set(CPACK_GENERATOR WIX)
 set(CPACK_PACKAGE_NAME "VS2DRTI")
@@ -35,14 +36,21 @@ set(CPACK_WIX_PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/msi/patch.xml")
 if (WIN32)
   set(CPACK_WIX_TEMPLATE "${CMAKE_CURRENT_SOURCE_DIR}/msi/WIX.MSVC11.template.in")
   install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/vs2drtJni/src/_vs2012_x64/Release/vs2drt.exe
-          DESTINATION ${CMAKE_INSTALL_BINDIR}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
   )
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/vs2drti1.4_examples/
-          DESTINATION examples
-  )
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc/
-          DESTINATION doc
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/README_WINDOWS_BATCH.TXT
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )  
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/README_WINDOWS.TXT
+    DESTINATION .
   )
 endif()
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/vs2drti1.4_examples/
+  DESTINATION examples
+)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc/
+  DESTINATION doc
+)
 
 INCLUDE(CPack)

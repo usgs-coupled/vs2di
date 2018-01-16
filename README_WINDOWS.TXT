@@ -28,7 +28,7 @@ A. SYSTEM REQUIREMENTS
 
 For installation of VS2DRTI, 75 megabytes of free disk space is needed.
 
-To run VS2DRTZI, the following are necessary:
+To run VS2DRTI, the following are necessary:
 
   - Windows 7 or higher
   - 100 MB free disk space or more, depending on size of problem
@@ -121,7 +121,7 @@ directory are shown to the right):
 
       vs2drti-1.4.0    ; README_WINDOWS.TXT
         -----bin       ; executables and DLLs
-        -----databas   ; Phreeqc database files
+        -----database  ; Phreeqc database files
         -----doc       ; model reports and input instructions
         -----examples  ; VS2DRTI examples
  

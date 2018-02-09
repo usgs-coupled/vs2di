@@ -1,0 +1,22 @@
+
+# /vs2di/
+/vs2di/build
+/vs2di/dist
+
+# /vs2di/help/vs2PostHelp/
+/vs2di/help/vs2PostHelp/build
+/vs2di/help/vs2PostHelp/dist
+
+# /vs2di/help/vs2dhiHelp/
+/vs2di/help/vs2dhiHelp/build
+/vs2di/help/vs2dhiHelp/dist
+
+# /vs2di/help/vs2dtiHelp/
+/vs2di/help/vs2dtiHelp/dist
+/vs2di/help/vs2dtiHelp/build
+
+# /vs2di/lib/
+/vs2di/lib/vs2dhiHelp.jar
+/vs2di/lib/vs2di.jar
+/vs2di/lib/vs2dtiHelp.jar
+/vs2di/lib/vs2postHelp.jar

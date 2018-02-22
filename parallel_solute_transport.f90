@@ -1,63 +1,166 @@
+    module TRXY0
+    double precision, allocatable::AOC0(:),BOC0(:),COC0(:),DOC0(:),EOC0(:)
+    end module TRXY0
     SUBROUTINE VTSETUPSOL_PARALLEL
     !*******
-    !VTSETUPSOL
+    !VTSETUPSOL_PARALLEL
     !*******
     !
     !    ROUTINE TO ASSEMBLE MATRIX EQUATIONS FOR ADVECTION-DISPERSION
     !    EQUATIONS AND TO CALL MATRIX SOLVER.
     !
-    use press
-    use rspac
-    use kcon
-    use mprop
-    use dumm
-    use disch
-    use equats
-    use jtxx
-    use trxx
+    use COMPNAM, only: compname
+    use trxy0
     use trxy2
-    use rpropsh
-    use scon
-    use trxv
-    use temp
-    use pit
-    use ptet
-    use tempcc
-    use COMPNAM
-    use react
-    use gmres1
+    use vs2dt_rm
+    use PhreeqcRM
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
         stdout=>output_unit, &
         stderr=>error_unit
-    IMPLICIT DOUBLE PRECISION (A-H,P-Z)
-
+    IMPLICIT none
+    INTEGER :: NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+    INTEGER JSTOP,JFLAG,jflag1
     COMMON/JCON/JSTOP,JFLAG,jflag1
-    COMMON/TCON/STIM,DSMAX,KTIM,NIT,NIT1,KP,NIT3
-    LOGICAL TRANS,TRANS1,TRANS2,SSTATE
-    COMMON/TRXY/EPS1,EPS2,EPS3,TRANS,TRANS1,TRANS2,SSTATE,MB9(99),NMB9
-    LOGICAL RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
-    COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
-    integer hydraulicFunctionType
-    common/functiontype/ hydraulicFunctionType
-    COMMON/TCON1/NIS,NIS1,NIS3
-    COMMON/SCON1/ITESTS
-    COMMON/JCONF/JFLAG2
-    logical solved, pmgmres_ilu_cr
+
     !
     !...........................................................................
     !
-    do 60 M=1,Nsol
+    INTEGER :: M
+    INTEGER, ALLOCATABLE :: CODE(:)
+    
+    ALLOCATE(CODE(Nsol))
+    allocate(AOC0(NNODES),BOC0(NNODES),COC0(NNODES),DOC0(NNODES),&
+        EOC0(NNODES))
+    AOC0 = AOC
+    BOC0 = BOC
+    COC0 = COC
+    DOC0 = DOC
+    EOC0 = EOC
+    code = -1
+    do M=1,Nsol
+        CALL TRANSPORT_ONE_SOLUTE(M, CODE)
+    enddo
+    
+    do m = 1,Nsol
+        if (code(m) < 0) stop "Unknown return code VTSETUPSOL_PARALLEL"
+        if (code(m) > 0) then
+            WRITE(stderr, 4000)
+            write(stderr,*) '   Exceeded maximum number of iterations for ', compname(m)
+            jstop = 10
+            jflag = 1
+        else 
+            write(stderr,*) '   Finished transport for ', compname(m)
+        endif
+    enddo
+    
+    deallocate(AOC0,BOC0,COC0,DOC0,EOC0)     
+    RETURN
+4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
+    ,' TRANSPORT EQUATION')
+4010 FORMAT(' Simulation terminated')
+    END SUBROUTINE VTSETUPSOL_PARALLEL
+    
+    SUBROUTINE TRANSPORT_ONE_SOLUTE(M, CODE)
+    ! modules
+    USE DISCH, only: Q, QQ
+    USE JTXX, only: JTEX
+    USE KCON, only: HX, NTYP
+    USE MPROP, only: THETA, THLST
+    USE PRESS, only: P, PXXX
+    USE PTET, only: NPV
+    USE RPROPSH, only: HK
+    USE RSPAC, only: DELZ, DXR, PI2, RX
+    USE SCON, only: ITMAX, DELT 
+    USE TRXV, only: VX, VZ
+    USE TRXX, only: CC, CCOLD, CSS, DXS1, DXS2, DZS1, DZS2, NCTYP  
+    USE TRXY0, only: AOC0, BOC0, COC0, DOC0, EOC0
+    use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+        stdout=>output_unit, &
+        stderr=>error_unit  
+    implicit none
+    ! Arguments
+    INTEGER M
+    INTEGER CODE(:)
+    ! Common blocks
+    INTEGER NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+    COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
+    
+    INTEGER NIS,NIS1,NIS3
+    COMMON/TCON1/NIS,NIS1,NIS3
+    
+    double precision eps1, eps2, eps3
+    LOGICAL TRANS,TRANS1,TRANS2,SSTATE
+    INTEGER MB9,NMB9
+    COMMON/TRXY/EPS1,EPS2,EPS3,TRANS,TRANS1,TRANS2,SSTATE,MB9(99),NMB9
+    
+    INTEGER JFLAG2
+    COMMON/JCONF/JFLAG2
+    
+    logical RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
+    COMMON/LOG1/RAD,BCIT,ETSIM,SEEP,ITSTOP,CIS,CIT,GRAV
+    ! Function
+    DOUBLE PRECISION VSFLX1
+    logical pmgmres_ilu_cr
+    ! local
+    INTEGER IM1, JM1, JP1, IP1, IP2, IM2, IM3, IP3
+    INTEGER :: I, IT, J, N, N1, N2, nly2, n_order, nz_num
+    INTEGER :: ITMAX1, ITESTS, MR
+    LOGICAL :: SOLVED
+    double precision :: areax, areax1, areaz, areaz1, ss, tempp, vol, vv
+    ! Allocatable
+    double precision, allocatable::AOC(:),BOC(:),COC(:),DOC(:),EOC(:)
+    double precision, allocatable::AS(:),BS(:),CS(:),DS(:),  &
+        ES(:),RHSS(:),XIS(:)
+    double precision, allocatable::DUM(:)
+    double precision, allocatable::TempC(:)
+    double precision, allocatable::a_gmr(:)
+    double precision, allocatable::rhs_gmr(:)
+    integer (kind=4), allocatable::ia_gmr(:)
+    integer (kind=4), allocatable::ja_gmr(:)
+    double precision, allocatable::QS(:)
+    
+    ! Allocate and initialize
+    allocate(AOC(NNODES),BOC(NNODES),COC(NNODES),DOC(NNODES),EOC(NNODES))
+    allocate(AS(NNODES),BS(NNODES),CS(NNODES),DS(NNODES),ES(NNODES),  &
+        RHSS(NNODES),XIS(NNODES))
+    AS = 0.0d0
+    BS = 0.0d0
+    CS = 0.0d0
+    DS = 0.0d0
+    ES = 0.0d0
+    RHSS = 0.0d0
+    XIS = 0.0d0
+    allocate(DUM(NNODES))
+    DUM = 0.0d0
+    allocate(TempC(NNODES))
+    TempC = 0.0d0
+    allocate (a_gmr(5*nnodes))
+    a_gmr = 0.0d0
+    allocate (rhs_gmr(nnodes))
+    rhs_gmr = 0.0d0
+    allocate (ia_gmr(5*nnodes))
+    ia_gmr = 0
+    allocate (ja_gmr(5*nnodes))
+    ia_gmr = 0
+    allocate(QS(NNODES))
+    QS = 0.0d0
+
+    !do 60 M=1,Nsol
         NIS1=0
 
         IF(jflag2.EQ.1) THEN
-            DO 10 N=1,NNODES
-                AOC(N)=0.0D0
-                BOC(N)=0.0D0
-                COC(N)=0.0D0
-                DOC(N)=0.0D0
-                EOC(N)=0.0D0
-10          CONTINUE
+            AOC=0.0D0
+            BOC=0.0D0
+            COC=0.0D0
+            DOC=0.0D0
+            EOC=0.0D0
+        ELSE
+            AOC=AOC0
+            BOC=BOC0
+            COC=COC0
+            DOC=DOC0
+            EOC=EOC0      
         END IF
         !
         !   INITIALIZE VARIABLES
@@ -533,9 +636,19 @@
         ,' TRANSPORT EQUATION '
         WRITE(6,4000)
         RETURN
-60  CONTINUE 
-    RETURN
-4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
-    ,' TRANSPORT EQUATION')
-4010 FORMAT(' Simulation terminated')
-    END SUBROUTINE VTSETUPSOL_PARALLEL
+60  CONTINUE
+
+    ! Deallocation
+    deallocate(AOC,BOC,COC,DOC,EOC)
+    deallocate(AS,BS,CS,DS,ES,RHSS,XIS)
+    deallocate(DUM)
+    deallocate(TempC)
+    deallocate (a_gmr)
+    deallocate (rhs_gmr)
+    deallocate (ia_gmr)
+    deallocate (ja_gmr)
+    deallocate(QS)
+    return
+    END SUBROUTINE TRANSPORT_ONE_SOLUTE
+
+

@@ -51,13 +51,15 @@
     
     code = -1
 #ifdef USE_OPENMP
-!omp omp_set_num_threads(nthreads)
-!omp parallel do
+ call OMP_SET_NUM_THREADS(nthreads)
+!$OMP parallel DO
 #endif
     do M=1,Nsol
         CALL TRANSPORT_ONE_SOLUTE(M, CODE)
     enddo
-    
+#ifdef USE_OPENMP
+!$OMP END parallel DO
+#endif
     do m = 1,Nsol
         if (code(m) < 0) stop "Unknown return code VTSETUPSOL_PARALLEL"
         if (code(m) > 0) then

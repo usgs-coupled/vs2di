@@ -8521,8 +8521,8 @@
     !
     !...........................................................................
     !
-    !call VTSETUPSOL_PARALLEL
-    !return
+    call VTSETUPSOL_PARALLEL
+    return
     do 60 M=1,Nsol
         NIS1=0
 

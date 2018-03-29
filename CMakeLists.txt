@@ -6,6 +6,7 @@ project(vs2drt C CXX Fortran)
 # F90 source
 SET(vs2drt_F90_SOURCES
 Call_RM.F90
+parallel_solute_transport.F90
 PhreeqcRM/src/RM_interface.F90
 vs2dt3_3_reactive_withoutArgus1.F90
 )

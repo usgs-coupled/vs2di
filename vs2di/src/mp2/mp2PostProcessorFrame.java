@@ -117,10 +117,6 @@ public abstract class mp2PostProcessorFrame extends JFrame
         }
         playbackBinaryModel = createPlaybackModel();
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator + 
-                                "images" + fileSeparator;
-
         // Menus
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -134,18 +130,32 @@ public abstract class mp2PostProcessorFrame extends JFrame
             exitLabel = "Exit";
         }
         menuBar.add(fileMenu = new JMenu(fileLabel));
+        if (theApp != null) {
+            fileMenu.setMnemonic(KeyEvent.VK_A);
+        } else {
+            fileMenu.setMnemonic(KeyEvent.VK_F);
+        }
         loadMenuItem = new JMenuItem("Load...");
+        loadMenuItem.setMnemonic(KeyEvent.VK_L);
         loadSettingsMenuItem = new JMenuItem("Load Settings...");
+        loadSettingsMenuItem.setMnemonic(KeyEvent.VK_L);
         saveSettingsMenuItem = new JMenuItem("Save Settings...");
+        saveSettingsMenuItem.setMnemonic(KeyEvent.VK_S);
         terminateComputationMenuItem = new JMenuItem("Terminate computation");
+        terminateComputationMenuItem.setMnemonic(KeyEvent.VK_T);
         restartComputationMenuItem = new JMenuItem("Restart computation");
+        restartComputationMenuItem.setMnemonic(KeyEvent.VK_R);
         printMenuItem = new JMenuItem("Print");
+        printMenuItem.setMnemonic(KeyEvent.VK_P);
         exportBitmapMenuItem = new JMenuItem("Export bitmap...");
+        exportBitmapMenuItem.setMnemonic(KeyEvent.VK_B);
         exitMenuItem = new JMenuItem(exitLabel);
         if (theApp != null) {
+            exitMenuItem.setMnemonic(KeyEvent.VK_D);
             fileMenu.add(terminateComputationMenuItem);
             fileMenu.add(restartComputationMenuItem);
         } else {
+            exitMenuItem.setMnemonic(KeyEvent.VK_X);
             fileMenu.add(loadMenuItem);
         }
         fileMenu.addSeparator();
@@ -155,13 +165,17 @@ public abstract class mp2PostProcessorFrame extends JFrame
         fileMenu.add(exitMenuItem);
 
         menuBar.add(optionMenu = new JMenu("Options"));
+        optionMenu.setMnemonic(KeyEvent.VK_O);
         optionMenu.add(drawingMenuItem = new JMenuItem("Drawing..."));
         optionMenu.add(colorMenuItem = new JMenuItem("Color Scale..."));
         optionMenu.add(vectorMenuItem = new JMenuItem("Vector..."));
         optionMenu.addSeparator();
         optionMenu.add(simulationMenuItem = new JMenuItem("Simulation..."));
+        /*
         optionMenu.addSeparator();
         optionMenu.add(bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false));
+        */
+        bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false);
 
         // Tool bar
         toolBar = new JToolBar();
@@ -170,17 +184,17 @@ public abstract class mp2PostProcessorFrame extends JFrame
         toolBar.setFloatable(false);
         getContentPane().add(toolBar, BorderLayout.WEST);
 
-        toolBar.add(runButton = new mp2Button(new ImageIcon(imageDirectory + "run.gif")));
-        toolBar.add(stopButton = new mp2Button(new ImageIcon(imageDirectory + "stop.gif")));
+        toolBar.add(runButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/run.gif"))));
+        toolBar.add(stopButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/stop.gif"))));
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(stepButton = new mp2Button(new ImageIcon(imageDirectory + "step.gif")));
+        toolBar.add(stepButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/step.gif"))));
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(resetButton = new mp2Button(new ImageIcon(imageDirectory + "reset.gif")));
+        toolBar.add(resetButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/reset.gif"))));
         toolBar.add(Box.createVerticalStrut(10));
-        toolBar.add(zoomButton = new mp2ToggleButton(new ImageIcon(imageDirectory + "zoom.gif")));
+        toolBar.add(zoomButton = new mp2ToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/zoom.gif"))));
         toolBar.add(Box.createVerticalStrut(10));
-        velocityImageIcon = new ImageIcon(imageDirectory + "velvector.gif");
-        fluxImageIcon = new ImageIcon(imageDirectory + "fluxvector.gif");
+        velocityImageIcon = new ImageIcon(ClassLoader.getSystemResource("images/velvector.gif"));
+        fluxImageIcon = new ImageIcon(ClassLoader.getSystemResource("images/fluxvector.gif"));
         toolBar.add(vectorButton = new mp2ToggleButton(velocityImageIcon));
         runButton.setToolTipText("Run");
         stopButton.setToolTipText("Stop");
@@ -257,6 +271,7 @@ public abstract class mp2PostProcessorFrame extends JFrame
         });
         restartComputationMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onRestartComputation");
                 onRestartComputation();
             }
         });
@@ -302,11 +317,13 @@ public abstract class mp2PostProcessorFrame extends JFrame
         });
         stepButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onStep");
                 onStep();
             }
         });
         resetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("onResetPlaybackToBeginning");
                 onResetPlaybackToBeginning();
             }
         });
@@ -477,7 +494,7 @@ public abstract class mp2PostProcessorFrame extends JFrame
      * loads the specified data file from the specified directory
      */
     public boolean loadData(String directory, String file) {
-        mp2Math.changeDirectory(directory + ".");
+        mp2Math.changeDirectory(directory);
         String inputFile;
         if (theApp != null) {
             model = computationalModel;
@@ -1019,11 +1036,21 @@ public abstract class mp2PostProcessorFrame extends JFrame
      * Invoked when the restart computation menu item is selected
      */
     protected void onRestartComputation() {
-        int result = mp2MessageBox.showYesNoDialog(this, 
-                "Do you want to restart the computation?", "Warning");
+        int result = mp2MessageBox.NO_OPTION;
+        if (System.getProperty("onRestartComputation") == null) {
+            result = mp2MessageBox.showYesNoDialog(this, 
+                    "Do you want to restart the computation?", "Warning");
+        }
+        else {
+            if (System.getProperty("onRestartComputation").compareToIgnoreCase("Yes") == 0) {
+                result = mp2MessageBox.YES_OPTION;
+            }
+        }
         if (result == mp2MessageBox.NO_OPTION) {
+            System.out.println("onRestartComputation:No");
             return;
         }
+        System.out.println("onRestartComputation:Yes");
         model.closeIO();
         if (model.getType() == mp2Model.PLAYBACK_BINARY) {
             model = computationalModel;
@@ -1290,11 +1317,22 @@ public abstract class mp2PostProcessorFrame extends JFrame
             isSimulating = false;
         }
 
-        int result = mp2MessageBox.showYesNoDialog(this, "The computation is not finished. " + 
-            "Do you want to quit anyway?", "Warning");
+        int result = mp2MessageBox.NO_OPTION;
+        if (System.getProperty("quitOK") == null) {
+            result = mp2MessageBox.showYesNoDialog(this,
+                    "The computation is not finished. " +
+                            "Do you want to quit anyway?", "Warning");
+        }
+        else {
+            if (System.getProperty("quitOK").compareToIgnoreCase("Yes") == 0) {
+                result = mp2MessageBox.YES_OPTION;
+            }
+        }
         if (result == mp2MessageBox.NO_OPTION) {
+            System.out.println("quitOK:No");
             return false;
         }
+        System.out.println("quitOK:Yes");
         model.closeIO();
         runStatus = 1;
         return true;

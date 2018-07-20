@@ -1,0 +1,9 @@
+<CPackWiXPatch>
+  <CPackWiXFragment Id="CM_CP_bin.vs2drti.exe">
+    <ProgId Id="VS2.Document" Description="VS2DRTI Document">
+      <Extension Id="vs2">
+        <Verb Id="open" TargetFile="CM_FP_bin.vs2drti.exe" Argument='"%1"'/>
+      </Extension>
+    </ProgId>
+  </CPackWiXFragment>
+</CPackWiXPatch>

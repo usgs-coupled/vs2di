@@ -5,18 +5,21 @@ package vs2;
 
 import mp2.*;
 import java.io.*;
+import java.util.Map;
+import java.util.HashMap;
 
 public class vs2PostProcessorOptions implements mp2PostProcessorOptions, mp2Constants, Serializable {
 
     static final long serialVersionUID = 3055414245232367302L;
 
-    public mp2ColorScale pressureHeadColor;
-    public mp2ColorScale moistureColor;
-    public mp2ColorScale saturationColor;
-    public mp2ColorScale concentrationColor;
-    public mp2ColorScale temperatureColor;   // new in version 1.1
-    public mp2ColorScale velocityColor;
-    public mp2ColorScale totalHeadColor;
+    private mp2ColorScale pressureHeadColor;
+    private mp2ColorScale moistureColor;
+    private mp2ColorScale saturationColor;
+    private mp2ColorScale concentrationColor;
+    private mp2ColorScale temperatureColor;   // new in version 1.1
+    private mp2ColorScale velocityColor;
+    private mp2ColorScale totalHeadColor;
+    protected Map<String, mp2ColorScale> colorScaleMap;
     public float milliSecPerStep = 0;
     public float saveInterval;
     public boolean saveBinary;
@@ -75,6 +78,13 @@ public class vs2PostProcessorOptions implements mp2PostProcessorOptions, mp2Cons
         showZonationAtStartup = false;
         showVectorAtStartup = false;
     }
+    
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // unserialize default
+        in.defaultReadObject();
+        assert(true);
+    }
+    
 
     public void init() {
         // assign default values if this object is deserialized
@@ -107,39 +117,42 @@ public class vs2PostProcessorOptions implements mp2PostProcessorOptions, mp2Cons
         if (totalHeadColor == null) {
             totalHeadColor = new mp2ColorScale();
         }
-        // In versions 1.0 and 1.1, the color scale objects do not have
-        // the member variable doDraw. This variable will be initialized as
-        // false, so it is necessary to set it to true.
-        pressureHeadColor.SetDoDraw(true);
-        moistureColor.SetDoDraw(true);
-        saturationColor.SetDoDraw(true);
-        concentrationColor.SetDoDraw(true);
-        temperatureColor.SetDoDraw(true);
-        velocityColor.SetDoDraw(true);
-        totalHeadColor.SetDoDraw(true);
-        // Now initialize the color scales
-        pressureHeadColor.init();
-        moistureColor.init();
-        saturationColor.init();
-        concentrationColor.init();
-        temperatureColor.init();
-        velocityColor.init();
-        totalHeadColor.init();
+        if (colorScaleMap == null) {
+            colorScaleMap = new HashMap<>();
+            colorScaleMap.put("Pressure Head",    pressureHeadColor);
+            colorScaleMap.put("Moisture Content", moistureColor);
+            colorScaleMap.put("Saturation",       saturationColor);
+            colorScaleMap.put("Temperature",      temperatureColor);
+            colorScaleMap.put("Concentration",    concentrationColor);
+            colorScaleMap.put("Vector",           velocityColor);
+            colorScaleMap.put("Total Head",       totalHeadColor);
+        }
+        for (Map.Entry<String, mp2ColorScale> entry : colorScaleMap.entrySet()) {
+            mp2ColorScale cs = entry.getValue();
+            // In versions 1.0 and 1.1, the color scale objects do not have
+            // the member variable doDraw. This variable will be initialized as
+            // false, so it is necessary to set it to true.
+            cs.SetDoDraw(true);
+            // Now initialize the color scales
+            cs.init();
+        }
     }
 
     public mp2ColorScale [] getColorScales() {
-        mp2ColorScale [] colorScale = new mp2ColorScale [6];
+        mp2ColorScale [] colorScale = new mp2ColorScale[7];
         colorScale[0] = pressureHeadColor;
         colorScale[1] = moistureColor;
         colorScale[2] = saturationColor;
-        if (vs2App.doHeat()) {
-            colorScale[3] = temperatureColor;
-        } else {
-            colorScale[3] = concentrationColor;
-        }
-        colorScale[4] = velocityColor;
-        colorScale[5] = totalHeadColor;
+        colorScale[3] = temperatureColor;
+        colorScale[4] = concentrationColor;
+        colorScale[5] = velocityColor;
+        colorScale[6] = totalHeadColor;
         return colorScale;
+    }
+
+    public Map<String, mp2ColorScale> getColorScaleMap() {
+        assert(colorScaleMap != null);
+        return colorScaleMap;
     }
     
     public float getMilliSecPerStep() {return milliSecPerStep;}

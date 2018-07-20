@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<TITLE>Adding a Chemistry Class</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Adding a Chemistry Class</H2>
+
+<P>If the Chemistry Class window is not visible, display it
+by clicking "Show" and then selecting "Chemistry Class Window".
+If the window is in the reduced size, click "Expand".</P>
+
+<P>In the Chemistry Class window:</P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left"> To add chemistry class <I>n</I>, click (select) row <I>n</I> - 1. The
+    new chemistry class will be inserted after the selected row.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left"> Click "Add". The "Add Chemistry Class" dialog box is displayed.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">Click "Select Color". The "Select Color" dialog box is displayed.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Select a color by specifying either HSV (hue-saturation-value)
+    or RGB (red-green-blue).</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Click "OK". This closes the "Select Color" dialog box.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">The chemical properties of each chemistry class are
+  defined in a <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3.htm">PHREEQC</A>
+  input file that must be created by the user outside of VS2DRTI. In the Add Chemistry Class window, the user can
+  enter integer index values for the Solution and each of six chemical reactants, which correspond to indices
+  in the PHREEQC input file.
+
+  The index value must be greater than or equal to 0 for a Solution, and
+  greater than or equal to -1 for all other reactants. A value of -1 indicates
+  that no reactions of this type occur in this chemisrty zone.
+  The user also has the option of selecting "As is" for each property.
+  When a zone is mapped to cells, property values marked "As is" are not changed. If this property
+  has been defined in a previous chemistry class, the previous value is retained.
+  Selecting the "As is" option for all but one reactant allows the user to apply a reaction to a discrete area
+  independent of all other solutions or reactions.
+
+  Solution generally refers to the index number of a
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-41.htm">SOLUTION</A>
+  data block in the PHREEQC input file. Similarly, the index numbers for the other reactants generally refer to
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-13.htm">EQUILIBRIUM_PHASES</A>,
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-14.htm">EXCHANGE</A>,
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-45.htm>"SURFACE</A>,
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-17.htm">GAS_PHASE</A>,
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-40.htm">SOLID_SOLUTIONS</A>, and
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-24.htm">KINETICS</A>
+  data blocks in the PHREEQC input file. It is also possible to refer to solutions and reactants that have been
+  defined by
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-37.htm">SAVE</A> or
+  <A href="https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/phreeqc3-html/phreeqc3-8.htm">COPY</A>
+  data blocks in the PHREEQC input file.
+  </td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+</table>
+
+
+</BODY>
+</HTML>

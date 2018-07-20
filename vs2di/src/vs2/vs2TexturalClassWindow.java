@@ -24,13 +24,15 @@ public class vs2TexturalClassWindow extends mp2TableWindow
     protected JButton shrinkButton;
     protected JButton expandButton;
     protected int shrunkWidth = 200;
-    protected int expandedWidth = 625;
+    protected int expandedWidth = 775;
     protected boolean isExpanded;
     protected mp2TablePanel colorAndNamePanel;
-    protected mp2TablePanel transportPanel;
+    protected mp2TablePanel energyTransportPanel;
+    protected mp2TablePanel soluteTransportPanel;
     protected mp2TablePanel flowPanel;
     protected mp2TableModel colorAndNameModel;
-    protected mp2TableModel transportModel;
+    protected mp2TableModel energyTransportModel;
+    protected mp2TableModel soluteTransportModel;
     protected mp2TableModel flowModel;
 
     protected static final int [] COLOR_AND_NAME_MASK = {1, 2};
@@ -67,6 +69,11 @@ public class vs2TexturalClassWindow extends mp2TableWindow
 
     protected static final int [] ENERGY_TRANSPORT_MASK =
                                 {1, 2, 21, 22, 34, 35, 36, 37};
+    
+    protected static final int [] SOLUTE_TRANSPORT_MASK =
+                                // {1, 2, 21, 22, 23, 42, 43, 44, 45, 46, 47, 48};
+                                {1, 2, 42, 43, 23};
+            
 
     /**
      * Constructor
@@ -117,8 +124,12 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         colorAndNamePanel = new mp2TablePanel(colorAndNameModel);
         flowModel = new mp2TableModel(tableData);
         flowPanel = new mp2TablePanel(flowModel);
-        transportModel = new mp2TableModel(tableData);
-        transportPanel = new mp2TablePanel(transportModel);
+        energyTransportModel = new mp2TableModel(tableData);
+        energyTransportModel.setColumnMask(ENERGY_TRANSPORT_MASK);
+        energyTransportPanel = new mp2TablePanel(energyTransportModel);
+        soluteTransportModel = new mp2TableModel(tableData);
+        soluteTransportModel.setColumnMask(SOLUTE_TRANSPORT_MASK);
+        soluteTransportPanel = new mp2TablePanel(soluteTransportModel);
 
         // Add listeners when user selects
         JTable table = colorAndNamePanel.getTable();
@@ -128,6 +139,19 @@ public class vs2TexturalClassWindow extends mp2TableWindow
                 onRowSelection();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    if (editButton.isEnabled()) {
+                        onEdit();
+                    }
+                }
+            }
+        });
         table = flowPanel.getTable();
         rowSM = table.getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
@@ -135,11 +159,57 @@ public class vs2TexturalClassWindow extends mp2TableWindow
                 onRowSelection();
             }
         });
-        table = transportPanel.getTable();
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    if (editButton.isEnabled()) {
+                        onEdit();
+                    }
+                }
+            }
+        });
+        table = energyTransportPanel.getTable();
         rowSM = table.getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 onRowSelection();
+            }
+        });
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    if (editButton.isEnabled()) {
+                        onEdit();
+                    }
+                }
+            }
+        });
+        table = soluteTransportPanel.getTable();
+        rowSM = table.getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                onRowSelection();
+            }
+        });
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    if (editButton.isEnabled()) {
+                        onEdit();
+                    }
+                }
             }
         });
 
@@ -402,18 +472,28 @@ public class vs2TexturalClassWindow extends mp2TableWindow
 
         // Get the selected row from the previously active table
         int r = activeTable.getSelectedRow();
-
-        // Set the new active table and synchronize the scroll bars
-        if (tabbedPane.getSelectedIndex() == 0) {
-            activeTable = flowPanel.getTable();
-            flowPanel.getScrollBar().setValue(
-                        transportPanel.getScrollBar().getValue());
+        
+        // synchronize the scroll bars
+        if (activeTable == flowPanel.getTable()) {
+            int i = flowPanel.getScrollBar().getValue();
+            energyTransportPanel.getScrollBar().setValue(i);
+            soluteTransportPanel.getScrollBar().setValue(i);            
+        } else if (activeTable == energyTransportPanel.getTable()) {
+            int i = energyTransportPanel.getScrollBar().getValue();            
+            flowPanel.getScrollBar().setValue(i);            
+            energyTransportPanel.getScrollBar().setValue(i);
+        } else if (activeTable == soluteTransportPanel.getTable()) {
+            int i = soluteTransportPanel.getScrollBar().getValue();            
+            flowPanel.getScrollBar().setValue(i);
+            soluteTransportPanel.getScrollBar().setValue(i);            
         } else {
-            activeTable = transportPanel.getTable();
-            transportPanel.getScrollBar().setValue(
-                        flowPanel.getScrollBar().getValue());
+            assert(false);
         }
-
+        
+        // Set the new active table
+        Component panel = tabbedPane.getSelectedComponent();
+        activeTable = ((mp2TablePanel)panel).getTable();
+        
         // Set the selected row in the new active table
         activeTable.clearSelection();
         activeTable.addRowSelectionInterval(r, r);
@@ -423,11 +503,13 @@ public class vs2TexturalClassWindow extends mp2TableWindow
      * Update which tabs are shown
      */
     public void UpdateTabs(vs2ModelOptions modelOptions) {
+        assert(tabbedPane.getTabCount() >= 1);  // at least flow tab should exist
         // Save the new model options
         this.modelOptions = modelOptions;
 
         // Get the previously selected panel
         int i = tabbedPane.getSelectedIndex();
+        Component c = tabbedPane.getComponent(i);
 
         // Remember the selected row so we can select
         // the same row at the end of the update
@@ -456,47 +538,35 @@ public class vs2TexturalClassWindow extends mp2TableWindow
             flowModel.setColumnMask(TABULAR_DATA_MASK);
             break;
         }
-        // If simulating transport, add transport panel if not present, and set title
-        if (modelOptions.doTransport) {
-            if (tabbedPane.getTabCount() == 1) tabbedPane.add(transportPanel, 1);
-            if (vs2App.doHeat()) {
-                tabbedPane.setTitleAt(1, "Transport");
-                transportModel.setColumnMask(ENERGY_TRANSPORT_MASK);
-            } else {
-                switch (modelOptions.reactionOption)
-                {
-                case N0_ADSORPTION_NO_ION_EXCHANGE:
-                    tabbedPane.setTitleAt(1, "Transport");
-                    transportModel.setColumnMask(NO_ADSORPTION_NO_ION_EXCHANGE_MASK);
-                    break;
-                case LINEAR_ADSORPTION:
-                    tabbedPane.setTitleAt(1, "Transport (with linear adsorption)");
-                    transportModel.setColumnMask(LINEAR_ADSORPTION_MASK);
-                    break;
-                case LANGMUIR:
-                    tabbedPane.setTitleAt(1, "Transport (with Langmuir isotherm)");
-                    transportModel.setColumnMask(LANGMUIR_MASK);
-                    break;
-                case FREUNDLICH:
-                    tabbedPane.setTitleAt(1, "Transport (with Freundlich isotherm)");
-                    transportModel.setColumnMask(FREUNDLICH_MASK);
-                    break;
-                case MONO_MONOVALENT_ION_EXCHANGE:  // fall through
-                case MONO_DIVALENT_ION_EXCHANGE:    // fall through
-                case DI_MONOVALENT_ION_EXCHANGE:    // fall through
-                case DI_DIVALENT_ION_EXCHANGE:
-                    tabbedPane.setTitleAt(1, "Transport (with ion exchange)");
-                    transportModel.setColumnMask(ION_EXCHANGE_MASK);
-                    break;
-                }
+        
+        //
+        // Tabs -> Flow(0), Heat transport(1), Solute transport(2)
+        //
+        
+        // Heat transport
+        if (modelOptions.doEnergyTransport) {
+            if (tabbedPane.indexOfComponent(energyTransportPanel) == -1) {
+                tabbedPane.add(energyTransportPanel, 1);
+                tabbedPane.setTitleAt(1, "Heat transport");                
             }
+        } else {
+            int idx = tabbedPane.indexOfComponent(energyTransportPanel);
+            if (idx != -1) {
+                tabbedPane.removeTabAt(idx);
+            }            
         }
-        // If not simulating transport, make sure transport tab is removed
-        else {
-            if (tabbedPane.getTabCount() == 2) {
-                tabbedPane.removeTabAt(1);
+        
+        // Solute transport
+        if (modelOptions.doSoluteTransport) {
+            if (tabbedPane.indexOfComponent(soluteTransportPanel) == -1) {
+                tabbedPane.add("Solute transport", soluteTransportPanel);
             }
-        }
+        } else {
+            int idx = tabbedPane.indexOfComponent(soluteTransportPanel);
+            if (idx != -1) {
+                tabbedPane.removeTabAt(idx);
+            }            
+        }     
 
         // If the table is shrunk, then no need to set tabs and active table.
         if (!isExpanded) {
@@ -504,13 +574,15 @@ public class vs2TexturalClassWindow extends mp2TableWindow
         }
 
         // Select the tab and set the active table
-        if (modelOptions.doTransport) {
-            tabbedPane.setSelectedIndex(i);
-            if (i==0) {
-                activeTable = flowPanel.getTable();
+        if (modelOptions.doEnergyTransport || modelOptions.doSoluteTransport) {
+            int idx = tabbedPane.indexOfComponent(c);
+            if (idx != -1) {
+                tabbedPane.setSelectedIndex(i);
             } else {
-                activeTable = transportPanel.getTable();
+                tabbedPane.setSelectedIndex(0);
+                c = flowPanel;
             }
+            activeTable = ((mp2TablePanel)c).getTable();            
         } else {
             tabbedPane.setSelectedIndex(0);
             activeTable = flowPanel.getTable();

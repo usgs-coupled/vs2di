@@ -15,16 +15,18 @@ public class vs2View extends mp2View implements vs2Constants {
 
     // table windows
     protected vs2TexturalClassWindow texturalClassWindow;
+    protected vs2ChemistryClassWindow chemistryClassWindow;
     protected vs2EvapotranspirationWindow evapotranspirationWindow;
     protected vs2RechargePeriodWindow rechargePeriodWindow;
 
     // graphical data views
     protected mp2DomainView domainView;
     protected mp2ColorCodedMapView texturalMapView;
+    protected vs2ColorCodedMapView chemistryMapView;
     protected vs2InitialEquilibriumProfileView initialEquilibriumProfileView;
     protected mp2ContourMapView initialPressureHeadView;
     protected mp2ContourMapView initialMoistureContentView;
-    protected mp2ContourMapView initialTransportView;
+    protected mp2ContourMapView initialTemperatureView;
     protected vs2BoundaryConditionsView boundaryConditionsView;
     protected vs2FluidSourceView fluidSourceView;
     protected mp2ObservationPointsView observationPointsView;
@@ -36,6 +38,7 @@ public class vs2View extends mp2View implements vs2Constants {
      */
     public void dispose() {
         texturalClassWindow.dispose();
+        chemistryClassWindow.dispose();
         evapotranspirationWindow.dispose();
         rechargePeriodWindow.dispose();
         gridView.disposeGridWindow();
@@ -55,6 +58,9 @@ public class vs2View extends mp2View implements vs2Constants {
                 (vs2ModelOptions) doc.getData(MODEL_OPTIONS);
         texturalClassWindow = new vs2TexturalClassWindow(frame,
                 (vs2TexturalClassData) doc.getData(TEXTURAL_CLASS),
+                modelOptions, theApp);
+        chemistryClassWindow = new vs2ChemistryClassWindow(frame,
+                (vs2ChemistryClassData) doc.getData(CHEMISTRY_CLASS),
                 modelOptions, theApp);
         evapotranspirationWindow = new vs2EvapotranspirationWindow(frame,
                 (vs2EvapotranspirationData) doc.getData(EVAPOTRANSPIRATION),
@@ -77,6 +83,9 @@ public class vs2View extends mp2View implements vs2Constants {
         texturalMapView = new mp2ColorCodedMapView(this,
                 (vs2TexturalMapData) doc.getData(TEXTURAL_MAP),
                 gridData, texturalClassWindow, homeDirectory);
+        chemistryMapView = new vs2ColorCodedMapView(this,
+                (vs2ChemistryMapData) doc.getData(CHEMISTRY_MAP),
+                gridData, chemistryClassWindow, homeDirectory);
         initialEquilibriumProfileView = new vs2InitialEquilibriumProfileView(this,
                 (vs2InitialEquilibriumProfileData) doc.getData(INITIAL_EQUILIBRIUM_PROFILE),
                 gridData, homeDirectory);
@@ -88,12 +97,9 @@ public class vs2View extends mp2View implements vs2Constants {
                 gridData, homeDirectory);
         initialMoistureContentView.setMinimumContourValue(0);
         initialMoistureContentView.setMaximumContourValue(1);
-        initialTransportView = new mp2ContourMapView(this,
-                (vs2InitialData) doc.getData(INITIAL_TRANSPORT),
+        initialTemperatureView = new mp2ContourMapView(this,
+                (vs2InitialData) doc.getData(INITIAL_TEMPERATURE),
                 gridData, homeDirectory);
-        if (! vs2App.doHeat()) {
-            initialTransportView.setMinimumContourValue(0);
-        }
         boundaryConditionsView = new vs2BoundaryConditionsView(this,
                 (vs2BoundaryConditionsData) doc.getData(BOUNDARY_CONDITIONS),
                 gridData, modelOptions,
@@ -153,6 +159,9 @@ public class vs2View extends mp2View implements vs2Constants {
         case TEXTURAL_MAP:
             activeDataView = texturalMapView;
             break;
+        case CHEMISTRY_MAP:
+            activeDataView = chemistryMapView;
+            break;
         case INITIAL_FLOW:
             vs2ModelOptions modelOptions =
                     (vs2ModelOptions) doc.getData(MODEL_OPTIONS);
@@ -171,8 +180,8 @@ public class vs2View extends mp2View implements vs2Constants {
                 break;
             }
             break;
-        case INITIAL_TRANSPORT:
-            activeDataView = initialTransportView;
+        case INITIAL_TEMPERATURE:
+            activeDataView = initialTemperatureView;
             break;
         case BOUNDARY_CONDITIONS:
             activeDataView = boundaryConditionsView;
@@ -219,6 +228,9 @@ public class vs2View extends mp2View implements vs2Constants {
         case TEXTURAL_CLASS:
             texturalClassWindow.setVisible(b);
             break;
+        case CHEMISTRY_CLASS:
+            chemistryClassWindow.setVisible(b);
+            break;
         case EVAPOTRANSPIRATION:
             evapotranspirationWindow.setVisible(b);
             break;
@@ -229,6 +241,14 @@ public class vs2View extends mp2View implements vs2Constants {
             texturalMapView.setVisible(b);
             mp2BufferedShapesView.remakeImage();
             if (!b && activeDataView.equals(texturalMapView)) {
+                frame.getDataChooser().setSelectedIndex(0);
+            }
+            repaint();
+            break;
+        case CHEMISTRY_MAP:
+            chemistryMapView.setVisible(b);
+            mp2BufferedShapesView.remakeImage();
+            if (!b && activeDataView.equals(chemistryMapView)) {
                 frame.getDataChooser().setSelectedIndex(0);
             }
             repaint();
@@ -245,10 +265,10 @@ public class vs2View extends mp2View implements vs2Constants {
             }
             repaint();
             break;
-        case INITIAL_TRANSPORT:
-            initialTransportView.setVisible(b);
+        case INITIAL_TEMPERATURE:
+            initialTemperatureView.setVisible(b);
             mp2BufferedShapesView.remakeImage();
-            if (!b && activeDataView.equals(initialTransportView)) {
+            if (!b && activeDataView.equals(initialTemperatureView)) {
                 frame.getDataChooser().setSelectedIndex(0);
             }
             repaint();
@@ -316,8 +336,10 @@ public class vs2View extends mp2View implements vs2Constants {
             if (activeDataView != siteMapView && !drawInXORMode) {
                 siteMapView.paint(g);
                 texturalMapView.paint(g);
+                chemistryMapView.paint(g);
             } else {
                 texturalMapView.paint(g);
+                chemistryMapView.paint(g);
                 if (drawInXORMode) {
                     g.setXORMode(Color.white);
                 }
@@ -328,7 +350,7 @@ public class vs2View extends mp2View implements vs2Constants {
             vs2ModelOptions modelOptions =
                     (vs2ModelOptions) doc.getData(MODEL_OPTIONS);
 
-            if (activeDataView == initialTransportView) {
+            if (activeDataView == initialTemperatureView) {
                 switch (modelOptions.initialFlowType) {
                 case INITIAL_EQUILIBRIUM_PROFILE:
                     initialEquilibriumProfileView.paint(g);
@@ -343,9 +365,9 @@ public class vs2View extends mp2View implements vs2Constants {
                     initialMoistureContentView.paint(g);
                     break;
                 }
-                initialTransportView.paint(g);
+                initialTemperatureView.paint(g);
             } else {
-                initialTransportView.paint(g);
+                initialTemperatureView.paint(g);
                 switch (modelOptions.initialFlowType) {
                 case INITIAL_EQUILIBRIUM_PROFILE:
                     initialEquilibriumProfileView.paint(g);
@@ -387,12 +409,13 @@ public class vs2View extends mp2View implements vs2Constants {
                     break;
                 }
             }
-            else if (activeDataView == initialTransportView) {
-                initialTransportView.paint(g);
+            else if (activeDataView == initialTemperatureView) {
+                initialTemperatureView.paint(g);
             }
             else {
-                if (texturalMapView.isVisible()) {
+                if (texturalMapView.isVisible() || chemistryMapView.isVisible()) {
                     texturalMapView.paint(g);
+                    chemistryMapView.paint(g);
                 }
                 else if (modelOptions.initialFlowType == INITIAL_EQUILIBRIUM_PROFILE
                             && initialEquilibriumProfileView.isVisible()) {
@@ -406,8 +429,8 @@ public class vs2View extends mp2View implements vs2Constants {
                             && initialMoistureContentView.isVisible()) {
                     initialMoistureContentView.paint(g);
                 }
-                else if (initialTransportView.isVisible()) {
-                    initialTransportView.paint(g);
+                else if (initialTemperatureView.isVisible()) {
+                    initialTemperatureView.paint(g);
                 }
             }
             if (drawInXORMode) {
@@ -430,15 +453,17 @@ public class vs2View extends mp2View implements vs2Constants {
     public void setEditable(boolean b) {
         super.setEditable(b);
         texturalClassWindow.setEnabled(b && !paintDiscrete);
+        chemistryClassWindow.setEnabled(b && !paintDiscrete);
         evapotranspirationWindow.setEnabled(b && !paintDiscrete);
         rechargePeriodWindow.setEnabled(b && !paintDiscrete);
 
         domainView.setEditable(b);
         texturalMapView.setEditable(b);
+        chemistryMapView.setEditable(b);
         initialEquilibriumProfileView.setEditable(b);
         initialPressureHeadView.setEditable(b);
         initialMoistureContentView.setEditable(b);
-        initialTransportView.setEditable(b);
+        initialTemperatureView.setEditable(b);
         boundaryConditionsView.setEditable(b);
         fluidSourceView.setEditable(b);
         observationPointsView.setEditable(b);
@@ -450,6 +475,7 @@ public class vs2View extends mp2View implements vs2Constants {
     public void setPaintModeToDiscrete(boolean b) {
         super.setPaintModeToDiscrete(b);
         texturalClassWindow.setEnabled(!b && isEditable);
+        chemistryClassWindow.setEnabled(!b && isEditable);
         evapotranspirationWindow.setEnabled(!b && isEditable);
         rechargePeriodWindow.setEnabled(!b && isEditable);
     }
@@ -462,6 +488,7 @@ public class vs2View extends mp2View implements vs2Constants {
      */
     public void UpdateTableWindows(vs2ModelOptions modelOptions) {
         texturalClassWindow.UpdateTabs(modelOptions);
+        chemistryClassWindow.UpdateTabs(modelOptions);
         if (!modelOptions.doEvaporation && !modelOptions.doTranspiration) {
             frame.getMenuItem(EVAPOTRANSPIRATION).setSelected(false);
         }
@@ -478,5 +505,9 @@ public class vs2View extends mp2View implements vs2Constants {
 
     public vs2TexturalClassWindow getTexturalClassWindow() {
         return texturalClassWindow;
+    }
+
+    public vs2ChemistryClassWindow getChemistryClassWindow() {
+        return chemistryClassWindow;
     }
 }

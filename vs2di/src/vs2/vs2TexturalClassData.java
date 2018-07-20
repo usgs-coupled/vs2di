@@ -23,40 +23,60 @@ public class vs2TexturalClassData extends mp2TableData implements
         // Common hydraulic parameters  (Note that "Id" and "Generic" are never
         // used by table but required for spacing)
         "Id", "Color", "Name", "Kzz/Khh", "Ss", "Porosity", "RMC", "Generic",
+        //0      1        2        3       4        5         6        7
 
         // Brooks-Corey
         "Sat Khh", "hb", "lambda",
+        //  8        9       10
 
         // Van Genuchten
         "Sat Khh", "alpha", "beta",
+        //  11       12       13
 
         // Haverkamp
         "Sat Khh", "A'", "B'", "alpha", "beta",
+        //  14      15    16      17      18
 
         // Tabular Data  (Note that "Hkm Data" is never used, but required for
         // spacing)
         "Sat Khh", "Hkm Data",
+        //  19         20
 
         // Common Transport parameters
         "alpha-L", "alpha-T", "mole. diff", "decay", "density",
+        //  21         22          23          24       25
 
         // Linear Adsorption isotherm
         "Kd",
+        //26
 
         // Langmuir isotherm
         "K1", "Q",
+        //27  28
 
         // Freundlich isotherm
         "Kf", "n",
+        //29   30
 
         // Ion Exchange
         "Km", "Q^", "C0",
+        //31   32    33
 
         // Energy transport parameters
         "Cs", "KTr", "KTs", "Cw",
+        //34   35     36     37
 
         // Rossi-Nimmo
-        "Sat Khh", "psi0", "psiD", "lambda"
+        "Sat Khh", "psi0", "psiD", "lambda",
+        // 38        39      40       41
+        
+        // Solute parameters
+        "alpha-L", "alpha-T",
+        // 42         43
+        
+        // INSOL(7)
+        "Solution", "Eq phases", "Exchange", "Surface", "Gas phase", "Solid solns", "Kinetics"
+        // 44          45            46         47          48            49            50
     };
 
     protected static final Class [] COLUMN_CLASS = {
@@ -68,7 +88,12 @@ public class vs2TexturalClassData extends mp2TableData implements
         Double.class, Double.class, Double.class, Double.class, Double.class,
         Double.class, Double.class, Double.class, Double.class, Double.class,
         Double.class, Double.class, Double.class, Double.class, Double.class,
-        Double.class, Double.class, Double.class, Double.class, Double.class};
+        Double.class, Double.class, Double.class, Double.class, Double.class,
+        // new for 1.4 Long disp, Trans disp, INSOL(7)
+        Double.class, Double.class,
+        Integer.class, Integer.class, Integer.class, Integer.class, Integer.class, 
+        Integer.class, Integer.class
+    };
 
     protected static final String [] TOOL_TIP_TEXT = {
         // Common hydraulic parameters  (Note that "Id" and "generic" are never
@@ -137,7 +162,20 @@ public class vs2TexturalClassData extends mp2TableData implements
         "saturated hydraulic conductivity",
         "psi0 parameter in Rossi-Nimmo model",
         "psiD parameter in Rossi-Nimmo model",
-        "lambda parameter in Rossi-Nimmo model"
+        "lambda parameter in Rossi-Nimmo model",
+        
+        // SOLUTE
+        "longitudinal dispersivity",
+        "transverse dispersivity",
+        
+        // INSOL(7)
+        "SOLUTION number",
+        "EQUILIBRIUM_PHASES number",
+        "EXCHANGE number",
+        "SURFACE number",
+        "GAS_PHASE number",
+        "SOLID_SOLUTIONS number",
+        "KINETICS number"
     };
 
     /**
@@ -145,6 +183,9 @@ public class vs2TexturalClassData extends mp2TableData implements
      */
     public vs2TexturalClassData() {
         super ();
+        assert(COLUMN_NAME.length == 51);
+        assert(COLUMN_NAME.length == COLUMN_CLASS.length);
+        assert(COLUMN_NAME.length == TOOL_TIP_TEXT.length);
         idCounter = 0;
         // Start off with a default row in the data set
         Object [] aRow = createDefaultRow();
@@ -176,6 +217,20 @@ public class vs2TexturalClassData extends mp2TableData implements
             dataRows.setElementAt(newRow, i);
         }
     }
+    
+    public void copySoluteDispersivities() {
+        // version 1.3 and previous versions stored dispersivities for both
+        // heat and solute in column 21 and 22
+        Object [] aRow;
+        for (int i=0; i<dataRows.size(); i++) {
+            aRow = (Object []) dataRows.elementAt(i);
+            
+            // longitudinal dispersivity
+            aRow[42] = aRow[21];
+            // transverse dispersivity
+            aRow[43] = aRow[22];
+        }        
+    }
 
     /**
      * Get the maximum number of tabular data rows among textural classes
@@ -201,57 +256,61 @@ public class vs2TexturalClassData extends mp2TableData implements
      * Export data
      */
     public void exportData(PrintWriter pw, vs2ModelOptions modelOptions) {
+        final int commentOffset = 23;
+        String s;
         Object [] aRow;
         int maxTabDataSize = getMaxTabularDataRows();
         for (int i=0; i<dataRows.size(); i++) {
             aRow = (Object []) dataRows.elementAt(i);
-            // Card B-6
-            pw.println((i+1) + "     /B6 -- ITEX. B7 to begin next line: HK");
-            // Card B-7
+            // Card B-8
+            s = String.valueOf((i+1));
+            pw.println(s + vs2App.tab(s, commentOffset)
+                    + "/B-8 -- ITEX. B-9 to begin next line: HK");
+            // Card B-9
             switch (modelOptions.soilModel) {
             case BROOKS_COREY:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[8]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[9]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[10]).doubleValue());
+                           ((Double) aRow[8]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[9]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[10]).doubleValue());
                 break;
             case VAN_GENUCHTEN:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[11]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[12]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[13]).doubleValue());
+                           ((Double) aRow[11]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[12]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[13]).doubleValue());
                 break;
             case HAVERKAMP:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[14]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[15]).doubleValue() + " " +
-                ((Double) aRow[6]).doubleValue() + " " +
-                ((Double) aRow[16]).doubleValue() + " " +
-                ((Double) aRow[17]).doubleValue() + " " +
-                ((Double) aRow[18]).doubleValue());
+                           ((Double) aRow[14]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[15]).doubleValue() + " " +
+                           ((Double) aRow[6]).doubleValue() + " " +
+                           ((Double) aRow[16]).doubleValue() + " " +
+                           ((Double) aRow[17]).doubleValue() + " " +
+                           ((Double) aRow[18]).doubleValue());
                 break;
             case ROSSI_NIMMO:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[38]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue() + " " +
-                ((Double) aRow[39]).doubleValue() + " " +
-                ((Double) aRow[40]).doubleValue() + " " +
-                ((Double) aRow[41]).doubleValue());
+                           ((Double) aRow[38]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue() + " " +
+                           ((Double) aRow[39]).doubleValue() + " " +
+                           ((Double) aRow[40]).doubleValue() + " " +
+                           ((Double) aRow[41]).doubleValue());
                 break;
             case TABULAR_DATA:
                 pw.println(((Double) aRow[3]).doubleValue() + " " +
-                ((Double) aRow[19]).doubleValue() + " " +
-                ((Double) aRow[4]).doubleValue() + " " +
-                ((Double) aRow[5]).doubleValue());
+                           ((Double) aRow[19]).doubleValue() + " " +
+                           ((Double) aRow[4]).doubleValue() + " " +
+                           ((Double) aRow[5]).doubleValue());
                 Vector hkmData = (Vector) aRow[20];
                 for (int j=0; j<3; j++) {
                     for (int k=0; k<hkmData.size(); k++) {
@@ -269,46 +328,25 @@ public class vs2TexturalClassData extends mp2TableData implements
                 }
                 break;
             }
-            // Card B-7A
-            if (modelOptions.doTransport) {
-                if (vs2App.doHeat()) {
-                    pw.println(((Double) aRow[21]).doubleValue() + " " +
-                               ((Double) aRow[22]).doubleValue() + " " +
-                               ((Double) aRow[34]).doubleValue() + " " +
-                               ((Double) aRow[35]).doubleValue() + " " +
-                               ((Double) aRow[36]).doubleValue() + " " +
-                               ((Double) aRow[37]).doubleValue() + " " + "     /B7A -- HT");
-                } else {
-                    pw.print(((Double) aRow[21]).doubleValue() + " " +
-                             ((Double) aRow[22]).doubleValue() + " " +
-                             ((Double) aRow[23]).doubleValue() + " " +
-                             ((Double) aRow[24]).doubleValue() + " " +
-                             ((Double) aRow[25]).doubleValue() + " ");
-                    switch (modelOptions.reactionOption) {
-                    case N0_ADSORPTION_NO_ION_EXCHANGE:
-                        pw.println("0" + "     /B7A -- HT");
-                        break;
-                    case LINEAR_ADSORPTION:
-                        pw.println(((Double) aRow[26]).doubleValue() + " 1.0" + "     /B7A -- HT");
-                        break;
-                    case LANGMUIR:
-                        pw.println(((Double) aRow[27]).doubleValue() + " " +
-                        ((Double) aRow[28]).doubleValue() + "     /B7A -- HT");
-                        break;
-                    case FREUNDLICH:
-                        pw.println(((Double) aRow[29]).doubleValue() + " " +
-                        ((Double) aRow[30]).doubleValue() + "     /B7A -- HT");
-                    break;
-                    case MONO_MONOVALENT_ION_EXCHANGE:  // fall through
-                    case MONO_DIVALENT_ION_EXCHANGE:    // fall through
-                    case DI_MONOVALENT_ION_EXCHANGE:    // fall through
-                    case DI_DIVALENT_ION_EXCHANGE:
-                        pw.println(((Double) aRow[31]).doubleValue() + " " +
-                        ((Double) aRow[32]).doubleValue() + " " +
-                        ((Double) aRow[33]).doubleValue() + "     /B7A -- HT");
-                        break;
-                    }
-                }
+            
+            // Card B-10 (was B-7A - VS2DH)
+            if (modelOptions.doEnergyTransport) {
+                s = String.valueOf(((Double) aRow[21]).doubleValue() + " " +
+                                   ((Double) aRow[22]).doubleValue() + " " +
+                                   ((Double) aRow[34]).doubleValue() + " " +
+                                   ((Double) aRow[35]).doubleValue() + " " +
+                                   ((Double) aRow[36]).doubleValue() + " " +
+                                   ((Double) aRow[37]).doubleValue() );
+                pw.println(s + vs2App.tab(s, commentOffset)
+                        + "/B-10 -- HT");
+            }
+            // Card B-11 (was B-7A - VS2DT)
+            if (modelOptions.doSoluteTransport) {
+                s = String.valueOf(((Double) aRow[42]).doubleValue() + " " +
+                                   ((Double) aRow[43]).doubleValue() + " " +
+                                   ((Double) aRow[23]).doubleValue() );
+                pw.println(s + vs2App.tab(s, commentOffset)
+                        + "/B-11 -- HS");
             }
         }
     }
@@ -393,6 +431,18 @@ public class vs2TexturalClassData extends mp2TableData implements
         aRow[39] = new Double(0.0);        // psi0
         aRow[40] = new Double(0.0);        // psiD
         aRow[41] = new Double(0.0);        // lambda
+        
+        // Chemistry
+        aRow[42] = new Double(0.0);        // longitudinal dispersivity (solute)
+        aRow[43] = new Double(0.0);        // transverse dispersivity (solute)
+        
+        aRow[44] = new Integer(-1);        // solution
+        aRow[45] = new Integer(-1);        // equilibrium_phases
+        aRow[46] = new Integer(-1);        // exchange
+        aRow[47] = new Integer(-1);        // surface
+        aRow[48] = new Integer(-1);        // gas_phase
+        aRow[49] = new Integer(-1);        // solid_solutions
+        aRow[50] = new Integer(-1);        // kinetics
 
         // Increment idCounter for next time
         idCounter++;
@@ -691,7 +741,7 @@ public class vs2TexturalClassData extends mp2TableData implements
 
     /** *************************************************************************************
      */ /********************************************************************************* */
-    int readHeatAndConcData (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
+    int readHeatAndConcData1_3 (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
 
         boolean  linear, freundlich, langmuir, valent;
         int      i;
@@ -744,6 +794,33 @@ public class vs2TexturalClassData extends mp2TableData implements
         }
 
 	return i;
+    }
+
+    /** *************************************************************************************
+     *  New 1.4 version
+     */ /********************************************************************************* */
+    int readHeatAndConcData (Vector data, int pos, boolean heat, boolean conc, Object aRow[]) throws IOException {
+
+        int      i;
+        String[] fields = new String[6];
+
+        i = 0;
+        if (heat) {
+            fields   = split ((String) data.elementAt (pos + i++), 6);
+            aRow[21] = new Double (fields[0]);          // alpha-L (heat)
+            aRow[22] = new Double (fields[1]);          // alpha-T (heat)
+            aRow[34] = new Double (fields[2]);          // Cs
+            aRow[35] = new Double (fields[3]);          // KTr
+            aRow[36] = new Double (fields[4]);          // KTs
+            aRow[37] = new Double (fields[5]);          // Cw
+        }
+        if (conc) {
+            fields   = split ((String) data.elementAt (pos + i++), 3);
+            aRow[42] = new Double (fields[0]);          // alpha-L (solute)
+            aRow[43] = new Double (fields[1]);          // alpha-T (solute)
+            aRow[23] = new Double (fields[2]);          // molecular diff.
+        }
+        return i;
     }
 
     /** *************************************************************************************
@@ -824,6 +901,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveBrooksCoreyData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Brooks Corey: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, hb, lambda");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[8]  + " ");
@@ -839,6 +917,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveHaverkampData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Haverkamp: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, A', B', alpha, beta");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[14]  + " ");
@@ -858,14 +937,17 @@ public class vs2TexturalClassData extends mp2TableData implements
         int    j, k;
 	Vector hkmData = (Vector) aRow[20];
 
+        pw.println ("# Tabular Data: Name, Kzz/Khh, Sat Khh, Ss, Porosity");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[19]  + " ");
         pw.print   (aRow[4]  + " ");
         pw.println (aRow[5]);
 
+        pw.println ("# Tabular Data (2A): # of point sets");
         pw.println (hkmData.size());
         for (k=0; k<hkmData.size(); k++) {
+            pw.println ("# Tabular Data (2B): # Pressure Head, Relative K, Moisture Content");
             Object [] hkm = (Object []) hkmData.elementAt(k);
             for (j=0; j<3; j++)
                 pw.print (((Double) hkm[j]).doubleValue() + " ");
@@ -877,6 +959,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveVanGenuchtenData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# van Genuchten: Name, Kzz/Khh, Sat Khh, Ss, Porosity, RMC, alpha, beta");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[11] + " ");
@@ -891,6 +974,7 @@ public class vs2TexturalClassData extends mp2TableData implements
      */ /*********************************************************************/
     public void saveRossiNimmoData (PrintWriter pw, Object aRow[]) throws IOException {
 
+        pw.println ("# Rossi-Nimmo: Name, Kzz/Khh, Sat Khh, Ss, Porosity, PSI0, PSID, lambda");
         pw.print   ("\"" + aRow[2]  + "\" ");
         pw.print   (aRow[3]  + " ");
         pw.print   (aRow[38] + " ");
@@ -903,7 +987,7 @@ public class vs2TexturalClassData extends mp2TableData implements
 
     /** *************************************************************************************
      */ /********************************************************************************* */
-    public void saveHeatAndConcData (PrintWriter pw, Object aRow[]) throws IOException {
+    public void saveHeatAndConcData1_3 (PrintWriter pw, Object aRow[]) throws IOException {
 
         boolean  linear, freundlich, langmuir, valent;
         int      i;
@@ -933,6 +1017,25 @@ public class vs2TexturalClassData extends mp2TableData implements
 	pw.print   (aRow[31] + " ");		// valent
 	pw.print   (aRow[32] + " ");		// valent
 	pw.println (aRow[33]);			// valent
+    }
+
+    /** *************************************************************************************
+     *  New 1.4 version
+     */ /********************************************************************************* */
+    public void saveHeatAndConcData (PrintWriter pw, Object aRow[]) throws IOException {
+
+        pw.println   ("# heat: Alpha-L, Alpha-T, Cs, KTr, KTs, Cw");
+        pw.print   (aRow[21] + " ");		// alpha-L (heat)
+        pw.print   (aRow[22] + " ");    	// alpha-T (heat)
+        pw.print   (aRow[34] + " ");  		// Heat Cs
+        pw.print   (aRow[35] + " ");  		// Heat KTr
+        pw.print   (aRow[36] + " ");  		// Heat KTs
+        pw.println (aRow[37]);        		// Heat Cw
+
+        pw.println   ("# solute: Alpha-L, Alpha-T, mole. diff.");
+        pw.print   (aRow[42] + " ");		// alpha-L (solute)
+        pw.print   (aRow[43] + " ");    	// alpha-T (solute)
+        pw.println (aRow[23] + " ");		// molecular diff.
     }
 
     /***************************************************************************************/

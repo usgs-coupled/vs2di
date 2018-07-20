@@ -1,0 +1,211 @@
+<HTML>
+<HEAD>
+<TITLE>How To Control VS2DT 3.3 Output</TITLE>
+</HEAD>
+<BODY>
+
+<H2>How To Control VS2DRT Output</H2>
+
+
+<P><B>To write, at every time step, output variables (heads, saturation, concentrations, etc.)
+to the main output file (vs2drt.out):</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Options" menu and select "Model..."
+The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">Select the desired output variables.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">If the Recharge Period Window is not visible, display it
+      by clicking "Show" and then selecting "Recharge Period Window".
+      If the window is in the reduced size, click "Expand".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">On the Recharge Period Window, check the box in the "print" column.
+      (Two clicks are needed to switch from uncheck to check).</td>
+</tr>
+</table>
+
+<P><B>To write, at selected times, output variables to the main output file (vs2drt.out):</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Options" menu and select "Model..."
+    The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">Select the desired output variables.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">On the right side of the dialog box, specify the desired output times.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">If the Recharge Period Window is not visible, display it
+    by clicking "Show" and then selecting "Recharge Period Window".
+    If the window is in the reduced size, click "Expand".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">Uncheck the box in the "print" column.</td>
+</tr>
+</table>
+
+<P><B>To write, at every time step, all balance components to the main output file (vs2drt.out):</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Option" menu and select "Model..."
+    The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">For "Mass Balance" option, select "at every time step".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+</table>
+
+<P><B>To write, at selected times, all balance components to the main output file (vs2drt.out):</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Option" menu and select "Model..."
+    The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">For "Mass Balance" option, select "at output times".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Specify the desired output times.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+</table>
+
+
+<P><B>To write, at every time step, selected balance components to file balance.out,
+and heads, temperatures, and concentrations at observation points to file obsPoints.out:</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Options" menu and select "Model..."
+    The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files"
+  control group, select "at every time step".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Click the "Fluid Balance" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Select the desired fluid balance components.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">If simulating transport, click the "Energy/Solute Balance" tab,
+  and Select the desired balance components.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+</table>
+
+<P><I>Note</I>: For each selected component, 3 entries are written:
+total for simulation, total for time step, and rate for time step.</P>
+
+
+<P><B>To write, at selected times, selected balance components to file balance.out,
+and heads, temperatures, and concentrations at observation points to file obsPoints.out</B></P>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">1. </td>
+  <td width="99%" valign="top" align="left">Click the "Options" menu and select "Model..."
+    The "Model Options" dialog box appears.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">2. </td>
+  <td width="99%" valign="top" align="left">Click the "Output" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">3. </td>
+  <td width="99%" valign="top" align="left">In the "Auxiliary Output Files"
+  control group, select "at output times".</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">4. </td>
+  <td width="99%" valign="top" align="left">Specify the desired output times.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">5. </td>
+  <td width="99%" valign="top" align="left">Click the "Fluid Balance" tab.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">6. </td>
+  <td width="99%" valign="top" align="left">Select the desired fluid balance components.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">7. </td>
+  <td width="99%" valign="top" align="left">If simulating transport, click the "Energy/Solute Balance" tab.
+  and Select the desired balance components.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">8. </td>
+  <td width="99%" valign="top" align="left">Click "OK".</td>
+</tr>
+</table>
+</BODY>
+</HTML>

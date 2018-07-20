@@ -33,7 +33,7 @@ C       FLUID FLOW IS SOLVED FOR BY AN IMPLICIT FINITE DIFFERENCE
 C          FORMULATION OF THE COMBINED RICHARDS AND COOPER-JACOB
 C          EQUATIONS FOR FLUID CONTINUITY.
 C
-C   -------      VERSION 3.2  August 2004        ----------
+C   -------      VERSION 3.3  April 2012        ----------
 C .................................................................
 C
 C          DEFINITION OF FUNCTIONAL RELATIONSHIPS REQUIRED
@@ -115,10 +115,14 @@ c      include 'c_scon.inc'
       common/iuNumber/ iuHead, iuConcentration
 C *** NEXT STATEMENT CHANGED FROM SAVE TO COMMON
       COMMON/TTT/IFET,IFET1,NITT,NITT1
+      common/elimit/elimit1,elimit2
       real*8 ang
       include 'd_kdum.inc'
 c      include 'c_kdum.inc'
 c *** Set version, hydraulic function type, and sorption type
+c
+      elimit1 = 1.0d-90
+      elimit2 = 0.0d0
       if (iold.eq.1) then
           VER2P5 = .true.
           hydraulicFunctionType = ihydr
@@ -146,7 +150,8 @@ c
       iInitial = index(f10,'#')
       if (iInitial.ne.0) go to 9088
       if(f5.ne.f10.and.f10.ne.blank) then
-       open(10,file=f10,FORM='UNFORMATTED')
+       open(13,file='fort.13',FORM='UNFORMATTED')
+       open(10,file=f10)
 c       iuHead = 10
       end if
       read(2,9090,end=9089)f12
@@ -996,12 +1001,12 @@ c      if(IFMT.eq.UNFORMATTED) then
        write (6,4181) stim, TUNIT
        if (trans) then
        do 
-        read (10,err = 131, end = 132) stimStart, p, cc
+        read (13,err = 131, end = 132) stimStart, p, cc
         if (stimStart.ge.stim) EXIT
        end do
        else
         do
-         read (10,err = 131, end = 132) stimStart, p
+         read (13,err = 131, end = 132) stimStart, p
          if (stimStart.ge.stim) EXIT
         end do
        end if
@@ -1022,9 +1027,11 @@ c      if(IFMT.eq.UNFORMATTED) then
 C
 C   READ INITIAL CONDITIONS FROM FILE IU
 C
-      read (iuHead,*) (dum(n),n=1,nxr)
+c      read (iuHead,*) (dum(n),n=1,nxr)
+      read (iu,*) (dum(n),n=1,nxr)
       ELSE
-      READ (iuHead,FMT=IFMT) (DUM(N),N=1,NXR)
+c      READ (iuHead,FMT=IFMT) (DUM(N),N=1,NXR)
+      READ (iu,FMT=IFMT) (DUM(N),N=1,NXR)
       end if
       else
       DO 140 N=1,NXR
@@ -1105,6 +1112,8 @@ C
 C   READ EVAPORATION VARIABLES
 C
       READ(05,*)NPV,ETCYC
+      npv1 = npv
+      if(npv.lt.0) npv = -npv
       include 'd_ptetAlloc.inc'
       DO 713 I=1,NPV
       PEVAL(I) = 0.0D0
@@ -1132,6 +1141,7 @@ C
       READ(05,*) (RDC(6,I),I=1,NPV)
       WRITE(06,4060)ZUNIT,TUNIT,ZUNIT,ZUNIT,ZUNIT,ZUNIT,(I,PTVAL(I),
      *(RDC(J,I),J=3,6),I=1,NPV)
+      NPV = npv1
       END IF
       END IF
       DO 180 IN=1,NNODES
@@ -1162,9 +1172,11 @@ C
       WRITE(06,4220) IU,FACTOR
       DO 200 J=1,NLY
       if (IFMT.EQ.FREE) then
-       read(iuConcentration,*) (dum(n),n=1,nxr)
+c       read(iuConcentration,*) (dum(n),n=1,nxr)
+       read(iu,*) (dum(n),n=1,nxr)
       else
-       READ(iuConcentration,FMT=IFMT) (DUM(N),N=1,NXR)
+c       READ(iuConcentration,FMT=IFMT) (DUM(N),N=1,NXR)
+       READ(iu,FMT=IFMT) (DUM(N),N=1,NXR)
       end if
       DO 200 N=1,NXR
       IN=NLY*(N-1)+J
@@ -1233,8 +1245,8 @@ c
  4120 FORMAT(1X,7HCLASS #,I2,/9X,3(1PD12.3),14(7(1PD12.3),/))
  4130 FORMAT(9X,10(1PD12.3))
  4140 FORMAT(6X,24HTEXTURAL CLASS INDEX MAP//   )
- 4150 FORMAT(1H ,5X,I5,2X,100(100I1))
- 4151 FORMAT(1H ,5X,I5,2X,100(100I2))
+ 4150 FORMAT(1H ,5X,I5,2X,100(99999I1))
+ 4151 FORMAT(1H ,5X,I5,2X,100(99999I2))
  4160 FORMAT(5X,24H ****** VALUE OF ITMAX =,I5,8HEXCEEDS ,
      &44HDIMENSION OF DHMX, PROGRAM TERMINATED ******)
  4170 FORMAT(5X,48HINITIAL PRESSURE HEAD OR MOISTURE CONTENT WAS SE,
@@ -1638,7 +1650,7 @@ c
      & 15X,31H3 = POTENTIAL SEEPAGE FACE NODE/
      & 15X,43H5 = NODE FOR WHICH EVAPORATION IS PERMITTED/
      & 15x,'7 = GRAVITY DRAIN CELL'/)
- 4050 FORMAT(1H ,I5,5X,100(100I1))
+ 4050 FORMAT(1H ,I5,5X,100(99999I1))
  4060 FORMAT(6X,100(1H*)/5X,
      &'STEADY STATE REACHED AT TIME = ',E14.6,'   TIME STEP NUMBER = '
      &,I9//)
@@ -1893,7 +1905,7 @@ C
        else
         if(jplt.eq.1) then
          jplt = 0
-         if(stim.eq.pltim(kplt)) kplt = kplt - 1
+         if(stim.eq.pltim(kplt-1)) kplt = kplt - 1
         end if
        end if
       end if
@@ -2418,6 +2430,7 @@ C
       include 'd_mprop.inc'
       include 'd_press.inc'
       include 'd_disch.inc'
+      include 'd_dumm.inc'
       include 'd_jtxx.inc'
       include 'd_equat.inc'
       include 'd_trxx.inc'
@@ -2426,6 +2439,7 @@ C
       include 'd_rprop.inc'
       include 'd_scon.inc'
       include 'd_BF.inc'
+      include 'd_ptet.inc'
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 c      include 'c_rspac.inc'
 c      include 'c_kcon.inc'
@@ -2454,6 +2468,7 @@ c      include 'c_scon.inc'
       CHARACTER*80 TITL
       CHARACTER*4 ZUNIT,TUNIT,CUNX
       COMMON/SCHAR/TITL,ZUNIT,TUNIT,CUNX
+      common/elimit/elimit1,elimit2
       COMMON/MASSB/ BL(72),bcmft,bcmtt,bl29I,bl29IT,bl29O,bl29OT,
      1bl68I,bl68IT,bl68o,bl68OT,bl66T
       common/massb1/ bltemp36,bltemp39,bltemp42,bltemp45,bcmf,bcmt,
@@ -2934,7 +2949,9 @@ C
 C    SUM SOURCES AND SINKS
 C
       BL(27)=BL(27)+Q(IN)
+      if(NPV.ge.0) then
       IF(TRANS.AND.NTYP(IN).NE.5) BL(60)=BL(60)+Q(IN)*CC(IN)
+      end if
       END IF
       END IF
    20 CONTINUE
@@ -3041,10 +3058,19 @@ C
         end if
        end if
        if(.not.o9p.or.jplt.eq.1) then
+        do 41 IM = 1,NMB9
+         if(dabs(BL(MB9(IM))).lt.elimit1) then
+          dum(IM) = elimit2
+         else
+          dum(IM) = BL(MB9(IM))
+         end if
+ 41      continue
         if(o13p) then
-         WRITE(09,4003) STIM,(BL(MB9(IM)),IM=1,NMB9)
+c         WRITE(09,4003) STIM,(BL(MB9(IM)),IM=1,NMB9)
+         WRITE(09,4003) STIM,(dum(IM),IM=1,NMB9)
         else
-         WRITE(09,4000) STIM,(BL(MB9(IM)),IM=1,NMB9)
+         WRITE(09,4000) STIM,(dum(IM),IM=1,NMB9)
+c         WRITE(09,4000) STIM,(BL(MB9(IM)),IM=1,NMB9)
         end if
        end if
       end if
@@ -3115,6 +3141,12 @@ c
 c        bl_mass = currentBF(ib1,2)*delt
 c        totalBF(ib1,2) = totalBF(ib1,2) + bl_mass
         if((iflag7.eq.1).and.(.not.o9p.or.jplt.eq.1)) then
+         if(dabs(totalBF(ib1,1)).lt.elimit1)totalBF(ib1,1)=elimit2
+         if(dabs(bl_flux).lt.elimit1) bl_flux = elimit2
+         if(dabs(currentBF(ib1,1)).lt.elimit1)currentBF(ib1,1)=elimit2
+         if(dabs(bltemp1).lt.elimit1)bltemp1 = elimit2
+         if(dabs(bl_mass).lt.elimit1) bl_mass = elimit2
+         if(dabs(totalBF(ib1,2)).lt.elimit1)totalBF(ib1,2)=elimit2
         if (o13p) then
          write(7,4013) stim,idBF(ib1),totalBF(ib1,1),bl_flux,
      1    currentBF(ib1,1),totalBF(ib1,2),bltemp1,bl_mass
@@ -3132,6 +3164,9 @@ c
 C
 C    WRITE RESULTS OF MASS BALANCE TO FILE 6
 C
+      do 47 m = 13,72
+       if(dabs(bl(m)).lt.elimit1) bl(m) = elimit2
+ 47    continue
       WRITE (06,4010) KTIM,KP,STIM,TUNIT,ZUNIT,ZUNIT,ZUNIT,TUNIT,(BL(M),
      *M=1,12)
       WRITE(06,4020) (BL(M),M=13,27),bcmft,bcmf,bcmfr,(bl(m),m=28,33)
@@ -3345,6 +3380,7 @@ c      include 'c_disch.inc'
       CHARACTER*80 TITL
       CHARACTER*4 ZUNIT,TUNIT,CUNX
       COMMON/SCHAR/TITL,ZUNIT,TUNIT,CUNX
+      common/elimit/elimit1,elimit2
 C
 C-------------------------------------------------------------------
 C
@@ -3359,6 +3395,11 @@ C
       I=N/NLY+1
       J1=MOD(N,NLY)
       IF(HX(N).NE.0.0D0) THEN
+       if(dabs(p(n)).lt.elimit1) p(n) = elimit2
+       if(dabs(cc(n)).lt.elimit1) cc(n) = elimit2
+       if(dabs(vx(n)).lt.elimit1) vx(n) = elimit2
+       if(dabs(vz(n)).lt.elimit1) vz(n) = elimit2
+       if(dabs(q(n)).lt.elimit1) q(n) = elimit2
       PPR=HK(JTEX(N),3)
       IF(PPR.EQ.0.0D0)PPR=1.0D0
       SAT=THETA(N)/PPR
@@ -3427,7 +3468,9 @@ C
       ELSE
       Z1=DZZ(J)*CS1+RX(N)*CS2
       END IF
-   30 DUM(IN)=P(IN)+Z1
+      DUM(IN)=P(IN)+Z1
+      if(dabs(dum(in)).lt.elimit1) dum(in) = elimit2
+ 30   continue
       if(o13p) then
        WRITE(8,4011) (DUM(N),N=J,NNODES-NLY+J,NLY)
       else
@@ -3439,10 +3482,15 @@ C  WRITE CONCENTRATIONS TO FILE 8
 C
       IF(TRANS) THEN
       DO 50 J=1,NLY
+      do 45 N=1,NXR
+      IN = NLY*(N-1)+J
+      DUM(IN) = CC(IN)
+      if(dabs(dum(in)).lt.elimit1) dum(in) = elimit2
+ 45   continue
       if (o13p) then
-       WRITE(08,4011) (CC(N),N=J,NNODES-NLY+J,NLY)
+       WRITE(08,4011) (DUM(N),N=J,NNODES-NLY+J,NLY)
       else
-       WRITE(08,4010) (CC(N),N=J,NNODES-NLY+J,NLY)
+       WRITE(08,4010) (DUM(N),N=J,NNODES-NLY+J,NLY)
       end if
    50 CONTINUE
       END IF
@@ -3459,7 +3507,7 @@ C
 C  PRINT PRESSURE HEADS
 C
       IF(PPNT) THEN
-      IF(JPLT.NE.1.or..not.f8p) THEN
+c      IF(JPLT.NE.1.or..not.f8p) THEN
       DO 60 J=2,NLYY
       DO 60 N=2,NXRR
       IN=NLY*(N-1)+J
@@ -3471,7 +3519,7 @@ C
       DUM(IN)=P(IN)+Z1
       IF(HX(IN).EQ.0.0D0)DUM(IN)=0.0D0
    60 CONTINUE
-      END IF
+c      END IF
       WRITE (6,4070)
       CALL VSOUT(1,DUM)
       END IF
@@ -3522,8 +3570,8 @@ C
       CONTINUE
       RETURN
  4000 FORMAT(/,8H TIME = ,E15.6,1X,A4/)
- 4010 FORMAT(10(1PE15.7))
- 4011 FORMAT(10(1PE21.13))
+ 4010 FORMAT(99999(1PE15.7))
+ 4011 FORMAT(99999(1PE21.13))
  4020 FORMAT(1pe14.6,1x,i8,2x,12(1x,1PE12.5))
  4021 FORMAT(1pe18.10,1x,i8,2x,12(1PE21.13))
 c
@@ -3569,6 +3617,7 @@ c      include 'c_dumm1.inc'
       CHARACTER*80 TITL
       CHARACTER*4 ZUNIT,TUNIT,CUNX
       COMMON/SCHAR/TITL,ZUNIT,TUNIT,CUNX
+      common/elimit/elimit1,elimit2
       DIMENSION VPRNT(1)
 C
 C-------------------------------------------------------------------
@@ -3581,6 +3630,7 @@ C
       IN=NLY*(N-1)+J
       DUM1(N)=VPRNT(IN)
       IF(HX(IN).EQ.0.0D0) DUM1(N)=0.0D0
+      if(dabs(dum1(n)).lt.elimit1) dum1(n) = elimit2
    10 CONTINUE
       IF(IV.GT.1) GO TO 20
       WRITE (06,4020) DZZ(J),(DUM1(N),N=2,NXRR)
@@ -3590,9 +3640,9 @@ C
       include 'd_dumm1Dealloc.inc'
       RETURN
  4000 FORMAT(1H ,1X,5HZ, IN/2X,A4,20X,20HX OR R DISTANCE, IN ,A4)
- 4010 FORMAT(1H ,8X,13(F9.2)/(9X,13(F9.2)))
- 4020 FORMAT(1X,F8.2,13(1PE9.2)/(9X,13(1PE9.2)))
- 4030 FORMAT(1X,F8.2,13F9.3/(9X,13F9.3))
+ 4010 FORMAT(1H ,9X,99999(F11.3)/(9X,13(F9.2)))
+ 4020 FORMAT(1X,F9.3,99999(1X,1PE10.3)/(9X,13(1PE9.2)))
+ 4030 FORMAT(1X,F9.3,99999(1X,F10.4)/(9X,13F9.3))
       END
       SUBROUTINE VSPOND(IFET,IFET1,IFET2)
 C******
@@ -4038,6 +4088,8 @@ c      include 'c_ptet.inc'
 C
 C---------------------------------------------------------------
 C
+      npv1 = npv
+      if(npv.lt.0) npv = -npv
       IF (NPV.EQ.1) THEN
 C
 C   IF ONLY 1 PERIOD THEN ALL VALUES ARE CONSTANT
@@ -4084,6 +4136,7 @@ C
       HROOT=RDC(6,K)+(RDC(6,I)-RDC(6,K))*FRPER
       END IF
       END IF
+      npv = npv1
       RETURN
       END
       DOUBLE PRECISION FUNCTION VSRDF(Z1,Z2)
@@ -5009,6 +5062,7 @@ C
       include 'd_trxx.inc'
       include 'd_trxy1.inc'
       include 'd_rprop.inc'
+      include 'd_ptet.inc'
       include 'd_scon.inc'
       IMPLICIT DOUBLE PRECISION (A-H,P-Z)
 c      include 'c_press.inc'
@@ -5063,7 +5117,7 @@ C
        else
         qt(n) = 0.0d0
        end if
-      end if
+c      end if
       IF(HX(N).NE.0.0D0) THEN
       N2=JTEX(N)
       if(SORP) then
@@ -5095,6 +5149,9 @@ C
       else
        RET(N)=VTRETFR(CC(N),N2)
       end if
+      end if
+      end if
+      if(HX(N).NE.0.0d0) THEN
       IM1=N-NLY
       JM1=N-1
       JP1=N+1
@@ -5287,7 +5344,9 @@ C#
       END IF
 C#
       END IF
+      if (NPV.ge.0) then
       IF(Q(N).LT.0.0D0.AND.NTYP(N).NE.5) E(N)=E(N)+Q(N)
+      end if
       IF(QQ(N).LT.0.0D0) E(N)=E(N)+QQ(N)
       IF(QT(N).GT.0.0D0) E(N)=E(N)-QT(N)
 C
@@ -5512,11 +5571,11 @@ c      include 'c_rprop.inc'
       VTRETFR=0.0D0
       RETURN
       END IF
-      IF (P.le.0.0D0) then
-       VTRETFR = 0.0D0
-      ELSE
       IF(HT(I,7).EQ.1.0D0) THEN
       VTRETFR=HT(I,5)*HT(I,6)
+      ELSE
+      IF (P.le.0.0D0) then
+       VTRETFR = 0.0D0
       ELSE
       VTRETFR=HT(I,5)*HT(I,6)*HT(I,7)*P**(HT(I,7)-1.0D0)
       END IF
@@ -5973,6 +6032,7 @@ C *** CLOSE ALL IO UNITS
       CLOSE(10)
       CLOSE(11)
       CLOSE(12)
+      CLOSE(13)
       RETURN
       END
 
@@ -5986,6 +6046,7 @@ C *** CLOSE ALL IO UNITS
       include 'd_equat.inc'
       include 'd_jtxx.inc'
       include 'd_dumm.inc'
+      include 'd_dumm1.inc'
       include 'd_ptet.inc'
       include 'd_trxx.inc'
       include 'd_trxy1.inc'

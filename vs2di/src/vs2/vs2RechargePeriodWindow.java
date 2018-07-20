@@ -96,11 +96,33 @@ public class vs2RechargePeriodWindow extends mp2TableWindow
                 onRowSelection();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    onEdit();                    
+                }
+            }
+        });
         table = smallTablePanel.getTable();
         rowSM = table.getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 onRowSelection();
+            }
+        });
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                JTable table = (JTable)me.getSource();
+                Point pt = me.getPoint();
+                int row = table.rowAtPoint(pt);
+                if (me.getClickCount() == 2) {
+                    onEdit();                    
+                }
             }
         });
 

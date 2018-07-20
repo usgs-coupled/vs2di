@@ -44,8 +44,6 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
              new String("qv = "),
              new String("grv_drn")};
 
-    protected static String Ci = "Ci";
-    protected static String Cb = "Cb";
 
     /**
      * Constructor
@@ -61,20 +59,10 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
         this.modelOptions = modelOptions;
         this.bcData = boundaryConditionsData;
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator
-                                + "images" + fileSeparator;
-
-        flowBCColorsLabel = new JLabel(new ImageIcon(imageDirectory + "flowbcx.gif"),
+        flowBCColorsLabel = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/flowbcx.gif")),
                 SwingConstants.CENTER);
-        radialFlowBCColorsLabel = new JLabel(new ImageIcon(imageDirectory + "flowbcr.gif"),
+        radialFlowBCColorsLabel = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/flowbcr.gif")),
                 SwingConstants.CENTER);
-
-        if (vs2App.doHeat()) {
-            Ci = "Ti";
-            Cb = "Tb";
-        }
-
     }
 
     /**
@@ -105,11 +93,17 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                         if (bc0.flowValue != bc.flowValue) {
                             bc0.flowValue = Double.MIN_VALUE;
                         }
-                        if (bc0.getTransportType() != bc.getTransportType()) {
-                            bc0.setTransportType(0);
+                        if (bc0.getEnergyTransportType() != bc.getEnergyTransportType()) {
+                            bc0.setEnergyTransportType(0);
                         }
-                        if (bc0.getTransportValue() != bc.getTransportValue()) {
-                            bc0.setTransportValue(Double.MIN_VALUE);
+                        if (bc0.getEnergyTransportValue() != bc.getEnergyTransportValue()) {
+                            bc0.setEnergyTransportValue(Double.MIN_VALUE);
+                        }
+                        if (bc0.getSoluteTransportType() != bc.getSoluteTransportType()) {
+                            bc0.setSoluteTransportType(0);
+                        }
+                        if (bc0.getSoluteTransportValue() != bc.getSoluteTransportValue()) {
+                            bc0.setSoluteTransportValue(Integer.MIN_VALUE);
                         }
                     }
                 }
@@ -118,13 +112,18 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
 
         dlg.flowBCType = bc0.flowType;
         dlg.flowBCValue = bc0.flowValue;
-        if (modelOptions.doTransport) {
-            dlg.transportBCType = bc0.getTransportType();
-            dlg.transportBCValue = bc0.getTransportValue();
+        if (modelOptions.doEnergyTransport) {
+            dlg.energyTransportBCType = bc0.getEnergyTransportType();
+            dlg.energyTransportBCValue = bc0.getEnergyTransportValue();
+        }
+        if (modelOptions.doSoluteTransport) {
+            dlg.soluteTransportBCType = bc0.getSoluteTransportType();
+            dlg.soluteTransportBCValue = bc0.getSoluteTransportValue();
+            assert(dlg.soluteTransportBCType != DIFFUSIVE_FLUX_BC);
         }
 
         if (dlg.doModal() == true) {
-
+            assert(dlg.soluteTransportBCType != DIFFUSIVE_FLUX_BC);
             if (dlg.getFromFile) {
 
                 mp2FileChooser fc = new mp2FileChooser();
@@ -143,7 +142,7 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                     mp2MessageBox.showMessageDialog("Unable to open file: " + fileName, "Error");
                     return;
                 }
-               	double [] bcValue = new double[2];
+               	double [] bcValue = new double[3];
                 String line;
                 Vector oldBC = boundaryConditionsData.getClonedBC();
                 Vector newBC = boundaryConditionsData.getClonedBC();
@@ -162,20 +161,26 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                                     vs2BoundaryCondition bc =
                                             (vs2BoundaryCondition) segments.elementAt(j);
                                     bc.flowType = dlg.flowBCType;
-                                    if (dlg.flowBCType == NO_FLOW_BC || dlg.flowBCType == SEEPAGE_FACE_BC
-                                            || dlg.flowBCType == GRAVITY_DRAIN_BC || dlg.flowBCType == EVAPORATION_BC) {
-                                        bc.flowValue = 0;
-                                    } else {
-                                        bc.flowValue = bcValue[0];
+
+                                    int nextIndex = 0;
+                                    bc.flowValue = 0;
+                                    if (requiresFlowData(dlg.flowBCType)) {
+                                        bc.flowValue = bcValue[nextIndex];
+                                        ++nextIndex;
                                     }
                                     if (dlg.flowBCValue == -1) bc.flowValue = -bc.flowValue;
-                                    if (modelOptions.doTransport) {
-                                        bc.setTransportType(dlg.transportBCType);
-                                        if (dlg.flowBCType == NO_FLOW_BC || dlg.flowBCType == SEEPAGE_FACE_BC
-                                            || dlg.flowBCType == GRAVITY_DRAIN_BC || dlg.flowBCType == EVAPORATION_BC) {
-                                            bc.setTransportValue(bcValue[0]);
-                                        } else {
-                                            bc.setTransportValue(bcValue[1]);
+                                    if (modelOptions.doEnergyTransport) {
+                                        bc.setEnergyTransportType(dlg.energyTransportBCType);
+                                        if (requiresEnergyData(dlg.flowBCType, dlg.flowBCValue, dlg.energyTransportBCType)) {
+                                            bc.setEnergyTransportValue(bcValue[nextIndex]);                                            
+                                            ++nextIndex;
+                                        }
+                                    }
+                                    if (modelOptions.doSoluteTransport) {
+                                        bc.setSoluteTransportType(dlg.soluteTransportBCType);
+                                        if (requiresSoluteData(dlg.flowBCType, dlg.flowBCValue, dlg.soluteTransportBCType)) {
+                                            bc.setSoluteTransportValue((int)Math.round(bcValue[nextIndex]));                                            
+                                            ++nextIndex;
                                         }
                                     }
                                 }
@@ -203,9 +208,13 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
                                     (vs2BoundaryCondition) segments.elementAt(j);
                             bc.flowType = dlg.flowBCType;
                             bc.flowValue = dlg.flowBCValue;
-                            if (modelOptions.doTransport) {
-                                bc.setTransportType(dlg.transportBCType);
-                                bc.setTransportValue(dlg.transportBCValue);
+                            if (modelOptions.doEnergyTransport) {
+                                bc.setEnergyTransportType(dlg.energyTransportBCType);
+                                bc.setEnergyTransportValue(dlg.energyTransportBCValue);
+                            }
+                            if (modelOptions.doSoluteTransport) {
+                                bc.setSoluteTransportType(dlg.soluteTransportBCType);
+                                bc.setSoluteTransportValue(dlg.soluteTransportBCValue);
                             }
                         }
                     }
@@ -232,27 +241,17 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
     }
 
     private boolean parseLine(String line, double [] bcValue) {
-        bcValue[0] = 0;
-        bcValue[1] = 0;
-        String a = line.trim();
-        if (a.length() == 0) return true;
-        int p = a.indexOf(' ');
-        try {
-            if (p == -1) {
-                bcValue[0] = Double.valueOf(a).doubleValue();
-                return true;
-            } else {
-                bcValue[0] = Double.valueOf(a.substring(0, p)).doubleValue();
-            }
-        } catch (NumberFormatException e) {
-            return false;
+        for (int i = 0; i < bcValue.length; ++i) {
+            bcValue[i] = 0;
         }
-        String b = a.substring(p).trim();
-        if (b.length() == 0) return true;
-        try {
-            bcValue[1] = Double.valueOf(b).doubleValue();
-        } catch (NumberFormatException e) {
-            return false;
+        line = line.replaceAll("\\s\\s+", " ");
+        String[] items = line.split(" ");
+        for (int i = 0; i < items.length; ++i) {
+            try {
+                bcValue[i] = Double.valueOf(items[i]).doubleValue();
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
         return true;
     }
@@ -289,49 +288,67 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
             }
             label += v;
 
-            if (modelOptions.doTransport
+            if ((modelOptions.doEnergyTransport || modelOptions.doSoluteTransport)
                         && !(bc.flowType == NORMAL_FLUID_FLUX_BC && bc.flowValue < 0)
                         && !(bc.flowType == VERTICAL_FLUID_FLUX_BC && bc.flowValue < 0)
                         && !(bc.flowType == VOLUMETRIC_FLOW_BC && bc.flowValue < 0)) {
-                v = String.valueOf(bc.getTransportValue());
+                v = String.valueOf(bc.getEnergyTransportValue());
                 if (v.endsWith(".0")) {
                     v = v.substring(0, v.length()-2);
                 }
-                if (bc.getTransportType() == DEFAULT_CONC_BC) {
-                    label += ", " + Ci + " = " + v;
+                if (modelOptions.doEnergyTransport) {
+                    if (bc.getEnergyTransportType() == DEFAULT_CONC_BC) {
+                        label += ", Ti = " + v;
+                    }
+                    else if (bc.getEnergyTransportType() == SPECIFIED_CONC_BC) {
+                        label += ", Tb = " + v;
+                    }
                 }
-                else if (bc.getTransportType() == SPECIFIED_CONC_BC) {
-                    label += ", " + Cb + " = " + v;
+                v = String.valueOf(bc.getSoluteTransportValue());
+                if (modelOptions.doSoluteTransport) {
+                    if (bc.getSoluteTransportType() == DEFAULT_CONC_BC) {
+                        label += ", Si = " + v;
+                    }
+                    else if (bc.getSoluteTransportType() == SPECIFIED_CONC_BC) {
+                        label += ", Sb = " + v;
+                    }
                 }
             }
-        } else if (modelOptions.doTransport && vs2App.doHeat()
+        } else if (modelOptions.doEnergyTransport
                    && (bc.flowType == SEEPAGE_FACE_BC || bc.flowType == GRAVITY_DRAIN_BC || bc.flowType == EVAPORATION_BC)
-                   && bc.getTransportType() == SPECIFIED_CONC_BC) {
-            String v = String.valueOf(bc.getTransportValue());
+                   && bc.getEnergyTransportType() == SPECIFIED_CONC_BC) {
+            String v = String.valueOf(bc.getEnergyTransportValue());
             if (v.endsWith(".0")) {
                 v = v.substring(0, v.length()-2);
             }
             label += ", T = " +v;
 
-        } else if (bc.flowType == NO_FLOW_BC && modelOptions.doTransport) {
-            String v = String.valueOf(bc.getTransportValue());
-            if (v.endsWith(".0")) {
-                v = v.substring(0, v.length()-2);
-            }
-            if (bc.getTransportType() == DEFAULT_CONC_BC) {
-                label += ", J = 0";
-            }
-            if (bc.getTransportType() == SPECIFIED_CONC_BC) {
-                label += ", " + Cb + " = " + v;
-            }
-            else if (bc.getTransportType() == DIFFUSIVE_FLUX_BC) {
-                if (vs2App.doHeat()) {
+        } else if (bc.flowType == NO_FLOW_BC) {
+            if (modelOptions.doEnergyTransport) {
+                String v = String.valueOf(bc.getEnergyTransportValue());
+                if (v.endsWith(".0")) {
+                    v = v.substring(0, v.length()-2);
+                }
+                if (bc.getEnergyTransportType() == DEFAULT_CONC_BC) {
+                    label += ", Jh = 0";
+                }
+                if (bc.getEnergyTransportType() == SPECIFIED_CONC_BC) {
+                    label += ", Tb = " + v;
+                }
+                else if (bc.getEnergyTransportType() == DIFFUSIVE_FLUX_BC) {
                     label += ", Jc = " + v;
-                } else {
-                    label += ", Jd = " + v;
                 }
             }
-
+            if (modelOptions.doSoluteTransport) {
+                String v = String.valueOf(bc.getSoluteTransportValue());
+                if (bc.getSoluteTransportType() == DEFAULT_CONC_BC) {
+                    label += ", Js = 0";
+                }
+                if (bc.getSoluteTransportType() == SPECIFIED_CONC_BC) {
+                    label += ", Sb = " + v;
+                }
+                assert(bc.getSoluteTransportType() != DIFFUSIVE_FLUX_BC);  // invalid for 1.4
+            }
         }
 
         return label;
@@ -350,6 +367,50 @@ public class vs2BoundaryConditionsView extends mp2BoundaryConditionsView impleme
             toolBar.add(flowBCColorsLabel);
         }
         view.setCursor(Cursor.getDefaultCursor());
+    }
+    
+    static public boolean requiresFlowData(int flowBCType) {
+        // test flowtype
+        if (flowBCType == NO_FLOW_BC || flowBCType == SEEPAGE_FACE_BC
+                || flowBCType == GRAVITY_DRAIN_BC || flowBCType == EVAPORATION_BC) {
+            return false;
+        }
+        return true;
+    }
+    
+    static public boolean requiresEnergyData(int flowBCType, double flowBCValue, int energyTransportBCType) {
+        if (flowBCType == NO_FLOW_BC) {
+            return (energyTransportBCType == SPECIFIED_CONC_BC || energyTransportBCType == DIFFUSIVE_FLUX_BC);
+        }
+        if (flowBCType == PRESSURE_HEAD_BC || flowBCType == TOTAL_HEAD_BC) {
+            return true;
+        }
+        if (flowBCType == NORMAL_FLUID_FLUX_BC || flowBCType == VOLUMETRIC_FLOW_BC) {
+            return (flowBCValue > 0);
+        }
+        if (flowBCType == EVAPORATION_BC || flowBCType == SEEPAGE_FACE_BC || flowBCType == GRAVITY_DRAIN_BC) {
+            return (energyTransportBCType == SPECIFIED_CONC_BC);
+        }
+        return false;
+    }
+    
+    
+    static public boolean requiresSoluteData(int flowBCType, double flowBCValue, int soluteTransportBCType) {
+        if (flowBCType == NO_FLOW_BC) {
+            // DIFFUSIVE_FLUX_BC for soluteTransport not supported
+            assert(soluteTransportBCType != DIFFUSIVE_FLUX_BC);
+            return (soluteTransportBCType == SPECIFIED_CONC_BC);
+        }
+        if (flowBCType == PRESSURE_HEAD_BC || flowBCType == TOTAL_HEAD_BC || flowBCType == VERTICAL_FLUID_FLUX_BC) {
+            return true;
+        }
+        if (flowBCType == NORMAL_FLUID_FLUX_BC || flowBCType == VOLUMETRIC_FLOW_BC) {
+            return (flowBCValue > 0);
+        }
+        if (flowBCType == EVAPORATION_BC || flowBCType == SEEPAGE_FACE_BC || flowBCType == GRAVITY_DRAIN_BC) {
+            return false;
+        }
+        return false;
     }
 
     /**

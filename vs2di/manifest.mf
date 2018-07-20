@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-X-COMMENT: Main-Class will be added automatically by build
-Class-Path: jh.jar vs2dhiHelp.jar vs2dtiHelp.jar

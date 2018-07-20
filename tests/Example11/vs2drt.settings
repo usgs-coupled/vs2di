@@ -1,0 +1,59 @@
+drawing width in inches: 10.0
+drawing height in inches: 12.0
+model distance per inch x: 1.0
+model distance per inch y: 0.01
+x origin in inches: 1.0
+y origin in inches: 1.0
+number of decimal places: 3
+seconds per time step: 0.0
+save interval: 0.0
+save output: 0
+vector magnitude per inch: 0.0
+vector vector column interval: 1
+vector row interval: 1
+vector mode:2
+show vector base: 0
+color scale count: 8
+color scale 0 name: Temperature
+color scale 0 red limit: 1.0
+color scale 0 blue limit: 0.0
+color scale 0 color interval: 0.1
+color scale 0 label interval: 0.1
+color scale 1 name: Saturation
+color scale 1 red limit: 1.0
+color scale 1 blue limit: 0.0
+color scale 1 color interval: 0.1
+color scale 1 label interval: 0.1
+color scale 2 name: Total Head
+color scale 2 red limit: 1.0
+color scale 2 blue limit: 0.0
+color scale 2 color interval: 0.1
+color scale 2 label interval: 0.1
+color scale 3 name: Pressure Head
+color scale 3 red limit: 1.0
+color scale 3 blue limit: 0.0
+color scale 3 color interval: 0.1
+color scale 3 label interval: 0.1
+color scale 4 name: Concentration (Cl)
+color scale 4 red limit: 50000.0
+color scale 4 blue limit: 0.0
+color scale 4 color interval: 5000.0
+color scale 4 label interval: 5000.0
+color scale 5 name: Concentration
+color scale 5 red limit: 1.0
+color scale 5 blue limit: 0.0
+color scale 5 color interval: 0.1
+color scale 5 label interval: 0.1
+color scale 6 name: Moisture Content
+color scale 6 red limit: 1.0
+color scale 6 blue limit: 0.0
+color scale 6 color interval: 0.1
+color scale 6 label interval: 0.1
+color scale 7 name: Vector
+color scale 7 red limit: 1.0
+color scale 7 blue limit: 0.0
+color scale 7 color interval: 0.1
+color scale 7 label interval: 0.1
+save moisture content: 0
+save saturation: 0
+save vectors: 0

@@ -79,34 +79,51 @@ public class vs2RechargePeriodDialog extends mp2Dialog {
         JPanel rightPanel = new JPanel(false);
         rightPanel.setLayout(new GridLayout(0, 1, 0, 10));
         subPanel.add(rightPanel);
+        
+        // Make a right panel to hold the text fields
+        JPanel unitsPanel = new JPanel(false);
+        unitsPanel.setLayout(new GridLayout(0, 1, 0, 10));
+        subPanel.add(unitsPanel);
+        
+        String T = modelOptions.T();
+        String L = modelOptions.L();
 
         // Add the labels and text fields to left and right panels respectively
         leftPanel.add(new JLabel("Period length", SwingConstants.RIGHT));
         rightPanel.add(periodLengthTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(T, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Initial time step", SwingConstants.RIGHT));
         rightPanel.add(initialTimeStepTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(T, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Time step multiplier", SwingConstants.RIGHT));
         rightPanel.add(timeStepMultiplierTextField = new JTextField(5));
+        unitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Maximum time step", SwingConstants.RIGHT));
         rightPanel.add(maxTimeStepTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(T, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Minimum time step", SwingConstants.RIGHT));
         rightPanel.add(minTimeStepTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(T, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Time step reduction factor", SwingConstants.RIGHT));
         rightPanel.add(timeStepReductionFactorTextField = new JTextField(5));
+        unitsPanel.add(new JLabel("-", SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Maximum head change", SwingConstants.RIGHT));
         rightPanel.add(maxHeadChangeTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Steady-state head criterion", SwingConstants.RIGHT));
         rightPanel.add(steadyStateCriterionTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
         leftPanel.add(new JLabel("Maximum height of ponding", SwingConstants.RIGHT));
         rightPanel.add(maxPondHeightTextField = new JTextField(5));
+        unitsPanel.add(new JLabel(L, SwingConstants.CENTER));
 
         // Put space below the sub panel
         centerPanel.add(Box.createVerticalStrut(20));

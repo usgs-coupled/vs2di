@@ -94,35 +94,42 @@ public class vs2EvapotranspirationData extends mp2TableData
 
     public void exportData(PrintWriter pw, boolean doEvaporation,
                       boolean doTranspiration) {
+        String s;
+        final int commentOffset = 23;
         Object [] aRow;
-        // Card B-15
-        pw.println(dataRows.size() + " " + periodLength + "     /B15 -- NPV, ETCYC");
-        // Cards B-16 through B-18
+        // Card B-19
+        s = String.valueOf(dataRows.size() + " " + periodLength);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-19 -- NPV, ETCYC");
+        
+        // Cards B-20 through B-22
         if (doEvaporation) {
+            s = "";
             for (int j=1; j<=3; j++) {
                 for (int i=0; i<dataRows.size(); i++) {
                     aRow = (Object []) dataRows.elementAt(i);
-                    pw.print(((Double) aRow[j]).doubleValue() + " ");
+                    s += String.valueOf(((Double) aRow[j]).doubleValue() + " ");
                 }
-                if (j==1) pw.print("     /B16 -- PEVAL");
-                if (j==2) pw.print("     /B17 -- RDC(1,J)");
-                if (j==3) pw.print("     /B18 -- RDC(2,J)");
-                pw.println();
+                if (j==1) pw.println(s + vs2App.tab(s, commentOffset) + "/B-20 -- PEVAL");
+                if (j==2) pw.println(s + vs2App.tab(s, commentOffset) + "/B-21 -- RDC(1,J)");
+                if (j==3) pw.println(s + vs2App.tab(s, commentOffset) + "/B-22 -- RDC(2,J)");
+                s = "";
             }
         }
-        // Cards B-19 through B-23
+        // Cards B-23 through B-27
         if (doTranspiration) {
+            s = "";
             for (int j=4; j<=8; j++) {
                 for (int i=0; i<dataRows.size(); i++) {
                     aRow = (Object []) dataRows.elementAt(i);
-                    pw.print(((Double) aRow[j]).doubleValue() + " ");
+                    s += String.valueOf(((Double) aRow[j]).doubleValue() + " ");
                 }
-                if (j==4) pw.print("     /B19 -- PTVAL");
-                if (j==5) pw.print("     /B20 -- RDC(3,J)");
-                if (j==6) pw.print("     /B21 -- RDC(4,J)");
-                if (j==7) pw.print("     /B22 -- RDC(5,J)");
-                if (j==8) pw.print("     /B23 -- RDC(6,J)");
-                pw.println();
+                if (j==4) pw.println(s + vs2App.tab(s, commentOffset) + "/B-23 -- PTVAL");
+                if (j==5) pw.println(s + vs2App.tab(s, commentOffset) + "/B-24 -- RDC(3,J)");
+                if (j==6) pw.println(s + vs2App.tab(s, commentOffset) + "/B-25 -- RDC(4,J)");
+                if (j==7) pw.println(s + vs2App.tab(s, commentOffset) + "/B-26 -- RDC(5,J)");
+                if (j==8) pw.println(s + vs2App.tab(s, commentOffset) + "/B-27 -- RDC(6,J)");
+                s = "";
             }
         }
     }

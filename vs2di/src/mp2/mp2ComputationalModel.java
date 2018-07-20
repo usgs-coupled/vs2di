@@ -15,7 +15,7 @@ public abstract class mp2ComputationalModel extends mp2Model implements mp2Const
     protected float saveInterval;
     protected float nextSaveTime;
     protected mp2PostProcessorOptions postOptions;
-    private mp2ColorScale [] colorScales = null;
+    protected mp2ColorScale [] colorScales = null;
 
     // implementations of abstract methods in superclass
     

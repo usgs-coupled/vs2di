@@ -17,8 +17,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
     public vs2SolverPanel solverPanel;
     public vs2OutputPanel outputPanel;
     public vs2FluidBalancePanel fluidBalancePanel;
-    public vs2SoluteBalancePanel soluteBalancePanel;
-    public vs2EnergyBalancePanel energyBalancePanel;
+    public vs2BalancePanel balancePanel;
 
     protected int activePanelIndex;
     protected vs2ModelOptionsPanel activePanel;
@@ -45,11 +44,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         solverPanel = new vs2SolverPanel(this);
         outputPanel = new vs2OutputPanel(this);
         fluidBalancePanel = new vs2FluidBalancePanel(this);
-        if (vs2App.doHeat()) {
-            energyBalancePanel = new vs2EnergyBalancePanel(this);
-        } else {
-            soluteBalancePanel = new vs2SoluteBalancePanel(this);
-        }
+        balancePanel = new vs2BalancePanel(this);
 
         // Create a tabbed pane to hold the panels, and
         // add the panels
@@ -60,11 +55,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         tabbedPane.addTab("Solver", null, solverPanel);
         tabbedPane.addTab("Output", null, outputPanel);
         tabbedPane.addTab("Fluid Balance", null, fluidBalancePanel);
-        if (vs2App.doHeat()) {
-            tabbedPane.addTab("Energy Balance", null, energyBalancePanel);
-        } else {
-            tabbedPane.addTab("Solute Balance", null, soluteBalancePanel);
-        }
+        tabbedPane.addTab("Energy/Solute Balance", null, balancePanel);
 
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -87,11 +78,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         solverPanel.init();
         outputPanel.init();
         fluidBalancePanel.init();
-        if (vs2App.doHeat()) {
-            energyBalancePanel.init();
-        } else {
-            soluteBalancePanel.init();
-        }
+        balancePanel.init();
 
         // Set the initial tab selection to the basic panel
         tabbedPane.setSelectedIndex(0);
@@ -130,11 +117,8 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         else if (tabTitle.equalsIgnoreCase("Fluid Balance")) {
               mp2JavaHelp.hb.enableHelpOnButton(helpButton, "fluidBalanceOptions", null);
         }
-        else if (tabTitle.equalsIgnoreCase("Solute Balance")) {
+        else if (tabTitle.equalsIgnoreCase("Energy/Solute Balance")) {
               mp2JavaHelp.hb.enableHelpOnButton(helpButton, "soluteBalanceOptions", null);
-        }
-        else if (tabTitle.equalsIgnoreCase("Energy Balance")) {
-              mp2JavaHelp.hb.enableHelpOnButton(helpButton, "energyBalanceOptions", null);
         }
         else {
               mp2JavaHelp.hb.enableHelpOnButton(helpButton, "basicOptions", null);
@@ -164,11 +148,8 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         else if (tabTitle.equalsIgnoreCase("Fluid Balance")) {
               mp2HelpWindow.showHelpFile ("fluidBalanceOptions.html");
         }
-        else if (tabTitle.equalsIgnoreCase("Solute Balance")) {
-             mp2HelpWindow.showHelpFile ("soluteBalanceOptions.html");
-        }
-        else if (tabTitle.equalsIgnoreCase("Energy Balance")) {
-              mp2HelpWindow.showHelpFile ("energyBalanceOptions.html");
+        else if (tabTitle.equalsIgnoreCase("Energy/Solute Balance")) {
+              mp2HelpWindow.showHelpFile ("soluteBalanceOptions.html");
         }
         else {
               mp2HelpWindow.showHelpFile ("contents.html");
@@ -195,8 +176,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         for (int i=0; i<tabbedPane.getTabCount(); i++) {
             String title = tabbedPane.getTitleAt(i);
             if (title.equals("Transport") 
-                    || title.equals("Solute Balance")
-                    || title.equals("Energy Balance")) {
+                    || title.equals("Energy/Solute Balance")) {
                 tabbedPane.removeTabAt(i);
             }
         }
@@ -233,11 +213,7 @@ public class vs2ModelOptionsDialog extends mp2Dialog {
         tabbedPane.insertTab("Transport", null, transportPanel,
                               "", transportPanelIndex);
         // Add the solute balance panel to the end
-        if (vs2App.doHeat()) {
-            tabbedPane.addTab("Energy Balance", null, energyBalancePanel);
-        } else {
-            tabbedPane.addTab("Solute Balance", null, soluteBalancePanel);
-        }
+        tabbedPane.addTab("Energy/Solute Balance", null, balancePanel);
         getContentPane().validate();
         getContentPane().repaint();
     }

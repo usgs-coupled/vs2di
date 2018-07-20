@@ -53,6 +53,7 @@ public abstract class mp2BoundaryConditionsView extends mp2GraphicalDataView {
 
         // Create the "Copy All to" menu item
         copyAllToMenuItem = new JMenuItem("Copy All To...");
+        copyAllToMenuItem.setMnemonic(KeyEvent.VK_C);
         copyAllToMenuItem.setEnabled(false);
         copyAllToMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +63,7 @@ public abstract class mp2BoundaryConditionsView extends mp2GraphicalDataView {
 
         // Create the "Corner Policy" menu item
         cornerPolicyMenuItem = new JMenuItem("Corner Policy...");
+        cornerPolicyMenuItem.setMnemonic(KeyEvent.VK_P);
         cornerPolicyMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCornerPolicy();
@@ -74,14 +76,14 @@ public abstract class mp2BoundaryConditionsView extends mp2GraphicalDataView {
                                 + "images" + fileSeparator;
 
         selectAndEditButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "arrow.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/arrow.gif")), true);
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
-        setBCButton = new mp2Button(new ImageIcon(imageDirectory + "bc.gif"));
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
+        setBCButton = new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/bc.gif")));
         showAllBCValuesButton = 
-                new mp2Button(new ImageIcon(imageDirectory + "showbc.gif"));
+                new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/showbc.gif")));
         hideAllBCValuesButton = 
-                new mp2Button(new ImageIcon(imageDirectory + "hidebc.gif"));
+                new mp2Button(new ImageIcon(ClassLoader.getSystemResource("images/hidebc.gif")));
 
         selectAndEditButton.setToolTipText("Select");
         discretizeButton.setToolTipText("Discretize");

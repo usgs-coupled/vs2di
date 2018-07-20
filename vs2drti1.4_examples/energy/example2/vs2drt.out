@@ -1,0 +1,657 @@
+                                   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                   +                           VS2DRT                         +
+                                   +                        VERSION 1.1                       +
+                                   +           SIMULATION OF 2-DIMENSIONAL VARIABLY           +
+                                   +            SATURATED REACTIVE TRANSPORT                  +
+                                   +                   THROUGH POROUS MEDIA.                  +
+                                   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+ ****************************************************************************************************
+     Verification Problem 1 in WRIR 96-4230, p. 5                                    
+ ****************************************************************************************************
+
+          SPACE AND TIME CONSTANTS
+          -----------------------
+     MAXIMUM SIMULATION TIME =   0.107650E+05 sec 
+     STARTING TIME =     0.0000
+     NUMBER OF RECHARGE PERIODS =         1
+     MAXIMUM NUMBER OF TIME STEPS =       1000
+     NUMBER OF ROWS =     65
+     NUMBER OF COLUMNS =      3
+     AXES TILTED BY ANGLE =     0.00
+          SOLUTION OPTIONS
+          ----------------
+     WRITE ALL PRESSURE HEADS TO FILE 8 AT OBSERVATION TIMES? F
+     STOP SOLUTION IF MAXIMUM NO. OF ITERATIONS EXCEEDED IN ANY TIME STEP? T
+     WRITE BOUNDARY FLUXES TO FILE 7? F
+     WRITE RESULTS AT SELECTED OBSERVATION POINTS TO FILE 11? F
+     WRITE MASS BALANCE RATES TO FILE 9? F
+     WRITE MASS BALANCE RATES TO FILE 6? F
+     WRITE MOISTURE CONTENTS TO FILE 6? F
+     WRITE SATURATIONS TO FILE 6? F
+     WRITE PRESSURE HEADS TO FILE 6? T
+     WRITE TOTAL HEADS TO FILE 6? F
+     WRITE VELOCITIES TO FILE 6? F
+                                                  GRID SPACING IN VERTICAL DIRECTION, IN m   
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000     1.000
+     1.000     1.000     1.000     1.000     1.000
+                                                  GRID SPACING IN HORIZONTAL OR RADIAL DIRECTION, IN m   
+     1.000     1.000     1.000
+     COORDINATE SYSTEM IS RECTANGULAR
+     TRANSPORT TO BE SIMULATED
+     CENTRAL DIFFERENCING IN SPACE USED FOR TRANSPORT EQUATION
+     CENTRAL DIFFERENCING IN TIME USED FOR TRANSPORT EQUATION
+     MATRIX EQUATIONS TO BE SOLVED BY SIP
+          INITIAL MOISTURE PARAMETERS
+          ___________________________
+
+     CONVERGENCE CRITERION FOR SIP FOR FLOW (EPS) =   1.000E-04 m   
+     CONVERGENCE CRITERION FOR SIP FOR HEAT TRANSPORT (EPS1) =   1.000E-05
+     CONVERGENCE CRITERION FOR OUTER'ITERATION (EPS2)  =    1.000E-03
+     CONVERGENCE CRITERION'FOR SIP FOR SOLUTE TRANSPORT(EPS3) =   0.000E+00
+     DAMPING FACTOR,HMAX = ,   7.000E-01
+     ARITHEMTIC MEAN USED FOR INTERCELL CONDUCTIVITY
+     NUMBER OF SOIL TEXTURAL CLASSES =          2
+     NUMBER OF SOIL PARAMETERS FOR EACH CLASS =          6
+     NUMBER OF HEAT TRANSPORT PARAMETERS FOR EACH CLASS =          6
+     NUMBER OF SOLUTE TRANSPORT PARAMETERS FOR EACH CLASS =          0
+     MINIMUM PERMITTED NO. OF ITERATIONS/TIME STEP =         2
+     MAXIMUM PERMITTED NO. OF ITERATIONS/TIME STEP =        80
+                                         CONSTANTS FOR SOIL TEXTURAL CLASSES
+
+          ANISOTROPY       KSAT     SPECIFIC    POROSITY
+                                    STORAGE
+            ALPHAL        ALPHAT      Cs         KT MIN     KT MAX        Cw   
+ CLASS # 1
+            1.000D+00   0.000D+00   0.000D+00   0.000D+00   0.000D+00   0.000D+00   0.000D+00
+            0.000D+00   0.000D+00   0.000D+00   0.000D+00   0.000D+00   0.000D+00
+ CLASS # 2
+            1.000D+00   1.389D-04   0.000D+00   5.000D-01   5.000D-02   0.000D+00   3.000D+00
+            1.000D+01   1.000D+01   2.080D+06   1.800D+00   1.800D+00   4.200D+06
+      TEXTURAL CLASS INDEX MAP
+
+
+     TEXTURAL CLASS TO BE READ IN FOR EACH ROW
+          1  111
+          2  121
+          3  121
+          4  121
+          5  121
+          6  121
+          7  121
+          8  121
+          9  121
+         10  121
+         11  121
+         12  121
+         13  121
+         14  121
+         15  121
+         16  121
+         17  121
+         18  121
+         19  121
+         20  121
+         21  121
+         22  121
+         23  121
+         24  121
+         25  121
+         26  121
+         27  121
+         28  121
+         29  121
+         30  121
+         31  121
+         32  121
+         33  121
+         34  121
+         35  121
+         36  121
+         37  121
+         38  121
+         39  121
+         40  121
+         41  121
+         42  121
+         43  121
+         44  121
+         45  121
+         46  121
+         47  121
+         48  121
+         49  121
+         50  121
+         51  121
+         52  121
+         53  121
+         54  121
+         55  121
+         56  121
+         57  121
+         58  121
+         59  121
+         60  121
+         61  121
+         62  121
+         63  121
+         64  121
+         65  111
+     INITIAL PRESSURE HEAD OR MOISTURE CONTENT WAS SET TO A CONSTANT VALUE OF   1.000E+00
+     INITIAL TEMPERATURE SET TO A CONSTANT VALUE OF    2.000E+01
+      Verification Problem 1 in WRIR 96-4230, p. 5                                    
+     TOTAL ELAPSED TIME =  0.000000E+00 sec 
+     TIME STEP         0
+
+
+                                                   PRESSURE HEAD
+  Z, IN
+  m                       X OR R DISTANCE, IN m   
+                0.500
+     0.500  1.000E+00
+     1.500  1.000E+00
+     2.500  1.000E+00
+     3.500  1.000E+00
+     4.500  1.000E+00
+     5.500  1.000E+00
+     6.500  1.000E+00
+     7.500  1.000E+00
+     8.500  1.000E+00
+     9.500  1.000E+00
+    10.500  1.000E+00
+    11.500  1.000E+00
+    12.500  1.000E+00
+    13.500  1.000E+00
+    14.500  1.000E+00
+    15.500  1.000E+00
+    16.500  1.000E+00
+    17.500  1.000E+00
+    18.500  1.000E+00
+    19.500  1.000E+00
+    20.500  1.000E+00
+    21.500  1.000E+00
+    22.500  1.000E+00
+    23.500  1.000E+00
+    24.500  1.000E+00
+    25.500  1.000E+00
+    26.500  1.000E+00
+    27.500  1.000E+00
+    28.500  1.000E+00
+    29.500  1.000E+00
+    30.500  1.000E+00
+    31.500  1.000E+00
+    32.500  1.000E+00
+    33.500  1.000E+00
+    34.500  1.000E+00
+    35.500  1.000E+00
+    36.500  1.000E+00
+    37.500  1.000E+00
+    38.500  1.000E+00
+    39.500  1.000E+00
+    40.500  1.000E+00
+    41.500  1.000E+00
+    42.500  1.000E+00
+    43.500  1.000E+00
+    44.500  1.000E+00
+    45.500  1.000E+00
+    46.500  1.000E+00
+    47.500  1.000E+00
+    48.500  1.000E+00
+    49.500  1.000E+00
+    50.500  1.000E+00
+    51.500  1.000E+00
+    52.500  1.000E+00
+    53.500  1.000E+00
+    54.500  1.000E+00
+    55.500  1.000E+00
+    56.500  1.000E+00
+    57.500  1.000E+00
+    58.500  1.000E+00
+    59.500  1.000E+00
+    60.500  1.000E+00
+    61.500  1.000E+00
+    62.500  1.000E+00
+                                                   TEMPERATURE
+  Z, IN
+  m                       X OR R DISTANCE, IN m   
+                0.500
+     0.500    20.0000
+     1.500    20.0000
+     2.500    20.0000
+     3.500    20.0000
+     4.500    20.0000
+     5.500    20.0000
+     6.500    20.0000
+     7.500    20.0000
+     8.500    20.0000
+     9.500    20.0000
+    10.500    20.0000
+    11.500    20.0000
+    12.500    20.0000
+    13.500    20.0000
+    14.500    20.0000
+    15.500    20.0000
+    16.500    20.0000
+    17.500    20.0000
+    18.500    20.0000
+    19.500    20.0000
+    20.500    20.0000
+    21.500    20.0000
+    22.500    20.0000
+    23.500    20.0000
+    24.500    20.0000
+    25.500    20.0000
+    26.500    20.0000
+    27.500    20.0000
+    28.500    20.0000
+    29.500    20.0000
+    30.500    20.0000
+    31.500    20.0000
+    32.500    20.0000
+    33.500    20.0000
+    34.500    20.0000
+    35.500    20.0000
+    36.500    20.0000
+    37.500    20.0000
+    38.500    20.0000
+    39.500    20.0000
+    40.500    20.0000
+    41.500    20.0000
+    42.500    20.0000
+    43.500    20.0000
+    44.500    20.0000
+    45.500    20.0000
+    46.500    20.0000
+    47.500    20.0000
+    48.500    20.0000
+    49.500    20.0000
+    50.500    20.0000
+    51.500    20.0000
+    52.500    20.0000
+    53.500    20.0000
+    54.500    20.0000
+    55.500    20.0000
+    56.500    20.0000
+    57.500    20.0000
+    58.500    20.0000
+    59.500    20.0000
+    60.500    20.0000
+    61.500    20.0000
+    62.500    20.0000
+      DATA FOR RECHARGE PERIOD         1
+
+          LENGTH OF THIS PERIOD =   1.07650E+04 sec 
+          LENGTH OF INITIAL TIME STEP FOR THIS PERIOD =   1.07650E+02 sec 
+          MULTIPLIER FOR TIME STEP =  1.000E+00
+          MAXIMUM TIME STEP SIZE =    1.07650E+02 sec 
+          MINIMUM TIME STEP SIZE =    1.00000E-03 sec 
+          TIME STEP REDUCTION FACTOR =  1.000E-01
+               MAXIMUM PRESSURE HEAD CHANGE ALLOWED IN ONE TIME STEP = 100.000
+               STEADY-STATE CLOSURE CRITERION =  0.000E+00
+               MAXIMUM DEPTH OF PONDING =  1.000E+02
+               PRINT SOLUTION AFTER EVERY TIME STEP? F
+               SIMULATE EVAPORATION? F
+               SIMULATE EVAPOTRANSPIRATION? F
+               SIMULATE SEEPAGE FACES? F
+
+ temerature setting at the boundary
+      NODE TYPE AND INITIAL BOUNDARY CONDITIONS FOR PERIOD         1
+      LEGEND: 
+               0 = INTERIOR CELL
+               1 = SPECIFIED PRESSURE HEAD CELL
+               2 = SPECIFIED FLUX CELL
+               3 = POTENTIAL SEEPAGE FACE NODE
+               5 = NODE FOR WHICH EVAPORATION IS PERMITTED
+               7 = GRAVITY DRAIN CELL
+
+     1     000
+     2     010
+     3     000
+     4     000
+     5     000
+     6     000
+     7     000
+     8     000
+     9     000
+    10     000
+    11     000
+    12     000
+    13     000
+    14     000
+    15     000
+    16     000
+    17     000
+    18     000
+    19     000
+    20     000
+    21     000
+    22     000
+    23     000
+    24     000
+    25     000
+    26     000
+    27     000
+    28     000
+    29     000
+    30     000
+    31     000
+    32     000
+    33     000
+    34     000
+    35     000
+    36     000
+    37     000
+    38     000
+    39     000
+    40     000
+    41     000
+    42     000
+    43     000
+    44     000
+    45     000
+    46     000
+    47     000
+    48     000
+    49     000
+    50     000
+    51     000
+    52     000
+    53     000
+    54     000
+    55     000
+    56     000
+    57     000
+    58     000
+    59     000
+    60     000
+    61     000
+    62     000
+    63     000
+    64     010
+    65     000
+ TIME STEP         1  TIME =   0.107650E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         2  TIME =   0.215300E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         3  TIME =   0.322950E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         4  TIME =   0.430600E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         5  TIME =   0.538250E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         6  TIME =   0.645900E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         7  TIME =   0.753550E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         8  TIME =   0.861200E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP         9  TIME =   0.968850E+03  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        10  TIME =   0.107650E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        11  TIME =   0.118415E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        12  TIME =   0.129180E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        13  TIME =   0.139945E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        14  TIME =   0.150710E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        15  TIME =   0.161475E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        16  TIME =   0.172240E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        17  TIME =   0.183005E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        18  TIME =   0.193770E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        19  TIME =   0.204535E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        20  TIME =   0.215300E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        21  TIME =   0.226065E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        22  TIME =   0.236830E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        23  TIME =   0.247595E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        24  TIME =   0.258360E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        25  TIME =   0.269125E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        26  TIME =   0.279890E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        27  TIME =   0.290655E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        28  TIME =   0.301420E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        29  TIME =   0.312185E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        30  TIME =   0.322950E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        31  TIME =   0.333715E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        32  TIME =   0.344480E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        33  TIME =   0.355245E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        34  TIME =   0.366010E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        35  TIME =   0.376775E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        36  TIME =   0.387540E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        37  TIME =   0.398305E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        38  TIME =   0.409070E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        39  TIME =   0.419835E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        40  TIME =   0.430600E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        41  TIME =   0.441365E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        42  TIME =   0.452130E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        43  TIME =   0.462895E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        44  TIME =   0.473660E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        45  TIME =   0.484425E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        46  TIME =   0.495190E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        47  TIME =   0.505955E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        48  TIME =   0.516720E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        49  TIME =   0.527485E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        50  TIME =   0.538250E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        51  TIME =   0.549015E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        52  TIME =   0.559780E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        53  TIME =   0.570545E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        54  TIME =   0.581310E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        55  TIME =   0.592075E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        56  TIME =   0.602840E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        57  TIME =   0.613605E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        58  TIME =   0.624370E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        59  TIME =   0.635135E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        60  TIME =   0.645900E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        61  TIME =   0.656665E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        62  TIME =   0.667430E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        63  TIME =   0.678195E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        64  TIME =   0.688960E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        65  TIME =   0.699725E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        66  TIME =   0.710490E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        67  TIME =   0.721255E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        68  TIME =   0.732020E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        69  TIME =   0.742785E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        70  TIME =   0.753550E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        71  TIME =   0.764315E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        72  TIME =   0.775080E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        73  TIME =   0.785845E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        74  TIME =   0.796610E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        75  TIME =   0.807375E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        76  TIME =   0.818140E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        77  TIME =   0.828905E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        78  TIME =   0.839670E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        79  TIME =   0.850435E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        80  TIME =   0.861200E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        81  TIME =   0.871965E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        82  TIME =   0.882730E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        83  TIME =   0.893495E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        84  TIME =   0.904260E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        85  TIME =   0.915025E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        86  TIME =   0.925790E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        87  TIME =   0.936555E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        88  TIME =   0.947320E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        89  TIME =   0.958085E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        90  TIME =   0.968850E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        91  TIME =   0.979615E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        92  TIME =   0.990380E+04  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        93  TIME =   0.100114E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        94  TIME =   0.101191E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        95  TIME =   0.102267E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        96  TIME =   0.103344E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        97  TIME =   0.104420E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        98  TIME =   0.105497E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP        99  TIME =   0.106573E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+ TIME STEP       100  TIME =   0.107650E+05  NIT =     3  NIT1 =     2  NIT3 =     2  NIS1 =     0
+      Verification Problem 1 in WRIR 96-4230, p. 5                                    
+     TOTAL ELAPSED TIME =  1.076500E+04 sec 
+     TIME STEP       100
+
+
+                                                   PRESSURE HEAD
+  Z, IN
+  m                       X OR R DISTANCE, IN m   
+                0.500
+     0.500  1.000E+00
+     1.500  1.021E+00
+     2.500  1.039E+00
+     3.500  1.055E+00
+     4.500  1.069E+00
+     5.500  1.081E+00
+     6.500  1.090E+00
+     7.500  1.098E+00
+     8.500  1.104E+00
+     9.500  1.108E+00
+    10.500  1.110E+00
+    11.500  1.112E+00
+    12.500  1.113E+00
+    13.500  1.112E+00
+    14.500  1.111E+00
+    15.500  1.110E+00
+    16.500  1.109E+00
+    17.500  1.107E+00
+    18.500  1.105E+00
+    19.500  1.102E+00
+    20.500  1.100E+00
+    21.500  1.098E+00
+    22.500  1.096E+00
+    23.500  1.093E+00
+    24.500  1.091E+00
+    25.500  1.088E+00
+    26.500  1.086E+00
+    27.500  1.084E+00
+    28.500  1.081E+00
+    29.500  1.079E+00
+    30.500  1.077E+00
+    31.500  1.074E+00
+    32.500  1.072E+00
+    33.500  1.069E+00
+    34.500  1.067E+00
+    35.500  1.065E+00
+    36.500  1.062E+00
+    37.500  1.060E+00
+    38.500  1.057E+00
+    39.500  1.055E+00
+    40.500  1.053E+00
+    41.500  1.050E+00
+    42.500  1.048E+00
+    43.500  1.045E+00
+    44.500  1.043E+00
+    45.500  1.041E+00
+    46.500  1.038E+00
+    47.500  1.036E+00
+    48.500  1.033E+00
+    49.500  1.031E+00
+    50.500  1.029E+00
+    51.500  1.026E+00
+    52.500  1.024E+00
+    53.500  1.022E+00
+    54.500  1.019E+00
+    55.500  1.017E+00
+    56.500  1.014E+00
+    57.500  1.012E+00
+    58.500  1.010E+00
+    59.500  1.007E+00
+    60.500  1.005E+00
+    61.500  1.002E+00
+    62.500  1.000E+00
+                                                   TEMPERATURE
+  Z, IN
+  m                       X OR R DISTANCE, IN m   
+                0.500
+     0.500    21.0000
+     1.500    20.9138
+     2.500    20.8218
+     3.500    20.7267
+     4.500    20.6315
+     5.500    20.5389
+     6.500    20.4514
+     7.500    20.3709
+     8.500    20.2988
+     9.500    20.2360
+    10.500    20.1826
+    11.500    20.1385
+    12.500    20.1029
+    13.500    20.0749
+    14.500    20.0533
+    15.500    20.0372
+    16.500    20.0254
+    17.500    20.0170
+    18.500    20.0112
+    19.500    20.0072
+    20.500    20.0045
+    21.500    20.0028
+    22.500    20.0017
+    23.500    20.0010
+    24.500    20.0006
+    25.500    20.0003
+    26.500    20.0002
+    27.500    20.0001
+    28.500    20.0001
+    29.500    20.0000
+    30.500    20.0000
+    31.500    20.0000
+    32.500    20.0000
+    33.500    20.0000
+    34.500    20.0000
+    35.500    20.0000
+    36.500    20.0000
+    37.500    20.0000
+    38.500    20.0000
+    39.500    20.0000
+    40.500    20.0000
+    41.500    20.0000
+    42.500    20.0000
+    43.500    20.0000
+    44.500    20.0000
+    45.500    20.0000
+    46.500    20.0000
+    47.500    20.0000
+    48.500    20.0000
+    49.500    20.0000
+    50.500    20.0000
+    51.500    20.0000
+    52.500    20.0000
+    53.500    20.0000
+    54.500    20.0000
+    55.500    20.0000
+    56.500    20.0000
+    57.500    20.0000
+    58.500    20.0000
+    59.500    20.0000
+    60.500    20.0000
+    61.500    20.0000
+    62.500    20.0000
+                     ---------- MASS BALANCE SUMMARY FOR TIME STEP      100 ----------
+                         RECHARGE PERIOD NUMBER         1
+                         TOTAL ELAPSED SIMULATION TIME =   1.076500E+04 sec 
+
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  +                                                                                                                              +
+  +                                                                                           TOTAL THIS          RATE THIS      +
+  +                                 VOLUMETRIC FLOW BALANCE                  TOTAL            TIME STEP            TIME STEP     +
+  +                                                                        m   **3             m   **3           m   **3/sec     +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      1.49756E+00         1.49883E-02         1.39232E-04    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.49756E+00        -1.49883E-02        -1.39232E-04    +
+  +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                        TOTAL FLUX INTO DOMAIN --      1.49756E+00         1.49883E-02         1.39232E-04    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.49756E+00        -1.49883E-02        -1.39232E-04    +
+  +                                                   EVAPORATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                              CHANGE IN FLUID STORED IN DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                          FLUID VOLUME BALANCE --     -1.10068E-14         6.38378E-16         5.93013E-18    +
+  +                                                                                                                              +
+  +                                                                                                                              +
+  +                                   ENERGY MASS BALANCE                                                                        +
+  +                                                                          J                   J                 J   /sec      +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      1.32083E+08         1.32196E+06         1.22802E+04    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.25794E+08        -1.25901E+06        -1.16954E+04    +
+  +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                   CONDUCTIVE FLUX INTO DOMAIN --      1.14554E+07         5.17624E+04         4.80839E+02    +
+  +                                 CONDUCTIVE FLUX OUT OF DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                        TOTAL FLUX INTO DOMAIN --      1.43539E+08         1.37373E+06         1.27610E+04    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.25794E+08        -1.25901E+06        -1.16954E+04    +
+  +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                                   ENERGY FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
+  +                             CHANGE IN ENERGY STORED IN DOMAIN --      1.77451E+07         1.14713E+05         1.06561E+03    +
+  +                                           ENERGY MASS BALANCE --     -1.25710E-05         1.80677E-07         1.67837E-09    +
+  +                                                                                                                              +
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

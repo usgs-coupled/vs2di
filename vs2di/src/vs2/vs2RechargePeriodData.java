@@ -117,32 +117,40 @@ public class vs2RechargePeriodData extends mp2TableData implements Serializable 
         }
         return false;
     }
-
+    
     public void exportPeriod(PrintWriter pw, int i, vs2ModelOptions modelOptions) {
         if (i >= dataRows.size()) {
             return;
         }
+        String s;
+        final int commentOffset = 23;
+        
         Object [] aRow = (Object []) dataRows.elementAt(i);
         // Card C-1
-        pw.println(((Double) aRow[1]).doubleValue() + " "
-                + ((Double) aRow[2]).doubleValue()
-                + "     /C1 -- TPER, DELT (Recharge Period " + (i+1) + ")");
+        s = String.valueOf((Double) aRow[1]) + " "
+                + String.valueOf((Double) aRow[2]);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-1 -- TPER, DELT (Recharge Period " + (i+1) + ")");
         // Card C-2
-        pw.println(((Double) aRow[3]).doubleValue() + " "
-                + ((Double) aRow[4]).doubleValue() + " "
-                + ((Double) aRow[5]).doubleValue() + " "
-                + ((Double) aRow[6]).doubleValue()
-                + "     /C2 -- TMLT, DLTMX, DLTMIN, TRED");
+        s = String.valueOf((Double) aRow[3]) + " "
+                + String.valueOf((Double) aRow[4]) + " "
+                + String.valueOf((Double) aRow[5]) + " "
+                + String.valueOf((Double) aRow[6]);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-2 -- TMLT, DLTMX, DLTMIN, TRED");
         // Card C-3
-        pw.println(((Double) aRow[7]).doubleValue() + " "
-                + ((Double) aRow[8]).doubleValue()
-                + "     /C3 -- DSMAX, STERR");
+        s = String.valueOf((Double) aRow[7]) + " "
+                + String.valueOf((Double) aRow[8]);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-3 -- DSMAX, STERR");
         // Card C-4
-        pw.println(((Double) aRow[9]).doubleValue()
-                + "     /C4 -- POND");
+        s = String.valueOf((Double) aRow[9]);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-4 -- POND");
         // Card C-5
-                pw.println(((((Boolean) aRow[10]).booleanValue()) ? "T" : "F")
-                + "     /C5 -- PRNT");
+        s = ((((Boolean) aRow[10]).booleanValue()) ? "T" : "F");
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/C-5 -- PRNT");
         // Card C-6
         pw.print(((((Boolean) aRow[11]).booleanValue() && modelOptions.doEvaporation) ? "T " : "F ")
                 + ((((Boolean) aRow[12]).booleanValue() && modelOptions.doTranspiration) ? "T " : "F "));

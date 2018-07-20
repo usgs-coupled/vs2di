@@ -66,20 +66,20 @@ public class mp2ContourMapView extends mp2BufferedShapesView {
             }
         });
 
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator
-                                + "images" + fileSeparator;
+//        String fileSeparator = System.getProperty("file.separator");
+//        String imageDirectory = homeDirectory + fileSeparator
+//                                + "images" + fileSeparator;
 
         createPolygonButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "polygon.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/polygon.gif")), false);
         createPolylineButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "polyline.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/polyline.gif")), false);
         createPointButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "point.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/point.gif")), false);
         discretizeButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "discretize.gif"), false);
+                new ImageIcon(ClassLoader.getSystemResource("images/discretize.gif")), false);
         contourLabelButton = new mp2ToggleButton(
-                new ImageIcon(imageDirectory + "contourlabel.gif"), true);
+                new ImageIcon(ClassLoader.getSystemResource("images/contourlabel.gif")), true);
 
         createPolygonButton.setToolTipText("Add a closed contour");
         createPolylineButton.setToolTipText("Add an open contour");

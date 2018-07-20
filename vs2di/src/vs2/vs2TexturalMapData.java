@@ -15,14 +15,18 @@ public class vs2TexturalMapData extends mp2ColorCodedMapData implements Serializ
      */
     public void exportData(PrintWriter pw, 
                    vs2TexturalClassData texturalClassData) {
+        final int commentOffset = 23;
+        String s;
         discretize();
         int c, r, i;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numColNoBorder = rectGridData.getXCoords().length - 1;
         int numRowNoBorder = rectGridData.getYCoords().length - 1;
-        // Card B-8 (Always read texture class for each row)
-        pw.println("0" + "     /B8 -- IROW. B9 begins next line: JTEX");
-        // Card B-9
+        // Card B-12 (Always read texture class for each row)
+        s = "0"; 
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-12 -- IROW. B-13 begins next line: JTEX");        
+        // Card B-13
         // first, write the top border
         for (c=0; c<numColNoBorder+2; c++) {
             pw.print("1 ");
@@ -43,7 +47,7 @@ public class vs2TexturalMapData extends mp2ColorCodedMapData implements Serializ
         for (c=0; c<numColNoBorder+2; c++) {
             pw.print("1 ");
         }
-        pw.println();
-        // Note that Card B-10 is not used.
+        pw.println("/End B-13");
+        // Note that Card B-14 is not used.
     }
 }

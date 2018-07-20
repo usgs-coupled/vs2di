@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<TITLE>Fluid and Solute Mass Balance</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Fluid, Energy, and Solute Mass Balance</H2>
+
+
+<P>
+Mass balance errors are displayed in the postprocessor
+to give an indication of the accuracy
+with which the finite difference matrix equations are being
+solved.  Mass balance error alone, however, may not be a valid
+indicator of simulation accuracy.  A small mass balance error
+may not indicate a high degree of accuracy, but a large mass balance
+error is usually indicative of low accuracy.  As an example,
+backward differencing in solution of the transport equation
+is mass conservative and can produce low mass balance errors, but
+for problems involving sharp concentration fronts this scheme will
+not be highly accurate because of the introduction of artificial
+numerical dispersion.
+</P>
+
+<P>
+An error of 0% would indicate that mass is being
+perfectly conserved.  As general rule, it is desirable to
+have the Total Simulation
+Mass Balance Error less than about 1%.  Errors greater than
+that may indicate that the the matrix solver is not solving
+the matrix equation to the desired accuracy.  </P>
+<P>
+The balance error can usually be decreased by reducing
+the closure criteria for flow, temperature, and concentration in the <A HREF=
+"solverOptions.html">solver options</A> under the "Model
+Options" tabbed dialog box.  Other factors that may affect
+the mass balance are grid spacing and time step size.  Reducing
+these values should lead to an improved balance.
+</P>
+
+<p>In VS2DRTI, the mass balance information shown in the postprocessor
+has been revised to correctly account for instantaneous
+changes in mass within the simulated domain due to
+instantaneous changes in boundary conditions. Such changes can occur at the
+start of a new recharge period.  For example, if a finite difference
+cell is changed from a no-flow condition (with pressure head h0)
+to a constant head condition (with pressure head h1),
+and if h0 is not equal to h1, then the model sees this as an instantaneous change
+in head.  Accompanying this head change will be an instantaneous change
+in water stored within this cell.  In VS2DI version 1.1, these
+changes in storage were simply lumped into the mass balance terms and
+sometimes produced apparently large mass balance errors.  Most commonly
+this occurred on the very first time step of a simulation when
+there was an inconsistency between initial and boundary conditions.
+In VS2DRTI, the mass balance components associated with boundary
+condition change are computed separately to avoid the
+apparently large mass balance errors. A similar revision has been
+implemented for the heat and solute mass balance calculations.</p>
+
+
+</BODY>
+</HTML>

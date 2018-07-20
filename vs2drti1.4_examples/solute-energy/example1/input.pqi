@@ -1,0 +1,36 @@
+EXCHANGE_SPECIES
+      Na+ + X- = NaX
+      -log_k	0.0
+
+      Ca+2 + 2X- = CaX2
+      -log_k      0.0
+      -delta_h  100
+      
+      K+ + X- = KX
+      -log_k	0.0
+
+SOLUTION 1 Initial solution
+-units mg/kgw
+-temp 12
+Na 100
+Ca 100
+Cl 300 charge
+END
+
+EXCHANGE 1
+X 0.1
+-equil 1
+END
+
+SOLUTION 2 Boundary condition solution
+-units mg/kgw
+-temp 40
+K 100
+Br 100 charge
+END
+
+SELECTED_OUTPUT 1
+-reset false
+-total  Na Ca K Cl Br
+-mol  NaX CaX2 KX
+END

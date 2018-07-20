@@ -1,0 +1,170 @@
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1  Initial solution
+	        units            mol/L
+	        temp             25.0
+	        pH               7.0     charge
+	        pe               12.5    O2(g)   -0.68   
+	END     
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 1.	Initial solution
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Pure water     
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   7.000      Charge balance
+                                       pe  =  13.627      Equilibrium with O2(g)
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =  1.001e-007
+                       Mass of water (kg)  =  1.000e+000
+                 Total alkalinity (eq/kg)  = -1.035e-018
+                    Total carbon (mol/kg)  =  0.000e+000
+                       Total CO2 (mol/kg)  =  0.000e+000
+                         Temperature (°C)  =  25.00
+                  Electrical balance (eq)  =  1.035e-018
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
+                               Iterations  =   3
+                                  Total H  = 1.110124e+002
+                                  Total O  = 5.550675e+001
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+             1.001e-007  1.001e-007    -7.000    -7.000    -0.000      0.00
+   OH-            1.001e-007  1.001e-007    -7.000    -7.000    -0.000     (0)  
+   H2O            5.551e+001  1.000e+000     1.744    -0.000     0.000     18.07
+H(0)         0.000e+000
+   H2             0.000e+000  0.000e+000   -44.404   -44.404     0.000     (0)  
+O(0)         5.354e-004
+   O2             2.677e-004  2.677e-004    -3.572    -3.572     0.000     (0)  
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(298 K,   1 atm)
+
+  H2(g)           -41.25    -44.40   -3.15  H2
+  H2O(g)           -1.51     -0.00    1.51  H2O
+  O2(g)            -0.68     -3.57   -2.89  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 2.
+------------------------------------
+
+	SOLUTION 2  Infiltrating solution
+	        units            mol/L
+	        temp             25.0
+	        pH               7.0     charge
+	        pe               12.5    O2(g)   -0.68
+	        Na               0.01
+	        Cl               0.01
+	END
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 2.	Infiltrating solution
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Cl               1.001e-002  1.001e-002
+	Na               1.001e-002  1.001e-002
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   6.995      Charge balance
+                                       pe  =  13.631      Equilibrium with O2(g)
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =  1.001e-002
+                       Mass of water (kg)  =  1.000e+000
+                 Total alkalinity (eq/kg)  = -1.674e-018
+                    Total carbon (mol/kg)  =  0.000e+000
+                       Total CO2 (mol/kg)  =  0.000e+000
+                         Temperature (°C)  =  25.00
+                  Electrical balance (eq)  = -2.758e-012
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  -0.00
+                               Iterations  =   3
+                                  Total H  = 1.110124e+002
+                                  Total O  = 5.550675e+001
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+             1.106e-007  1.010e-007    -6.956    -6.995    -0.039      0.00
+   OH-            1.100e-007  9.904e-008    -6.958    -7.004    -0.046     (0)  
+   H2O            5.551e+001  9.997e-001     1.744    -0.000     0.000     18.07
+Cl           1.001e-002
+   Cl-            1.001e-002  9.008e-003    -2.000    -2.045    -0.046     (0)  
+H(0)         0.000e+000
+   H2             0.000e+000  0.000e+000   -44.405   -44.404     0.001     (0)  
+Na           1.001e-002
+   Na+            1.001e-002  9.035e-003    -2.000    -2.044    -0.044     (0)  
+   NaOH           5.892e-010  5.905e-010    -9.230    -9.229     0.001     (0)  
+O(0)         5.342e-004
+   O2             2.671e-004  2.677e-004    -3.573    -3.572     0.001     (0)  
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(298 K,   1 atm)
+
+  H2(g)           -41.25    -44.40   -3.15  H2
+  H2O(g)           -1.51     -0.00    1.51  H2O
+  Halite           -5.67     -4.09    1.58  NaCl
+  O2(g)            -0.68     -3.57   -2.89  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 3.
+------------------------------------
+
+	SELECTED_OUTPUT 1
+	    file                 selected_output_1.sel
+	    reset                false
+	    ph                   true
+	USER_PUNCH 1
+	    headings Na_mgL Cl_mgL
+	    start
+	10 PUNCH TOT("Na") * GFW("Na") * 1000
+	20 PUNCH TOT("Cl") * GFW("Cl") * 1000
+	    end
+	END
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 4.
+------------------------------------
+
+-------------------------------
+End of Run after 5.562 Seconds.
+-------------------------------
+

@@ -5,6 +5,8 @@ package vs2;
 
 import mp2.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The view for the post processor
@@ -12,12 +14,7 @@ import java.awt.*;
 public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Constants {
 
     protected mp2Contour contour;
-    protected mp2ColorScale pressureHeadColor;
-    protected mp2ColorScale moistureColor;
-    protected mp2ColorScale saturationColor;
-    protected mp2ColorScale transportColor;
-    protected mp2ColorScale velocityColor;
-    protected mp2ColorScale totalHeadColor;
+    protected Map<String, mp2ColorScale> colorScaleMap;
     
     protected int nx;
     protected int nz;
@@ -36,6 +33,8 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
     protected int mbLabelShift2;
     protected boolean showZonation;
     protected float [] dzz;
+    protected String displayString;
+    protected int componentIndex;
 
     public static final int NO_DISPLAY = 0;
     public static final int PRESSURE_HEAD = 1;
@@ -44,6 +43,8 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
     public static final int TRANSPORT = 4;
     public static final int VECTOR = 5;
     public static final int TOTAL_HEAD = 6;
+    public static final int ENERGY_TRANSPORT = 7;
+    public static final int SOLUTE_TRANSPORT = 8;
 
     /**
      * Creates a post processor view
@@ -57,6 +58,7 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         mbLabelShift1 = 140;
         mbLabelShift2 = 140;
         showZonation = false;
+        componentIndex = 0;
     }
     
     protected void getDataFromModel() {
@@ -84,30 +86,26 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         // Get nodal data
         switch (display) {
         case PRESSURE_HEAD:
-            colorScale = pressureHeadColor;
+            colorScale = getColorScale("Pressure Head");
             vsMod.getPressureHead(buffer);
             break;
         case MOISTURE_CONTENT:
-            colorScale = moistureColor;
+            colorScale = getColorScale("Moisture Content");
             vsMod.getMoistureContent(buffer);
             break;
         case SATURATION: 
-            colorScale = saturationColor;
+            colorScale = getColorScale("Saturation");
             vsMod.getSaturation(buffer);
             break;
-        case TRANSPORT:
-            colorScale = transportColor;
-            vsMod.getTransport(buffer);
-            break;
         case VECTOR:
-            colorScale = velocityColor;
+            colorScale = getColorScale("Vector");
             for (i=0; i<nx*nz; i++) {
                 buffer[i] = (float) Math.sqrt(vx[i] * vx[i] + 
                                               vy[i] * vy[i]);
             }
             break;
         case TOTAL_HEAD:
-            colorScale = totalHeadColor;
+            colorScale = getColorScale("Total Head");
             // First, get the pressure head
             vsMod.getPressureHead(buffer);
             // Then, change to total head
@@ -116,6 +114,14 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
                     buffer[i*nz + j] -= dzz[j];
                 }
             }
+            break;
+        case ENERGY_TRANSPORT:
+            colorScale = getColorScale("Temperature");
+            vsMod.getTemperature(buffer);
+            break;
+        case SOLUTE_TRANSPORT:
+            colorScale = getColorScale(displayString);
+            vsMod.getConcentration(componentIndex, buffer);
             break;
         }        
     }
@@ -257,15 +263,23 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         g.drawString(nf.format(err[1]) + "%", px3, pz);
 
         pz += charHeight + 10;
-        if (((vs2PostProcessorFrame) frame).getUsage() == ENERGY_TRANSPORT) {
-            g.drawString("Energy", px1, pz);
-        } else {
-            g.drawString("Solute", px1, pz);
-        }
-        vsMod.getTransportMassBalanceErrors(err);
+        g.drawString("Energy", px1, pz);
+        vsMod.getHeatTransportMassBalanceErrors(err);
         g.drawString(nf.format(err[0]) + "%", px2, pz);
         g.drawString(nf.format(err[1]) + "%", px3, pz);
-        
+
+        if (display == SOLUTE_TRANSPORT) {
+            pz += charHeight + 10;
+            if (displayString.compareTo("Concentration") == 0) {
+                g.drawString("Solute", px1, pz);
+            } else {
+                g.drawString(displayString, px1, pz);
+            }
+            vsMod.getSoluteTransportMassBalanceErrors(componentIndex, err);
+            g.drawString(nf.format(err[0]) + "%", px2, pz);
+            g.drawString(nf.format(err[1]) + "%", px3, pz);
+        }
+
         if (display == TOTAL_HEAD) {
             pz += charHeight + 10;
             g.drawString("Note: Datum for total head is at top of grid.", px1, pz);
@@ -282,12 +296,11 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
         // adjust size of color scales
         int cswidth = (int) (colorScaleWidth * magnification);
         int csheight = (int) (colorScaleHeight * magnification);
-        pressureHeadColor.SetScaleDimensions(cswidth, csheight);
-        moistureColor.SetScaleDimensions(cswidth, csheight);
-        saturationColor.SetScaleDimensions(cswidth, csheight);
-        transportColor.SetScaleDimensions(cswidth, csheight);
-        velocityColor.SetScaleDimensions(cswidth, csheight);
-        totalHeadColor.SetScaleDimensions(cswidth, csheight);
+        assert(colorScaleMap != null);
+        for (Map.Entry<String, mp2ColorScale> entry : colorScaleMap.entrySet()) {
+            mp2ColorScale cs = entry.getValue();
+            cs.SetScaleDimensions(cswidth, csheight);
+        }
 
         vs2Model vsMod = (vs2Model) model;
         nx = vsMod.getNumCellAlongX ();  // including border cells
@@ -367,19 +380,85 @@ public class vs2PostProcessorView extends mp2PostProcessorView implements vs2Con
 
     /**
      * Sets the color scales.
+     * 
+     * 2016-08-26 SRC -- this needs to be cleaned up
      */
     public void setColorScales(mp2ColorScale [] colorScale) {
-        pressureHeadColor = colorScale[0]; 
-        moistureColor = colorScale[1];         
-        saturationColor = colorScale[2];         
-        transportColor = colorScale[3];
-        velocityColor = colorScale[4]; 
-        totalHeadColor = colorScale[5]; 
+        if (colorScale == null) {
+            // VERSION_ID >= 13
+            colorScaleMap = ((vs2Model)model).getColorScaleMap();
+            assert(colorScaleMap != null);
+            assert(colorScaleMap.size() >= 6);
+            assert(colorScaleMap.containsKey("Pressure Head"));
+            assert(colorScaleMap.containsKey("Moisture Content"));
+            assert(colorScaleMap.containsKey("Saturation"));
+            assert(colorScaleMap.containsKey("Temperature"));
+            assert(colorScaleMap.containsKey("Concentration"));
+            assert(colorScaleMap.containsKey("Vector"));
+            assert(colorScaleMap.containsKey("Total Head"));
+            return;
+        } else {
+            assert(colorScale.length >= 6);
+            // VERSION_ID = 12
+            colorScaleMap = ((vs2Model)model).getColorScaleMap();
+            if (colorScaleMap == null) {
+                colorScaleMap = new HashMap<>();
+                colorScaleMap.put("Pressure Head",    colorScale[0]);
+                colorScaleMap.put("Moisture Content", colorScale[1]);
+                colorScaleMap.put("Saturation",       colorScale[2]);
+                colorScaleMap.put("Temperature",      colorScale[3]);
+                colorScaleMap.put("Concentration",    colorScale[3]);
+                colorScaleMap.put("Vector",           colorScale[4]);
+                colorScaleMap.put("Total Head",       colorScale[5]);
+                assert(false);  // is this needed ???
+            } else {
+                assert(colorScaleMap.size() >= 6);
+                assert(colorScaleMap.containsKey("Pressure Head"));
+                assert(colorScaleMap.containsKey("Moisture Content"));
+                assert(colorScaleMap.containsKey("Saturation"));
+                assert(colorScaleMap.containsKey("Temperature"));
+                assert(colorScaleMap.containsKey("Concentration"));
+                assert(colorScaleMap.containsKey("Vector"));
+                assert(colorScaleMap.containsKey("Total Head"));
+            }
+        }
     }
     
     public void showZonation(boolean b) {
         showZonation = b;
         draw();
     }
+    
+    public void setComponentIndex(int index) {
+        componentIndex = index;
+    }
+    
+    public void setDisplayString(String string) {
+        displayString = string;
+    }
+    
+    protected mp2ColorScale getColorScale(String string) {
+        if (!colorScaleMap.containsKey(string)) {
+            mp2ColorScale scale = new mp2ColorScale();
+            scale.SetLimits(0, 1);
+            scale.SetColorInterval(0.1);
+            scale.SetLabelInterval(0.1);            
+            scale.SetDoDraw(true);
+            scale.init();
+            colorScaleMap.put(string, scale);
+        }
+        return colorScaleMap.get(string);
+    }
+    
+    /**
+     * Sets the model
+     */
+    public void setModel(mp2Model model) {
+        super.setModel(model);
+        // reset default display
+        setDisplayString("None");
+        setComponentIndex(0);
+        setDisplay(NO_DISPLAY);
+    }    
 }
 

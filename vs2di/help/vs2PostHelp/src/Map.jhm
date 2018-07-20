@@ -11,7 +11,6 @@
 	<mapID target="drawingOptions" url="html/drawingOptions.html" />
 	<mapID target="fullMigrationVs2dh1p0" url="html/fullMigrationVs2dh1p0.html" />
 	<mapID target="fullMigrationVs2dt2p5" url="html/fullMigrationVs2dt2p5.html" />
-	<mapID target="graphicsBuffering" url="html/graphicsBuffering.html" />
 	<mapID target="loadSavedSimulationFile" url="html/loadSavedSimulationFile.html" />
 	<mapID target="migrationVs2dh1p0" url="html/migrationVs2dh1p0.html" />
 	<mapID target="migrationVs2dt2p5" url="html/migrationVs2dt2p5.html" />

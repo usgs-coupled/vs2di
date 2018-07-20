@@ -543,7 +543,7 @@ public abstract class mp2App implements mp2Constants {
                     "IO Error");
             }
             frame.setCursor(Cursor.getDefaultCursor());
-            mp2Math.changeDirectory(doc.getDirectory() + ".");
+            mp2Math.changeDirectory(doc.getDirectory());
         }
     }
 

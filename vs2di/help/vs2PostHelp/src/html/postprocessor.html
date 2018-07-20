@@ -1,11 +1,11 @@
 <HTML>
 <HEAD>
-<TITLE>Help for VS2DI Standalone Postprocessor</TITLE>
+<TITLE>Help for VS2DRTI Standalone Postprocessor</TITLE>
 </HEAD>
 <BODY>
 
-<H2>   Help for VS2DI Standalone Postprocessor</H2>
-<P>When the postprocessor is launched as a standalone application, 
+<H2>   Help for VS2DRTI Standalone Postprocessor</H2>
+<P>When the postprocessor is launched as a standalone application,
 it can operate in 2 modes. The type of file loaded to the postprocessor
 determines determines the mode in which the standalone postprocessor
 operates.
@@ -18,23 +18,22 @@ of the standalone postprocessor.</p>
 
 <p><B>Computation Mode</B></p>
 
-<p>When operating in computation mode, the postprocessor
+<p>When operating in computation mode (intended for knowledgeable users), the postprocessor
 is used to run a simulation using either:</p>
 
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-<tr>  
+<tr>
   <td width="1%" nowrap valign="top" align="left">•</td>
   <td width="99%" valign="top" align="left">data files exported from the
-    VS2DI preprocessor, and possibly modified by the user, or</td>
+    VS2DRTI preprocessor and
+    possibly modified by the user, or</td>
 </tr>
 <tr>
   <td width="1%" nowrap valign="top" align="left">•</td>
-  <td width="99%" valign="top" align="left">data files originally
-    prepared for VS2DT version 2.5 or VS2DH version 1.0, and having undergone 
-    partial migration or full migration.</td>
-</tr>
-<tr>
-  <td colspan=2>Computation mode is intended for knowledgeable users.</td>
+  <td width="99%" valign="top" align="left">data files exported from
+  the earlier VS2DTI or VS2DHI preprocessors or created manually
+  for earlier versions of VS2DT or VS2DH. In this case, the simulation is run by
+  Version 3.3 of VS2DT or VS2DH, not by VS2DRT.</td>
 </tr>
 </table>
 

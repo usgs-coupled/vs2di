@@ -56,6 +56,11 @@ public class vs2EvapotranspirationDialog extends mp2Dialog
    {
       // get the model options back from the custom object
       modelOptions = (vs2ModelOptions) customObject;
+      
+      // units
+      String T = modelOptions.T();
+      String L = modelOptions.L();
+      String SupMinus =  modelOptions.SuperMinus();
 
       // Make a center panel to hold all the components.
       JPanel centerPanel = new JPanel(false);
@@ -75,36 +80,52 @@ public class vs2EvapotranspirationDialog extends mp2Dialog
       JPanel rightPanel = new JPanel(false);
       rightPanel.setLayout(new GridLayout(0, 1, 0, 10));
       centerPanel.add(rightPanel);
+      
+      // Put space between the right and units panels
+      centerPanel.add(Box.createHorizontalStrut(5));
+      
+      // units panel
+      JPanel unitsPanel = new JPanel(false);
+      unitsPanel.setLayout(new GridLayout(0, 1, 0, 10));
+      centerPanel.add(unitsPanel);
 
       // Add the labels and text fields to left and right panels respectively
       if (modelOptions.doEvaporation)
       {
          leftPanel.add(new JLabel("Potential evaporation", SwingConstants.RIGHT));
          rightPanel.add(potentialEvaporationTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L + "/" + T));
 
          leftPanel.add(new JLabel("Surface resistance", SwingConstants.RIGHT));
          rightPanel.add(surfaceResistanceTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L + SupMinus + "¹"));
 
          leftPanel.add(new JLabel("Pressure potential of atmosphere",
             SwingConstants.RIGHT));
          rightPanel.add(pressurePotentialAtmosphereTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L));
       }
       if (modelOptions.doTranspiration)
       {
          leftPanel.add(new JLabel("Potential transpiration", SwingConstants.RIGHT));
          rightPanel.add(potentialTranspirationTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L + "/" + T));
 
          leftPanel.add(new JLabel("Rooting depth", SwingConstants.RIGHT));
          rightPanel.add(rootDepthTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L));
 
          leftPanel.add(new JLabel("Activity at root base", SwingConstants.RIGHT));
          rightPanel.add(rootBaseActivityTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L + SupMinus + "²"));
 
          leftPanel.add(new JLabel("Activity at root top", SwingConstants.RIGHT));
          rightPanel.add(rootTopActivityTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L + SupMinus + "²"));
 
          leftPanel.add(new JLabel("Pressure head in root", SwingConstants.RIGHT));
          rightPanel.add(rootPressureHeadTextField = new JTextField(5));
+         unitsPanel.add(new JLabel(L));
       }
    }
 

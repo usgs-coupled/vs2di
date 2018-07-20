@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<TITLE>Controlling the Simulation</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Controlling the Simulation</H2>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The postprocessor initially starts up in "computational" mode.
+    That is, the postprocessor is linked to the model (VS2DRT) and
+    <A HREF="displayResults.html">displays the results</A> as VS2DRT
+    computes the solution.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">You may <A HREF="saveSimulation.html">save the simulation results</A>
+    for later playback. The simulation results are saved in the file "vs2dt.sim" in
+    the <A HREF="fileManagement.html">working directory.</A></td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">If you save the simulation results, then at the end
+    of the simulation, the postprocessor enters into "playback" mode. That is,
+    the postprocessor displays the saved results by reading them from the file
+    vs2dt.sim.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">The maximum animation speed in playback mode can be
+    significantly faster than the speed in computational mode.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">Playback mode is not available if you do not save the simulation results.</td>
+</tr>
+</table>
+
+<P>You can control a simulation (computation or playback) using the following buttons.</P>
+
+<P><IMG SRC="images/run.gif">&nbsp;<B>Runs the simulation.</B> In computational mode,
+the solution for the next time step is computed and displayed. This continues until
+the entire simulation is completed. In playback mode, the saved results for the
+next time step are read from file and displayed. This continues until the entire file
+is read.
+</P>
+
+<P><IMG SRC="images/stop.gif">&nbsp;<B>Stops the simulation.</B> In computational mode,
+the model will not stop immediately. Instead, the model finishes the computation
+for the current time stop and then stops. Therefore, there will be a
+lag between the time when the "Stop" button is clicked and the
+time when computation is finished.</P>
+
+<P><IMG SRC="images/step.gif">&nbsp;<B>Advances one time step.</B> In computational mode,
+the solution for the next time step is computed and displayed. In replay mode, the
+saved results for the next time step are read and displayed.</P>
+
+<P><IMG SRC="images/resetplayback.gif">&nbsp;<B>Restarts playback from beginning.</B>
+Resets the playback to the start of the simulation. This option is available
+only in playback mode.</p>
+
+<P>Additional Notes:</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">You may <B>terminate a simulation</B> by clicking the "Action" menu and
+    then clicking "Terminate computation." If you have saved results, the
+    postprocessor enters into playback mode. You can play back the
+    saved results up to the time step at which the simulation is terminated.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">You may <B>restart the computation</B> from the beginning by clicking the
+    "Action" menu and then clicking "Restart computation". If you are in
+    playback mode, the postprocessor enters into computational mode.</td>
+</tr>
+<tr>
+  <td width="1%" nowrap valign="top" align="left">•</td>
+  <td width="99%" valign="top" align="left">If the animation is too fast, you may <A HREF="animationSpeed.html">slow down
+    the animation speed.</A></td>
+</tr>
+</table>
+
+</BODY>
+</HTML>

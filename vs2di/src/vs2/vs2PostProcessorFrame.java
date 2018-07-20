@@ -15,6 +15,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
 
     protected int usage;
     protected mp2ToggleButton zonationButton;
+    protected int firstComponentIndex;
 
     /**
      * Creates a post processor in interactive mode
@@ -29,11 +30,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     public vs2PostProcessorFrame(mp2App app, String home) {
         super(app, home);
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                usage = ENERGY_TRANSPORT;
-            } else {
-                usage = SOLUTE_TRANSPORT;
-            }
+            usage = SOLUTE_AND_ENERGY_TRANSPORT;
         } else {
             usage = USAGE_UNDEFINED;    
         }
@@ -41,18 +38,17 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         displayChooser.addItem("Pressure Head");
         displayChooser.addItem("Moisture Content");
         displayChooser.addItem("Saturation");
-        if (usage == SOLUTE_TRANSPORT) {
-            displayChooser.addItem("Concentration");
-        } else if (usage == ENERGY_TRANSPORT) {
-            displayChooser.addItem("Temperature");
-        }
+        displayChooser.addItem("Temperature");
+        displayChooser.addItem("Concentration");
         displayChooser.addItem("Vector");
         displayChooser.addItem("None");
         displayChooser.setMaximumRowCount(10);
         
         JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
         JMenuItem helpMenuItem;
         helpMenuItem = new JMenuItem("Postprocessor Help...");
+        helpMenuItem.setMnemonic(KeyEvent.VK_P);
         menuBar.add(helpMenu);
         helpMenu.add(helpMenuItem);
         
@@ -81,11 +77,8 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             }
         }
         
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDirectory + fileSeparator + 
-                                "images" + fileSeparator;
         toolBar.add(Box.createVerticalStrut(5));
-        toolBar.add(zonationButton = new mp2ToggleButton(new ImageIcon(imageDirectory + "zonation.gif")));
+        toolBar.add(zonationButton = new mp2ToggleButton(new ImageIcon(ClassLoader.getSystemResource("images/zonation.gif"))));
         zonationButton.setToolTipText("Show or hide boundaries between textural classes");
         zonationButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -123,7 +116,10 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         }
         super.onExit();
         if (model.getType() == mp2Model.COMPUTATIONAL) {
-            ((vs2ComputationalModel) model).releaseMemory();
+            // release memory if not cancelled in super.onExit() / quitOK
+            if (theApp != null && !theApp.getFrame().getMenuItem(POST_PROCESSOR).isSelected()) {
+                ((vs2ComputationalModel) model).releaseMemory();
+            }
         }
     }
 
@@ -132,11 +128,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      */
     protected mp2ComputationalModel createComputationalModel() {
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                return  new vs2dh();
-            } else {
-                return new vs2dt();
-            }
+            return new vs2drt();
         } else {
             return null;
         }
@@ -161,18 +153,14 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * write binary data
      */
     protected String getComputationalOutputFile() {
-        return (usage == ENERGY_TRANSPORT) ? "vs2dh.sim" : "vs2dt.sim";
+        return "vs2drt.sim";
     }
     
     protected String getPostprocessorTitle() {
         if (theApp != null) {
-            if (vs2App.doHeat()) {
-                return "VS2DHI Postprocessor";
-            } else {
-                return "VS2DTI Postprocessor";
-            }
+            return "VS2DRTI Postprocessor";
         } else {
-            return "VS2D Postprocessor--Standalone Mode";
+            return "VS2DRTI Postprocessor--Standalone Mode";
         }
     }
 
@@ -180,6 +168,11 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Gets the directory containing the properties files
      */
     protected String getPropertiesDirectory() {
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            String drive = System.getenv("HOMEDRIVE");
+            String path = System.getenv("HOMEPATH");
+            return drive + path;
+        }
         return homeDirectory + System.getProperty("file.separator") + "bin";
     }
     
@@ -201,12 +194,15 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Loads data
      */
     public boolean loadData(String directory, String file) {
+        System.out.println("loadData in");
         
         if (theApp == null && !findModelTypeAndUsage(directory, file)) {
+            System.out.println("loadData out 1");
             return false;
         }
 
         if (!super.loadData(directory,file)) {
+            System.out.println("loadData out 2");
             return false;
         }
         if (theApp != null) {
@@ -216,9 +212,17 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
             vs2ModelOptions modelOptions = (vs2ModelOptions) theApp.getDoc().getData(MODEL_OPTIONS);
-            if (modelOptions.doTransport) {
-                if (vs2App.doHeat()) {
-                    displayChooser.addItem("Temperature");
+            if (modelOptions.doEnergyTransport) {
+                displayChooser.addItem("Temperature");
+            }
+            if (modelOptions.doSoluteTransport) {
+                assert(computationalModel != null);
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -244,9 +248,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("Pressure Head");
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
-            if (((vs2ComputationalModel) computationalModel).getDoTransport()) {
-                if (usage == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (((vs2ComputationalModel) computationalModel).getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (((vs2ComputationalModel) computationalModel).getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -269,9 +280,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             if (pb.getDoSaturation()) {
                 displayChooser.addItem("Saturation");
             }
-            if (pb.getDoTransport()) {
-                if (pb.getUsage() == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (pb.getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (pb.getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = pb.getComponents();
+                if (comps != null) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -290,6 +308,7 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             displayChooser.addItem("None");
             displayChooser.revalidate();
         }
+        System.out.println("loadData out 3");
         return true;
     }
 
@@ -330,7 +349,11 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             in.close ();
             if (line != null && line.length() > 3 && line.startsWith("#")) {
                 String code = line.substring(1).trim().toLowerCase();
-                if (code.startsWith("vs2dt3.")) {
+                if (code.startsWith("vs2drt1.")) {
+                    usage = SOLUTE_AND_ENERGY_TRANSPORT;
+                    computationalModel = new vs2drt();
+                    return true;
+                } else if (code.startsWith("vs2dt3.")) {
                     usage = SOLUTE_TRANSPORT;
                     computationalModel = new vs2dt();
                     return true;
@@ -433,35 +456,24 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
      * Entry point when running post processor as standalone app
      */
     public static void main(String [] args) {
-        String homeDir = null;
         mp2FileChooser.useJFileChooser(true);
-        for (int i=0; i<Math.min(args.length, 2); i++) {
-            if (args[i].equalsIgnoreCase("-w")) {
-                try {
-                    // Use windows look and feel
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    // When launched by a windows exe program to run on jre, the
-                    // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
-                    // instead
-                    mp2FileChooser.useJFileChooser(false);
-                } catch (Exception e) {
-                    System.out.println("Error loading L&F: " + e);
-                }
-                
-            } else {
-                homeDir = args[i];
+        try {
+            // Use windows look and feel when running under windows
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                // When launched by a windows exe program to run on jre, the
+                // javax.swing.JFileChooser doesn't work so we use java.awt.FileDialog
+                // instead
+                //
+                // SRC 08/26/2016 seems to be working on 1.8 
+                // mp2FileChooser.useJFileChooser(false);
             }
+        } catch (Exception e) {
+            System.out.println("Error loading L&F: " + e);
         }
-        if (homeDir == null)  {
-            homeDir = System.getProperty("user.dir");
-        }
-        
-        vs2PostProcessorFrame frame = new vs2PostProcessorFrame(null, homeDir);
-        String fileSeparator = System.getProperty("file.separator");
-        String imageDirectory = homeDir + fileSeparator
-                                + "images" + fileSeparator;
+        vs2PostProcessorFrame frame = new vs2PostProcessorFrame(null);
         Image appIcon = Toolkit.getDefaultToolkit().getImage(
-                                    imageDirectory + "posticon.gif");
+                                    ClassLoader.getSystemResource("images/posticon.gif"));
         frame.setIconImage(appIcon);
         frame.setVisible(true);
     }
@@ -480,8 +492,15 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
         else if (item.equals("Saturation")) {
             view.setDisplay(vs2PostProcessorView.SATURATION);
         }
-        else if (item.equals("Concentration")||item.equals("Temperature")) {
-            view.setDisplay(vs2PostProcessorView.TRANSPORT);
+        else if (item.equals("Temperature")) {
+            view.setDisplay(vs2PostProcessorView.ENERGY_TRANSPORT);
+        }
+        else if (item.startsWith("Concentration")) {
+            ((vs2PostProcessorView)view).setDisplayString(item);
+            int n = displayChooser.getSelectedIndex() - firstComponentIndex;
+            ((vs2PostProcessorView)view).setComponentIndex(n);
+            // must set index before setting display
+            view.setDisplay(vs2PostProcessorView.SOLUTE_TRANSPORT);
         }
         else if (item.equals("Vector")) {
             view.setDisplay(vs2PostProcessorView.VECTOR);
@@ -517,9 +536,16 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             if (pb.getDoSaturation()) {
                 displayChooser.addItem("Saturation");
             }
-            if (pb.getDoTransport()) {
-                if (pb.getUsage() == ENERGY_TRANSPORT) {
-                    displayChooser.addItem("Temperature");
+            if (pb.getDoEnergyTransport()) {
+                displayChooser.addItem("Temperature");
+            }
+            if (pb.getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = pb.getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
                 } else {
                     displayChooser.addItem("Concentration");
                 }
@@ -541,18 +567,30 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     protected void onRestartComputation() {
         boolean displayChooserRequiresUpdate = (model.getType() == mp2Model.PLAYBACK_BINARY);
         String selectedDisplay = (String) displayChooser.getSelectedItem();
-        ((vs2ComputationalModel) computationalModel).releaseMemory();
         super.onRestartComputation();
+        if (restartComputationMenuItem.isEnabled()) {
+            // user pressed No to "Do you want to restart the computation?"
+            return;
+        }
         if (displayChooserRequiresUpdate) {
             displayChooser.removeAllItems();
             displayChooser.addItem("Total Head");
             displayChooser.addItem("Pressure Head");
             displayChooser.addItem("Moisture Content");
             displayChooser.addItem("Saturation");
-            if (usage == ENERGY_TRANSPORT) {
+            if (((vs2ComputationalModel) computationalModel).getDoEnergyTransport()) {
                 displayChooser.addItem("Temperature");
-            } else {
-                displayChooser.addItem("Concentration");
+            }
+            if (((vs2ComputationalModel) computationalModel).getDoSoluteTransport()) {
+                firstComponentIndex = displayChooser.getItemCount();
+                String [] comps = ((vs2ComputationalModel) computationalModel).getComponents();
+                if (comps.length > 1) {
+                    for (int i=0; i<comps.length; ++i) {
+                        displayChooser.addItem("Concentration (" + comps[i] + ")");
+                    }
+                } else {
+                    displayChooser.addItem("Concentration");
+                }
             }
             displayChooser.addItem("Vector");
             displayChooser.addItem("None");
@@ -625,13 +663,457 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
             break;
         case 11:
             mp2MessageBox.showMessageDialog(this,
-                    "Convergence of flow and transport equation not attained."
+                    "Convergence of flow and transport equation not attained. "
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 12:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in PhreeqcRM. See *.log.txt file. "
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 13:
+            mp2MessageBox.showMessageDialog(this,
+                    "InitializeRM failed. "
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 14:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. No active coordinate direction."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 15:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. z direction should contain only three nodes for this 1D problem."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 16:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM. Can not have inactive cells in a 1D simulation."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 17:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM: n_to_ij failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 18:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in CreateMappingRM: RM_CreateMapping failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 19:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in GetConcentrationsRM: RM_GetConcentrations failed."
+                    + "Simulation halted.",
+                    "Warning");
+            break;
+        case 20:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error in SetConcentrationsRM: RM_SetConcentrations failed."
                     + "Simulation halted.",
                     "Warning");
             break;
         case 99:
             mp2MessageBox.showMessageDialog(this,
                     "Read error encountered.  Playback halted.",
+                    "Warning");
+            break;
+        case 201:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-1:  TITL.  Simulation halted.",
+                    "Warning");
+            break;
+        case 202:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-2:  TMAX,STIM,ANG.  Simulation halted.",
+                    "Warning");
+            break;
+        case 203:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-3:  ZUNIT,TUNIT,CUNX,HUNX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 204:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-4:  NXR,NLY.  Simulation halted.",
+                    "Warning");
+            break;
+        case 205:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-5:  NRECH,NUMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 206:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-6:  RAD,ITSTOP,HEAT,SOLUTE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 207:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-7:  CHEMFILE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 208:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-8:  DATABASEFILE.  Simulation halted.",
+                    "Warning");
+            break;
+        case 209:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-9:  PREFIX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 210:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-10: CIS,CIT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 211:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-11: INPRXZ.  Simulation halted.",
+                    "Warning");
+            break;
+        case 212:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-12:  F11P,F7P,F8P,F9P,F6P.  Simulation halted.",
+                    "Warning");
+            break;
+        case 213:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-13:  THPT,SPNT,PPNT,HPNT,VPNT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 214:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-14:  IFAC,FACX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 215:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-15: (DXR(K),K=1,NXR).  Simulation halted.",
+                    "Warning");
+            break;
+        case 216:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-16:  XMULT,XMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 217:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-17:  JFAC,FACZ.  Simulation halted.",
+                    "Warning");
+            break;
+        case 218:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-18:  (DELZ(K),K=1,NLY).  Simulation halted.",
+                    "Warning");
+            break;
+        case 219:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-19:  ZMULT,ZMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 220:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-20:  NPLT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 221:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-21:  (PLTIM(K),K=1,NPLT).  Simulation halted.",
+                    "Warning");
+            break;
+        case 222:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-22:  NOBS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 223:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-23:  ((KDUM(K,J),J=1,2),K=1,NOBS).  Simulation halted.",
+                    "Warning");
+            break;
+        case 224:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-24: NMB9.  Simulation halted.",
+                    "Warning");
+            break;
+        case 225:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading A-25:  (MB9(K),K=1,NMB9).  Simulation halted.",
+                    "Warning");
+            break;
+        case 226:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-1:  EPS,HMAX,WUS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 227:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-2: EPS1,EPS2.  Simulation halted.",
+                    "Warning");
+            break;
+        case 228:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-3: EPS3.  Simulation halted.",
+                    "Warning");
+            break;
+        case 229:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-4:  MINIT,ITMAX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 230:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-5:  PHRD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 231:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-6:  NTEX,NPROP.  Simulation halted.",
+                    "Warning");
+            break;
+        case 232:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-7:  hydraulicFunctionType.  Simulation halted.",
+                    "Warning");
+            break;
+        case 233:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-8:  ITEX.  Simulation halted.",
+                    "Warning");
+            break;
+        case 234:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-9:  ANIZ(J),(HK(J,I),I=1,NPROP).  Simulation halted.",
+                    "Warning");
+            break;
+        case 235:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-10:  (HT(j,I),I=1,6).  Simulation halted.",
+                    "Warning");
+            break;
+        case 236:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-11:  (HS(j,I),I=1,3),(ITEXSOL(J,I),I=1,7).  Simulation halted.",
+                    "Warning");
+            break;
+        case 237:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-12:  IROW.  Simulation halted.",
+                    "Warning");
+            break;
+        case 238:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-13:  (JTEX(N),N=1,NXR).  Simulation halted.",
+                    "Warning");
+            break;
+        case 239:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-14:  IL,IR,JBT,JRD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 240:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-15:  IREAD,FACTOR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 241:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-16:  DWTX,HMIN.  Simulation halted.",
+                    "Warning");
+            break;
+        case 242:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-17: IU,IFMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 243:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-18:  BCIT,ETSIM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 244:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-19: NPV,ETCYC.  Simulation halted.",
+                    "Warning");
+            break;
+        case 245:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-20: (PEVAL(I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 246:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-21: (RDC(1,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 247:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-22: (RDC(2,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 248:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-23: (PTVAL(I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 249:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-24:  (RDC(3,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 250:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-25:  (RDC(4,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 251:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-26:  (RDC(5,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 252:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-27:  (RDC(6,I),I=1,NPV).  Simulation halted.",
+                    "Warning");
+            break;
+        case 253:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-28:  IREAD,FACTOR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 254:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-29: IU,IFMT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 255:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-30:  IREAD.  Simulation halted.",
+                    "Warning");
+            break;
+        case 256:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-31:  INSOL1.  Simulation halted.",
+                    "Warning");
+            break;
+        case 257:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-32:  INDSOL.  Simulation halted.",
+                    "Warning");
+            break;
+        case 258:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-33:  numBF, maxnumcells.  Simulation halted.",
+                    "Warning");
+            break;
+        case 259:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-34:  idBF(i), numcellsBF(i).  Simulation halted.",
+                    "Warning");
+            break;
+        case 260:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading B-35:  jj,nn.  Simulation halted.",
+                    "Warning");
+            break;
+        case 261:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-1:  TPER,DELT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 262:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-2:  TMLT,DLTMX,DLTMIN,TRED.  Simulation halted.",
+                    "Warning");
+            break;
+        case 263:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-3:  DSMAX,STERR.  Simulation halted.",
+                    "Warning");
+            break;
+        case 264:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-4:  POND.  Simulation halted.",
+                    "Warning");
+            break;
+        case 265:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-5:  PRNT.  Simulation halted.",
+                    "Warning");
+            break;
+        case 266:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-6:  BCIT,ETSIM,SEEP.  Simulation halted.",
+                    "Warning");
+            break;
+        case 267:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-7:  NFCS.  Simulation halted.",
+                    "Warning");
+            break;
+        case 268:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-8:  JJ,JLAST(K) .  Simulation halted.",
+                    "Warning");
+            break;
+        case 269:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-9:  ((JSPX(L,J,K),L=2,3),J=1,JJ).  Simulation halted.",
+                    "Warning");
+            break;
+        case 270:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-10:  IBC .  Simulation halted.",
+                    "Warning");
+            break;
+        case 271:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-11:  JJ,NN,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 272:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-12: NTT,TF.  Simulation halted.",
+                    "Warning");
+            break;
+        case 273:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-13: NTC,INSBC1.  Simulation halted.",
+                    "Warning");
+            break;
+        case 274:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-14:  JJ,NN,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 275:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-15:  JJT,JJB,NNL,NNR,NTX,PFDUM.  Simulation halted.",
+                    "Warning");
+            break;
+        case 276:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-16: NTT,TF.  Simulation halted.",
+                    "Warning");
+            break;
+        case 277:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-17: NTC,INSBC1 .  Simulation halted.",
+                    "Warning");
+            break;
+        case 278:
+            mp2MessageBox.showMessageDialog(this,
+                    "Error reading C-18:  JJT,JJB,NNL,NNR,NTX,PFDUM.  Simulation halted.",
                     "Warning");
             break;
         default:
@@ -680,9 +1162,105 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
 
     protected void readSettingsFile(BufferedReader in) throws Exception {
         try {
-            super.readSettingsFile(in);
-            vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
             String line;
+            line = in.readLine();
+            double drawingWidth = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setDrawingWidthInInches(drawingWidth);
+	    
+            line = in.readLine();
+            double drawingHeight = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setDrawingHeightInInches(drawingHeight);
+	    
+            line = in.readLine();
+            double modelDistancePerInchX = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setModelDistancePerInchX(modelDistancePerInchX);
+	    
+            line = in.readLine();
+            double modelDistancePerInchY = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setModelDistancePerInchY(modelDistancePerInchY);
+	    
+            line = in.readLine();
+            double xOriginInInches = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setXOriginInInches(xOriginInInches);
+	    
+            line = in.readLine();
+            double yOriginInInches = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+            computationalModel.setYOriginInInches(yOriginInInches);
+	    
+            line = in.readLine();
+            int numDecimal = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+            computationalModel.setNumberOfDecimalPlacesToShow(numDecimal);
+	    
+            line = in.readLine();
+            float secPerStep = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setSecPerStep(secPerStep);
+	    
+            line = in.readLine();
+            float saveInterval = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setSaveInterval(saveInterval);
+	    
+            line = in.readLine();
+            int saveBinaryFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setSaveOutputAsBinary(saveBinaryFlag == 1 ? true : false);
+	    
+            line = in.readLine();
+            float vectorMagnitudePerInch = Float.valueOf(line.substring(line.indexOf(':')+1).trim()).floatValue();
+            computationalModel.setVectorMagnitudePerInch(vectorMagnitudePerInch);
+	    
+            line = in.readLine();
+            int vectorColInterval = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorColInterval(vectorColInterval);
+	    
+            line = in.readLine();
+            int vectorRowInterval = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorRowInterval(vectorRowInterval);
+	    
+            line = in.readLine();
+            int vectorMode = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+	        computationalModel.setVectorMode(vectorMode);
+            if (vectorMode == VECTOR_AS_VELOCITY) {
+                vectorButton.setIcon(velocityImageIcon);
+                vectorButton.setDisabledIcon(velocityImageIcon);
+                vectorButton.setDisabledSelectedIcon(velocityImageIcon);
+            } else {
+                vectorButton.setIcon(fluxImageIcon);
+                vectorButton.setDisabledIcon(fluxImageIcon);
+                vectorButton.setDisabledSelectedIcon(fluxImageIcon);
+            }
+	    
+            line = in.readLine();
+            int showStemsFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+            computationalModel.setShowStems(showStemsFlag == 1 ? true : false);
+            
+            line = in.readLine();
+            int colorScaleCount = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
+
+            java.util.Map<String, mp2ColorScale> map = ((vs2ComputationalModel)computationalModel).getColorScaleMap();
+            double valueRed, valueBlue, colorInterval, labelInterval;
+            for (int i = 0; i < colorScaleCount; ++i) {
+                line = in.readLine();
+                String k = line.substring(line.indexOf(':')+1).trim();
+
+                mp2ColorScale v = new mp2ColorScale();
+                v.init();
+                
+                line = in.readLine();
+                valueRed = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                valueBlue = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                colorInterval = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                line = in.readLine();
+                labelInterval = Double.valueOf(line.substring(line.indexOf(':')+1).trim()).doubleValue();
+                
+                v.SetLimits(valueBlue, valueRed);
+                v.SetColorInterval(colorInterval);
+                v.SetLabelInterval(labelInterval);
+                
+                map.put(k, v);
+            }
+            
+            vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
             line = in.readLine();
             int saveMoistureContentFlag = Integer.parseInt(line.substring(line.indexOf(':')+1).trim());
             cm.setSaveMoistureContent((saveMoistureContentFlag != 0) ? true : false);
@@ -701,13 +1279,169 @@ public class vs2PostProcessorFrame extends mp2PostProcessorFrame implements vs2C
     
     protected void writeSettingsFile(PrintWriter pw) throws Exception {
         try {
-            super.writeSettingsFile(pw);
+            pw.println("drawing width in inches: " + computationalModel.getDrawingWidthInInches());
+            pw.println("drawing height in inches: " + computationalModel.getDrawingHeightInInches());
+            pw.println("model distance per inch x: " + computationalModel.getModelDistancePerInchX());
+            pw.println("model distance per inch y: " + computationalModel.getModelDistancePerInchY());
+            pw.println("x origin in inches: " + computationalModel.getXOriginInInches());
+            pw.println("y origin in inches: " + computationalModel.getYOriginInInches());
+            pw.println("number of decimal places: " + computationalModel.getNumberOfDecimalPlacesToShow());
+            pw.println("seconds per time step: " + (computationalModel.getSecPerStep()));
+            pw.println("save interval: " + computationalModel.getSaveInterval());
+            pw.println("save output: " + (computationalModel.getSaveOutputAsBinary() ? 1 : 0));
+            pw.println("vector magnitude per inch: " + computationalModel.getVectorMagnitudePerInch());
+            pw.println("vector vector column interval: " + computationalModel.getVectorColInterval());
+            pw.println("vector row interval: " + computationalModel.getVectorRowInterval());
+            pw.println("vector mode:" + computationalModel.getVectorMode());
+            pw.println("show vector base: " + (computationalModel.getShowStems() ? 1 : 0));
+            
             vs2ComputationalModel cm = (vs2ComputationalModel) computationalModel;
+            java.util.Map<String, mp2ColorScale> map = cm.getColorScaleMap();
+            assert(map != null && map.size() > 5);
+            pw.println("color scale count: " + map.size());
+            
+            int i = 0;
+            for (java.util.Map.Entry<String, mp2ColorScale> entry : map.entrySet()) {
+                String key = entry.getKey();
+                pw.println("color scale " + i + " name: " + key);
+                
+                mp2ColorScale cs = entry.getValue();
+                pw.println("color scale " + i + " red limit: " + cs.GetValueRed());
+                pw.println("color scale " + i + " blue limit: " + cs.GetValueBlue());
+                pw.println("color scale " + i + " color interval: " + cs.GetColorInterval());
+                pw.println("color scale " + i + " label interval: " + cs.GetLabelInterval());
+                ++i;
+            }
+            
             pw.println("save moisture content: " + (cm.getSaveMoistureContent() ? "1" : "0"));
             pw.println("save saturation: " + (cm.getSaveSaturation() ? "1" : "0"));
             pw.println("save vectors: " + (cm.getSaveVectors() ? "1" : "0"));
         } catch (Exception e) {
             throw e;
         }
+    }
+    
+    /**
+     * Invoked when the load menu item is selected
+     * 
+     * 2016-08-26 SRC -- overloaded in order to call releaseMemory
+     */
+    protected boolean onLoad() {
+        if (doViewer && model != null && model.getType() == mp2Model.COMPUTATIONAL
+                     && runStatus == 0) {
+            int result = mp2MessageBox.showYesNoDialog(this, "The computation is not finished. " + 
+                "Do you want to load another file?", "Warning");
+            if (result == mp2MessageBox.NO_OPTION) {
+                return false;
+            }
+            ((vs2ComputationalModel) model).releaseMemory();
+        }
+        if (model != null) {
+            model.closeIO();
+        }
+        mp2FileChooser fc = new mp2FileChooser();
+        fc.setDialogTitle("Load");
+        if (workingDirectory != null) {
+            fc.setCurrentDirectory(new File(workingDirectory));
+        } else if (properties != null) {
+            String directory = properties.getProperty("directory");
+            if (directory != null && directory.length() > 0) {
+                fc.setCurrentDirectory(new File(directory));
+            }
+        }
+        if (fc.showOpenDialog(this) != mp2FileChooser.APPROVE_OPTION) {
+            return false;
+        }
+                
+        workingDirectory = new String(fc.getCurrentDirectory().getPath());
+        String file = new String(fc.getSelectedFile().getName());
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        if (!loadData(workingDirectory, file)) {
+            setCursor(Cursor.getDefaultCursor());
+            return false;
+        }
+        setCursor(Cursor.getDefaultCursor());
+        scrollPane.getHorizontalScrollBar().setValue(0);
+        scrollPane.getVerticalScrollBar().setValue(0);
+        magnification = startupMagnification;
+        view.setVectorMagnitudePerPixel(
+            (float) model.getVectorMagnitudePerInch() / PIXELS_PER_INCH);
+        view.resizeContents(magnification);
+        view.revalidate();
+        xRuler.updateScalesAndLabels();
+        yRuler.updateScalesAndLabels();
+        xRuler.revalidate();
+        yRuler.revalidate();
+        view.draw();
+        scrollPane.repaint();
+        loadSettingsMenuItem.setEnabled(true);
+        saveSettingsMenuItem.setEnabled(true);
+        return true;
+    }
+    
+    /**
+     * Performs model start up calculations.
+     */
+    protected int doModelStartUpCalculations() {
+        if (model.getType() == mp2Model.COMPUTATIONAL) {
+            return ((vs2ComputationalModel)model).getJStop();
+        }
+        return 0;
+    }
+
+    /**
+     * Only used for unit testing
+     * @return run JButton
+     */
+    public JButton getRunButton() {
+        return this.runButton;        
+    }
+
+    /**
+     * Only used for unit testing
+     * @return reset JButton
+     */
+    public JButton getResetButton() {
+        return this.resetButton;        
+    }
+
+    /**
+     * Only used for unit testing
+     * @return step JButton
+     */
+    public JButton getStepButton() {
+        return this.stepButton;        
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return restart computation JMenuItem
+     */
+    public JMenuItem getRestartComputationMenuItem() {
+        return this.restartComputationMenuItem;        
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return Exit(Done) JMenuItem
+     */
+    public JMenuItem getExitMenuItem() {
+        return this.exitMenuItem;
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return stop JButton
+     */
+    public JButton getStopButton() {
+        return this.stopButton;        
+    }
+    
+    /**
+     * Only used for unit testing
+     * @return displayChooser JComboBox
+     */
+    public JComboBox getDisplayChooser() {
+        return this.displayChooser;        
     }
 }

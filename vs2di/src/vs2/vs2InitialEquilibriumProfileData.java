@@ -15,12 +15,18 @@ public class vs2InitialEquilibriumProfileData extends mp2GraphicalData
     protected double minimumPressureHead = Double.NEGATIVE_INFINITY;
 
     public void exportData(PrintWriter pw, double [] yCoord) {
-        pw.println("2 1.0" + "     /B11 -- IREAD, FACTOR");
+        String s;
+        final int commentOffset = 23;        
+        s = String.valueOf("2 1.0"); 
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-15 -- IREAD, FACTOR");
         float wt = (float) (waterTableLocation - yCoord[0]);
         float minP = (float) minimumPressureHead;
-        pw.println(wt + " " + minP + "     /B12 -- DWTX, HMIN");
+        s = String.valueOf(wt + " " + minP);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/B-16 -- DWTX, HMIN");
     }
-
+    
     public void setWaterTableLocation(double z) {
         waterTableLocation = z;
         doc.setChanged(true);

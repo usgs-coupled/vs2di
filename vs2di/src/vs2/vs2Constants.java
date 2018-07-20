@@ -5,7 +5,8 @@ package vs2;
 
 public interface vs2Constants {
 
-    public static final String VS2_VERSION = "1.3";
+    //public static final String VS2_VERSION = "1.3";
+    public static final String VS2_VERSION = "1.4";
 
     //public static final int MAX_OUTPUT_TIMES = 500;
     //public static final int MAX_OBSERVATION_POINTS = 150;
@@ -15,8 +16,10 @@ public interface vs2Constants {
     public static final int RECHARGE_PERIOD = 4103;
     public static final int TEXTURAL_MAP = 4104;
     public static final int INITIAL_FLOW = 4105;
-    public static final int INITIAL_TRANSPORT = 4109;
+    public static final int INITIAL_TEMPERATURE = 4109;
     public static final int FLUID_SOURCE = 4110;
+    public static final int CHEMISTRY_CLASS = 4111;
+    public static final int CHEMISTRY_MAP = 4112;
 
     // Don't change values below
     public static final int INITIAL_PRESSURE_HEAD = 206;
@@ -60,6 +63,14 @@ public interface vs2Constants {
 
     public static final int SOLUTE_TRANSPORT = 0;
     public static final int ENERGY_TRANSPORT = 1;
+    public static final int SOLUTE_AND_ENERGY_TRANSPORT = 2;       // new in Version 1.4
     public static final int USAGE_UNDEFINED = -1;
+    
+    // IPRNTCHE options
+    public static final int IPRNTCHE_NO_PHREEQC_OUTPUT = 0;        // new in Version 1.4
+    public static final int IPRNTCHE_SELECTED_OUTPUT   = 1;        // new in Version 1.4
 
+    // IPOUT options
+    public static final int IPOUT_NO_PHREEQC_OUTPUT        = 0;    // new in Version 1.4
+    public static final int IPOUT_EXTENSIVE_PHREEQC_OUTPUT = 1;    // new in Version 1.4
 }

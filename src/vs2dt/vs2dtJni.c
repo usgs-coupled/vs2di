@@ -1,12 +1,46 @@
 #include <jni.h>
 #include <stdlib.h>
-#include "vs2dt.h"
+#include <string.h>
+
+#if defined(CMAKE_FC)
+#include "FC.h"
+#endif
 
 /* See Java_vs2_vs2dt_getMoistureContents for notes on JNI programming */
 
+// fortran prototypes
+void CLOSEIO(void);
+void DOHEAT(long *iflag);
+void DOSOLUTE(long *iflag);
+void DOTRANS(long *iflag);
+void GETCOMP(jint *i, char buffer[], size_t len);
+void GETCOMPCOUNT(long *count);
+void GETCONC(double *c, long *nn);
+void GETDX(double *dx, long *nx);
+void GETDZ(double *dz, long *nz);
+void GETFLOWMBERR(double *err);
+void GETTRANSMBERR(double *err);
+void GETKSAT(double *ksat, long *nn);
+void GETMOIST(double *moist, long *nn);
+void GETNX(long *nx);
+void GETNZ(long *nz);
+void GETPHEAD(double *phead, long *nn);
+void GETSAT(double *sat, long *nn);
+void GETSOLTRANSMBERR(double *err, int *index);
+void GETSTEP(long *ktime);
+void GETSTIME(double *stime);
+void GETTEMP(double *c, long *nn);
+void GETTEX(int *ksat, long *nn);
+void GETVX(double *vx, long *nn);
+void GETVZ(double *vz, long *nn);
+void RELEASEMEMORY(void);
+void SETUP(int *iold, int *ihydr, int *isorp, char *filen, size_t filen_len);
+void STEP(long *jstop);
+
 JNIEXPORT void JNICALL Java_vs2_vs2dt_start(JNIEnv *env, jclass obj, jint jold, jint jhydr, jint jsorp, jstring jfilen)
 {
-   long len, iold, ihydr, isorp;
+   long iold, ihydr, isorp;
+   size_t len;
    char filen[80];
    char *str = (char *) (*env)->GetStringUTFChars(env, jfilen, 0);
    sprintf(filen, "%s", str);
@@ -15,34 +49,34 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_start(JNIEnv *env, jclass obj, jint jold, 
    iold = jold;
    ihydr = jhydr;
    isorp = jsorp;
-   setup_ (&iold, &ihydr, &isorp, filen, len);
+   SETUP (&iold, &ihydr, &isorp, filen, len);
 }
 
 JNIEXPORT jboolean JNICALL Java_vs2_vs2dt_getDoTransport(JNIEnv *env, jclass obj)
 {
    long iflag;
-   dotrans_ (&iflag);
+   DOTRANS (&iflag);
    return (jboolean) iflag;
 }
 
 JNIEXPORT jint JNICALL Java_vs2_vs2dt_advanceOneStep(JNIEnv *env, jclass obj)
 {
    long jstop;
-   step_ (&jstop);
+   STEP (&jstop);
    return (jint) jstop;
 }
 
 JNIEXPORT jint JNICALL Java_vs2_vs2dt_getNumCellAlongX(JNIEnv *env, jclass obj)
 {
    long nx;
-   getnx_ (&nx);
+   GETNX (&nx);
    return (jint) nx;
 }
 
 JNIEXPORT jint JNICALL Java_vs2_vs2dt_getNumCellAlongZ(JNIEnv *env, jclass obj)
 {
    long nz;
-   getnz_ (&nz);
+   GETNZ (&nz);
    return (jint) nz;
 }
 
@@ -53,9 +87,9 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getCellSizesAlongX(JNIEnv *env, jclass obj
    long nx;
    int i;
 
-   getnx_ (&nx);
+   GETNX (&nx);
    dx = (double *) malloc(nx*sizeof(double));
-   getdx_ (dx, &nx);
+   GETDX (dx, &nx);
    jdx = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nx; i++)
    {
@@ -72,9 +106,9 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getCellSizesAlongZ(JNIEnv *env, jclass obj
    long nz;
    int i;
 
-   getnz_ (&nz);
+   GETNZ (&nz);
    dz = (double *) malloc(nz*sizeof(double));
-   getdz_ (dz, &nz);
+   GETDZ (dz, &nz);
    jdz = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nz; i++)
    {
@@ -91,11 +125,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getTransport(JNIEnv *env, jclass obj, jflo
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    c = (double *) malloc(nn*sizeof(double));
-   getconc_ (c, &nn);
+   GETCONC (c, &nn);
    jc = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -112,11 +146,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getKSat(JNIEnv *env, jclass obj, jfloatArr
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    ksat = (double *) malloc(nn*sizeof(double));
-   getksat_ (ksat, &nn);
+   GETKSAT (ksat, &nn);
    jksat = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -133,11 +167,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getTexturalClassArray(JNIEnv *env, jclass 
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    tex = (int *) malloc(nn*sizeof(int));
-   gettex_ (tex, &nn);
+   GETTEX (tex, &nn);
    jtex = (*env)->GetIntArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -154,13 +188,13 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getMoistureContent(JNIEnv *env, jclass obj
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);     /* Get the number of cells in the x direction */
-   getnz_ (&nz);     /* Get the number of cells in the z direction */
+   GETNX (&nx);     /* Get the number of cells in the x direction */
+   GETNZ (&nz);     /* Get the number of cells in the z direction */
    nn = nx*nz;     /* Determine the total number of cells */
    moist = (double *) malloc(nn*sizeof(double));   /* allocate memory */
 
    /**** Get the moisture content from the model ****/   
-   getmoist_ (moist, &nn);
+   GETMOIST (moist, &nn);
    
    jmoist = (*env)->GetFloatArrayElements(env, jvalue, NULL);   /* Get a pointer to the elements in jvalue */
 
@@ -180,11 +214,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getSaturation(JNIEnv *env, jclass obj, jfl
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    sat = (double *) malloc(nn*sizeof(double));
-   getsat_ (sat, &nn);
+   GETSAT (sat, &nn);
    jsat = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -201,11 +235,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getPressureHead(JNIEnv *env, jclass obj, j
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    phead = (double *) malloc(nn*sizeof(double));
-   getphead_ (phead, &nn);
+   GETPHEAD (phead, &nn);
    jphead = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -218,25 +252,25 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getPressureHead(JNIEnv *env, jclass obj, j
 JNIEXPORT jint JNICALL Java_vs2_vs2dt_getTimeStep(JNIEnv *env, jclass obj)
 {
    long ktime;
-   getstep_ (&ktime);
+   GETSTEP (&ktime);
    return (jint) ktime;
 }
 
 JNIEXPORT jfloat JNICALL Java_vs2_vs2dt_getModelTime(JNIEnv *env, jclass obj)
 {
    double stime;
-   getstime_ (&stime);
+   GETSTIME (&stime);
    return (jfloat) stime;
 }
 
 JNIEXPORT void JNICALL Java_vs2_vs2dt_cleanup(JNIEnv *env, jclass obj)
 {
-   closeio_ ();
+   CLOSEIO ();
 }
 
 JNIEXPORT void JNICALL Java_vs2_vs2dt_releaseMemory(JNIEnv *env, jclass obj)
 {
-   releasememory_ ();
+   RELEASEMEMORY ();
 }
 
 JNIEXPORT void JNICALL Java_vs2_vs2dt_getFlowMassBalanceErrors(JNIEnv *env, jclass obj, jdoubleArray jvalue)
@@ -245,7 +279,7 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getFlowMassBalanceErrors(JNIEnv *env, jcla
    double *err;
 
    err = (double *) malloc(2*sizeof(double));
-   getflowmberr_(err);
+   GETFLOWMBERR(err);
    jerr = (*env)->GetDoubleArrayElements(env, jvalue, NULL);
    jerr[0] = err[0];
    jerr[1] = err[1];
@@ -259,7 +293,7 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getTransportMassBalanceErrors(JNIEnv *env,
    double *err;
 
    err = (double *) malloc(2*sizeof(double));
-   gettransmberr_(err);
+   GETTRANSMBERR(err);
    jerr = (*env)->GetDoubleArrayElements(env, jvalue, NULL);
    jerr[0] = err[0];
    jerr[1] = err[1];
@@ -274,11 +308,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getVx(JNIEnv *env, jclass obj, jfloatArray
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    vx = (double *) malloc(nn*sizeof(double));
-   getvx_ (vx, &nn);
+   GETVX (vx, &nn);
    jvx = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {
@@ -295,11 +329,11 @@ JNIEXPORT void JNICALL Java_vs2_vs2dt_getVz(JNIEnv *env, jclass obj, jfloatArray
    long nx, nz, nn;
    int i;
 
-   getnx_ (&nx);
-   getnz_ (&nz);
+   GETNX (&nx);
+   GETNZ (&nz);
    nn = nx*nz;
    vz = (double *) malloc(nn*sizeof(double));
-   getvz_ (vz, &nn);
+   GETVZ (vz, &nn);
    jvz = (*env)->GetFloatArrayElements(env, jvalue, NULL);
    for (i=0; i<nn; i++)
    {

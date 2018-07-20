@@ -23,6 +23,11 @@ public class vs2FrameManager extends mp2FrameManager
     protected JCheckBoxMenuItem texturalClassMenuItem;
 
     /**
+     * Menu item to show or hide the chemistry class window
+     */
+    protected JCheckBoxMenuItem chemistryClassMenuItem;
+
+    /**
      * Menu item to show or hide the evapotranspiration window
      */
     protected JCheckBoxMenuItem evapotranspirationMenuItem;
@@ -36,6 +41,11 @@ public class vs2FrameManager extends mp2FrameManager
      * Menu item to display or hide the textural map on the view
      */
     protected JCheckBoxMenuItem texturalMapMenuItem;
+    
+    /**
+     * Menu item to display or hide the chemistry map on the view
+     */
+    protected JCheckBoxMenuItem chemistryMapMenuItem;    
 
     /**
      * Menu item to display or hide the initial conditions for flow on the view
@@ -43,9 +53,9 @@ public class vs2FrameManager extends mp2FrameManager
     protected JCheckBoxMenuItem initialFlowMenuItem;
 
     /**
-     * Menu item to display or hide the initial concentration/temperature on the view
+     * Menu item to display or hide the initial temperature on the view
      */
-    protected JCheckBoxMenuItem initialTransportMenuItem;
+    protected JCheckBoxMenuItem initialTemperatureMenuItem;
 
     /**
      * Menu item to display or hide the boundary conditions on the view
@@ -102,15 +112,16 @@ public class vs2FrameManager extends mp2FrameManager
      * Items in the data chooser.
      */
     protected static String DATA_CHOOSER_ITEM[] =
-            {"Domain",
-             "Textural Map",
-             "Initial Equilibrium Profile",
-             "Initial Concentration",
-             "Boundary Conditions",
-             "Source/Sink Points",
-             "Observation Points",
-             "Grid",
-             "Site Map"};
+            {"Domain",                          // 0
+             "Textural Map",                    // 1
+             "Chemistry Map",                   // 2  *new
+             "Initial Equilibrium Profile",     // 3
+             "Initial Temperature",             // 4
+             "Boundary Conditions",             // 5
+             "Source/Sink Points",              // 6
+             "Observation Points",              // 7
+             "Grid",                            // 8
+             "Site Map"};                       // 9
 
     /**
      * Constructor
@@ -120,36 +131,52 @@ public class vs2FrameManager extends mp2FrameManager
 
         texturalClassMenuItem =
                 new JCheckBoxMenuItem("Textural Class Window", false);
+        texturalClassMenuItem.setMnemonic(KeyEvent.VK_T);
+        chemistryClassMenuItem =
+                new JCheckBoxMenuItem("Chemistry Class Window", false);
+        chemistryClassMenuItem.setMnemonic(KeyEvent.VK_H);
         evapotranspirationMenuItem =
                 new JCheckBoxMenuItem("Evapotranspiration Window", false);
+        evapotranspirationMenuItem.setMnemonic(KeyEvent.VK_E);
         rechargePeriodMenuItem =
                 new JCheckBoxMenuItem("Recharge Period Window", false);
+        rechargePeriodMenuItem.setMnemonic(KeyEvent.VK_R);
         texturalMapMenuItem =
                 new JCheckBoxMenuItem("Textural Map", false);
+        texturalMapMenuItem.setMnemonic(KeyEvent.VK_M);
+        chemistryMapMenuItem =
+                new JCheckBoxMenuItem("Chemistry Map", false);
+        chemistryMapMenuItem.setMnemonic(KeyEvent.VK_E);
         initialFlowMenuItem =
                 new JCheckBoxMenuItem("Initial Pressure Head", false);
-        if (vs2App.doHeat()) {
-            DATA_CHOOSER_ITEM[3] = "Initial Temperature";
-            initialTransportMenuItem =
-                    new JCheckBoxMenuItem("Initial Temperature", false);
-        } else {
-            initialTransportMenuItem =
-                    new JCheckBoxMenuItem("Initial Concentration", false);
-        }
+        initialFlowMenuItem.setMnemonic(KeyEvent.VK_I);
+        initialTemperatureMenuItem
+                = new JCheckBoxMenuItem("Initial Temperature", false);
+        initialTemperatureMenuItem.setMnemonic(KeyEvent.VK_N);
         boundaryConditionsMenuItem =
                 new JCheckBoxMenuItem("Boundary Conditions", false);
+        boundaryConditionsMenuItem.setMnemonic(KeyEvent.VK_B);
         fluidSourceMenuItem =
                 new JCheckBoxMenuItem("Source/Sink Points", false);
+        fluidSourceMenuItem.setMnemonic(KeyEvent.VK_U);
         observationPointsMenuItem =
                 new JCheckBoxMenuItem("Observation Points", false);
+        observationPointsMenuItem.setMnemonic(KeyEvent.VK_O);
         gridMenuItem =
                 new JCheckBoxMenuItem("Grid", false);
+        gridMenuItem.setMnemonic(KeyEvent.VK_G);
         siteMapMenuItem =
                 new JCheckBoxMenuItem("Site Map", false);
+        siteMapMenuItem.setMnemonic(KeyEvent.VK_S);
         postProcessorMenuItem =
                 new JCheckBoxMenuItem("Postprocessor", false);
+        postProcessorMenuItem.setMnemonic(KeyEvent.VK_P);
+        postProcessorMenuItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
         helpMenuItem = new JMenuItem("Contents...");
+        helpMenuItem.setMnemonic(KeyEvent.VK_C);
         aboutMenuItem = new JMenuItem("About...");
+        aboutMenuItem.setMnemonic(KeyEvent.VK_A);
 
         boundaryConditionsLabel = new JLabel("", JLabel.RIGHT);
         rechargePeriodLabel = new JLabel("", JLabel.RIGHT);
@@ -157,6 +184,11 @@ public class vs2FrameManager extends mp2FrameManager
         texturalClassMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 onShowMenuItem(TEXTURAL_CLASS, e);
+            }
+        });
+        chemistryClassMenuItem.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                onShowMenuItem(CHEMISTRY_CLASS, e);
             }
         });
         evapotranspirationMenuItem.addItemListener(new ItemListener() {
@@ -174,14 +206,19 @@ public class vs2FrameManager extends mp2FrameManager
                 onShowMenuItem(TEXTURAL_MAP, e);
             }
         });
+        chemistryMapMenuItem.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                onShowMenuItem(CHEMISTRY_MAP, e);
+            }
+        });
         initialFlowMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 onShowMenuItem(INITIAL_FLOW, e);
             }
         });
-        initialTransportMenuItem.addItemListener(new ItemListener() {
+        initialTemperatureMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                onShowMenuItem(INITIAL_TRANSPORT, e);
+                onShowMenuItem(INITIAL_TEMPERATURE, e);
             }
         });
         boundaryConditionsMenuItem.addItemListener(new ItemListener() {
@@ -220,17 +257,14 @@ public class vs2FrameManager extends mp2FrameManager
             }
         });
         bufferedGraphicsMenuItem = new JCheckBoxMenuItem("Buffered Graphics", false);
+        bufferedGraphicsMenuItem.setMnemonic(KeyEvent.VK_B);
         bufferedGraphicsMenuItem.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 onBufferedGraphics(e.getStateChange()==ItemEvent.SELECTED);
             }
         });
         if (mp2App.useJavaHelp()) {
-            if (vs2App.doHeat()) {
-                mp2JavaHelp.initialize("vs2dhiHelp");
-            } else {
-                mp2JavaHelp.initialize("vs2dtiHelp");
-            }
+            mp2JavaHelp.initialize("vs2drtiHelp");
             helpMenuItem.addActionListener(new CSH.DisplayHelpFromSource(mp2JavaHelp.hb));
         } else {
             helpMenuItem.addActionListener(new ActionListener() {
@@ -245,6 +279,8 @@ public class vs2FrameManager extends mp2FrameManager
         switch (index) {
         case TEXTURAL_CLASS:
             return texturalClassMenuItem;
+        case CHEMISTRY_CLASS:
+            return chemistryClassMenuItem;
         case EVAPOTRANSPIRATION:
             return evapotranspirationMenuItem;
         case RECHARGE_PERIOD:
@@ -271,7 +307,8 @@ public class vs2FrameManager extends mp2FrameManager
      */
     public void prepareFrame(mp2Frame frame) {
 
-        String helpFolder = vs2App.doHeat() ? "energy" : "solute";
+//        String helpFolder = vs2App.doHeat() ? "energy" : "solute";
+        String helpFolder = "solute";
         if (!mp2App.useJavaHelp()) {
             mp2HelpWindow.setup(theApp.getHomeDirectory(), helpFolder);
         }
@@ -280,12 +317,14 @@ public class vs2FrameManager extends mp2FrameManager
         showMenu.removeAll();
 
         showMenu.add(texturalClassMenuItem);
+        showMenu.add(chemistryClassMenuItem);
         showMenu.add(evapotranspirationMenuItem);
         showMenu.add(rechargePeriodMenuItem);
         showMenu.addSeparator();
         showMenu.add(texturalMapMenuItem);
+        showMenu.add(chemistryMapMenuItem);
         showMenu.add(initialFlowMenuItem);
-        showMenu.add(initialTransportMenuItem);
+        showMenu.add(initialTemperatureMenuItem);
         showMenu.add(boundaryConditionsMenuItem);
         showMenu.add(fluidSourceMenuItem);
         showMenu.add(observationPointsMenuItem);
@@ -299,8 +338,10 @@ public class vs2FrameManager extends mp2FrameManager
         helpMenu.add(helpMenuItem);
         helpMenu.add(aboutMenuItem);
 
+        /*
         frame.getMenu(OPTIONS_MENU).addSeparator();
         frame.getMenu(OPTIONS_MENU).add(bufferedGraphicsMenuItem);
+        */
 
         JComboBox dataChooser = frame.getDataChooser();
         dataChooser.removeAllItems();
@@ -363,14 +404,20 @@ public class vs2FrameManager extends mp2FrameManager
             texturalClassMenuItem.setSelected(true);
         }
         else if (dataName.equals(DATA_CHOOSER_ITEM[2])) {
+            view.setActiveDataView(CHEMISTRY_MAP);
+            chemistryMapMenuItem.setSelected(true);
+            // Show chemistry class window also
+            chemistryClassMenuItem.setSelected(true);
+        }
+        else if (dataName.equals(DATA_CHOOSER_ITEM[3])) {
             view.setActiveDataView(INITIAL_FLOW);
             initialFlowMenuItem.setSelected(true);
         }
-        else if (dataName.equals(DATA_CHOOSER_ITEM[3])) {
-            view.setActiveDataView(INITIAL_TRANSPORT);
-            initialTransportMenuItem.setSelected(true);
-        }
         else if (dataName.equals(DATA_CHOOSER_ITEM[4])) {
+            view.setActiveDataView(INITIAL_TEMPERATURE);
+            initialTemperatureMenuItem.setSelected(true);
+        }
+        else if (dataName.equals(DATA_CHOOSER_ITEM[5])) {
             if (domainData.getBoundary(0) == null) {
                 mp2MessageBox.showMessageDialog(
                     "Boundary conditions cannot be defined "
@@ -384,7 +431,7 @@ public class vs2FrameManager extends mp2FrameManager
                 rechargePeriodMenuItem.setSelected(true);
             }
         }
-        else if (dataName.equals(DATA_CHOOSER_ITEM[5])) {
+        else if (dataName.equals(DATA_CHOOSER_ITEM[6])) {
             vs2RechargePeriodData rechargePeriodData =
                 (vs2RechargePeriodData) theApp.getDoc().getData(RECHARGE_PERIOD);
             if (rechargePeriodData.getNumberOfRows() == 0) {
@@ -398,11 +445,11 @@ public class vs2FrameManager extends mp2FrameManager
                 fluidSourceMenuItem.setSelected(true);
             }
         }
-        else if (dataName.equals(DATA_CHOOSER_ITEM[6])) {
+        else if (dataName.equals(DATA_CHOOSER_ITEM[7])) {
             view.setActiveDataView(OBSERVATION_POINTS);
             observationPointsMenuItem.setSelected(true);
         }
-        else if (dataName.equals(DATA_CHOOSER_ITEM[7])) {
+        else if (dataName.equals(DATA_CHOOSER_ITEM[8])) {
             if (domainData.getBoundary(0) == null) {
                 mp2MessageBox.showMessageDialog(
                     "Grid cannot be defined "
@@ -414,7 +461,7 @@ public class vs2FrameManager extends mp2FrameManager
                 gridMenuItem.setSelected(true);
             }
         }
-        else if (dataName.equals(DATA_CHOOSER_ITEM[8])) {
+        else if (dataName.equals(DATA_CHOOSER_ITEM[9])) {
             view.setActiveDataView(SITE_MAP);
             siteMapMenuItem.setSelected(true);
         }
@@ -494,11 +541,13 @@ public class vs2FrameManager extends mp2FrameManager
 
     public void resetMenuItems() {
         texturalClassMenuItem.setSelected(false);
+        chemistryClassMenuItem.setSelected(false);
         evapotranspirationMenuItem.setSelected(false);
         rechargePeriodMenuItem.setSelected(false);
         texturalMapMenuItem.setSelected(false);
+        chemistryMapMenuItem.setSelected(false);
         initialFlowMenuItem.setSelected(false);
-        initialTransportMenuItem.setSelected(false);
+        initialTemperatureMenuItem.setSelected(false);
         boundaryConditionsMenuItem.setSelected(false);
         fluidSourceMenuItem.setSelected(false);
         observationPointsMenuItem.setSelected(false);
@@ -532,19 +581,19 @@ public class vs2FrameManager extends mp2FrameManager
         int oldSelectedIndex = dataChooser.getSelectedIndex();
         switch (modelOptions.initialFlowType) {
         case INITIAL_PRESSURE_HEAD:
-            DATA_CHOOSER_ITEM[2] = "Initial Pressure Head";
+            DATA_CHOOSER_ITEM[3] = "Initial Pressure Head";
             break;
         case INITIAL_MOISTURE_CONTENT:
-            DATA_CHOOSER_ITEM[2] = "Initial Moisture Content";
+            DATA_CHOOSER_ITEM[3] = "Initial Moisture Content";
             break;
         case INITIAL_EQUILIBRIUM_PROFILE:  // fall through
         default:
-            DATA_CHOOSER_ITEM[2] = "Initial Equilibrium Profile";
+            DATA_CHOOSER_ITEM[3] = "Initial Equilibrium Profile";
             break;
         }
         dataChooser.removeAllItems();
         for (int i=0; i<DATA_CHOOSER_ITEM.length; i++) {
-            if (!((i==3 && !modelOptions.doTransport) || (i==5 && modelOptions.useRadialCoord))) {
+            if (!((i==4 && !modelOptions.doEnergyTransport) || (i==6 && modelOptions.useRadialCoord) || (i==2 && !modelOptions.doSoluteTransport))) {
                 dataChooser.addItem(DATA_CHOOSER_ITEM[i]);
             }
         }
@@ -558,21 +607,28 @@ public class vs2FrameManager extends mp2FrameManager
         }
 
         // Update the show menu
-        initialFlowMenuItem.setText(DATA_CHOOSER_ITEM[2]);
+        initialFlowMenuItem.setText(DATA_CHOOSER_ITEM[3]);
+        initialFlowMenuItem.setMnemonic(KeyEvent.VK_I);
         JMenu showMenu = frame.getMenu(SHOW_MENU);
         showMenu.removeAll();
         showMenu.add(texturalClassMenuItem);
+        if (modelOptions.doSoluteTransport) {
+            showMenu.add(chemistryClassMenuItem);
+        }
         if (modelOptions.doEvaporation || modelOptions.doTranspiration) {
             showMenu.add(evapotranspirationMenuItem);
         }
         showMenu.add(rechargePeriodMenuItem);
         showMenu.addSeparator();
         showMenu.add(texturalMapMenuItem);
+        if (modelOptions.doSoluteTransport) {
+            showMenu.add(chemistryMapMenuItem);
+        }
         showMenu.add(initialFlowMenuItem);
-        if (modelOptions.doTransport) {
-            showMenu.add(initialTransportMenuItem);
+        if (modelOptions.doEnergyTransport) {
+            showMenu.add(initialTemperatureMenuItem);
         } else {
-            initialTransportMenuItem.setSelected(false);
+            initialTemperatureMenuItem.setSelected(false);
         }
         showMenu.add(boundaryConditionsMenuItem);
         if (modelOptions.useRadialCoord) {
@@ -590,7 +646,7 @@ public class vs2FrameManager extends mp2FrameManager
     class AboutDialog extends JDialog {
 
         public AboutDialog(JFrame frame) {
-            super(frame, "About " + (vs2App.doHeat() ? "VS2DHI" : "VS2DTI"), true);
+            super(frame, "About VS2DRTI", true);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             getContentPane().setLayout(new BorderLayout());
 
@@ -605,7 +661,7 @@ public class vs2FrameManager extends mp2FrameManager
             c.weightx = 2;
             gridbag.setConstraints(panel, c);
             centerPanel.add(panel);
-            String program = vs2App.doHeat() ? "VS2DHI" : "VS2DTI";
+            String program = "VS2DRTI";
             panel.add(new JLabel(program + " - Version " + VS2_VERSION, SwingConstants.CENTER));
             panel.add(new JLabel("U.S. Geological Survey", SwingConstants.CENTER));
 
@@ -645,6 +701,9 @@ public class vs2FrameManager extends mp2FrameManager
             panel.add(new JLabel("of triangle.c has granted free distribution of that program for noncommercial"));
             panel.add(new JLabel("use. Distribution of triangle.c as part of a commerical system is permissible"));
             panel.add(new JLabel("only by direct arrangement with the author of that program."));
+            panel.add(new JLabel("A component of this software uses the program pmgmres_ilu_cr written by Lili Ju"));
+            panel.add(new JLabel("and John Burkardt. This program is distributed under the GNU LGPL license"));
+            panel.add(new JLabel("(https://www.gnu.org/licenses/lgpl-3.0.en.html). "));
 
             panel = new JPanel(new GridLayout(0, 1));
             gridbag.setConstraints(panel, c);
@@ -652,10 +711,10 @@ public class vs2FrameManager extends mp2FrameManager
             panel.setBorder(new CompoundBorder(
                     BorderFactory.createTitledBorder("Credits"),
                     new EmptyBorder(2, 5, 5, 5)));
-            panel.add(new JLabel(program + " was written by:"));
-            panel.add(new JLabel("Paul Hsieh (pahsieh@usgs.gov), U.S. Geological Survey, Menlo Park, CA"));
-            panel.add(new JLabel("William Wingle (wwingle@mines.edu), Colorado School of Mines, Golden, CO"));
-            panel.add(new JLabel("Richard Healy (rwhealy@usgs.gov), U.S. Geological Survey, Denver, CO"));
+            panel.add(new JLabel("The VS2DRTI graphical user interface was developed by Scott Charlton"));
+            panel.add(new JLabel("(charlton@usgs.gov) U.S. Geological Survey, Golden, CO from the VS2DI interface"));
+            panel.add(new JLabel("written by Paul Hsieh (pahseih@usgs.gov), U.S. Geological Survey, Menlo Park, CA"));
+            panel.add(new JLabel("and William Wingle (wwingle@mines.edu), Colorado School of Mines, Golden CO."));
 
             panel = new JPanel(new GridLayout(0, 1));
             gridbag.setConstraints(panel, c);

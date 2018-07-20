@@ -14,6 +14,7 @@ public class vs2ObservationPointsData extends mp2ObservationPointsData
      * Exports data to VS2DT model input file
      */
     public void exportData(PrintWriter pw, boolean outputToAuxFilesEveryTimeStep) {
+        final int commentOffset = 23;
         discretize();
 
         if (observationCellIndices == null ||
@@ -21,14 +22,16 @@ public class vs2ObservationPointsData extends mp2ObservationPointsData
             return;
         }
 
-        // Card A-15
+        // Card A-22
         int nobs = observationCellIndices.size();
         if (!outputToAuxFilesEveryTimeStep) {
-            pw.print("-");
+            nobs *= -1;
         }
-        pw.println(nobs + "     /A15 -- NOBS. A16 begines next line: J, N");
+        String s = String.valueOf(nobs);
+        pw.println(s + vs2App.tab(s, commentOffset)
+                + "/A-22 -- NOBS. A-23 begins next line: J, N");
 
-        // Card A-16
+        // Card A-23
         int i, index, row, col;
         mp2RectilinearGridData rectGridData = (mp2RectilinearGridData) gridData;
         int numCol = rectGridData.getXCoords().length - 1;

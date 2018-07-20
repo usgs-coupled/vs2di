@@ -59,7 +59,7 @@ public class vs2ModelTypeDialog extends mp2Dialog implements vs2Constants {
         gridbag.setConstraints(leftPanel, c);
         panel.add(leftPanel);
         leftPanel.add(new JLabel("Hydraulic Function:", SwingConstants.RIGHT));
-        leftPanel.add(new JLabel("Adsorption/Ion Exchange:", SwingConstants.RIGHT));
+        leftPanel.add(new JLabel("Adsorption/Ion Exchange:", SwingConstants.RIGHT)).setEnabled(false);
         
         JPanel rightPanel = new JPanel(new GridLayout(0, 1, 10, 10));
         c.insets = new Insets(0, 10, 0, 0);
@@ -79,6 +79,7 @@ public class vs2ModelTypeDialog extends mp2Dialog implements vs2Constants {
         adsorptionChooser.addItem("Monovalent-divalent ion exch");
         adsorptionChooser.addItem("Divalent-monovalent ion exch");
         adsorptionChooser.addItem("Divalent-divalent ion exch");
+        adsorptionChooser.setEnabled(false);
         
         ButtonGroup bg = new ButtonGroup();
         bg.add(soluteRadioButton);

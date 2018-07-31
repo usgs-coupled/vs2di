@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioUserFile ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{A35940C4-7A25-405E-9211-44EB3C8F607C}">
+	<Configurations>
+		<Configuration Name="openmp_debug|Win32" WorkingDirectory="C:\cruncher\VS2DI\reactive\GMRes_test\vs2drti_ver1.4_examples\flow\example1"/>
+		<Configuration Name="openmp|Win32"/>
+		<Configuration Name="openmp_debug|x64"/>
+		<Configuration Name="openmp|x64"/></Configurations></VisualStudioUserFile>

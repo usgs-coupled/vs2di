@@ -259,6 +259,7 @@ SET(vs2drtf_SOURCES
   src/Call_RM.F90
   src/mgmres.f90
   src/modules.f90
+  src/parallel_solute_transport.F90
   src/vs2dt3_3_reactive_withoutArgus1.F90
   ${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/RM_interface.F90
 )
@@ -266,12 +267,20 @@ SET(vs2drtf_SOURCES
 # place [*.F[90]] files into "Source Files"
 source_group("Source Files" FILES "src/Call_RM.F90")
 source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/RM_interface.F90")
+source_group("Source Files" FILES "src/parallel_solute_transport.F90")
 source_group("Source Files" FILES "src/vs2dt3_3_reactive_withoutArgus1.F90")
 
 if (WIN32)
   add_library(vs2drtf STATIC ${vs2drtf_SOURCES})
 else()
   add_library(vs2drtf SHARED ${vs2drtf_SOURCES})
+endif()
+
+if (OPENMP_FOUND)
+  ADD_DEFINITIONS(-DUSE_OPENMP)
+  SET_TARGET_PROPERTIES(vs2drtf PROPERTIES
+                        COMPILE_FLAGS "${OpenMP_Fortran_FLAGS}"
+                        LINK_FLAGS "${OpenMP_Fortran_FLAGS}")
 endif()
 
 SET(vs2drtJni_SOURCES
@@ -292,38 +301,40 @@ endif ()
 # Java
 find_package(Java)
 
-if (MSVC)
-  set(CompilerFlags
-    CMAKE_CXX_FLAGS
-    CMAKE_CXX_FLAGS_DEBUG
-    CMAKE_CXX_FLAGS_RELEASE
-    CMAKE_CXX_FLAGS_MINSIZEREL
-    CMAKE_CXX_FLAGS_RELWITHDEBINFO
-    CMAKE_C_FLAGS
-    CMAKE_C_FLAGS_DEBUG
-    CMAKE_C_FLAGS_RELEASE
-    CMAKE_C_FLAGS_MINSIZEREL
-    CMAKE_C_FLAGS_RELWITHDEBINFO
-  )
-
-  # Set C/C++ Runtime Library to Multi-threaded (/MT) 
-  foreach(CompilerFlag ${CompilerFlags})
-    if(${CompilerFlag} MATCHES "/MD")
-      string(REGEX REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
-    endif()
-  endforeach()
-  
-  set(FortranCompilerFlags
-    CMAKE_Fortran_FLAGS
-  )
-  
-  # Set Fortran Runtime Library to Multithreaded
-  foreach(FortranCompilerFlags ${FortranCompilerFlags})
-    if(${FortranCompilerFlags} MATCHES "/libs:dll")
-      string(REGEX REPLACE "/libs:dll" "/libs:static" ${FortranCompilerFlags} "${${FortranCompilerFlags}}")
-    endif()  
-  endforeach()  
-endif()
+### if (MSVC)
+###   set(CompilerFlags
+###     CMAKE_CXX_FLAGS
+###     CMAKE_CXX_FLAGS_DEBUG
+###     CMAKE_CXX_FLAGS_RELEASE
+###     CMAKE_CXX_FLAGS_MINSIZEREL
+###     CMAKE_CXX_FLAGS_RELWITHDEBINFO
+###     CMAKE_C_FLAGS
+###     CMAKE_C_FLAGS_DEBUG
+###     CMAKE_C_FLAGS_RELEASE
+###     CMAKE_C_FLAGS_MINSIZEREL
+###     CMAKE_C_FLAGS_RELWITHDEBINFO
+###   )
+### 
+###   # Set C/C++ Runtime Library to Multi-threaded (/MT) 
+###   foreach(CompilerFlag ${CompilerFlags})
+###     if(${CompilerFlag} MATCHES "/MD")
+###       string(REGEX REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+###     endif()
+###   endforeach()
+###   
+###   if (OPENMP_FOUND)
+###     set(FortranCompilerFlags "CMAKE_Fortran_FLAGS ${OpenMP_Fortran_FLAGS}")
+###   else()
+###     set(FortranCompilerFlags "CMAKE_Fortran_FLAGS")
+###   endif()
+###   
+###   # Set Fortran Runtime Library to Multithreaded
+###   foreach(FortranCompilerFlags ${FortranCompilerFlags})
+###     if(${FortranCompilerFlags} MATCHES "/libs:dll")
+###       string(REGEX REPLACE "/libs:dll" "/libs:static" ${FortranCompilerFlags} "${${FortranCompilerFlags}}")
+###     endif()  
+###   endforeach()  
+### endif()
 
 if (WIN32)
   install(TARGETS vs2drtJni DESTINATION ${CMAKE_INSTALL_BINDIR})

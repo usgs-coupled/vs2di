@@ -19,7 +19,9 @@
 
     <Feature Id="ProductFeature" Title="vs2drti_msi" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <MergeRef Id="VC110_CRT_x64" />
       <MergeRef Id="VC110_OpenMP_x64" />
+      <MergeRef Id="w_fcompxe_redist_intel64_2013_sp1.1.139" />
     </Feature>
 
     <!-- Properties -->
@@ -53,7 +55,9 @@
 
   <Fragment>
     <DirectoryRef Id="TARGETDIR">
+      <Merge Id='VC110_CRT_x64' Language='0' SourceFile='$(env.DEV_MERGE_DIR)\Microsoft_VC110_CRT_x64.msm' DiskId='1' />
       <Merge Id='VC110_OpenMP_x64' Language='0' SourceFile='$(env.DEV_MERGE_DIR)\Microsoft_VC110_OpenMP_x64.msm' DiskId='1' />
+      <Merge Id='w_fcompxe_redist_intel64_2013_sp1.1.139' Language="1033" SourceFile='$(env.IFORT_COMPILER14)\redist\intel64\compiler\w_fcompxe_redist_intel64_2013_sp1.1.139.msm' DiskId='1' />
     </DirectoryRef>
   </Fragment>
 

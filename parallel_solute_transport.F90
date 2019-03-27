@@ -3,8 +3,8 @@
     double precision, allocatable::QS0(:)
     double precision, allocatable::AOC1(:),BOC1(:),COC1(:),DOC1(:),EOC1(:)
     double precision, allocatable::QS1(:)
-    double precision, allocatable::AS1(:),BS1(:),CS1(:),DS1(:),ES1(:),  &
-        RHSS1(:),XIS1(:)
+    double precision, allocatable::AS1(:),BS1(:),CS1(:),DS1(:)!,ES1(:),  &
+        !RHSS1(:),XIS1(:)
     end module TRXY0
     SUBROUTINE VTSETUPSOL_PARALLEL
     !*******
@@ -50,7 +50,7 @@
         EOC1(NNODES))
     ALLOCATE(QS1(NNODES))
     ALLOCATE(AS1(NNODES),BS1(NNODES),CS1(NNODES), &
-        DS1(NNODES),ES1(NNODES),RHSS1(NNODES),XIS1(NNODES))
+        DS1(NNODES)) !,ES1(NNODES),RHSS1(NNODES),XIS1(NNODES)
     
     AOC0 = AOC
     BOC0 = BOC
@@ -95,13 +95,13 @@
     BS = BS1
     CS = CS1
     DS = DS1
-    ES = ES1
-    RHSS = RHSS1
-    XIS = XIS1
+    !ES = ES1
+    !RHSS = RHSS1
+    !XIS = XIS1
     
     deallocate(AOC0,BOC0,COC0,DOC0,EOC0,QS0)  
     deallocate(AOC1,BOC1,COC1,DOC1,EOC1,QS1) 
-    deallocate(AS1,BS1,CS1,DS1,ES1,RHSS1,XIS1)
+    deallocate(AS1,BS1,CS1,DS1) !,ES1,RHSS1,XIS1
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
     ,' TRANSPORT EQUATION')
@@ -123,7 +123,7 @@
     USE TRXX, only: CC, CCOLD, CSS, DXS1, DXS2, DZS1, DZS2, NCTYP  
     USE TRXY0, only: AOC0, BOC0, COC0, DOC0, EOC0, QS0,  &
         AOC1, BOC1, COC1, DOC1, EOC1, QS1, &
-        AS1, BS1, CS1, DS1, ES1, RHSS1, XIS1
+        AS1, BS1, CS1, DS1!, ES1, RHSS1, XIS1
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
         stdout=>output_unit, &
         stderr=>error_unit  
@@ -670,9 +670,9 @@
         BS1 = BS
         CS1 = CS
         DS1 = DS
-        ES1 = ES
-        RHSS1 = RHSS
-        XIS1 = XIS
+        !ES1 = ES
+        !RHSS1 = RHSS
+        !XIS1 = XIS
     endif
     ! Deallocation
     deallocate(AOC,BOC,COC,DOC,EOC)

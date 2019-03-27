@@ -5043,6 +5043,7 @@
                         !      qx = qt(in)
                         if(SOLUTE) then
                             qx = qs(in)
+                            !qx = vsflx1(in)
                         else
                             qx = qt(in)
                         end if
@@ -5451,6 +5452,7 @@
                     !          qx = qt(in1)
                     if(SOLUTE) then
                         qx = qs(in1)
+                        !qx = vsflx1(in1)
                     else
                         qx = qt(in1)
                     end if

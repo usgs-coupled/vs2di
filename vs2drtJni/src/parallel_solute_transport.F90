@@ -1,6 +1,10 @@
     module TRXY0
     double precision, allocatable::AOC0(:),BOC0(:),COC0(:),DOC0(:),EOC0(:)
     double precision, allocatable::QS0(:)
+    double precision, allocatable::AOC1(:),BOC1(:),COC1(:),DOC1(:),EOC1(:)
+    double precision, allocatable::QS1(:)
+    double precision, allocatable::AS1(:),BS1(:),CS1(:),DS1(:)!,ES1(:),  &
+        !RHSS1(:),XIS1(:)
     end module TRXY0
     SUBROUTINE VTSETUPSOL_PARALLEL
     !*******
@@ -11,6 +15,7 @@
     !    EQUATIONS AND TO CALL MATRIX SOLVER.
     !   
     use COMPNAM, only: compname
+    use EQUATS
     use TRXX, only: QS
     use trxy0
     use trxy2
@@ -41,6 +46,11 @@
     ALLOCATE(AOC0(NNODES),BOC0(NNODES),COC0(NNODES),DOC0(NNODES),&
         EOC0(NNODES))
     ALLOCATE(QS0(NNODES))
+    ALLOCATE(AOC1(NNODES),BOC1(NNODES),COC1(NNODES),DOC1(NNODES),&
+        EOC1(NNODES))
+    ALLOCATE(QS1(NNODES))
+    ALLOCATE(AS1(NNODES),BS1(NNODES),CS1(NNODES), &
+        DS1(NNODES)) !,ES1(NNODES),RHSS1(NNODES),XIS1(NNODES)
     
     AOC0 = AOC
     BOC0 = BOC
@@ -71,8 +81,27 @@
             write(stderr,*) '     ', compname(m)
         endif
     enddo
+
+! copy current values from transport of first solute
+! values are used in flux calculations
+    AOC = AOC1
+    BOC = BOC1
+    COC = COC1
+    DOC = DOC1
+    EOC = EOC1
+    QS = QS1
     
-    deallocate(AOC0,BOC0,COC0,DOC0,EOC0,QS0)     
+    AS = AS1
+    BS = BS1
+    CS = CS1
+    DS = DS1
+    !ES = ES1
+    !RHSS = RHSS1
+    !XIS = XIS1
+    
+    deallocate(AOC0,BOC0,COC0,DOC0,EOC0,QS0)  
+    deallocate(AOC1,BOC1,COC1,DOC1,EOC1,QS1) 
+    deallocate(AS1,BS1,CS1,DS1) !,ES1,RHSS1,XIS1
     RETURN
 4000 FORMAT('MAXIMUM NUMBER OF ITERATIONS EXCEEDED FOR SOLUTE '&
     ,' TRANSPORT EQUATION')
@@ -92,7 +121,9 @@
     USE SCON, only: ITMAX, DELT 
     USE TRXV, only: VX, VZ
     USE TRXX, only: CC, CCOLD, CSS, DXS1, DXS2, DZS1, DZS2, NCTYP  
-    USE TRXY0, only: AOC0, BOC0, COC0, DOC0, EOC0, QS0
+    USE TRXY0, only: AOC0, BOC0, COC0, DOC0, EOC0, QS0,  &
+        AOC1, BOC1, COC1, DOC1, EOC1, QS1, &
+        AS1, BS1, CS1, DS1!, ES1, RHSS1, XIS1
     use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
         stdout=>output_unit, &
         stderr=>error_unit  
@@ -189,7 +220,7 @@
                 DS(N)=0.0D0
                 ES(N)=0.0D0
                 RHSS(N)=0.0D0
-                if(it.eq.1) then
+                !if(it.eq.1) then
                     CCOLD(M,N)=CC(M,N)
                     IF(NTYP(N).EQ.1) then
                         dum(n) = qs(n)
@@ -197,7 +228,7 @@
                     else
                         qs(n) = 0.0d0
                     end if
-                end if
+                !end if
                 TempC(N)=CC(M,N)
                 IF(HX(N).NE.0.0D0) THEN
                     N2=JTEX(N)
@@ -627,7 +658,22 @@
     !WRITE(6,4000)
     !RETURN
 !60  CONTINUE
-
+    if (M .eq. 1) then
+        AOC1 = AOC
+        BOC1 = BOC
+        COC1 = COC
+        DOC1 = DOC
+        EOC1 = EOC
+        QS1 = QS
+        
+        AS1 = AS
+        BS1 = BS
+        CS1 = CS
+        DS1 = DS
+        !ES1 = ES
+        !RHSS1 = RHSS
+        !XIS1 = XIS
+    endif
     ! Deallocation
     deallocate(AOC,BOC,COC,DOC,EOC)
     deallocate(AS,BS,CS,DS,ES,RHSS,XIS)

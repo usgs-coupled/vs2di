@@ -1,11 +1,11 @@
-README.TXT                                           December 14, 2017
+README.TXT                                           @VER_DATE@
 
                                  VS2DRTI
 
         A Graphical Software Package for Simulating Water Flow and Heat
         and Reactive Solute Transport in Variably Saturated Porous Media
 
-                    VS2DRTI - Version 1.4  2017/12/14
+                    VS2DRTI - Version @MAJOR_MINOR@  @BDATE@
 
                                   for
                            Microsoft Windows
@@ -41,9 +41,9 @@ B. DISTRIBUTION FILES
 The following distribution files are currently available for
 Windows:
 
-  vs2drti-1.4.0-12981-x64.msi  -  VS2DRTI version 1.4 installation program
+  vs2drti-@VERSION@-@REVISION@-x64.msi  -  VS2DRTI version @MAJOR_MINOR@ installation program
 
-  vs2drti1.4_examples.zip  -  Zip file containing
+  vs2drti@MAJOR_MINOR@_examples.zip  -  Zip file containing
                              examples and tutorial
 
 
@@ -119,7 +119,7 @@ directory, but you may use other directories or disk drives.
 The following directory structure will be created (the contents of each 
 directory are shown to the right):
 
-      vs2drti-1.4.0    ; README_WINDOWS.TXT
+      vs2drti-@VERSION@    ; README_WINDOWS.TXT
         -----bin       ; executables and DLLs
         -----database  ; Phreeqc database files
         -----doc       ; model reports and input instructions
@@ -134,7 +134,7 @@ the software can be run as follows:
 
 1. Click the "Start" button
 2. Select "Programs"
-3. Select "VS2DRTI 1.4"
+3. Select "VS2DRTI @MAJOR_MINOR@"
 4  Click:
      VS2DRTI -- to simulate water flow and heat and solute transport 
      Postprocessor -- to run the postprocessor in standalone mode
@@ -154,7 +154,7 @@ The following procedure is used to uninstall the VS2DRTI package:
      click "Control Panel". The Control Panel is displayed.
   2. Double Click on "Add/Remove Programs". 
      The "Add/Remove Programs Properties" dialog box is displayed.
-  3. From the list of installed programs, select "VS2DRTI 1.4".
+  3. From the list of installed programs, select "VS2DRTI @MAJOR_MINOR@".
   4. Click "Add/Remove". Windows will uninstall the application.
 
 Note that user data will not be removed by the uninstallation

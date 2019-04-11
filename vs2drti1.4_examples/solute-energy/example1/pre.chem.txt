@@ -42,8 +42,6 @@ Initial solution 1.	Initial solution
                  Ionic strength (mol/kgw)  =  1.183e-002
                        Mass of water (kg)  =  1.000e+000
                  Total alkalinity (eq/kg)  = -6.772e-008
-                    Total carbon (mol/kg)  =  0.000e+000
-                       Total CO2 (mol/kg)  =  0.000e+000
                          Temperature (°C)  =  12.00
                   Electrical balance (eq)  = -5.120e-011
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  -0.00
@@ -148,8 +146,6 @@ Initial solution 2.	Boundary condition solution
                  Ionic strength (mol/kgw)  =  2.558e-003
                        Mass of water (kg)  =  1.000e+000
                  Total alkalinity (eq/kg)  =  2.047e-007
-                    Total carbon (mol/kg)  =  0.000e+000
-                       Total CO2 (mol/kg)  =  0.000e+000
                          Temperature (°C)  =  40.00
                   Electrical balance (eq)  = -3.508e-017
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  -0.00
@@ -206,7 +202,7 @@ End of simulation.
 Reading input data for simulation 5.
 ------------------------------------
 
---------------------------------
-End of Run after 180.23 Seconds.
---------------------------------
+-------------------------------
+End of Run after 0.098 Seconds.
+-------------------------------
 

@@ -36,8 +36,6 @@ Initial solution 0.	Recharge solution
                  Ionic strength (mol/kgw)  =  1.007e-007
                        Mass of water (kg)  =  1.000e+000
                  Total alkalinity (eq/kg)  =  1.217e-009
-                    Total carbon (mol/kg)  =  0.000e+000
-                       Total CO2 (mol/kg)  =  0.000e+000
                          Temperature (°C)  =  25.00
                   Electrical balance (eq)  = -1.217e-009
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  -0.60
@@ -109,8 +107,6 @@ Initial solution 1.	Initial solution
                  Ionic strength (mol/kgw)  =  1.416e-004
                        Mass of water (kg)  =  1.000e+000
                  Total alkalinity (eq/kg)  =  1.261e-009
-                    Total carbon (mol/kg)  =  0.000e+000
-                       Total CO2 (mol/kg)  =  0.000e+000
                          Temperature (°C)  =  25.00
                   Electrical balance (eq)  = -2.829e-004
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  = -99.93
@@ -152,7 +148,7 @@ End of simulation.
 Reading input data for simulation 3.
 ------------------------------------
 
---------------------------------
-End of Run after 62.884 Seconds.
---------------------------------
+-------------------------------
+End of Run after 0.062 Seconds.
+-------------------------------
 

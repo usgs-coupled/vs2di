@@ -2308,8 +2308,8 @@
   +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      1.55975E-03         0.00000E+00         0.00000E+00    +
-  +                              CHANGE IN FLUID STORED IN DOMAIN --      7.80291E-01         2.38619E-14         1.17707E-16    +
-  +                                          FLUID VOLUME BALANCE --      2.82720E-09        -1.59673E-14        -7.87639E-17    +
+  +                              CHANGE IN FLUID STORED IN DOMAIN --      7.80291E-01         2.49719E-14         1.23182E-16    +
+  +                                          FLUID VOLUME BALANCE --      2.82717E-09        -2.08797E-14        -1.02996E-16    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       DATA FOR RECHARGE PERIOD         2
@@ -3762,7 +3762,7 @@
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      1.55975E-03         0.00000E+00         0.00000E+00    +
   +                              CHANGE IN FLUID STORED IN DOMAIN --      1.94394E-03        -6.33931E-06        -3.12708E-08    +
-  +                                          FLUID VOLUME BALANCE --      8.62892E-08        -1.49020E-13        -7.35090E-16    +
+  +                                          FLUID VOLUME BALANCE --      8.62889E-08        -1.50473E-13        -7.42261E-16    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       DATA FOR RECHARGE PERIOD         3
@@ -4939,7 +4939,7 @@
   +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      1.55975E-03         0.00000E+00         0.00000E+00    +
-  +                              CHANGE IN FLUID STORED IN DOMAIN --      7.80297E-01         2.21243E-14         1.09136E-16    +
-  +                                          FLUID VOLUME BALANCE --      8.90994E-08        -1.31709E-14        -6.49699E-17    +
+  +                              CHANGE IN FLUID STORED IN DOMAIN --      7.80297E-01         2.21406E-14         1.09216E-16    +
+  +                                          FLUID VOLUME BALANCE --      8.90989E-08        -2.19749E-14        -1.08399E-16    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

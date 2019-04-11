@@ -1625,34 +1625,34 @@
   +                                                                                           TOTAL THIS          RATE THIS      +
   +                                 VOLUMETRIC FLOW BALANCE                  TOTAL            TIME STEP            TIME STEP     +
   +                                                                        m   **3             m   **3           m   **3/day     +
-  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      1.00320E-11         0.00000E+00         0.00000E+00    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.32368E-07        -3.32807E-08        -5.73141E-08    +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      5.24799E-09         0.00000E+00         0.00000E+00    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.50779E-07        -4.03013E-08        -6.94045E-08    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      4.00000E+03         4.64538E+02         8.00000E+02    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                        TOTAL FLUX INTO DOMAIN --      4.00000E+03         4.64538E+02         8.00000E+02    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.32368E-07        -3.32807E-08        -5.73141E-08    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.50779E-07        -4.03013E-08        -6.94045E-08    +
   +                                                   EVAPORATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                              CHANGE IN FLUID STORED IN DOMAIN --      4.00000E+03         4.64538E+02         8.00000E+02    +
-  +                                          FLUID VOLUME BALANCE --      3.34984E-06         2.99613E-08         5.15976E-08    +
+  +                                          FLUID VOLUME BALANCE --      3.06394E-06         3.67106E-07         6.32208E-07    +
   +                                                                                                                              +
   +                                                                                                                              +
   +                                   ENERGY MASS BALANCE                                                                        +
   +                                                                          J                   J                 J   /day      +
-  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      4.90698E-04         0.00000E+00         0.00000E+00    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -5.10351E+00        -1.24669E+00        -2.14698E+00    +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      2.41332E-01         0.00000E+00         0.00000E+00    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -5.77545E+00        -1.41127E+00        -2.43040E+00    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      6.68800E+11         7.76707E+10         1.33760E+11    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                                   CONDUCTIVE FLUX INTO DOMAIN --      4.96430E-02         6.05030E-03         1.04195E-02    +
-  +                                 CONDUCTIVE FLUX OUT OF DOMAIN --     -1.42168E-02        -1.75921E-03        -3.02961E-03    +
+  +                                   CONDUCTIVE FLUX INTO DOMAIN --      5.89193E-02         7.06777E-03         1.21717E-02    +
+  +                                 CONDUCTIVE FLUX OUT OF DOMAIN --     -1.40545E-02        -1.76575E-03        -3.04088E-03    +
   +                                        TOTAL FLUX INTO DOMAIN --      6.68800E+11         7.76707E+10         1.33760E+11    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -5.11772E+00        -1.24845E+00        -2.15001E+00    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -5.78951E+00        -1.41303E+00        -2.43344E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                   ENERGY FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN ENERGY STORED IN DOMAIN --      6.68800E+11         7.76707E+10         1.33760E+11    +
-  +                                           ENERGY MASS BALANCE --      8.86167E+04         2.25437E+04         3.88235E+04    +
+  +                                           ENERGY MASS BALANCE --      8.86193E+04         2.25440E+04         3.88240E+04    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       DATA FOR RECHARGE PERIOD         2
@@ -2408,33 +2408,33 @@
   +                                                                                           TOTAL THIS          RATE THIS      +
   +                                 VOLUMETRIC FLOW BALANCE                  TOTAL            TIME STEP            TIME STEP     +
   +                                                                        m   **3             m   **3           m   **3/day     +
-  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      9.92694E-09         0.00000E+00         0.00000E+00    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -4.16932E-05        -4.14016E-06        -7.75263E-06    +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      2.16669E-08         0.00000E+00         0.00000E+00    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -4.18009E-05        -4.14625E-06        -7.76404E-06    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      4.00000E+03         0.00000E+00         0.00000E+00    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                        TOTAL FLUX INTO DOMAIN --      4.00000E+03         0.00000E+00         0.00000E+00    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -4.16932E-05        -4.14016E-06        -7.75263E-06    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -4.18009E-05        -4.14625E-06        -7.76404E-06    +
   +                                                   EVAPORATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                              CHANGE IN FLUID STORED IN DOMAIN --      4.00000E+03         2.39650E-05         4.48755E-05    +
-  +                                          FLUID VOLUME BALANCE --     -1.12344E-03        -2.81051E-05        -5.26281E-05    +
+  +                              CHANGE IN FLUID STORED IN DOMAIN --      4.00000E+03         2.38159E-05         4.45964E-05    +
+  +                                          FLUID VOLUME BALANCE --     -1.12459E-03        -2.79622E-05        -5.23604E-05    +
   +                                                                                                                              +
   +                                                                                                                              +
   +                                   ENERGY MASS BALANCE                                                                        +
   +                                                                          J                   J                 J   /day      +
-  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      4.56470E-01         0.00000E+00         0.00000E+00    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.59442E+03        -1.64555E+02        -3.08136E+02    +
+  +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      9.32497E-01         0.00000E+00         0.00000E+00    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -1.59889E+03        -1.64702E+02        -3.08411E+02    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      6.68800E+11         0.00000E+00         0.00000E+00    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                                   CONDUCTIVE FLUX INTO DOMAIN --      4.23964E-01         8.68939E-03         1.62713E-02    +
-  +                                 CONDUCTIVE FLUX OUT OF DOMAIN --     -1.50955E-01        -3.17798E-03        -5.95091E-03    +
-  +                                        TOTAL FLUX INTO DOMAIN --      6.68800E+11         8.68939E-03         1.62713E-02    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.59457E+03        -1.64558E+02        -3.08142E+02    +
+  +                                   CONDUCTIVE FLUX INTO DOMAIN --      4.69786E-01         9.32793E-03         1.74670E-02    +
+  +                                 CONDUCTIVE FLUX OUT OF DOMAIN --     -1.49395E-01        -3.17695E-03        -5.94898E-03    +
+  +                                        TOTAL FLUX INTO DOMAIN --      6.68800E+11         9.32793E-03         1.74670E-02    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -1.59904E+03        -1.64705E+02        -3.08417E+02    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                   ENERGY FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN ENERGY STORED IN DOMAIN --      6.68800E+11        -1.64684E+02        -3.08378E+02    +
-  +                                           ENERGY MASS BALANCE --      8.86290E+04         1.34984E-01         2.52763E-01    +
+  +                             CHANGE IN ENERGY STORED IN DOMAIN --      6.68800E+11        -1.64824E+02        -3.08641E+02    +
+  +                                           ENERGY MASS BALANCE --      8.86335E+04         1.28771E-01         2.41129E-01    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

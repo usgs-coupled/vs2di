@@ -1553,96 +1553,96 @@ Cl
    176     010
    177     000
  TIME STEP         1  TIME =   0.100000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP         2  TIME =   0.200000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP         3  TIME =   0.300000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP         4  TIME =   0.400000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP         2  TIME =   0.200000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP         3  TIME =   0.300000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP         4  TIME =   0.400000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP         5  TIME =   0.500000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP         6  TIME =   0.600000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP         6  TIME =   0.600000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP         7  TIME =   0.700000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP         8  TIME =   0.800000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP         8  TIME =   0.800000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP         9  TIME =   0.900000E+01  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        10  TIME =   0.100000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        11  TIME =   0.110000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        12  TIME =   0.120000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        11  TIME =   0.110000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        12  TIME =   0.120000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP        13  TIME =   0.130000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        14  TIME =   0.140000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        15  TIME =   0.150000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        16  TIME =   0.160000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        14  TIME =   0.140000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        15  TIME =   0.150000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        16  TIME =   0.160000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        17  TIME =   0.170000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        18  TIME =   0.180000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        19  TIME =   0.190000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        20  TIME =   0.200000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        21  TIME =   0.210000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        22  TIME =   0.220000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        23  TIME =   0.230000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        24  TIME =   0.240000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        18  TIME =   0.180000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        19  TIME =   0.190000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        20  TIME =   0.200000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        21  TIME =   0.210000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        22  TIME =   0.220000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        23  TIME =   0.230000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        24  TIME =   0.240000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        25  TIME =   0.250000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        26  TIME =   0.260000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        27  TIME =   0.270000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        28  TIME =   0.280000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        29  TIME =   0.290000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        30  TIME =   0.300000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        31  TIME =   0.310000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        32  TIME =   0.320000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        33  TIME =   0.330000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        34  TIME =   0.340000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        35  TIME =   0.350000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        26  TIME =   0.260000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        27  TIME =   0.270000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        28  TIME =   0.280000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        29  TIME =   0.290000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        30  TIME =   0.300000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        31  TIME =   0.310000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP        32  TIME =   0.320000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        33  TIME =   0.330000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP        34  TIME =   0.340000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        35  TIME =   0.350000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        36  TIME =   0.360000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        37  TIME =   0.370000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        38  TIME =   0.380000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        39  TIME =   0.390000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        40  TIME =   0.400000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        41  TIME =   0.410000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        42  TIME =   0.420000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        37  TIME =   0.370000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        38  TIME =   0.380000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        39  TIME =   0.390000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        40  TIME =   0.400000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        41  TIME =   0.410000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        42  TIME =   0.420000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        43  TIME =   0.430000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        44  TIME =   0.440000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        45  TIME =   0.450000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        46  TIME =   0.460000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        47  TIME =   0.470000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        48  TIME =   0.480000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        49  TIME =   0.490000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        44  TIME =   0.440000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        45  TIME =   0.450000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        46  TIME =   0.460000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        47  TIME =   0.470000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        48  TIME =   0.480000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        49  TIME =   0.490000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        50  TIME =   0.500000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        51  TIME =   0.510000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        51  TIME =   0.510000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        52  TIME =   0.520000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        53  TIME =   0.530000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        53  TIME =   0.530000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
  TIME STEP        54  TIME =   0.540000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        55  TIME =   0.550000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        56  TIME =   0.560000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        55  TIME =   0.550000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        56  TIME =   0.560000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        57  TIME =   0.570000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        58  TIME =   0.580000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        59  TIME =   0.590000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        60  TIME =   0.600000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        61  TIME =   0.610000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        62  TIME =   0.620000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        59  TIME =   0.590000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        60  TIME =   0.600000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        61  TIME =   0.610000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        62  TIME =   0.620000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        63  TIME =   0.630000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        64  TIME =   0.640000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        65  TIME =   0.650000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        66  TIME =   0.660000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        64  TIME =   0.640000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        65  TIME =   0.650000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        66  TIME =   0.660000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        67  TIME =   0.670000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        68  TIME =   0.680000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        69  TIME =   0.690000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        70  TIME =   0.700000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        71  TIME =   0.710000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        72  TIME =   0.720000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        72  TIME =   0.720000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP        73  TIME =   0.730000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        74  TIME =   0.740000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        74  TIME =   0.740000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        75  TIME =   0.750000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        76  TIME =   0.760000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        77  TIME =   0.770000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        76  TIME =   0.760000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        77  TIME =   0.770000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        78  TIME =   0.780000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        79  TIME =   0.790000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        80  TIME =   0.800000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        81  TIME =   0.810000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        82  TIME =   0.820000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        83  TIME =   0.830000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        84  TIME =   0.840000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        85  TIME =   0.850000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        80  TIME =   0.800000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        81  TIME =   0.810000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        82  TIME =   0.820000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        83  TIME =   0.830000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP        84  TIME =   0.840000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP        85  TIME =   0.850000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        86  TIME =   0.860000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        87  TIME =   0.870000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        87  TIME =   0.870000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        88  TIME =   0.880000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        89  TIME =   0.890000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        89  TIME =   0.890000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        90  TIME =   0.900000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP        91  TIME =   0.910000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP        91  TIME =   0.910000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP        92  TIME =   0.920000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        93  TIME =   0.930000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP        94  TIME =   0.940000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
@@ -1653,64 +1653,64 @@ Cl
  TIME STEP        99  TIME =   0.990000E+02  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       100  TIME =   0.100000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       101  TIME =   0.101000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       102  TIME =   0.102000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       102  TIME =   0.102000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       103  TIME =   0.103000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       104  TIME =   0.104000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       105  TIME =   0.105000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       104  TIME =   0.104000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       105  TIME =   0.105000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       106  TIME =   0.106000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       107  TIME =   0.107000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       108  TIME =   0.108000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       109  TIME =   0.109000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       110  TIME =   0.110000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       111  TIME =   0.111000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       112  TIME =   0.112000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       113  TIME =   0.113000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       114  TIME =   0.114000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       115  TIME =   0.115000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       107  TIME =   0.107000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       108  TIME =   0.108000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       109  TIME =   0.109000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       110  TIME =   0.110000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       111  TIME =   0.111000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       112  TIME =   0.112000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       113  TIME =   0.113000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       114  TIME =   0.114000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       115  TIME =   0.115000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       116  TIME =   0.116000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       117  TIME =   0.117000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       118  TIME =   0.118000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       117  TIME =   0.117000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       118  TIME =   0.118000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       119  TIME =   0.119000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       120  TIME =   0.120000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       121  TIME =   0.121000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       122  TIME =   0.122000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       123  TIME =   0.123000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       124  TIME =   0.124000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       124  TIME =   0.124000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       125  TIME =   0.125000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       126  TIME =   0.126000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       126  TIME =   0.126000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       127  TIME =   0.127000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       128  TIME =   0.128000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       129  TIME =   0.129000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       130  TIME =   0.130000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       131  TIME =   0.131000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       128  TIME =   0.128000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       129  TIME =   0.129000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       130  TIME =   0.130000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       131  TIME =   0.131000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       132  TIME =   0.132000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       133  TIME =   0.133000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       134  TIME =   0.134000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       135  TIME =   0.135000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       133  TIME =   0.133000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP       134  TIME =   0.134000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       135  TIME =   0.135000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       136  TIME =   0.136000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       137  TIME =   0.137000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       137  TIME =   0.137000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       138  TIME =   0.138000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       139  TIME =   0.139000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       140  TIME =   0.140000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       139  TIME =   0.139000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       140  TIME =   0.140000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       141  TIME =   0.141000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       142  TIME =   0.142000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       143  TIME =   0.143000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       144  TIME =   0.144000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       142  TIME =   0.142000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       143  TIME =   0.143000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       144  TIME =   0.144000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       145  TIME =   0.145000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       146  TIME =   0.146000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       147  TIME =   0.147000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       148  TIME =   0.148000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       148  TIME =   0.148000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       149  TIME =   0.149000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       150  TIME =   0.150000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       151  TIME =   0.151000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       152  TIME =   0.152000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       150  TIME =   0.150000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       151  TIME =   0.151000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       152  TIME =   0.152000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       153  TIME =   0.153000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       154  TIME =   0.154000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       155  TIME =   0.155000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       155  TIME =   0.155000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       156  TIME =   0.156000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       157  TIME =   0.157000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       157  TIME =   0.157000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       158  TIME =   0.158000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       159  TIME =   0.159000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       159  TIME =   0.159000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       160  TIME =   0.160000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
                                                                                       
      TOTAL ELAPSED TIME =  1.600000E+02 sec 
@@ -2267,7 +2267,7 @@ O
      2.300  1.637E-03
      2.500  1.637E-03
      2.700  1.637E-03
-     2.900  1.638E-03
+     2.900  1.637E-03
      3.100  1.638E-03
      3.300  1.638E-03
      3.500  1.638E-03
@@ -2284,7 +2284,7 @@ O
      5.700  1.639E-03
      5.900  1.639E-03
      6.100  1.639E-03
-     6.300  1.640E-03
+     6.300  1.639E-03
      6.500  1.640E-03
      6.700  1.640E-03
      6.900  1.640E-03
@@ -2292,142 +2292,142 @@ O
      7.300  1.641E-03
      7.500  1.641E-03
      7.700  1.641E-03
-     7.900  1.642E-03
+     7.900  1.641E-03
      8.100  1.642E-03
      8.300  1.642E-03
-     8.500  1.643E-03
+     8.500  1.642E-03
      8.700  1.643E-03
-     8.900  1.644E-03
+     8.900  1.643E-03
      9.100  1.644E-03
-     9.300  1.645E-03
+     9.300  1.644E-03
      9.500  1.645E-03
-     9.700  1.646E-03
-     9.900  1.646E-03
-    10.100  1.647E-03
+     9.700  1.645E-03
+     9.900  1.645E-03
+    10.100  1.646E-03
     10.300  1.647E-03
-    10.500  1.648E-03
+    10.500  1.647E-03
     10.700  1.648E-03
-    10.900  1.649E-03
-    11.100  1.650E-03
+    10.900  1.648E-03
+    11.100  1.649E-03
     11.300  1.650E-03
-    11.500  1.651E-03
-    11.700  1.652E-03
+    11.500  1.650E-03
+    11.700  1.651E-03
     11.900  1.652E-03
-    12.100  1.653E-03
-    12.300  1.654E-03
-    12.500  1.655E-03
-    12.700  1.656E-03
-    12.900  1.656E-03
-    13.100  1.657E-03
-    13.300  1.658E-03
-    13.500  1.659E-03
-    13.700  1.660E-03
-    13.900  1.661E-03
-    14.100  1.662E-03
-    14.300  1.663E-03
-    14.500  1.664E-03
-    14.700  1.665E-03
-    14.900  1.665E-03
-    15.100  1.666E-03
-    15.300  1.667E-03
-    15.500  1.668E-03
-    15.700  1.669E-03
-    15.900  1.670E-03
-    16.100  1.671E-03
-    16.300  1.672E-03
-    16.500  1.673E-03
-    16.700  1.674E-03
-    16.900  1.675E-03
-    17.100  1.676E-03
-    17.300  1.677E-03
-    17.500  1.678E-03
-    17.700  1.679E-03
-    17.900  1.680E-03
-    18.100  1.680E-03
-    18.300  1.681E-03
-    18.500  1.682E-03
-    18.700  1.683E-03
-    18.900  1.684E-03
-    19.100  1.685E-03
-    19.300  1.685E-03
-    19.500  1.686E-03
-    19.700  1.687E-03
-    19.900  1.688E-03
-    20.100  1.688E-03
-    20.300  1.689E-03
-    20.500  1.690E-03
-    20.700  1.691E-03
-    20.900  1.691E-03
-    21.100  1.692E-03
-    21.300  1.692E-03
-    21.500  1.693E-03
-    21.700  1.694E-03
-    21.900  1.694E-03
-    22.100  1.695E-03
-    22.300  1.695E-03
-    22.500  1.696E-03
-    22.700  1.696E-03
-    22.900  1.697E-03
-    23.100  1.697E-03
-    23.300  1.698E-03
-    23.500  1.698E-03
-    23.700  1.698E-03
-    23.900  1.699E-03
-    24.100  1.699E-03
-    24.300  1.700E-03
-    24.500  1.700E-03
-    24.700  1.700E-03
-    24.900  1.700E-03
-    25.100  1.701E-03
-    25.300  1.701E-03
-    25.500  1.701E-03
-    25.700  1.702E-03
-    25.900  1.702E-03
-    26.100  1.702E-03
-    26.300  1.702E-03
-    26.500  1.702E-03
-    26.700  1.703E-03
-    26.900  1.703E-03
-    27.100  1.703E-03
-    27.300  1.703E-03
-    27.500  1.703E-03
-    27.700  1.703E-03
-    27.900  1.703E-03
-    28.100  1.703E-03
-    28.300  1.703E-03
-    28.500  1.703E-03
-    28.700  1.703E-03
-    28.900  1.703E-03
-    29.100  1.703E-03
-    29.300  1.703E-03
-    29.500  1.703E-03
-    29.700  1.703E-03
-    29.900  1.703E-03
-    30.100  1.703E-03
-    30.300  1.703E-03
-    30.500  1.703E-03
-    30.700  1.703E-03
-    30.900  1.703E-03
-    31.100  1.702E-03
-    31.300  1.702E-03
-    31.500  1.702E-03
-    31.700  1.702E-03
-    31.900  1.702E-03
-    32.100  1.701E-03
-    32.300  1.701E-03
-    32.500  1.701E-03
-    32.700  1.701E-03
-    32.900  1.700E-03
-    33.100  1.700E-03
-    33.300  1.700E-03
-    33.500  1.700E-03
-    33.700  1.699E-03
-    33.900  1.699E-03
-    34.100  1.699E-03
-    34.300  1.699E-03
-    34.500  1.699E-03
-    34.700  1.699E-03
-    34.900  1.699E-03
+    12.100  1.652E-03
+    12.300  1.653E-03
+    12.500  1.654E-03
+    12.700  1.655E-03
+    12.900  1.655E-03
+    13.100  1.656E-03
+    13.300  1.657E-03
+    13.500  1.658E-03
+    13.700  1.659E-03
+    13.900  1.659E-03
+    14.100  1.660E-03
+    14.300  1.661E-03
+    14.500  1.662E-03
+    14.700  1.663E-03
+    14.900  1.664E-03
+    15.100  1.665E-03
+    15.300  1.666E-03
+    15.500  1.667E-03
+    15.700  1.668E-03
+    15.900  1.669E-03
+    16.100  1.669E-03
+    16.300  1.670E-03
+    16.500  1.671E-03
+    16.700  1.672E-03
+    16.900  1.673E-03
+    17.100  1.674E-03
+    17.300  1.675E-03
+    17.500  1.676E-03
+    17.700  1.677E-03
+    17.900  1.677E-03
+    18.100  1.678E-03
+    18.300  1.679E-03
+    18.500  1.680E-03
+    18.700  1.681E-03
+    18.900  1.682E-03
+    19.100  1.682E-03
+    19.300  1.683E-03
+    19.500  1.684E-03
+    19.700  1.684E-03
+    19.900  1.685E-03
+    20.100  1.686E-03
+    20.300  1.686E-03
+    20.500  1.687E-03
+    20.700  1.688E-03
+    20.900  1.688E-03
+    21.100  1.689E-03
+    21.300  1.689E-03
+    21.500  1.690E-03
+    21.700  1.690E-03
+    21.900  1.691E-03
+    22.100  1.691E-03
+    22.300  1.691E-03
+    22.500  1.692E-03
+    22.700  1.692E-03
+    22.900  1.692E-03
+    23.100  1.693E-03
+    23.300  1.693E-03
+    23.500  1.693E-03
+    23.700  1.693E-03
+    23.900  1.694E-03
+    24.100  1.694E-03
+    24.300  1.694E-03
+    24.500  1.694E-03
+    24.700  1.694E-03
+    24.900  1.694E-03
+    25.100  1.694E-03
+    25.300  1.694E-03
+    25.500  1.694E-03
+    25.700  1.694E-03
+    25.900  1.694E-03
+    26.100  1.694E-03
+    26.300  1.694E-03
+    26.500  1.694E-03
+    26.700  1.694E-03
+    26.900  1.694E-03
+    27.100  1.694E-03
+    27.300  1.694E-03
+    27.500  1.694E-03
+    27.700  1.694E-03
+    27.900  1.693E-03
+    28.100  1.693E-03
+    28.300  1.693E-03
+    28.500  1.693E-03
+    28.700  1.693E-03
+    28.900  1.693E-03
+    29.100  1.692E-03
+    29.300  1.692E-03
+    29.500  1.692E-03
+    29.700  1.692E-03
+    29.900  1.691E-03
+    30.100  1.691E-03
+    30.300  1.691E-03
+    30.500  1.691E-03
+    30.700  1.691E-03
+    30.900  1.690E-03
+    31.100  1.690E-03
+    31.300  1.690E-03
+    31.500  1.690E-03
+    31.700  1.689E-03
+    31.900  1.689E-03
+    32.100  1.689E-03
+    32.300  1.689E-03
+    32.500  1.688E-03
+    32.700  1.688E-03
+    32.900  1.688E-03
+    33.100  1.688E-03
+    33.300  1.688E-03
+    33.500  1.687E-03
+    33.700  1.687E-03
+    33.900  1.687E-03
+    34.100  1.687E-03
+    34.300  1.687E-03
+    34.500  1.687E-03
+    34.700  1.686E-03
+    34.900  1.686E-03
 Charge    
      0.100 -2.818E-01
      0.300 -2.818E-01
@@ -2800,7 +2800,7 @@ Cl
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                              CHANGE IN FLUID STORED IN DOMAIN --      8.33538E-15         7.30057E-16         7.30057E-16    +
-  +                                          FLUID VOLUME BALANCE --     -4.14665E-12        -2.76792E-14        -2.76792E-14    +
+  +                                          FLUID VOLUME BALANCE --     -4.14669E-12        -2.76807E-14        -2.76807E-14    +
   +                                                                                                                              +
 H2O       
   +                                                                                                                              +
@@ -2815,10 +2815,10 @@ H2O
   +                                        TOTAL FLUX INTO DOMAIN --      5.90246E+06         3.68904E+04         3.68904E+04    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -5.90249E+06        -3.68906E+04        -3.68906E+04    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.25376E-03         7.25954E-06         7.25954E-06    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.35492E-03         7.25937E-06         7.25937E-06    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --     -7.73856E-02         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN SOLUTE STORED IN DOMAIN --     -3.00587E+01        -1.87786E-01        -1.87786E-01    +
-  +                                           SOLUTE MASS BALANCE --     -7.73846E-02        -2.92656E-09        -2.92656E-09    +
+  +                                           SOLUTE MASS BALANCE --     -7.73850E-02        -3.30841E-09        -3.30841E-09    +
   +                                                                                                                              +
 H         
   +                                                                                                                              +
@@ -2833,28 +2833,28 @@ H
   +                                        TOTAL FLUX INTO DOMAIN --      1.21361E-03         7.58507E-06         7.58507E-06    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -1.19763E-03        -7.48593E-06        -7.48593E-06    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      3.57719E-06         1.14992E-08         1.14992E-08    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      3.57720E-06         1.15066E-08         1.15066E-08    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --      8.86918E-08         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      1.95577E-05         1.10636E-07         1.10636E-07    +
-  +                                           SOLUTE MASS BALANCE --      8.86889E-08        -6.04140E-13        -6.04140E-13    +
+  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      1.95577E-05         1.10643E-07         1.10643E-07    +
+  +                                           SOLUTE MASS BALANCE --      8.86895E-08        -3.80074E-13        -3.80074E-13    +
   +                                                                                                                              +
 O         
   +                                                                                                                              +
   +                                   SOLUTE MASS BALANCE                                                                        +
   +                                                                          g                   g                 g   /sec      +
   +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      9.69139E-03         6.05712E-05         6.05712E-05    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -9.98982E-03        -6.28454E-05        -6.28454E-05    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -9.93613E-03        -6.23935E-05        -6.23935E-05    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                         DIFFUSIVE/DISPERSIVE FLUX INTO DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                       DIFFUSIVE/DISPERSIVE FLUX OUT OF DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                        TOTAL FLUX INTO DOMAIN --      9.69139E-03         6.05712E-05         6.05712E-05    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -9.98982E-03        -6.28454E-05        -6.28454E-05    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -9.93613E-03        -6.23935E-05        -6.23935E-05    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.04381E-03         9.12650E-08         9.12650E-08    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      9.37009E-04         9.12037E-08         9.12037E-08    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --      7.09349E-07         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      7.46772E-04        -2.18299E-06        -2.18299E-06    +
-  +                                           SOLUTE MASS BALANCE --     -6.85311E-07        -5.23030E-12        -5.23030E-12    +
+  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      6.93175E-04        -1.73109E-06        -1.73109E-06    +
+  +                                           SOLUTE MASS BALANCE --     -1.95496E-07        -1.12210E-12        -1.12210E-12    +
   +                                                                                                                              +
 Charge    
   +                                                                                                                              +
@@ -2872,7 +2872,7 @@ Charge
   +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --     -1.15097E-07        -1.28874E-09        -1.28874E-09    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --     -4.30005E-03         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN SOLUTE STORED IN DOMAIN --     -1.66979E+00        -1.04316E-02        -1.04316E-02    +
-  +                                           SOLUTE MASS BALANCE --     -4.30005E-03         5.31996E-16         5.31996E-16    +
+  +                                           SOLUTE MASS BALANCE --     -4.30005E-03         7.91555E-16         7.91555E-16    +
   +                                                                                                                              +
 Cl        
   +                                                                                                                              +
@@ -2887,10 +2887,10 @@ Cl
   +                                        TOTAL FLUX INTO DOMAIN --      5.92005E+01         3.70003E-01         3.70003E-01    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -1.56981E-03        -1.70849E-04        -1.70849E-04    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      4.08054E-06         4.56896E-08         4.56896E-08    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      4.08053E-06         4.56896E-08         4.56896E-08    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --      1.52450E-01         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN SOLUTE STORED IN DOMAIN --      5.91989E+01         3.69832E-01         3.69832E-01    +
-  +                                           SOLUTE MASS BALANCE --      1.52450E-01        -1.94998E-14        -1.94998E-14    +
+  +                                           SOLUTE MASS BALANCE --      1.52450E-01        -2.26506E-14        -2.26506E-14    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       DATA FOR RECHARGE PERIOD         2
@@ -3099,216 +3099,216 @@ Cl
  TIME STEP       161  TIME =   0.161000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       162  TIME =   0.162000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       163  TIME =   0.163000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       164  TIME =   0.164000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       165  TIME =   0.165000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       166  TIME =   0.166000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       167  TIME =   0.167000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       168  TIME =   0.168000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       169  TIME =   0.169000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       164  TIME =   0.164000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       165  TIME =   0.165000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       166  TIME =   0.166000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       167  TIME =   0.167000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       168  TIME =   0.168000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       169  TIME =   0.169000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       170  TIME =   0.170000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       171  TIME =   0.171000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       172  TIME =   0.172000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       171  TIME =   0.171000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       172  TIME =   0.172000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       173  TIME =   0.173000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       174  TIME =   0.174000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       175  TIME =   0.175000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       176  TIME =   0.176000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       177  TIME =   0.177000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       178  TIME =   0.178000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       175  TIME =   0.175000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       176  TIME =   0.176000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       177  TIME =   0.177000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       178  TIME =   0.178000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       179  TIME =   0.179000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       180  TIME =   0.180000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       181  TIME =   0.181000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       182  TIME =   0.182000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       180  TIME =   0.180000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       181  TIME =   0.181000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       182  TIME =   0.182000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       183  TIME =   0.183000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       184  TIME =   0.184000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       185  TIME =   0.185000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       186  TIME =   0.186000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       187  TIME =   0.187000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       188  TIME =   0.188000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       184  TIME =   0.184000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       185  TIME =   0.185000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       186  TIME =   0.186000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       187  TIME =   0.187000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       188  TIME =   0.188000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     5
  TIME STEP       189  TIME =   0.189000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       190  TIME =   0.190000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       191  TIME =   0.191000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       192  TIME =   0.192000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       190  TIME =   0.190000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       191  TIME =   0.191000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       192  TIME =   0.192000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       193  TIME =   0.193000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       194  TIME =   0.194000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       194  TIME =   0.194000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       195  TIME =   0.195000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       196  TIME =   0.196000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       197  TIME =   0.197000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       198  TIME =   0.198000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       199  TIME =   0.199000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       200  TIME =   0.200000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       201  TIME =   0.201000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       197  TIME =   0.197000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       198  TIME =   0.198000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       199  TIME =   0.199000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       200  TIME =   0.200000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       201  TIME =   0.201000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       202  TIME =   0.202000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       203  TIME =   0.203000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       204  TIME =   0.204000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       203  TIME =   0.203000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       204  TIME =   0.204000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       205  TIME =   0.205000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       206  TIME =   0.206000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       207  TIME =   0.207000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       208  TIME =   0.208000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       207  TIME =   0.207000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       208  TIME =   0.208000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       209  TIME =   0.209000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       210  TIME =   0.210000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       211  TIME =   0.211000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       211  TIME =   0.211000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       212  TIME =   0.212000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       213  TIME =   0.213000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       214  TIME =   0.214000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       213  TIME =   0.213000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       214  TIME =   0.214000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       215  TIME =   0.215000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       216  TIME =   0.216000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       216  TIME =   0.216000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       217  TIME =   0.217000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       218  TIME =   0.218000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       219  TIME =   0.219000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       220  TIME =   0.220000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       221  TIME =   0.221000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       218  TIME =   0.218000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       219  TIME =   0.219000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       220  TIME =   0.220000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       221  TIME =   0.221000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       222  TIME =   0.222000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       223  TIME =   0.223000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       223  TIME =   0.223000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       224  TIME =   0.224000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       225  TIME =   0.225000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       226  TIME =   0.226000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       227  TIME =   0.227000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       228  TIME =   0.228000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       229  TIME =   0.229000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       230  TIME =   0.230000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       228  TIME =   0.228000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       229  TIME =   0.229000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       230  TIME =   0.230000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       231  TIME =   0.231000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       232  TIME =   0.232000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       232  TIME =   0.232000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       233  TIME =   0.233000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       234  TIME =   0.234000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       235  TIME =   0.235000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       235  TIME =   0.235000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       236  TIME =   0.236000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       237  TIME =   0.237000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       238  TIME =   0.238000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       239  TIME =   0.239000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       240  TIME =   0.240000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       237  TIME =   0.237000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       238  TIME =   0.238000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       239  TIME =   0.239000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       240  TIME =   0.240000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       241  TIME =   0.241000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       242  TIME =   0.242000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       243  TIME =   0.243000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       244  TIME =   0.244000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       242  TIME =   0.242000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       243  TIME =   0.243000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       244  TIME =   0.244000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       245  TIME =   0.245000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       246  TIME =   0.246000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       247  TIME =   0.247000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       246  TIME =   0.246000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       247  TIME =   0.247000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       248  TIME =   0.248000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       249  TIME =   0.249000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       250  TIME =   0.250000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       251  TIME =   0.251000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       252  TIME =   0.252000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       253  TIME =   0.253000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       254  TIME =   0.254000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       255  TIME =   0.255000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       256  TIME =   0.256000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       257  TIME =   0.257000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       258  TIME =   0.258000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       259  TIME =   0.259000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       251  TIME =   0.251000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       252  TIME =   0.252000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       253  TIME =   0.253000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       254  TIME =   0.254000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       255  TIME =   0.255000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       256  TIME =   0.256000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       257  TIME =   0.257000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       258  TIME =   0.258000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       259  TIME =   0.259000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       260  TIME =   0.260000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       261  TIME =   0.261000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       261  TIME =   0.261000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       262  TIME =   0.262000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       263  TIME =   0.263000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       264  TIME =   0.264000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       265  TIME =   0.265000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       266  TIME =   0.266000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       267  TIME =   0.267000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       268  TIME =   0.268000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       266  TIME =   0.266000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       267  TIME =   0.267000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       268  TIME =   0.268000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       269  TIME =   0.269000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       270  TIME =   0.270000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       271  TIME =   0.271000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       272  TIME =   0.272000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       273  TIME =   0.273000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       272  TIME =   0.272000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       273  TIME =   0.273000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       274  TIME =   0.274000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       275  TIME =   0.275000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       276  TIME =   0.276000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       275  TIME =   0.275000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       276  TIME =   0.276000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       277  TIME =   0.277000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       278  TIME =   0.278000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       279  TIME =   0.279000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       280  TIME =   0.280000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       281  TIME =   0.281000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       281  TIME =   0.281000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       282  TIME =   0.282000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       283  TIME =   0.283000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       284  TIME =   0.284000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       285  TIME =   0.285000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       286  TIME =   0.286000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       287  TIME =   0.287000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       288  TIME =   0.288000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       283  TIME =   0.283000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       284  TIME =   0.284000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP       285  TIME =   0.285000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       286  TIME =   0.286000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       287  TIME =   0.287000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       288  TIME =   0.288000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       289  TIME =   0.289000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       290  TIME =   0.290000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       290  TIME =   0.290000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       291  TIME =   0.291000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       292  TIME =   0.292000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       293  TIME =   0.293000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       294  TIME =   0.294000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       295  TIME =   0.295000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       296  TIME =   0.296000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       297  TIME =   0.297000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       298  TIME =   0.298000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       299  TIME =   0.299000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       295  TIME =   0.295000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       296  TIME =   0.296000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       297  TIME =   0.297000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       298  TIME =   0.298000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       299  TIME =   0.299000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       300  TIME =   0.300000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       301  TIME =   0.301000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       302  TIME =   0.302000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       303  TIME =   0.303000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       304  TIME =   0.304000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       305  TIME =   0.305000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       301  TIME =   0.301000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       302  TIME =   0.302000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       303  TIME =   0.303000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       304  TIME =   0.304000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       305  TIME =   0.305000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       306  TIME =   0.306000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       307  TIME =   0.307000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       308  TIME =   0.308000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       309  TIME =   0.309000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       307  TIME =   0.307000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       308  TIME =   0.308000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       309  TIME =   0.309000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       310  TIME =   0.310000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       311  TIME =   0.311000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       311  TIME =   0.311000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       312  TIME =   0.312000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       313  TIME =   0.313000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       314  TIME =   0.314000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       315  TIME =   0.315000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       316  TIME =   0.316000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       317  TIME =   0.317000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       318  TIME =   0.318000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       319  TIME =   0.319000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       314  TIME =   0.314000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       315  TIME =   0.315000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       316  TIME =   0.316000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       317  TIME =   0.317000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       318  TIME =   0.318000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP       319  TIME =   0.319000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       320  TIME =   0.320000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       321  TIME =   0.321000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       322  TIME =   0.322000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       321  TIME =   0.321000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       322  TIME =   0.322000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       323  TIME =   0.323000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       324  TIME =   0.324000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       325  TIME =   0.325000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       326  TIME =   0.326000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       327  TIME =   0.327000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       326  TIME =   0.326000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       327  TIME =   0.327000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       328  TIME =   0.328000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       329  TIME =   0.329000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       330  TIME =   0.330000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       331  TIME =   0.331000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       329  TIME =   0.329000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       330  TIME =   0.330000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       331  TIME =   0.331000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       332  TIME =   0.332000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       333  TIME =   0.333000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       334  TIME =   0.334000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       334  TIME =   0.334000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       335  TIME =   0.335000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       336  TIME =   0.336000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       336  TIME =   0.336000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       337  TIME =   0.337000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       338  TIME =   0.338000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       338  TIME =   0.338000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       339  TIME =   0.339000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       340  TIME =   0.340000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       341  TIME =   0.341000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       341  TIME =   0.341000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       342  TIME =   0.342000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       343  TIME =   0.343000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       343  TIME =   0.343000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       344  TIME =   0.344000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       345  TIME =   0.345000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       346  TIME =   0.346000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       347  TIME =   0.347000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       346  TIME =   0.346000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       347  TIME =   0.347000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       348  TIME =   0.348000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       349  TIME =   0.349000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       350  TIME =   0.350000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       350  TIME =   0.350000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       351  TIME =   0.351000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       352  TIME =   0.352000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       353  TIME =   0.353000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       354  TIME =   0.354000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       354  TIME =   0.354000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       355  TIME =   0.355000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       356  TIME =   0.356000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       357  TIME =   0.357000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       358  TIME =   0.358000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       357  TIME =   0.357000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       358  TIME =   0.358000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       359  TIME =   0.359000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       360  TIME =   0.360000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       361  TIME =   0.361000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       360  TIME =   0.360000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       361  TIME =   0.361000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       362  TIME =   0.362000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       363  TIME =   0.363000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       364  TIME =   0.364000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       365  TIME =   0.365000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       366  TIME =   0.366000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       367  TIME =   0.367000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       368  TIME =   0.368000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       363  TIME =   0.363000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       364  TIME =   0.364000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       365  TIME =   0.365000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       366  TIME =   0.366000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       367  TIME =   0.367000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       368  TIME =   0.368000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       369  TIME =   0.369000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       370  TIME =   0.370000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       371  TIME =   0.371000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       372  TIME =   0.372000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       373  TIME =   0.373000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       370  TIME =   0.370000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       371  TIME =   0.371000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       372  TIME =   0.372000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       373  TIME =   0.373000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       374  TIME =   0.374000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       375  TIME =   0.375000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       376  TIME =   0.376000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
@@ -3320,102 +3320,102 @@ Cl
  TIME STEP       382  TIME =   0.382000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       383  TIME =   0.383000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       384  TIME =   0.384000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       385  TIME =   0.385000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       385  TIME =   0.385000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       386  TIME =   0.386000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       387  TIME =   0.387000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       388  TIME =   0.388000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       389  TIME =   0.389000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       390  TIME =   0.390000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       391  TIME =   0.391000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       392  TIME =   0.392000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       393  TIME =   0.393000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       394  TIME =   0.394000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       387  TIME =   0.387000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       388  TIME =   0.388000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       389  TIME =   0.389000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       390  TIME =   0.390000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       391  TIME =   0.391000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       392  TIME =   0.392000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       393  TIME =   0.393000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       394  TIME =   0.394000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       395  TIME =   0.395000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       396  TIME =   0.396000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       397  TIME =   0.397000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       398  TIME =   0.398000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       397  TIME =   0.397000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       398  TIME =   0.398000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       399  TIME =   0.399000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       400  TIME =   0.400000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       401  TIME =   0.401000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       402  TIME =   0.402000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       403  TIME =   0.403000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       404  TIME =   0.404000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       405  TIME =   0.405000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       402  TIME =   0.402000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       403  TIME =   0.403000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       404  TIME =   0.404000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       405  TIME =   0.405000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       406  TIME =   0.406000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       407  TIME =   0.407000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       408  TIME =   0.408000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       409  TIME =   0.409000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       410  TIME =   0.410000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       408  TIME =   0.408000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       409  TIME =   0.409000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       410  TIME =   0.410000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       411  TIME =   0.411000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       412  TIME =   0.412000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       412  TIME =   0.412000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       413  TIME =   0.413000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       414  TIME =   0.414000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       415  TIME =   0.415000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       416  TIME =   0.416000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       417  TIME =   0.417000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       418  TIME =   0.418000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       419  TIME =   0.419000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       420  TIME =   0.420000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       421  TIME =   0.421000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       414  TIME =   0.414000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       415  TIME =   0.415000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       416  TIME =   0.416000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       417  TIME =   0.417000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       418  TIME =   0.418000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       419  TIME =   0.419000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       420  TIME =   0.420000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       421  TIME =   0.421000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       422  TIME =   0.422000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       423  TIME =   0.423000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       424  TIME =   0.424000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       424  TIME =   0.424000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
  TIME STEP       425  TIME =   0.425000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       426  TIME =   0.426000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       427  TIME =   0.427000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       428  TIME =   0.428000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       426  TIME =   0.426000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       427  TIME =   0.427000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       428  TIME =   0.428000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       429  TIME =   0.429000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       430  TIME =   0.430000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       431  TIME =   0.431000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       432  TIME =   0.432000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       433  TIME =   0.433000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       434  TIME =   0.434000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       435  TIME =   0.435000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       436  TIME =   0.436000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       437  TIME =   0.437000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       430  TIME =   0.430000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     4
+ TIME STEP       431  TIME =   0.431000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       432  TIME =   0.432000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       433  TIME =   0.433000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       434  TIME =   0.434000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       435  TIME =   0.435000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       436  TIME =   0.436000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       437  TIME =   0.437000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       438  TIME =   0.438000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       439  TIME =   0.439000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       440  TIME =   0.440000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       441  TIME =   0.441000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       442  TIME =   0.442000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       443  TIME =   0.443000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       440  TIME =   0.440000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       441  TIME =   0.441000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       442  TIME =   0.442000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       443  TIME =   0.443000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       444  TIME =   0.444000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       445  TIME =   0.445000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       446  TIME =   0.446000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       447  TIME =   0.447000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       448  TIME =   0.448000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       449  TIME =   0.449000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       450  TIME =   0.450000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       451  TIME =   0.451000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       452  TIME =   0.452000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       453  TIME =   0.453000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       454  TIME =   0.454000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       455  TIME =   0.455000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       456  TIME =   0.456000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       457  TIME =   0.457000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       458  TIME =   0.458000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       459  TIME =   0.459000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       446  TIME =   0.446000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       447  TIME =   0.447000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       448  TIME =   0.448000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       449  TIME =   0.449000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       450  TIME =   0.450000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       451  TIME =   0.451000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     3
+ TIME STEP       452  TIME =   0.452000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       453  TIME =   0.453000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       454  TIME =   0.454000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       455  TIME =   0.455000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       456  TIME =   0.456000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       457  TIME =   0.457000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       458  TIME =   0.458000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       459  TIME =   0.459000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       460  TIME =   0.460000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       461  TIME =   0.461000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       462  TIME =   0.462000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       463  TIME =   0.463000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       464  TIME =   0.464000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       465  TIME =   0.465000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       461  TIME =   0.461000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       462  TIME =   0.462000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       463  TIME =   0.463000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       464  TIME =   0.464000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       465  TIME =   0.465000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       466  TIME =   0.466000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       467  TIME =   0.467000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       468  TIME =   0.468000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       468  TIME =   0.468000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       469  TIME =   0.469000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       470  TIME =   0.470000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       470  TIME =   0.470000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       471  TIME =   0.471000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       472  TIME =   0.472000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       473  TIME =   0.473000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       472  TIME =   0.472000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       473  TIME =   0.473000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       474  TIME =   0.474000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       475  TIME =   0.475000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       476  TIME =   0.476000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       477  TIME =   0.477000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       475  TIME =   0.475000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       476  TIME =   0.476000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
+ TIME STEP       477  TIME =   0.477000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
  TIME STEP       478  TIME =   0.478000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
  TIME STEP       479  TIME =   0.479000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
- TIME STEP       480  TIME =   0.480000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     1
+ TIME STEP       480  TIME =   0.480000E+03  NIT =     2  NIT1 =     0  NIT3 =     0  NIS1 =     2
                                                                                       
      TOTAL ELAPSED TIME =  4.800000E+02 sec 
      TIME STEP       480
@@ -3957,181 +3957,181 @@ H
     34.700  2.043E-04
     34.900  2.043E-04
 O         
-     0.100  1.615E-03
-     0.300  1.615E-03
-     0.500  1.615E-03
-     0.700  1.615E-03
-     0.900  1.615E-03
-     1.100  1.615E-03
+     0.100  1.616E-03
+     0.300  1.616E-03
+     0.500  1.616E-03
+     0.700  1.616E-03
+     0.900  1.616E-03
+     1.100  1.616E-03
      1.300  1.616E-03
      1.500  1.616E-03
      1.700  1.616E-03
      1.900  1.616E-03
-     2.100  1.616E-03
-     2.300  1.616E-03
-     2.500  1.616E-03
-     2.700  1.616E-03
-     2.900  1.616E-03
-     3.100  1.616E-03
-     3.300  1.616E-03
-     3.500  1.616E-03
-     3.700  1.616E-03
-     3.900  1.617E-03
-     4.100  1.617E-03
-     4.300  1.617E-03
-     4.500  1.617E-03
-     4.700  1.617E-03
-     4.900  1.617E-03
-     5.100  1.618E-03
-     5.300  1.618E-03
-     5.500  1.618E-03
-     5.700  1.618E-03
-     5.900  1.618E-03
-     6.100  1.619E-03
-     6.300  1.619E-03
-     6.500  1.619E-03
-     6.700  1.620E-03
-     6.900  1.620E-03
-     7.100  1.620E-03
-     7.300  1.621E-03
-     7.500  1.621E-03
-     7.700  1.622E-03
-     7.900  1.622E-03
-     8.100  1.623E-03
-     8.300  1.623E-03
-     8.500  1.624E-03
-     8.700  1.624E-03
-     8.900  1.625E-03
-     9.100  1.625E-03
-     9.300  1.626E-03
-     9.500  1.627E-03
-     9.700  1.627E-03
-     9.900  1.628E-03
-    10.100  1.629E-03
-    10.300  1.629E-03
-    10.500  1.630E-03
-    10.700  1.631E-03
-    10.900  1.632E-03
-    11.100  1.633E-03
-    11.300  1.633E-03
-    11.500  1.634E-03
-    11.700  1.635E-03
-    11.900  1.636E-03
-    12.100  1.637E-03
-    12.300  1.638E-03
-    12.500  1.639E-03
-    12.700  1.640E-03
-    12.900  1.641E-03
-    13.100  1.642E-03
-    13.300  1.642E-03
-    13.500  1.643E-03
-    13.700  1.644E-03
-    13.900  1.645E-03
-    14.100  1.646E-03
-    14.300  1.647E-03
-    14.500  1.648E-03
-    14.700  1.649E-03
-    14.900  1.650E-03
-    15.100  1.651E-03
-    15.300  1.652E-03
-    15.500  1.653E-03
-    15.700  1.654E-03
-    15.900  1.655E-03
-    16.100  1.656E-03
-    16.300  1.657E-03
-    16.500  1.658E-03
-    16.700  1.659E-03
-    16.900  1.660E-03
-    17.100  1.661E-03
-    17.300  1.661E-03
-    17.500  1.662E-03
-    17.700  1.663E-03
-    17.900  1.664E-03
-    18.100  1.665E-03
-    18.300  1.666E-03
-    18.500  1.666E-03
-    18.700  1.667E-03
-    18.900  1.668E-03
-    19.100  1.669E-03
-    19.300  1.669E-03
-    19.500  1.670E-03
-    19.700  1.671E-03
-    19.900  1.671E-03
-    20.100  1.672E-03
-    20.300  1.672E-03
-    20.500  1.673E-03
-    20.700  1.674E-03
-    20.900  1.674E-03
-    21.100  1.675E-03
-    21.300  1.675E-03
-    21.500  1.676E-03
-    21.700  1.676E-03
-    21.900  1.676E-03
-    22.100  1.677E-03
-    22.300  1.677E-03
-    22.500  1.677E-03
-    22.700  1.678E-03
-    22.900  1.678E-03
-    23.100  1.678E-03
+     2.100  1.617E-03
+     2.300  1.617E-03
+     2.500  1.617E-03
+     2.700  1.617E-03
+     2.900  1.617E-03
+     3.100  1.618E-03
+     3.300  1.618E-03
+     3.500  1.618E-03
+     3.700  1.618E-03
+     3.900  1.619E-03
+     4.100  1.619E-03
+     4.300  1.620E-03
+     4.500  1.620E-03
+     4.700  1.620E-03
+     4.900  1.621E-03
+     5.100  1.621E-03
+     5.300  1.622E-03
+     5.500  1.622E-03
+     5.700  1.623E-03
+     5.900  1.624E-03
+     6.100  1.624E-03
+     6.300  1.625E-03
+     6.500  1.626E-03
+     6.700  1.626E-03
+     6.900  1.627E-03
+     7.100  1.628E-03
+     7.300  1.629E-03
+     7.500  1.629E-03
+     7.700  1.630E-03
+     7.900  1.631E-03
+     8.100  1.632E-03
+     8.300  1.633E-03
+     8.500  1.634E-03
+     8.700  1.635E-03
+     8.900  1.636E-03
+     9.100  1.637E-03
+     9.300  1.638E-03
+     9.500  1.639E-03
+     9.700  1.640E-03
+     9.900  1.641E-03
+    10.100  1.642E-03
+    10.300  1.643E-03
+    10.500  1.644E-03
+    10.700  1.645E-03
+    10.900  1.646E-03
+    11.100  1.647E-03
+    11.300  1.648E-03
+    11.500  1.649E-03
+    11.700  1.650E-03
+    11.900  1.651E-03
+    12.100  1.652E-03
+    12.300  1.654E-03
+    12.500  1.655E-03
+    12.700  1.656E-03
+    12.900  1.656E-03
+    13.100  1.657E-03
+    13.300  1.658E-03
+    13.500  1.659E-03
+    13.700  1.660E-03
+    13.900  1.661E-03
+    14.100  1.662E-03
+    14.300  1.663E-03
+    14.500  1.664E-03
+    14.700  1.664E-03
+    14.900  1.665E-03
+    15.100  1.666E-03
+    15.300  1.667E-03
+    15.500  1.667E-03
+    15.700  1.668E-03
+    15.900  1.669E-03
+    16.100  1.669E-03
+    16.300  1.670E-03
+    16.500  1.671E-03
+    16.700  1.671E-03
+    16.900  1.672E-03
+    17.100  1.672E-03
+    17.300  1.673E-03
+    17.500  1.673E-03
+    17.700  1.674E-03
+    17.900  1.674E-03
+    18.100  1.675E-03
+    18.300  1.675E-03
+    18.500  1.675E-03
+    18.700  1.676E-03
+    18.900  1.676E-03
+    19.100  1.676E-03
+    19.300  1.677E-03
+    19.500  1.677E-03
+    19.700  1.677E-03
+    19.900  1.678E-03
+    20.100  1.678E-03
+    20.300  1.678E-03
+    20.500  1.678E-03
+    20.700  1.678E-03
+    20.900  1.679E-03
+    21.100  1.679E-03
+    21.300  1.679E-03
+    21.500  1.679E-03
+    21.700  1.679E-03
+    21.900  1.679E-03
+    22.100  1.679E-03
+    22.300  1.679E-03
+    22.500  1.679E-03
+    22.700  1.679E-03
+    22.900  1.679E-03
+    23.100  1.679E-03
     23.300  1.679E-03
     23.500  1.679E-03
     23.700  1.679E-03
     23.900  1.679E-03
     24.100  1.679E-03
     24.300  1.679E-03
-    24.500  1.680E-03
-    24.700  1.680E-03
-    24.900  1.680E-03
-    25.100  1.680E-03
-    25.300  1.680E-03
-    25.500  1.680E-03
-    25.700  1.680E-03
-    25.900  1.679E-03
-    26.100  1.679E-03
-    26.300  1.679E-03
-    26.500  1.679E-03
-    26.700  1.679E-03
-    26.900  1.679E-03
-    27.100  1.678E-03
-    27.300  1.678E-03
-    27.500  1.678E-03
-    27.700  1.677E-03
-    27.900  1.677E-03
-    28.100  1.677E-03
-    28.300  1.676E-03
-    28.500  1.676E-03
-    28.700  1.675E-03
-    28.900  1.675E-03
-    29.100  1.674E-03
-    29.300  1.674E-03
-    29.500  1.673E-03
-    29.700  1.673E-03
-    29.900  1.672E-03
-    30.100  1.672E-03
-    30.300  1.671E-03
-    30.500  1.670E-03
-    30.700  1.670E-03
-    30.900  1.669E-03
-    31.100  1.668E-03
-    31.300  1.668E-03
-    31.500  1.667E-03
-    31.700  1.666E-03
-    31.900  1.666E-03
-    32.100  1.665E-03
-    32.300  1.664E-03
-    32.500  1.664E-03
-    32.700  1.663E-03
-    32.900  1.663E-03
-    33.100  1.662E-03
-    33.300  1.661E-03
-    33.500  1.661E-03
-    33.700  1.660E-03
-    33.900  1.660E-03
-    34.100  1.659E-03
-    34.300  1.659E-03
-    34.500  1.659E-03
-    34.700  1.658E-03
-    34.900  1.658E-03
+    24.500  1.678E-03
+    24.700  1.678E-03
+    24.900  1.678E-03
+    25.100  1.678E-03
+    25.300  1.677E-03
+    25.500  1.677E-03
+    25.700  1.677E-03
+    25.900  1.676E-03
+    26.100  1.676E-03
+    26.300  1.676E-03
+    26.500  1.675E-03
+    26.700  1.675E-03
+    26.900  1.674E-03
+    27.100  1.674E-03
+    27.300  1.673E-03
+    27.500  1.672E-03
+    27.700  1.672E-03
+    27.900  1.671E-03
+    28.100  1.671E-03
+    28.300  1.670E-03
+    28.500  1.669E-03
+    28.700  1.668E-03
+    28.900  1.668E-03
+    29.100  1.667E-03
+    29.300  1.666E-03
+    29.500  1.666E-03
+    29.700  1.665E-03
+    29.900  1.664E-03
+    30.100  1.663E-03
+    30.300  1.662E-03
+    30.500  1.662E-03
+    30.700  1.661E-03
+    30.900  1.660E-03
+    31.100  1.659E-03
+    31.300  1.658E-03
+    31.500  1.658E-03
+    31.700  1.657E-03
+    31.900  1.656E-03
+    32.100  1.655E-03
+    32.300  1.655E-03
+    32.500  1.654E-03
+    32.700  1.653E-03
+    32.900  1.653E-03
+    33.100  1.652E-03
+    33.300  1.651E-03
+    33.500  1.651E-03
+    33.700  1.650E-03
+    33.900  1.650E-03
+    34.100  1.649E-03
+    34.300  1.649E-03
+    34.500  1.649E-03
+    34.700  1.649E-03
+    34.900  1.648E-03
 Charge    
      0.100 -3.077E-06
      0.300 -3.467E-06
@@ -4504,7 +4504,7 @@ Cl
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                              CHANGE IN FLUID STORED IN DOMAIN --      6.91797E-15         9.65764E-16         9.65764E-16    +
-  +                                          FLUID VOLUME BALANCE --     -1.24058E-11        -2.33077E-14        -2.33077E-14    +
+  +                                          FLUID VOLUME BALANCE --     -1.24059E-11        -2.33090E-14        -2.33090E-14    +
   +                                                                                                                              +
 H2O       
   +                                                                                                                              +
@@ -4519,10 +4519,10 @@ H2O
   +                                        TOTAL FLUX INTO DOMAIN --      1.77075E+07         3.68906E+04         3.68906E+04    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -1.77075E+07        -3.68905E+04        -3.68905E+04    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      4.47328E-03         3.03907E-06         3.03907E-06    +
-  +                                   SOLUTE FROM BOUNDARY CHANGE --      1.66249E-05         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN SOLUTE STORED IN DOMAIN --     -8.36953E+00         1.00821E-01         1.00821E-01    +
-  +                                           SOLUTE MASS BALANCE --      1.68159E-05        -3.25247E-09        -3.25247E-09    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      4.54646E-03         3.03969E-06         3.03969E-06    +
+  +                                   SOLUTE FROM BOUNDARY CHANGE --      1.66267E-05         0.00000E+00         0.00000E+00    +
+  +                             CHANGE IN SOLUTE STORED IN DOMAIN --     -8.36957E+00         1.00821E-01         1.00821E-01    +
+  +                                           SOLUTE MASS BALANCE --      1.63483E-05        -2.75736E-09        -2.75736E-09    +
   +                                                                                                                              +
 H         
   +                                                                                                                              +
@@ -4537,28 +4537,28 @@ H
   +                                        TOTAL FLUX INTO DOMAIN --      3.60922E-03         7.48628E-06         7.48628E-06    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -3.60952E-03        -7.55798E-06        -7.55798E-06    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      8.99294E-06         6.09400E-09         6.09400E-09    +
-  +                                   SOLUTE FROM BOUNDARY CHANGE --      6.68283E-08         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      8.69622E-06        -6.56007E-08        -6.56007E-08    +
-  +                                           SOLUTE MASS BALANCE --      6.64028E-08        -6.36341E-13        -6.36341E-13    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      8.99292E-06         6.07992E-09         6.07992E-09    +
+  +                                   SOLUTE FROM BOUNDARY CHANGE --      6.68269E-08         0.00000E+00         0.00000E+00    +
+  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      8.69621E-06        -6.56150E-08        -6.56150E-08    +
+  +                                           SOLUTE MASS BALANCE --      6.64001E-08        -3.93143E-13        -3.93143E-13    +
   +                                                                                                                              +
 O         
   +                                                                                                                              +
   +                                   SOLUTE MASS BALANCE                                                                        +
   +                                                                          g                   g                 g   /sec      +
   +    FLUX INTO DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --      2.88191E-02         5.97740E-05         5.97740E-05    +
-  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -2.98467E-02        -6.13508E-05        -6.13508E-05    +
+  +  FLUX OUT OF DOMAIN ACROSS SPECIFIED PRESSURE HEAD BOUNDARIES --     -2.97270E-02        -6.09874E-05        -6.09874E-05    +
   +             FLUX INTO DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +           FLUX OUT OF DOMAIN ACROSS SPECIFIED FLUX BOUNDARIES --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                         DIFFUSIVE/DISPERSIVE FLUX INTO DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                       DIFFUSIVE/DISPERSIVE FLUX OUT OF DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                        TOTAL FLUX INTO DOMAIN --      2.88191E-02         5.97740E-05         5.97740E-05    +
-  +                                      TOTAL FLUX OUT OF DOMAIN --     -2.98467E-02        -6.13508E-05        -6.13508E-05    +
+  +                                      TOTAL FLUX OUT OF DOMAIN --     -2.97270E-02        -6.09874E-05        -6.09874E-05    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.48867E-03         4.84499E-08         4.84499E-08    +
-  +                                   SOLUTE FROM BOUNDARY CHANGE --      5.40672E-07         0.00000E+00         0.00000E+00    +
-  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      4.62417E-04        -1.52836E-06        -1.52836E-06    +
-  +                                           SOLUTE MASS BALANCE --     -8.57337E-07        -6.18792E-12        -6.18792E-12    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.41140E-03         4.81794E-08         4.81794E-08    +
+  +                                   SOLUTE FROM BOUNDARY CHANGE --      5.38785E-07         0.00000E+00         0.00000E+00    +
+  +                             CHANGE IN SOLUTE STORED IN DOMAIN --      5.04358E-04        -1.16521E-06        -1.16521E-06    +
+  +                                           SOLUTE MASS BALANCE --     -3.69391E-07        -3.83782E-12        -3.83782E-12    +
   +                                                                                                                              +
 Charge    
   +                                                                                                                              +
@@ -4573,10 +4573,10 @@ Charge
   +                                        TOTAL FLUX INTO DOMAIN --     -1.66985E+00        -4.48779E-08        -4.48779E-08    +
   +                                      TOTAL FLUX OUT OF DOMAIN --      1.20484E+00         5.60115E-03         5.60115E-03    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --     -5.21716E-07        -4.32413E-10        -4.32413E-10    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --     -5.21845E-07        -4.32413E-10        -4.32413E-10    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --     -1.65878E-06         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN SOLUTE STORED IN DOMAIN --     -4.65012E-01         5.60111E-03         5.60111E-03    +
-  +                                           SOLUTE MASS BALANCE --     -1.65839E-06         1.86006E-12         1.86006E-12    +
+  +                                           SOLUTE MASS BALANCE --     -1.65839E-06         1.85998E-12         1.85998E-12    +
   +                                                                                                                              +
 Cl        
   +                                                                                                                              +
@@ -4591,9 +4591,9 @@ Cl
   +                                        TOTAL FLUX INTO DOMAIN --      5.92005E+01         0.00000E+00         0.00000E+00    +
   +                                      TOTAL FLUX OUT OF DOMAIN --     -4.27144E+01        -1.98576E-01        -1.98576E-01    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.84964E-05         1.53303E-08         1.53303E-08    +
+  +                     CHANGE IN SOLUTE DUE TO CHEMICAL REACTION --      1.85010E-05         1.53303E-08         1.53303E-08    +
   +                                   SOLUTE FROM BOUNDARY CHANGE --      5.88088E-05         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN SOLUTE STORED IN DOMAIN --      1.64861E+01        -1.98576E-01        -1.98576E-01    +
-  +                                           SOLUTE MASS BALANCE --      5.87950E-05        -6.59440E-11        -6.59440E-11    +
+  +                                           SOLUTE MASS BALANCE --      5.87950E-05        -6.59408E-11        -6.59408E-11    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

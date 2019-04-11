@@ -1,0 +1,321 @@
+
+<H2>Summary of VS2DRTI</H2>
+<hr>
+<PRE>
+<b>NAME</b>
+       vs2drti - A graphical software package for simulating water flow and
+               heat and reactive solute transport in variably saturated porous
+               media
+
+<b>ABSTRACT</b>
+       VS2DRTI is a graphical software package for simulating flow and
+       transport in variably saturated porous media.  This software package
+       consists of two components:
+
+        - VS2DRTI, for simulating water flow and heat and reactive solute transport,
+        - a standalone postprocessor, for viewing results saved from
+          previous simulation runs.
+
+       VS2DRTI combines a graphical user interface with a
+       numerical model (VS2DRT) to create an integrated, window-based modeling
+       environment.  Users can easily specify or change the model domain,
+       hydraulic and transport properties, initial and boundary conditions,
+       grid spacing, and other model parameters.  Simulation results can be
+       displayed as contours of pressure head, moisture content,
+       saturation, concentration or temperature, and velocity or flux for
+       each time step, thus creating a simple animation.
+
+       VS2DRT links the U.S. Geological Survey's computer models VS2DT (for solute
+       transport), VS2DH (for energy transport), and Phreegc (for geochemical
+       reactions).  VS2DRT is a finite-difference model that solves Richard's
+       equation for fluid flow, and the advection-dispersion equation for heat
+       solute transport.  The model can analyze problems in one or two dimensions
+       using either cartesian or radial coordinate systems.  Relations between
+       pressure head, moisture content, and relative hydraulic conductivity may be
+       represented by functions developed by van Genuchten, Brooks and
+       Corey, Haverkamp and others, or by data points.  Initial hydraulic
+       condition can be specified as static equilibrium, specified pressure
+       head, or specified moisture content.  Boundary conditions include
+       specified pressure or total head, specified flux, infiltration with
+       ponding, evaporation, plant transpiration, and seepage faces.
+       Solute transport processes include advection and dispersion, as well
+       as a complete implementation of the chemical reactions available in
+       Phreeqc.
+
+       VS2DRT is written in Fortran 90 and C++.
+
+       A Windows executable version of VS2DRT (vs2drt.exe) is included in the
+       download package for user who would prefer to run simulation in
+       batch mode.
+
+<b>METHOD</b>
+       For the flow equation, spatial derivatives are approximated by
+       central differences written about grid-block boundaries.  Time
+       derivatives are approximated by a fully implicit backward scheme.
+       Nonlinear conductance terms, boundary conditions, and sink terms are
+       linearized implicitly.  Relative hydraulic conductivity is evaluated
+       at cell boundaries by using full upstream weighting, the arithmetic
+       mean, or the geometric mean of values from adjacent cells.
+       Saturated hydraulic conductivities are evaluated at cell boundaries
+       by using distance-weighted harmonic means.  Nonlinear conductance
+       and storage terms can be represented by algebraic equations or by
+       tabular data.
+
+       For the advection-dispersion equation, either central or backward
+       differences may be selected for the spatial and time derivatives.
+       Thermal conductivity is assumed to vary linearly with moisture content.
+       The matrix equations produced for the flow and transport equations are
+       solved sequentially using the strongly implicit procedure.
+
+       An operator-splitting approach is used in VS2DRT, whereby the flow
+       and transport equations are solved independently of the geochemical
+       reactions. At each time step, the flow, heat, and solute transport
+       equations are solved, allowing simulated concentrations to be transported
+       by advection and dispersion. Component concentrations for each model cell
+       are then transferred to PhreeqcRM; geochemical reactions are simulated;
+       and updated component concentrations are returned to each cell.
+
+<a name="HISTORY"><b>HISTORY</b></a>
+       Version 1.4.1 Date: April 10, 2019
+        VS2DRTI Graphical Package version 1.4.1
+         Updated to version 3.5.1.14001 of PHREEQC.
+		 Corrected errors in flux calculations introduced in the parallelization
+		 of solute transport. 
+
+       Version 1.4 Date: December 15, 2017
+        VS2DRTI Graphical Package version 1.4
+         The new computer program VS2DRT links existing USGS computer models VS2DT,
+         VS2DH, and PhreeqcRM. VS2DRT allows simulation of water flow, heat transport,
+         and reactive solute transport in variably saturated porous media. VS2DRT was
+         originally constructed by Haile (2013).
+         The VS2DRTI graphical user interface (GUI) is a revised version of the
+         VS2DI GUI that supports the new VS2DRT model.
+
+
+       Version 1.3 Date: March 28, 2012
+        VS2DI Graphical Package version 1.3
+         Preprocessor:
+            1. Compatibility with Windows 7 and Vista (32 and 64 bit)
+            2. Gravity drain boundary condition.
+            3. Rossi-Nimmo hydraulic functions for simulation of very
+               dry conditions.
+            4. Evapotranspiration period parameters can be
+               imported/exported from or to a text file.
+         Java Runtime Environment:
+            The JRE bundled with the application has been updated to
+            Version 1.7.
+         VS2DT and VS2DH versions 3.3:
+            1. Gravity drain boundary condition.
+            2. Rossi-Nimmo hydraulic functions for simulation of very
+               dry conditions.
+            3. Revised formats for ascii output files - higher
+               resolution; wrap around lines eliminated.
+
+       Version 1.2 Date: October 12, 2004
+
+        VS2DI Graphical Package version 1.2
+	 Preprocessor:
+	   1. Source or sink points may be specified in the model domain.
+	   2. The x-z (or x-r) coordinates at a vertex of a domain
+              boundary, textural zone, or contour may be explicitly
+	      specified by right-clicking on the vertex.
+	   3. Multiple, consecutive recharge periods can be added,
+	      edited, or deleted in the Recharge Period Window.
+	   4. Boundary condition at a domain boundary segment may be specified by
+              double clicking the segment.
+	   5. Boundary condition data (for example, specified pressure) for may be
+	      imported from file.
+	   6. Comments are added to the model input files generated
+	      for VS2DT and VS2DH Versions 3.2.
+         Postprocessor:
+	   1. The boundary between textural zones may be displayed.
+	   2. The mass/energy balance calculation has been revised to correctly
+	      account for instantaneous changes in mass/energy within the simulated
+	      domain due to instantaneous changes in boundary conditions.
+	 Java Runtime Environment:
+	   The JRE bundled with the application has been updated to Version 1.4.2.
+
+        VS2DT and VS2DH versions 3.2:
+           1. Conversion of VS2DT and VS2DH to Fortran 90.  This removes all
+              limits on number of rows and columns, number of recharge
+              periods, number of texture classes, number and size of seepage
+              faces, iterations per time step, number of observation
+              points, and output times.
+           2. Modification to mass balance calculations to list changes in
+              mass due to changing boundary conditions as separate items.
+           3. Option has been added for enhanced precision (14 digits)
+              in print out to observation and mass balance output
+              files.  This option is selected by setting input
+              variable NUMT equal to the negative
+	      number of time steps (input line A-5).
+           4. Output to observation file can be made at selected times
+              only (as opposed to every time step) by setting
+              NOBS (input line A-15) equal to the negative number of
+              observation points.
+           5. Output to mass balance file can be made at selected times
+              only (as opposed to every time step) by setting
+              NMB9 (input line A-17) equal to the negative number of
+              observation points.
+	   6. Requested output times are now matched exactly, even if
+	      this requires a time step size less than the minimum size.
+           7. Column labels have been added to mass balance output file.
+	   8. Evaporation allowed to occur from cells other than those
+	      representing land surface.
+	   9. Corrected bug in loop of ET cycle.
+          10. Corrected bug in use of interpolation tables for hydraulic
+              properties.
+	  11. Corrected bug in storage term for finite difference transport
+	      equation.
+
+       Version 1.1 2000/02/09 - extended to work with VS2DH; improved
+          postprocessing capabilities.  This release contains revised
+          versions 3.0 of VS2DT and VS2DH, which allow runtime selection of
+          hydraulic function and adsorption type.  The VS2DI postprocessor
+          has the capability to run on input files created with earlier
+          versions of VS2DT and VS2DH.
+
+       Version 1.0 1999/07/28 - Initial release
+
+<b>DATA REQUIREMENTS</b>
+       A conceptual model of the geometry and boundaries of the region to
+       be simulated is of prime importance.  Initial conditions in terms of
+       pressure heads or moisture contents for flow simulations and
+       concentrations or temperatures for transport simulations are needed.
+       Hydraulic and transport properties of the porous media are also
+       required.  These values can be different for different sediments.
+       Flow simulations require values for saturated hydraulic conductivity
+       and for relative hydraulic conductivity and moisture content as
+       functions of pressure head.  Solute transport simulations require
+       values for dispersivity and molecular diffusion.  Energy transport
+       simulations require values for heat capacities of water and soil and
+       thermal conductivity.  Solute transport simulations require a Phreeqc
+       data file and a Phreeqc input file, which can be created with the
+       PhreeqcI software package (Charlton and Parkhurst, 2002;
+       https://wwwbrr.cr.usgs.gov/projects/GWC_coupled/phreeqc/).
+       Other information may be needed, depending on
+       the program options that are selected.
+
+<b>OUTPUT OPTIONS</b>
+       Simulation results can be displayed as contours of pressure head,
+       moisture content, saturation, concentration or temperature, and
+       velocity or flux for each time step, thus creating a simple
+       animation.  The graphical displays may be printed or saved as bitmap
+       files.  Text (or ASCII) output can be obtained for pressure head,
+       total head, volumetric moisture content, saturations, velocities,
+       and solute concentrations or temperatures.  Time histories and
+       spatial profiles of the data can be obtained.  In addition, the user
+       may opt to view time histories of up to 72 mass balance parameters.
+
+<b>SYSTEM REQUIREMENTS</b>
+       The VS2DRTI software package was developed using a combination of
+       Java, C, and Fortran programming languages.  This software has run
+       successfully on the following operating systems:  Microsoft Windows
+       7, XP, 2000, 98, and NT 4.0.
+       For other computer platforms, the usability of VS2DRTI
+       depends on the availability of a Java Development Kit for that
+       platform, and the ability to compile Fortran and C programs into
+       dynamic or shared libraries that can be used by the Java program.
+       Additional information on computer requirements can be found in the
+       README file distributed with the software.
+
+<b>DOCUMENTATION</b>
+
+       Parkhurst, D.L., and Wissmeier, L. 2015. PhreeqcRM: A reaction
+          module for transport simulators based on the geochemical model PHREEQC.
+          Advances in Water Resources 83: 176–189. DOI: 10.1016/j.advwatres.2015.06.001.
+       Haile, Sosina S. 2013. VS2DRT: Variable saturated two dimensional reactive
+          transport modeling in the vadose zone. (Doctoral dissertation) Freiberg Online
+          Geoscience 34: 1–152.
+       Parkhurst, D.L., and Appelo, C.A.J. 2013. Description of input and
+          examples for PHREEQC Version 3—a computer program for speciation, batch-reaction,
+          one-dimensional transport, and inverse geochemical calculations. U.S. Geological
+          Survey Techniques and Methods 6-A43.
+          An electronic version of this report can be downloaded from:
+          https://pubs.er.usgs.gov/publication/tm6A43
+       Charlton, S.R., and Parkhurst, D.L. 2002. PHREEQCI—A graphical user
+          interface to the geochemical model PHREEQC. U.S. Geological Survey
+          Fact Sheet 031–02.
+          An electronic version of this report can be downloaded from:
+          https://pubs.er.usgs.gov/publication/fs03102
+       Hsieh, P.A., Wingle, William, and Healy, R.W., 2000, VS2DI--A
+          graphical software package for simulating fluid flow and solute
+          or energy transport in variably saturated porous media: U.S.
+          Geological Survey Water-Resources Investigations Report 99-4130,
+          16 p.
+          An electronic version of this report can be downloaded from:
+          http://pubs.er.usgs.gov/pubs/wri/wri994130
+       Healy, R.W., and Ronan, A.D., 1996, Documentation of computer
+          program VS2DH for simulation of energy transport in variably
+          saturated porous media--modification of the U.S. Geological
+          Survey's computer program VS2DT: U.S. Geological Survey Water-
+          Resources Investigations Report 96-4230, 36 p.
+          An electronic version of this report can be downloaded from:
+          http://pubs.er.usgs.gov/pubs/wri/wri964230
+       Healy, R.W., 1990, Simulation of solute transport in variably
+          saturated porous media with supplemental information on
+          modifications to the U.S. Geological Survey's Computer Program
+          VS2D: U.S. Geological Survey Water-Resources Investigations
+          Report 90-4025, 125 p.
+          An electronic version of the report can be downloaded from:
+          http://pubs.er.usgs.gov/pubs/wri/wri904025
+       Lappala, E.G., Healy, R.W., and Weeks, E.P., 1987, Documentation of
+          computer program VS2D to solve the equations of fluid flow in
+          variably saturated porous media: U.S. Geological Survey Water-
+          Resources Investigations Report 83-4099, 184 p.
+          An electronic version of the report can be downloaded from:
+          http://pubs.er.usgs.gov/pubs/wri/wri834099  <p>
+
+<b>REFERENCES</b>
+       VS2DT and VS2DH have been used by scientists at the USGS and at
+       various universities and consulting companies.  Example applications
+       are described in:
+
+       Bartolino, J.R., and Niswonger, R.G., 1999, Numerical simulation of
+          vertical ground-water flux of the Rio Grande from ground-water
+          temperature profiles, central New Mexico: U.S. Geological Survey
+          Water-Resources Investigations Report 99-4212, 34 p.
+       Mills, P.C., and Healy, R.W., 1993, Water and tritium movement
+          through the unsaturated zone at a low-level radioactive-waste
+          disposal site near Sheffield, Illinois, 1981-85: U.S. Geological
+          Survey Water-Supply Paper 2386, 72 p.
+       Halford, K.J., 1997, Effects of the unsaturated zone on aquifer test
+          analysis in a shallow-aquifer system: Ground Water, v. 35, no.3,
+          p. 512-522.
+       McCord, J.T., Gotway, C.A., and Conrad, S.H., 1997, Impact of
+          geologic heterogeneity on recharge estimation using environmental
+          tracers: Numerical modeling investigation: Water Resources
+          Research, v. 33, no. 6, p. 1229-1240.
+
+<b>CONTACTS</b>
+       Operation and Distribution:
+          U.S. Geological Survey
+          Rick Healy
+          Mail Stop 413 Box 25046
+          Denver Federal Center
+          Lakewood, CO 80225
+
+          rwhealy@usgs.gov
+
+       Official versions of U.S. Geological Survey water-resources analysis
+       software are available for electronic retrieval via the World Wide
+       Web (WWW) at:
+
+                  http://water.usgs.gov/software/
+
+       and via anonymous File Transfer Protocol (FTP) from:
+
+                  water.usgs.gov (path: /pub/software).
+
+       See http://water.usgs.gov/software/ordering_documentation.html for
+       information on ordering printed copies of USGS publications.
+</PRE>
+<hr>
+<ADDRESS>
+The URL for this page is http://wwwbrr.cr.usgs.gov/projects/GW_Unsat/vs2di1.2/manapp.html<BR>
+Send questions or comments to <a href="mailto:rwhealy@usgs.gov"
+title="E-mail from vs2di website">rwhealy@usgs.gov</a> <BR>
+
+Page created:  12/15/2017<BR>
+<ADDRESS>
+</BODY>
+</HTML>

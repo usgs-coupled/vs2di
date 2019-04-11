@@ -636,7 +636,7 @@
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                              CHANGE IN FLUID STORED IN DOMAIN --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                                          FLUID VOLUME BALANCE --     -1.10068E-14         6.38378E-16         5.93013E-18    +
+  +                                          FLUID VOLUME BALANCE --     -2.42341E-14        -3.97252E-16        -3.69022E-18    +
   +                                                                                                                              +
   +                                                                                                                              +
   +                                   ENERGY MASS BALANCE                                                                        +
@@ -652,6 +652,6 @@
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                   ENERGY FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                             CHANGE IN ENERGY STORED IN DOMAIN --      1.77451E+07         1.14713E+05         1.06561E+03    +
-  +                                           ENERGY MASS BALANCE --     -1.25710E-05         1.80677E-07         1.67837E-09    +
+  +                                           ENERGY MASS BALANCE --     -1.22769E-05         1.03144E-07         9.58142E-10    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

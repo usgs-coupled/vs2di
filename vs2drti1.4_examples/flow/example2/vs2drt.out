@@ -313,7 +313,7 @@
   +                                                 TRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                      TOTAL EVAPOTRANSPIRATION --      0.00000E+00         0.00000E+00         0.00000E+00    +
   +                                    FLUID FROM BOUNDARY CHANGE --      0.00000E+00         0.00000E+00         0.00000E+00    +
-  +                              CHANGE IN FLUID STORED IN DOMAIN --      5.13276E-01         8.07182E-11         5.17542E-13    +
-  +                                          FLUID VOLUME BALANCE --     -9.17695E-05         1.24954E-12         8.01171E-15    +
+  +                              CHANGE IN FLUID STORED IN DOMAIN --      5.13276E-01         8.07226E-11         5.17571E-13    +
+  +                                          FLUID VOLUME BALANCE --     -9.17695E-05         1.24523E-12         7.98405E-15    +
   +                                                                                                                              +
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -31,7 +31,7 @@ Module vs2dt_rm
                 IMPLICIT NONE
             END SUBROUTINE FH_FinalizeFiles 
 
-            INTEGER FUNCTION FH_GetProcessorCount() &
+            INTEGER(KIND=C_INT) FUNCTION FH_GetProcessorCount() &
                 BIND(C, NAME='FH_GetProcessorCount')
                 USE ISO_C_BINDING
                 IMPLICIT NONE

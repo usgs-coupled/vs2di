@@ -20,8 +20,31 @@ modules.f90
 
 source_group("Source Files" FILES ${vs2drt_F90_SOURCES})
 
+# ###
+# if (UNIX AND NOT APPLE)
+#   #  set(CMAKE_INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_BINDIR}")
+#   set_target_properties(vs2drt PROPERTIES INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_BINDIR}")
+# endif()
+# ###
+
 # executable
-add_executable(vs2drt ${vs2drt_SOURCES})
+if (VS2DRT_BUILD_MPI)
+  add_executable(vs2drt${MPI_SUFFIX} ${vs2drt_SOURCES})
+  if (UNIX AND NOT APPLE)
+    set_target_properties(vs2drt${MPI_SUFFIX} PROPERTIES INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
+  endif()
+elseif(VS2DRT_BUILD_OPENMP)
+  add_executable(vs2drt${OPENMP_SUFFIX} ${vs2drt_SOURCES})
+  if (UNIX AND NOT APPLE)
+    set_target_properties(vs2drt${OPENMP_SUFFIX} PROPERTIES INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
+  endif()
+else()
+  add_executable(vs2drt ${vs2drt_SOURCES})
+  if (UNIX AND NOT APPLE)
+    set_target_properties(vs2drt PROPERTIES INSTALL_RPATH "\$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
+  endif()
+endif()
+
 
 # Disable deprecation warnings for standard C and STL functions
 # in VS2005 and later
@@ -30,27 +53,6 @@ IF(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
   ADD_DEFINITIONS(-D_SCL_SECURE_NO_WARNINGS)
 ENDIF(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
 
-#### check for zlib_root env
-###if(NOT ZLIB_ROOT)
-###  if(EXISTS $ENV{ZLIB_ROOT})
-###    set(ZLIB_ROOT $ENV{ZLIB_ROOT})
-###  endif()
-###endif()
-###
-###if (WIN32)
-###  # override PhreeqcRM zlib
-###  set(PHREEQCRM_EXTERNALLY_CONFIGURED ON)
-###  set(ZLIB_FOUND true)
-###  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
-###    set(ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/x64")
-###    set(ZLIB_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/x64/zlib.lib")
-###  else()
-###    set(ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/win32")
-###    set(ZLIB_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/win32/zlib.lib")
-###  endif()
-###endif()
-
-##{{
 if(NOT ZLIB_ROOT)
   if (WIN32)
     if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
@@ -61,24 +63,23 @@ if(NOT ZLIB_ROOT)
   endif()
   find_package(ZLIB REQUIRED)
 endif()
-##}}
 
 if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
   add_definitions(-DUSE_GZ)
   include_directories(${ZLIB_INCLUDE_DIRS})
 endif()
 
-# fortran name mangling
-include(FortranCInterface)
-FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
-)
+# # fortran name mangling
+# include(FortranCInterface)
+# FortranCInterface_HEADER(FC.h MACRO_NAMESPACE "FC_" SYMBOLS
+# )
 
 # define CMAKE_FC
 add_definitions(-DCMAKE_FC)
 
 # source
 SET(libvs2drt_SOURCES
-${PROJECT_BINARY_DIR}/FC.h
+##${PROJECT_BINARY_DIR}/FC.h
 FileHandler.cpp
 FileHandler.h
 )
@@ -93,13 +94,19 @@ include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywo
 include_directories("${PROJECT_BINARY_DIR}")
 
 # dll/shared objects
-##OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 SET(LIB_TYPE STATIC)
 if (BUILD_SHARED_LIBS)
   SET(LIB_TYPE SHARED)
 endif()
 add_library(libvs2drt ${LIB_TYPE} ${libvs2drt_SOURCES})
 set_target_properties(libvs2drt PROPERTIES DEBUG_POSTFIX "d")
+###
+if (UNIX AND NOT APPLE)
+  set_target_properties(libvs2drt PROPERTIES INSTALL_RPATH "\$ORIGIN")
+endif()
+###
+
 
 # library dependencies
 if (PHREEQCRM_FORTRAN_TESTING)
@@ -136,16 +143,16 @@ if (BUILD_SHARED_LIBS)
   endif()
 endif()
 
-# check for openmp
-find_package(OpenMP)
+## # check for openmp
+## find_package(OpenMP)
 
-if (OPENMP_FOUND)
-  ADD_DEFINITIONS(-DUSE_OPENMP)
-  set(CMAKE_CXX_FLAGS     "${CMAKE_CXX_FLAGS}     ${OpenMP_CXX_FLAGS}")
-  set(CMAKE_C_FLAGS       "${CMAKE_C_FLAGS}       ${OpenMP_C_FLAGS}")
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
-  set(VS2DRT_OPENMP_FOUND ON PARENT_SCOPE)
-endif()
+## if (OPENMP_FOUND)
+##   ADD_DEFINITIONS(-DUSE_OPENMP)
+##   set(CMAKE_CXX_FLAGS     "${CMAKE_CXX_FLAGS}     ${OpenMP_CXX_FLAGS}")
+##   set(CMAKE_C_FLAGS       "${CMAKE_C_FLAGS}       ${OpenMP_C_FLAGS}")
+##   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
+##   set(VS2DRT_OPENMP_FOUND ON PARENT_SCOPE)
+## endif()
 
 #
 # set PhreeqcRM defaults for vs2drt
@@ -153,18 +160,26 @@ endif()
 
 # PHREEQCRM_STATIC_RUNTIME
 set(PHREEQCRM_STATIC_RUNTIME ON CACHE INTERNAL "doc" FORCE)
-mark_as_advanced(PHREEQCRM_STATIC_RUNTIME)
+##mark_as_advanced(PHREEQCRM_STATIC_RUNTIME)
 
 # PHREEQCRM_USE_ZLIB (must be enabled)
-set(PHREEQCRM_USE_ZLIB OFF CACHE INTERNAL "doc" FORCE)
-mark_as_advanced(PHREEQCRM_USE_ZLIB)
+set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)
+##mark_as_advanced(PHREEQCRM_USE_ZLIB)
 
-# PHREEQCRM_BUILD_MPI (must be disabled)
-set(PHREEQCRM_BUILD_MPI OFF CACHE INTERNAL "doc" FORCE)
-mark_as_advanced(PHREEQCRM_BUILD_MPI)
+## # PHREEQCRM_BUILD_MPI (just hide)
+## mark_as_advanced(PHREEQCRM_BUILD_MPI)
 
 # PHREEQCRM_FORTRAN_TESTING (just hide)
-mark_as_advanced(PHREEQCRM_FORTRAN_TESTING)
+
+set(PHREEQCRM_FORTRAN_TESTING OFF CACHE INTERNAL "doc" FORCE)
+##mark_as_advanced(PHREEQCRM_FORTRAN_TESTING)
+
+# BUILD_SHARED_LIBS
+if (UNIX AND NOT APPLE)
+  set(BUILD_SHARED_LIBS ON CACHE INTERNAL "doc" FORCE)
+endif()
+##mark_as_advanced(PHREEQCRM_USE_ZLIB)
+
 
 # 
 if (MSVC)
@@ -201,12 +216,42 @@ if (MSVC)
 endif()
 
 # subdirs
+set(PHREEQCRM_INSTALL_TARGETS ON)
 add_subdirectory(PhreeqcRM)
 
 # link (zlib must be last on linux)
 if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
   set(EXTRA_LIBS ${EXTRA_LIBS} ${ZLIB_LIBRARIES})
 endif()
-target_link_libraries(vs2drt ${EXTRA_LIBS})
 
-install(TARGETS vs2drt DESTINATION ${CMAKE_INSTALL_BINDIR})
+if (VS2DRT_BUILD_MPI)
+  set(EXTRA_LIBS PUBLIC MPI::MPI_CXX PUBLIC MPI::MPI_Fortran ${EXTRA_LIBS})
+endif()
+
+if (VS2DRT_BUILD_OPENMP AND (NOT VS2DRT_BUILD_MPI))
+  set(EXTRA_LIBS PUBLIC OpenMP::OpenMP_CXX PUBLIC OpenMP::OpenMP_Fortran ${EXTRA_LIBS})
+endif()
+
+# executable
+if (VS2DRT_BUILD_MPI)
+  target_link_libraries(vs2drt${MPI_SUFFIX} ${EXTRA_LIBS})
+  #install(TARGETS vs2drt${MPI_SUFFIX} DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS vs2drt${MPI_SUFFIX} libvs2drt
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+elseif(VS2DRT_BUILD_OPENMP)
+  target_link_libraries(vs2drt${OPENMP_SUFFIX} ${EXTRA_LIBS})
+  #install(TARGETS vs2drt${OPENMP_SUFFIX} DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS vs2drt${OPENMP_SUFFIX} libvs2drt
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+else()
+  target_link_libraries(vs2drt ${EXTRA_LIBS})
+  #install(TARGETS vs2drt DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS vs2drt libvs2drt
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+endif()

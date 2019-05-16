@@ -53,21 +53,21 @@ IF(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
   ADD_DEFINITIONS(-D_SCL_SECURE_NO_WARNINGS)
 ENDIF(MSVC_VERSION EQUAL 1400 OR MSVC_VERSION GREATER 1400)
 
-if(NOT ZLIB_ROOT)
-  if (WIN32)
-    if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
-      set(ZLIB_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/x64")
-    else()
-      set(ZLIB_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/win32")
-    endif()
-  endif()
-  find_package(ZLIB REQUIRED)
-endif()
+#if(NOT ZLIB_ROOT)
+#  if (WIN32)
+#    if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
+#      set(ZLIB_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/x64")
+#    else()
+#      set(ZLIB_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/win32")
+#    endif()
+#  endif()
+#  find_package(ZLIB REQUIRED)
+#endif()
 
-if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
-  add_definitions(-DUSE_GZ)
-  include_directories(${ZLIB_INCLUDE_DIRS})
-endif()
+#if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
+#  add_definitions(-DUSE_GZ)
+#  include_directories(${ZLIB_INCLUDE_DIRS})
+#endif()
 
 # # fortran name mangling
 # include(FortranCInterface)
@@ -94,7 +94,11 @@ include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywo
 include_directories("${PROJECT_BINARY_DIR}")
 
 # dll/shared objects
-OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+if (WIN32)
+  OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+else()
+  OPTION(BUILD_SHARED_LIBS "Build Shared Libraries" ON)
+endif()
 SET(LIB_TYPE STATIC)
 if (BUILD_SHARED_LIBS)
   SET(LIB_TYPE SHARED)
@@ -138,9 +142,9 @@ endif ()
 # when building shared objects must include link libs
 if (BUILD_SHARED_LIBS)
   target_link_libraries(libvs2drt PhreeqcRM)
-  if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
-    target_link_libraries(libvs2drt ${ZLIB_LIBRARIES})
-  endif()
+#  if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
+#    target_link_libraries(libvs2drt ${ZLIB_LIBRARIES})
+#  endif()
 endif()
 
 ## # check for openmp
@@ -163,7 +167,8 @@ set(PHREEQCRM_STATIC_RUNTIME ON CACHE INTERNAL "doc" FORCE)
 ##mark_as_advanced(PHREEQCRM_STATIC_RUNTIME)
 
 # PHREEQCRM_USE_ZLIB (must be enabled)
-set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)
+##set(PHREEQCRM_USE_ZLIB ON CACHE INTERNAL "doc" FORCE)
+set(PHREEQCRM_USE_ZLIB OFF CACHE INTERNAL "doc" FORCE)
 ##mark_as_advanced(PHREEQCRM_USE_ZLIB)
 
 ## # PHREEQCRM_BUILD_MPI (just hide)
@@ -216,13 +221,18 @@ if (MSVC)
 endif()
 
 # subdirs
-set(PHREEQCRM_INSTALL_TARGETS ON)
+if (WIN32)
+  set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_BINDIR})
+endif()
+if (BUILD_SHARED_LIBS)
+  set(PHREEQCRM_INSTALL_TARGETS ON)
+endif()
 add_subdirectory(PhreeqcRM)
 
 # link (zlib must be last on linux)
-if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
-  set(EXTRA_LIBS ${EXTRA_LIBS} ${ZLIB_LIBRARIES})
-endif()
+#if (PHREEQCRM_USE_ZLIB AND ZLIB_FOUND)
+#  set(EXTRA_LIBS ${EXTRA_LIBS} ${ZLIB_LIBRARIES})
+#endif()
 
 if (VS2DRT_BUILD_MPI)
   set(EXTRA_LIBS PUBLIC MPI::MPI_CXX PUBLIC MPI::MPI_Fortran ${EXTRA_LIBS})
@@ -235,23 +245,38 @@ endif()
 # executable
 if (VS2DRT_BUILD_MPI)
   target_link_libraries(vs2drt${MPI_SUFFIX} ${EXTRA_LIBS})
-  #install(TARGETS vs2drt${MPI_SUFFIX} DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(TARGETS vs2drt${MPI_SUFFIX} libvs2drt
+  install(TARGETS vs2drt${MPI_SUFFIX}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
+  if (BUILD_SHARED_LIBS)
+    install(TARGETS libvs2drt
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      )
+  endif()
 elseif(VS2DRT_BUILD_OPENMP)
   target_link_libraries(vs2drt${OPENMP_SUFFIX} ${EXTRA_LIBS})
-  #install(TARGETS vs2drt${OPENMP_SUFFIX} DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(TARGETS vs2drt${OPENMP_SUFFIX} libvs2drt
+  install(TARGETS vs2drt${OPENMP_SUFFIX}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
+  if (BUILD_SHARED_LIBS)
+    install(TARGETS libvs2drt
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      )
+  endif()
 else()
   target_link_libraries(vs2drt ${EXTRA_LIBS})
-  #install(TARGETS vs2drt DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(TARGETS vs2drt libvs2drt
+  install(TARGETS vs2drt
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     )
+  if (BUILD_SHARED_LIBS)
+    install(TARGETS libvs2drt
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      )
+  endif()
 endif()

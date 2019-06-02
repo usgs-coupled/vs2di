@@ -1383,11 +1383,12 @@
             status = RM_SetSaturation(rm_id, satur)
             call SetConcentrationsRM(cc)
             !if (npscrn .ne. 0) then
-            write(msg,"(A)") "   Chemistry"
-            status = RM_SetScreenOn(rm_id, 1)
-            status = RM_ScreenMessage(rm_id, msg)
-            status = RM_SetScreenOn(rm_id, 0)
+            !write(msg,"(A)") "   Chemistry"
+            !status = RM_SetScreenOn(rm_id, 1)
+            !status = RM_ScreenMessage(rm_id, msg)
+            !status = RM_SetScreenOn(rm_id, 0)
             !endif
+            write(stderr,"(A)") "   Chemistry"
             status = RM_RunCells(rm_id)
             call GetConcentrationsRM(cc)
             IF (JSTOP.GT.1) THEN

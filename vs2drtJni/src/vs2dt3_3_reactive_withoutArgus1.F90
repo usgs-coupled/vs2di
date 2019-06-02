@@ -20,10 +20,14 @@
             READ(arg,"(I5)",err=5) i
             if (i > 0) then
                 nthreads = i
+                nthreads_transport = i
             endif
 5           continue            
         endif
     endif
+#else
+    nthreads = 1
+    nthreads_transport = 1
 #endif  
 #ifdef USE_MPI
     nthreads = 1

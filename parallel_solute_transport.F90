@@ -26,17 +26,19 @@
         stderr=>error_unit
     IMPLICIT none
     INTERFACE
-        SUBROUTINE TRANSPORT_ONE_SOLUTE(M, CODE)
+        SUBROUTINE TRANSPORT_ONE_SOLUTE(M, CODE, NIS1)
             INTEGER, ALLOCATABLE :: CODE(:)
-            INTEGER :: M
+            INTEGER :: M, NIS1
         END SUBROUTINE TRANSPORT_ONE_SOLUTE
     END INTERFACE    
     INTEGER :: M
-    INTEGER, ALLOCATABLE :: CODE(:)
+    INTEGER, ALLOCATABLE :: CODE(:), NIS1_ARRAY(:)
     INTEGER :: NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
     COMMON/ISPAC/NLY,NLYY,NXR,NXRR,NNODES,Nsol,Nodesol
     INTEGER JSTOP,JFLAG,jflag1
     COMMON/JCON/JSTOP,JFLAG,jflag1
+    INTEGER NIS,NIS1,NIS3
+    COMMON/TCON1/NIS,NIS1,NIS3
 
     !
     !...........................................................................
@@ -60,17 +62,23 @@
     QS0 = QS
     
     code = -1
+    allocate(NIS1_ARRAY(Nsol))
+    ! if not USE_OPENMP, nthreads_transport = 1
+    ! if USE_OPENMP, nthreads = nproc || nthreads = argument
+    nthreads_transport = MIN(nthreads_transport,Nsol)
 #ifdef USE_OPENMP
- call OMP_SET_NUM_THREADS(nthreads)
-!$OMP parallel DO
+    call OMP_SET_NUM_THREADS(nthreads_transport)
+    !$OMP parallel DO
 #endif
     do M=1,Nsol
-        CALL TRANSPORT_ONE_SOLUTE(M, CODE)
+        CALL TRANSPORT_ONE_SOLUTE(M, CODE, NIS1_ARRAY(M))
     enddo
 #ifdef USE_OPENMP
-!$OMP END parallel DO
+    !$OMP END parallel DO
 #endif
+    nis1 = 0
     do m = 1,Nsol
+        nis1 = nis1 + nis1_array(m)
         if (code(m) < 0) stop "Unknown return code VTSETUPSOL_PARALLEL"
         if (code(m) > 0) then
             WRITE(stderr, 4000)
@@ -81,6 +89,7 @@
             write(stderr,*) '     ', compname(m)
         endif
     enddo
+    deallocate(nis1_array)
 
 ! copy current values from transport of first solute
 ! values are used in flux calculations
@@ -108,7 +117,7 @@
 4010 FORMAT(' Simulation terminated')
     END SUBROUTINE VTSETUPSOL_PARALLEL
     
-    SUBROUTINE TRANSPORT_ONE_SOLUTE(M, CODE)
+    SUBROUTINE TRANSPORT_ONE_SOLUTE(M, CODE, NIS1)
     ! modules
     USE DISCH, only: Q, QQ
     USE JTXX, only: JTEX
@@ -141,8 +150,8 @@
     INTEGER JFLAG2
     COMMON/JCONF/JFLAG2
     
-    INTEGER NIS,NIS1,NIS3
-    COMMON/TCON1/NIS,NIS1,NIS3
+!    INTEGER NIS,NIS1,NIS3
+!    COMMON/TCON1/NIS,NIS1,NIS3
     
     double precision eps1, eps2, eps3
     LOGICAL TRANS,TRANS1,TRANS2,SSTATE
@@ -160,6 +169,7 @@
     INTEGER :: I, IT, J, N, N1, N2, nly2, n_order, nz_num
     INTEGER :: ITMAX1, ITESTS, MR
     LOGICAL :: SOLVED
+    INTEGER :: NIS1
     double precision :: areax, areax1, areaz, areaz1, ss, tempp, vol, vv
     ! Allocatable
     double precision, allocatable::AOC(:),BOC(:),COC(:),DOC(:),EOC(:)

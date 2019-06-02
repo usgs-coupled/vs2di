@@ -4,6 +4,7 @@ Module vs2dt_rm
 #endif
     integer :: rm_id
     integer :: nthreads = -1, nxyz, ncomps
+    integer :: nthreads_transport = -1
     integer :: status, mpi_myself, mpi_tasks
     integer, dimension(:), allocatable :: forward1
     logical :: solute_rm
@@ -69,6 +70,11 @@ Module vs2dt_rm
     ELSE
         nthreads = MIN(ncells, nthreads)
     END IF
+    IF (nthreads_transport < 1) THEN
+        nthreads_transport = nproc
+    END IF 
+    ! if not USE_OPENMP, nthreads_transport = 1   
+    ! if USE_OPENMP, nthreads_transport = nproc || nthreads_transport = argument
     rm_id = RM_Create(NNODES, nthreads)
 #endif    
     status = RM_SetFilePrefix(rm_id, PREFIX)

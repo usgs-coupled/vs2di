@@ -88,7 +88,7 @@ where <installation_directory> is the directory in which the software
 is installed. (Don't forget the leading semicolon.) For example, 
 if the software is installed in the default location, you would append 
 
-  ;C:\Program Files\USGS\vs2drti-1.4.1\bin
+  ;C:\Program Files\USGS\vs2drti-@VERSION@\bin
   
 Click "OK". 
 
@@ -102,7 +102,7 @@ where <installation_directory> is the directory in which the software is
 installed. For example, if the software is installed in the default 
 location, you would enter
 
-  C:\Program Files\USGS\vs2drti-1.4.1\bin
+  C:\Program Files\USGS\vs2drti-@VERSION@\bin
 
 Click "OK".
 
@@ -116,7 +116,7 @@ where <installation_directory> is the directory in which the software
 is installed. For example, if the software is installed to the default
 location, the above line would be
 
-  PATH=%PATH%;C:\Program Files\USGS\vs2drti-1.4.1\bin
+  PATH=%PATH%;C:\Program Files\USGS\vs2drti-@VERSION@\bin
 
 Reboot your system after modifying AUTOEXEC.BAT.
 
@@ -134,6 +134,6 @@ To run the VS2DRT:
    If you chose not to add the "bin" directory to your PATH environmental
    variable, you will have to type the complete pathname. For example,
    if you installed the software to the default location, you would type
-   the command "C:\Program Files\USGS\vs2drti-1.4.1\bin\vs2drt" (including quotes).
+   the command "C:\Program Files\USGS\vs2drti-@VERSION@\bin\vs2drt" (including quotes).
 
 

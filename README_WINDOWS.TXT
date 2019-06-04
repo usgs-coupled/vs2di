@@ -109,11 +109,11 @@ Lappala, E.G., Healy, R.W., and Weeks, E.P., 1983, Documentation of
 
 D. INSTALLING
 
-To install VS2DRTI, double-click vs2drti-1.4.0-12981-x64.msi to execute the 
+To install VS2DRTI, double-click vs2drti-@VERSION@-@REVISION@-x64.msi to execute the 
 installation program, and follow the directions on the screen.
 
 By default, the software is installed in the directory
-C:\Program Files\USGS\vs2drti-1.4.0.  This is the recommended installation 
+C:\Program Files\USGS\vs2drti-@VERSION@.  This is the recommended installation 
 directory, but you may use other directories or disk drives.
 
 The following directory structure will be created (the contents of each 

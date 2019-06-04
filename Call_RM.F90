@@ -60,11 +60,11 @@ Module vs2dt_rm
     solute_rm = solute
     nsol = 0
     !nthreads = 1
-#ifdef USE_MPI
-    rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
-#else
     ncells = (NLY-2)*(NXR-2)
     nproc = FH_GetProcessorCount()
+#ifdef USE_OPENMP 
+    ! if USE_OPENMP, nthreads_transport = nproc || nthreads_transport = argument
+    ! if not USE_OPENMP, nthreads_transport = 1  
     IF (nthreads < 1) THEN
         nthreads = MIN(ncells, nproc)
     ELSE
@@ -73,8 +73,13 @@ Module vs2dt_rm
     IF (nthreads_transport < 1) THEN
         nthreads_transport = nproc
     END IF 
-    ! if not USE_OPENMP, nthreads_transport = 1   
-    ! if USE_OPENMP, nthreads_transport = nproc || nthreads_transport = argument
+#else
+    nthreads = 1
+    nthreads_transport = 1
+#endif
+#ifdef USE_MPI
+    rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
+#else
     rm_id = RM_Create(NNODES, nthreads)
 #endif    
     status = RM_SetFilePrefix(rm_id, PREFIX)

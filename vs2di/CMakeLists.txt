@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(jars)
 
+# set standard directory locations
+include(GNUInstallDirs)
+
 set(NB_FILES
   "${CMAKE_CURRENT_BINARY_DIR}/nbproject/build-impl.xml"
   "${CMAKE_CURRENT_BINARY_DIR}/nbproject/genfiles.properties"
@@ -61,6 +64,15 @@ add_custom_target(ANT_JAR ALL DEPENDS ${NB_FILES} ${HELP_FILES} ${LIB_FILES} ${S
 install(FILES ${JAR}
         DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if (NOT WIN32)
+  install(FILES vs2drti
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+    GROUP_EXECUTE GROUP_READ
+    WORLD_EXECUTE WORLD_READ
+    )
+endif()
 
 install(FILES ${LIB_JARS}
         DESTINATION ${CMAKE_INSTALL_BINDIR}/lib

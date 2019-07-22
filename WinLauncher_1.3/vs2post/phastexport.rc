@@ -39,7 +39,7 @@ IDI_PHASTEXPORT         ICON                    "vs2post.ICO"
 // TEXTINCLUDE
 //
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
     "#include ""windows.h""\r\n"
@@ -48,13 +48,13 @@ BEGIN
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
 END
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
@@ -67,9 +67,9 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_NOJRE               "Sorry, vs2post could not locate a suitable Java Runtime Environment.\nPlease download and install one from https://java.com/en/download."
+    IDS_NOJRE               "Sorry, vs2post could not locate a suitable Java Runtime Environment.\nPlease download and install Amazon Corretto 8 x64 JDK from https://aws.amazon.com/corretto."
     IDS_JRE_KEY             "SOFTWARE\\JavaSoft\\Java Runtime Environment"
     IDS_CUR_VER             "CurrentVersion"
     IDS_JAVAHOME            "JavaHome"

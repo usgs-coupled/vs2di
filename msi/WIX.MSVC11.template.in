@@ -14,7 +14,7 @@
 
         <Package InstallerVersion="405" Compressed="yes"/>
 
-        <Condition Message='This installer requires the Java Runtime Environment x64 version 7 or higher. Please install it and try again. http://www.java.com/' >
+        <Condition Message='This installer requires the Amazon Corretto 8 Windows x64 JDK. Please install it and try again. https://aws.amazon.com/corretto' >
           <![CDATA[Installed OR JAVA_VERSION >= "1.7"]]>
         </Condition>
 

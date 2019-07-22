@@ -84,7 +84,7 @@ END
 // TEXTINCLUDE
 //
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
     "#include ""windows.h""\r\n"
@@ -93,13 +93,13 @@ BEGIN
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
 END
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
@@ -131,12 +131,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Released: @RELEASE_DATE@"
             VALUE "CompanyName", "U.S. Geological Survey"
-            VALUE "FileDescription", "PHAST HDF Exporter"
-            VALUE "FileVersion", "1.1.0.0"
-            VALUE "InternalName", "phasthdf"
+            VALUE "FileDescription", "VS2DRTI spawner"
+            VALUE "FileVersion", "1.4.0.0"
+            VALUE "InternalName", "vs2drti"
             VALUE "LegalCopyright", "public domain"
-            VALUE "OriginalFilename", "phasthdf.exe"
-            VALUE "ProductName", "PHAST-1.1"
+            VALUE "OriginalFilename", "vs2drti.exe"
+            VALUE "ProductName", "VS2DRTI"
         END
     END
     BLOCK "VarFileInfo"
@@ -153,7 +153,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_NOJRE               "Sorry, vs2drti could not locate a suitable Java Runtime Environment.\nPlease download and install one from https://java.com/en/download."
+    IDS_NOJRE               "Sorry, vs2drti could not locate a suitable Java Runtime Environment.\nPlease download and install Amazon Corretto 8 x64 JDK from https://aws.amazon.com/corretto."
     IDS_JRE_KEY             "SOFTWARE\\JavaSoft\\Java Runtime Environment"
     IDS_CUR_VER             "CurrentVersion"
     IDS_JAVAHOME            "JavaHome"

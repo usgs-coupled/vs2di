@@ -1,0 +1,92 @@
+#
+# https://code.chs.usgs.gov/coupled/vs2di
+#
+image: buildpack-deps:bionic-scm
+
+stages:
+  - sync
+  - trigger
+
+before_script:
+  - eval $(ssh-agent -s)
+  - echo "${SSH_PRIVATE_KEY_ENC}" | base64 --decode | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan ${CI_SERVER_HOST} >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+  - git config --global user.email "darth@empire.com"
+  - git config --global user.name "Darth Vader"
+ 
+subtree-sync:
+  stage: sync
+
+  ##
+  ## Only run if on the master branch and the variable GROUP is set
+  ##
+  ## change this to
+  ## only:
+  ##  - master@$GROUP/vs2di
+  ## and set GROUP to coupled before merge
+  only:
+    refs:
+      - master
+    variables:
+      - $GROUP
+  
+  script:
+    ##
+    ## Must re-clone in order for the subtree merge to work
+    ## tried re-setting the url for the origin but didn't work
+    ##
+    - cd ..
+    - rm -rf ${CI_PROJECT_NAME}
+    - git clone git@${CI_SERVER_HOST}:${CI_PROJECT_PATH}.git
+    - cd ${CI_PROJECT_NAME}
+
+    ##
+    ## Sync subtrees
+    ##
+    - |
+      #!/bin/bash -ex
+      #
+      # vs2di                        git@${CI_SERVER_HOST}:${GROUP}/vs2di.git
+      # └─vs2drtJni                  └─vs2drtJni
+      #   └─src                        └─git@${CI_SERVER_HOST}:${GROUP}/subtrees/vs2drt-src.git                         vs2drtJni/src
+      #     └─PhreeqcRM                  └─git@${CI_SERVER_HOST}:${GROUP}/phreeqcrm.git                                 vs2drtJni/src/PhreeqcRM
+      #       ├─database                   ├─git@${CI_SERVER_HOST}:${GROUP}/subtrees/phreeqc3-database.git              vs2drtJni/src/PhreeqcRM/database
+      #       └─src                        └─git@${CI_SERVER_HOST}:${GROUP}/subtrees/PhreeqcRM-src.git                  vs2drtJni/src/PhreeqcRM/src
+      #         └─IPhreeqcPhast              └─IPhreeqcPhast
+      #           └─IPhreeqc                   └─git@${CI_SERVER_HOST}:${GROUP}/subtrees/IPhreeqc-src.git               vs2drtJni/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc
+      #             └─phreeqcpp                  └─git@${CI_SERVER_HOST}:${GROUP}/subtrees/phreeqc3-src.git             vs2drtJni/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp
+      #               └─common                     └─git@${CI_SERVER_HOST}:${GROUP}/subtrees/phreeqc3-src-common.git    vs2drtJni/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common
+
+      git_subtree() {
+        git subtree "${1}" --prefix="${2}" "${4}" master 2>&1 | grep -v "^[[:digit:]].*/[[:digit:]].*"
+      }
+
+      declare -A urls=( \
+        ["vs2drt-src"]="git@${CI_SERVER_HOST}:${GROUP}/subtrees/vs2drt-src.git" \
+      )
+
+      declare -A prefixes=( \
+        ["vs2drt-src"]="vs2drtJni/src" \
+      )
+
+      export GIT_EDITOR=true
+
+      for remote in "${!urls[@]}"; do
+        git_subtree "pull" "${prefixes[$remote]}" "$remote" "${urls[$remote]}"
+      done
+
+      for remote in "${!urls[@]}"; do
+        git_subtree "push" "${prefixes[$remote]}" "$remote" "${urls[$remote]}"
+      done
+
+      git status
+      git push origin master
+
+## Downstream Projects
+## none
+
+## Upstream Projects
+## vs2drt-src https://code.chs.usgs.gov/coupled/subtrees/vs2drt-src

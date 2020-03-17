@@ -1,6 +1,6 @@
 To build/install openmp version on linux:
-  tar xvzf vs2drt-@VERSION@-@REVISION@.tar.gz
-  cd vs2drt-@VERSION@-@REVISION@
+  tar xvzf vs2drt-@VERSION@.tar.gz
+  cd vs2drt-@VERSION@
   mkdir _openmp
   cd _openmp/
   ../configure --help   # instructions
@@ -10,7 +10,7 @@ To build/install openmp version on linux:
 
 
 To build/install mpi version on linux:
-  cd vs2drt-@VERSION@-@REVISION@
+  cd vs2drt-@VERSION@
   mkdir _mpi
   cd _mpi/
   ../configure --help   # instructions

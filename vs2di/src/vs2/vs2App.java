@@ -27,7 +27,7 @@ public class vs2App extends mp2App implements vs2Constants {
      * Creates the vs2dti application
      */
     public vs2App() {
-        super(ClassLoader.getSystemResource("images/splash.3.png"),
+        super(ClassLoader.getSystemResource("images/splash.png"),
                 ClassLoader.getSystemResource("images/appicon.gif"),
                 false,
                 System.getProperty("user.dir"));
@@ -148,7 +148,7 @@ public class vs2App extends mp2App implements vs2Constants {
         }
         String homeDir = System.getProperty("user.dir");;
         theApp = new vs2App(
-                ClassLoader.getSystemResource("images/splash.3.png"),
+                ClassLoader.getSystemResource("images/splash.png"),
                 ClassLoader.getSystemResource("images/appicon.gif"),
                 homeDir);
 

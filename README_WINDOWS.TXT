@@ -41,7 +41,7 @@ B. DISTRIBUTION FILES
 The following distribution files are currently available for
 Windows:
 
-  vs2drti-@VERSION@-@REVISION@-x64.msi  -  VS2DRTI version @MAJOR_MINOR@ installation program
+  vs2drti-@VERSION@-x64.msi  -  VS2DRTI version @MAJOR_MINOR@ installation program
 
   vs2drti@MAJOR_MINOR@_examples.zip  -  Zip file containing
                              examples and tutorial
@@ -58,22 +58,22 @@ In addition, the following reports are available:
 
 Parkhurst, D.L., and Wissmeier, L. 2015. PhreeqcRM: A reaction
    module for transport simulators based on the geochemical model PHREEQC.
-   Advances in Water Resources 83: 176–189. DOI: 10.1016/j.advwatres.2015.06.001.
+   Advances in Water Resources 83: 176-189. DOI: 10.1016/j.advwatres.2015.06.001.
 
 Haile, Sosina S. 2013. VS2DRT: Variable saturated two dimensional reactive 
    transport modeling in the vadose zone. (Doctoral dissertation) Freiberg Online 
-   Geoscience 34: 1–152.
+   Geoscience 34: 1-152.
 
 Parkhurst, D.L., and Appelo, C.A.J. 2013. Description of input and
-   examples for PHREEQC Version 3—a computer program for speciation, batch-reaction,
+   examples for PHREEQC Version 3-a computer program for speciation, batch-reaction,
    one-dimensional transport, and inverse geochemical calculations. U.S. Geological
    Survey Techniques and Methods 6-A43.
    An electronic version of this report can be downloaded from:
    https://pubs.er.usgs.gov/publication/tm6A43
    
-Charlton, S.R., and Parkhurst, D.L. 2002. PHREEQCI—A graphical user
+Charlton, S.R., and Parkhurst, D.L. 2002. PHREEQCI-A graphical user
    interface to the geochemical model PHREEQC. U.S. Geological Survey
-   Fact Sheet 031–02.
+   Fact Sheet 031-02.
    An electronic version of this report can be downloaded from:
    https://pubs.er.usgs.gov/publication/fs03102  <p>
 
@@ -109,7 +109,7 @@ Lappala, E.G., Healy, R.W., and Weeks, E.P., 1983, Documentation of
 
 D. INSTALLING
 
-To install VS2DRTI, double-click vs2drti-@VERSION@-@REVISION@-x64.msi to execute the 
+To install VS2DRTI, double-click vs2drti-@VERSION@-x64.msi to execute the
 installation program, and follow the directions on the screen.
 
 By default, the software is installed in the directory

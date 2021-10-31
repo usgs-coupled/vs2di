@@ -4,6 +4,7 @@ Module vs2dt_rm
 #endif
     integer :: rm_id
     integer :: nthreads = -1, nxyz, ncomps
+    integer :: nthreads_transport = -1
     integer :: status, mpi_myself, mpi_tasks
     integer, dimension(:), allocatable :: forward1
     logical :: solute_rm
@@ -31,7 +32,7 @@ Module vs2dt_rm
                 IMPLICIT NONE
             END SUBROUTINE FH_FinalizeFiles 
 
-            INTEGER FUNCTION FH_GetProcessorCount() &
+            INTEGER(KIND=C_INT) FUNCTION FH_GetProcessorCount() &
                 BIND(C, NAME='FH_GetProcessorCount')
                 USE ISO_C_BINDING
                 IMPLICIT NONE
@@ -59,16 +60,26 @@ Module vs2dt_rm
     solute_rm = solute
     nsol = 0
     !nthreads = 1
-#ifdef USE_MPI
-    rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
-#else
     ncells = (NLY-2)*(NXR-2)
     nproc = FH_GetProcessorCount()
+#ifdef USE_OPENMP 
+    ! if USE_OPENMP, nthreads_transport = nproc || nthreads_transport = argument
+    ! if not USE_OPENMP, nthreads_transport = 1  
     IF (nthreads < 1) THEN
         nthreads = MIN(ncells, nproc)
     ELSE
         nthreads = MIN(ncells, nthreads)
     END IF
+    IF (nthreads_transport < 1) THEN
+        nthreads_transport = nproc
+    END IF 
+#else
+    nthreads = 1
+    nthreads_transport = 1
+#endif
+#ifdef USE_MPI
+    rm_id = RM_Create(NNODES, MPI_COMM_WORLD)
+#else
     rm_id = RM_Create(NNODES, nthreads)
 #endif    
     status = RM_SetFilePrefix(rm_id, PREFIX)

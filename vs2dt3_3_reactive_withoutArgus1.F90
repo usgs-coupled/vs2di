@@ -20,10 +20,14 @@
             READ(arg,"(I5)",err=5) i
             if (i > 0) then
                 nthreads = i
+                nthreads_transport = i
             endif
 5           continue            
         endif
     endif
+#else
+    nthreads = 1
+    nthreads_transport = 1
 #endif  
 #ifdef USE_MPI
     nthreads = 1
@@ -1383,11 +1387,12 @@
             status = RM_SetSaturation(rm_id, satur)
             call SetConcentrationsRM(cc)
             !if (npscrn .ne. 0) then
-            write(msg,"(A)") "   Chemistry"
-            status = RM_SetScreenOn(rm_id, 1)
-            status = RM_ScreenMessage(rm_id, msg)
-            status = RM_SetScreenOn(rm_id, 0)
+            !write(msg,"(A)") "   Chemistry"
+            !status = RM_SetScreenOn(rm_id, 1)
+            !status = RM_ScreenMessage(rm_id, msg)
+            !status = RM_SetScreenOn(rm_id, 0)
             !endif
+            write(stderr,"(A)") "   Chemistry"
             status = RM_RunCells(rm_id)
             call GetConcentrationsRM(cc)
             IF (JSTOP.GT.1) THEN
@@ -5043,6 +5048,7 @@
                         !      qx = qt(in)
                         if(SOLUTE) then
                             qx = qs(in)
+                            !qx = vsflx1(in)
                         else
                             qx = qt(in)
                         end if
@@ -5451,6 +5457,7 @@
                     !          qx = qt(in1)
                     if(SOLUTE) then
                         qx = qs(in1)
+                        !qx = vsflx1(in1)
                     else
                         qx = qt(in1)
                     end if

@@ -233,6 +233,8 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhast.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhastLib.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhastLib.h
+  src/PhreeqcRM/src/BMI_methods.cpp
+  src/PhreeqcRM/src/BMI_Var.h
   src/PhreeqcRM/src/IrmResult.h
   src/PhreeqcRM/src/PhreeqcRM.cpp
   src/PhreeqcRM/src/PhreeqcRM.h
@@ -240,6 +242,8 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/RM_interface_C.h
   src/PhreeqcRM/src/RM_interface_F.cpp
   src/PhreeqcRM/src/RM_interface_F.h
+  src/PhreeqcRM/src/YAMLPhreeqcRM.cpp
+  src/PhreeqcRM/src/YAMLPhreeqcRM.h
 )
 
 if (WIN32)

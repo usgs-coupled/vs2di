@@ -231,7 +231,7 @@
     logical axes(2) 
     common/axis/axes
     common/conversion/CNVTM,CNVTMI     
-    CHARACTER*10 SCOMPNAME(50)
+    character(len=:), dimension(:), allocatable   :: SCOMPNAME
     common/ITEMK/KNLY,KNXR,KNNODE
     !!@@include 'd_kdum.inc'
     integer, allocatable::KDUM(:,:)
@@ -480,9 +480,7 @@
         !#CALL PHREEQC_MAIN(SOLUTE,CHEMFILE,DATABASEFILE,PREFIX)
         !#SCOMPNAME= "          "
         !#CALL COUNT_ALL_COMPONENTS(Nsol, SCOMPNAME)
-        do i = 1, nSol
-            status = RM_GetComponent(rm_id, i, scompname(i))
-        enddo
+        status = RM_GetComponents(rm_id, scompname)
         Nodesol= NNODES*Nsol  
     END IF
     IF(PPNT.OR.HPNT)THEN

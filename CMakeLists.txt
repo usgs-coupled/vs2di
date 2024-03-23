@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 2.8...3.20)
 
 # project
 project(vs2drt C CXX Fortran)
@@ -68,6 +68,7 @@ include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
 include_directories("PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
 include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/PhreeqcRM")
 
 # dll/shared objects
 if (WIN32)

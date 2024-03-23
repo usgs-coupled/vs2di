@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 2.8...3.20)
 project(vs2drtJni C CXX Fortran)
 
 # set standard directory locations
@@ -77,16 +77,25 @@ ADD_DEFINITIONS(-DUSE_PHRQ_ALLOC)
 find_package(OpenMP)
 
 SET(PhreeqcRM_SOURCES
+  src/PhreeqcRM/src/BMI_interface_C.cpp
+  src/PhreeqcRM/src/BMI_interface_C.h
+  src/PhreeqcRM/src/BMI_interface_F.cpp
+  src/PhreeqcRM/src/BMI_interface_F.h
+  src/PhreeqcRM/src/bmi.hxx
+  src/PhreeqcRM/src/BMIPhreeqcRM.cpp
+  src/PhreeqcRM/src/BMIPhreeqcRM.h
+  src/PhreeqcRM/src/BMIVariant.cpp
+  src/PhreeqcRM/src/BMIVariant.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/CSelectedOutput.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/CSelectedOutput.hxx
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/CVar.hxx
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/Debug.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/ErrorReporter.hxx
+  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc_interface_F.cpp
+  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc_interface_F.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc.hpp
-  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc_interface_F.cpp
-  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqc_interface_F.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqcCallbacks.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/IPhreeqcLib.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/advection.cpp
@@ -149,10 +158,10 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/NameDouble.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/NumKeyword.cxx
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/NumKeyword.h
-  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector.cpp
-  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector_serial.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector_serial.h
+  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector.cpp
+  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/nvector.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/parse.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PBasic.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PBasic.h
@@ -163,8 +172,8 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords/Keywords.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords/Keywords.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PHRQ_io_output.cpp
-  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/pitzer.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/pitzer_structures.cpp
+  src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/pitzer.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PPassemblage.cxx
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PPassemblage.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PPassemblageComp.cxx
@@ -233,8 +242,6 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhast.h
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhastLib.cpp
   src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqcPhastLib.h
-  src/PhreeqcRM/src/BMI_methods.cpp
-  src/PhreeqcRM/src/BMI_Var.h
   src/PhreeqcRM/src/IrmResult.h
   src/PhreeqcRM/src/PhreeqcRM.cpp
   src/PhreeqcRM/src/PhreeqcRM.h

@@ -54,20 +54,33 @@ SET(libvs2drt_SOURCES
   ${PROJECT_BINARY_DIR}/FC.h
 )
 
-include_directories("${PROJECT_BINARY_DIR}")
+# include_directories("${PROJECT_BINARY_DIR}")
 
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src")
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast")
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc")
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp")
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
-include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common")
+# include_directories("${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords")
 
 if (WIN32)
   add_library(libvs2drt STATIC ${libvs2drt_SOURCES})
 else()
   add_library(libvs2drt SHARED ${libvs2drt_SOURCES})
 endif()
+
+# libvs2drt include
+target_include_directories(libvs2drt
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords>
+)
+
 
 # iphreeqc defs
 ADD_DEFINITIONS(-DSWIG_SHARED_OBJ)
@@ -249,6 +262,13 @@ SET(PhreeqcRM_SOURCES
   src/PhreeqcRM/src/RM_interface_C.h
   src/PhreeqcRM/src/RM_interface_F.cpp
   src/PhreeqcRM/src/RM_interface_F.h
+  src/PhreeqcRM/src/RMVARS.h
+  src/PhreeqcRM/src/VarManager.cpp
+  src/PhreeqcRM/src/VarManager.h
+  src/PhreeqcRM/src/YAML_interface_C.cpp
+  src/PhreeqcRM/src/YAML_interface_C.h
+  src/PhreeqcRM/src/YAML_interface_F.cpp
+  src/PhreeqcRM/src/YAML_interface_F.h
   src/PhreeqcRM/src/YAMLPhreeqcRM.cpp
   src/PhreeqcRM/src/YAMLPhreeqcRM.h
 )
@@ -258,6 +278,28 @@ if (WIN32)
 else()
   add_library(PhreeqcRM SHARED ${PhreeqcRM_SOURCES})
 endif()
+
+#{{
+target_include_directories(PhreeqcRM
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/common>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/IPhreeqcPhast/IPhreeqc/phreeqcpp/PhreeqcKeywords>
+)
+
+# generate "${PhreeqcRM_BINARY_DIR}/irm_dll_export.h"
+# based on how the PhreeqcRM library is built (BUILD_SHARED_LIBS)
+include(GenerateExportHeader)
+generate_export_header(PhreeqcRM BASE_NAME IRM_DLL)
+
+# c++11
+target_compile_features(PhreeqcRM PUBLIC cxx_std_11)
+
+#}}
 
 if (OPENMP_FOUND)
   ADD_DEFINITIONS(-DUSE_OPENMP)
@@ -276,10 +318,10 @@ SET(vs2drtf_SOURCES
 )
 
 # place [*.F[90]] files into "Source Files"
-source_group("Source Files" FILES "src/Call_RM.F90")
+source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/Call_RM.F90")
 source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/PhreeqcRM/src/RM_interface.F90")
-source_group("Source Files" FILES "src/parallel_solute_transport.F90")
-source_group("Source Files" FILES "src/vs2dt3_3_reactive_withoutArgus1.F90")
+source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/parallel_solute_transport.F90")
+source_group("Source Files" FILES "${PROJECT_SOURCE_DIR}/src/vs2dt3_3_reactive_withoutArgus1.F90")
 
 if (WIN32)
   add_library(vs2drtf STATIC ${vs2drtf_SOURCES})
@@ -305,7 +347,13 @@ add_library(vs2drtJni SHARED ${vs2drtJni_SOURCES})
 # JNI
 find_package(JNI REQUIRED)
 if (JNI_FOUND)
-  include_directories(${JNI_INCLUDE_DIRS})
+  #{{
+  # include_directories(${JNI_INCLUDE_DIRS})
+  target_include_directories(vs2drtJni
+    PUBLIC
+      ${JNI_INCLUDE_DIRS}
+  )
+  #}}
   target_link_libraries(vs2drtJni libvs2drt PhreeqcRM vs2drtf ${JNI_LIBRARIES})
 endif ()
 

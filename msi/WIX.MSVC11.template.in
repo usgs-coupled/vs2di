@@ -12,9 +12,10 @@
         Manufacturer="$(var.CPACK_PACKAGE_VENDOR)"
         UpgradeCode="$(var.CPACK_WIX_UPGRADE_GUID)">
 
-        <Package InstallerVersion="405" Compressed="yes"/>
+        <!-- <Package InstallerVersion="405" Compressed="yes"/>  -->
+        <Package InstallerVersion="405" Compressed="yes" Platform="x64"/>
 
-        <Condition Message='This installer requires the Amazon Corretto 8 Windows x64 JDK. Please install it and try again. https://aws.amazon.com/corretto' >
+        <Condition Message='This installer requires the Amazon Corretto 8 Windows x64 JRE or JDK. Please install either one of them and try again. https://aws.amazon.com/corretto' >
           <![CDATA[Installed OR JAVA_VERSION >= "1.7"]]>
         </Condition>
 
